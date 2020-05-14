@@ -1,0 +1,35 @@
+.feautre-select-container{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 70px;
+  box-shadow: 0 0 9px 0 #ebe8e8;
+  .container-content{
+    height: 100%;
+    text-align: center;
+    color:#878781;
+    width:250px;
+   text{
+      font-size: 21px;
+    }
+  };
+  .gap-line{
+    width: 1px;
+    height: 20px;
+    position: absolute;
+    top:25px;
+    background-color: rgba(127, 119, 117, 0.71);
+  }
+ .gap-line1{
+   left:250px
+ }
+  .gap-line2{
+    left:500px
+  }
+}
+.uu{
+  font-size: 28px;
+  margin-right: 7px;
+}
+
