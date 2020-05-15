@@ -20,6 +20,7 @@ export default class WgtGoodsScroll extends Component {
   }
 
   componentDidMount() {
+    let query = Taro.createSelectorQuery()
     const { info } = this.props
     let { config } = info
     if (config.lastSeconds) {
