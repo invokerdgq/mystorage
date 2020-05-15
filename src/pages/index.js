@@ -93,7 +93,6 @@ export default class HomeIndex extends Component {
   }
 
   componentDidMount () {
-    Taro.M(this.props.store)
     this.fetchInfo(async (info) => {
       const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=index&name=search'
       const [fixSetting, { is_open, ad_pic, ad_title }] = await Promise.all([req.get(url), api.promotion.automatic({register_type: 'general'})])//----------request about fix position setting
