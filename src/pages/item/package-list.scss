@@ -22,7 +22,7 @@ $item-img-size: 240px !default;
         margin: 0 0 $edge-margin*2;
         position: relative;
         box-shadow: none;
-      
+
         &__hd {
         }
         &__bd {
@@ -39,7 +39,7 @@ $item-img-size: 240px !default;
           padding: $edge-margin*2 20px;
           flex: 1;
           height: auto;
-      
+
         }
         &__caption{
           height: auto;
@@ -114,7 +114,7 @@ $item-img-size: 240px !default;
           color: $color-gray;
           text-decoration: line-through;
         }
-      
+
         &__extra {
           display: flex;
           align-items: center;

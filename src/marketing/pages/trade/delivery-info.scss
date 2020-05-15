@@ -1,4 +1,4 @@
-@import "../../style/imports";
+@import "../../../style/imports";
 .delivery-detail {
   width: 100%;
   padding:20px 28px;
@@ -49,13 +49,13 @@
   }
 
   .at-timeline-item__content-item {
-    
+
     color: $color-brand-primary;
   }
 
   .at-timeline-item__content--sub {
     color: #999;
-   
+
   }
 }
 
@@ -100,7 +100,7 @@
     border-color: #999;
   }
 
-  
+
   &__content {
     margin-left: 40PX;
   }

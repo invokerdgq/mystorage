@@ -13,7 +13,7 @@ import _cloneDeep from 'lodash/cloneDeep'
 import CheckoutItems from './checkout-items'
 import PaymentPicker from './comps/payment-picker'
 import DrugInfo from './comps/drug-info'
-import OrderItem from '../trade/comps/order-item'
+import OrderItem from '../../marketing/pages/trade/comps/order-item'
 
 import './espier-checkout.scss'
 

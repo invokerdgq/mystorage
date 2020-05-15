@@ -5,7 +5,7 @@ import { classNames } from '@/utils'
 
 import './goods-grid.scss'
 
-export default class WgtGoodsGrid extends Component {      //-----------------商品栅格
+export default class WgtGoodsGrid extends Component {
   static options = {
     addGlobalClass: true
   }
@@ -100,13 +100,10 @@ export default class WgtGoodsGrid extends Component {      //-----------------�
                         {
                           config.showPrice
                           && <View className="goods-price">
-                            <Text className="desc-left">价格:</Text>
                             <Text className="cur">¥{price}</Text>
-                            <Text className="speed-buy">立即抢购</Text>
-                              {/*{*/}
-                              {/*  marketPrice != 0 &&*/}
-                              {/*  <Text className='market-price'>{marketPrice}</Text>*/}
-                              {/*}*/}
+                            <View className="speed-buy-container">
+                              <Text className="speed-buy">立即抢购</Text>
+                            </View>
                             </View>
                         }
                       </View>

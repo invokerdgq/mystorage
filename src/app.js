@@ -26,6 +26,9 @@ if(process.env.TARO_ENV === 'weapp'){
   function isTabBarPage(url){
     return /\/(index|category\/index|recomend\/list|cart\/espier-index|member\/index)(.)*/.test(url)
   }
+  function isItemList(url) {
+    return /\/trade(.)*/.test(url)
+  }
   let originNav = Taro.navigateTo
   Taro.navigateTo = function (option) {
     isTabBarPage(option.url)?Taro.switchTab(option): originNav(option)
@@ -34,7 +37,17 @@ if(process.env.TARO_ENV === 'weapp'){
   Taro.redirectTo = function (option) {
     isTabBarPage(option.url)?Taro.switchTab(option): originRed(option)
     }
+  let originNav1 = Taro.navigateTo
+  Taro.navigateTo = function (option) {
+    if(isItemList(option.url)) option.url = `/marketing/${option.url}`
+    originNav1(option)
   }
+  let originRed1 = Taro.redirectTo
+  Taro.redirectTo = function (option) {
+    if(isItemList(option.url)) option.url = `/marketing/${option.url}`
+    originRed1(option)
+  }
+}
 
 
 const { store } = configStore()
@@ -57,14 +70,19 @@ useHooks()
     config = {
       tabBar:process.env.TARO_ENV === 'weapp'? {
         list:[
-          {pagePath: "pages/index", text: "首页", name: "home", iconPath: "assets/imgs/tab_home.png", selectedIconPath: "assets/imgs/tab_home_selected.png"},
-          {pagePath: "pages/category/index", text: "分类", name: "category", iconPath: "assets/imgs/classify.png", selectedIconPath: "assets/imgs/classify_selected.png"},
-          {pagePath: "pages/recommend/list", text: "种草", name: "article", iconPath: "assets/imgs/tab_zuanshi.png", selectedIconPath: "assets/imgs/tab_zuanshi_selected.png"},
-          {pagePath: "pages/cart/espier-index", text: "购物车", name: "cart", iconPath: "assets/imgs/tab_gouwudai.png", selectedIconPath: "assets/imgs/tab_gouwudai_selected.png"},
-          {pagePath: "pages/member/index", text: "我的", name: "member", iconPath: "assets/imgs/tab_wode.png", selectedIconPath: "assets/imgs/tab_wode_selected.png"}
-             ]
+          {pagePath: "pages/index", text: "首页", name: "home", iconPath: "assets/imgs/home.jpg", selectedIconPath: "assets/imgs/home_selected.jpg"},
+          {pagePath: "pages/category/index", text: "分类", name: "category", iconPath: "assets/imgs/catagory.jpg", selectedIconPath: "assets/imgs/catagory_selected.jpg"},
+          {pagePath: "pages/recommend/list", text: "种草", name: "article", iconPath: "assets/imgs/grass.jpg", selectedIconPath: "assets/imgs/grass_selected.jpg"},
+          {pagePath: "pages/cart/espier-index", text: "购物车", name: "cart", iconPath: "assets/imgs/cart.jpg", selectedIconPath: "assets/imgs/cart_selected.jpg"},
+          {pagePath: "pages/member/index", text: "我的", name: "member", iconPath: "assets/imgs/mine.jpg", selectedIconPath: "assets/imgs/mine_selected.jpg"}
+             ],
+        selectedColor:'#c1534e',
+        borderStyle:'black'
       }:null
       ,
+      window:{
+        navigationStyle: "custom"
+      },
       pages: [
         'pages/index',
         'pages/goodsdetail',
@@ -120,19 +138,6 @@ useHooks()
         'pages/store/index',
         'pages/store/list',
 
-        'pages/trade/list',
-        'pages/trade/customer-pickup-list',
-        'pages/trade/drug-list',
-        'pages/trade/detail',
-        'pages/trade/delivery-info',
-        'pages/trade/rate',
-        'pages/trade/cancel',
-        'pages/trade/after-sale',
-        'pages/trade/refund',
-        'pages/trade/refund-detail',
-        'pages/trade/refund-sendback',
-        'pages/trade/invoice-list',
-
         'pages/vip/vipgrades',
 
         'pages/custom/custom-page',
@@ -141,6 +146,19 @@ useHooks()
         {
           root: 'marketing',
           pages: [
+            'pages/trade/list',
+            'pages/trade/customer-pickup-list',
+            'pages/trade/drug-list',
+            'pages/trade/detail',
+            'pages/trade/delivery-info',
+            'pages/trade/rate',
+            'pages/trade/cancel',
+            'pages/trade/after-sale',
+            'pages/trade/refund',
+            'pages/trade/refund-detail',
+            'pages/trade/refund-sendback',
+            'pages/trade/invoice-list',
+
             'pages/distribution/index',
             'pages/distribution/setting',
             'pages/distribution/statistics',
@@ -224,37 +242,37 @@ useHooks()
     }
 
     async fetchTabs () {
-      const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=tabs'
-      const defaultTabs = {
-        config: {
-          backgroundColor: "#ffffff",
-          color: "#333333",
-          selectedColor: "#E33420"
-        },
-        data: [{
-          name: "home",
-          pagePath: "/pages/index",
-          text: "首页"
-        },{
-          name: "category",
-          pagePath: "/pages/category/index",
-          text: "分类"
-        },{
-          name: "cart",
-          pagePath: "/pages/cart/espier-index",
-          text: "购物车"
-        },{
-          name: "member",
-          pagePath: "/pages/member/index",
-          text: "我"
-        }],
-        name: "tabs"
-      }
-      const info = await req.get(url)
-      store.dispatch({
-        type: 'tabBar',
-        payload: info.list.length ? info.list[0].params : defaultTabs
-      })
+      // const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=tabs'
+      // const defaultTabs = {
+      //   config: {
+      //     backgroundColor: "#ffffff",
+      //     color: "#333333",
+      //     selectedColor: "#E33420"
+      //   },
+      //   data: [{
+      //     name: "home",
+      //     pagePath: "/pages/index",
+      //     text: "首页"
+      //   },{
+      //     name: "category",
+      //     pagePath: "/pages/category/index",
+      //     text: "分类"
+      //   },{
+      //     name: "cart",
+      //     pagePath: "/pages/cart/espier-index",
+      //     text: "购物车"
+      //   },{
+      //     name: "member",
+      //     pagePath: "/pages/member/index",
+      //     text: "我"
+      //   }],
+      //   name: "tabs"
+      // }
+      // const info = await req.get(url)
+      // store.dispatch({
+      //   type: 'tabBar',
+      //   payload: info.list.length ? info.list[0].params : defaultTabs
+      // })
     }
 
     async fetchColors () {

@@ -358,12 +358,12 @@ export default class HomeIndex extends Component {
           show={showBackToTop}
           onClick={this.scrollBackToTop}
         />
-        {
-          isShowAddTip ? <View className='add_tip'>
-            <View class='tip-text'>点击“•●•”添加到我的小程序，微信首页下拉即可快速访问店铺</View>
-            <View className='icon-close icon-view' onClick={this.handleClickCloseAddTip.bind(this)}> </View>
-          </View> : null
-        }
+        {/*{*/}
+        {/*  isShowAddTip ? <View className='add_tip'>*/}
+        {/*    <View class='tip-text'>点击“•●•”添加到我的小程序，微信首页下拉即可快速访问店铺</View>*/}
+        {/*    <View className='icon-close icon-view' onClick={this.handleClickCloseAddTip.bind(this)}> </View>*/}
+        {/*  </View> : null*/}
+        {/*}*/}
 
         <SpToast />
         {

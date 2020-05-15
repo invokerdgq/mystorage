@@ -127,7 +127,6 @@ export default class TradeDetail extends Component {
     })
 
     const ziti = pickBy(data.distributor, {
-      store_name: 'store_name',
       store_address: 'store_address',
       store_name: 'store_name',
       hour: 'hour',
