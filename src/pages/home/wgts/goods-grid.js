@@ -117,12 +117,16 @@ export default class WgtGoodsGrid extends Component {      //-----------------�
             }
           </View>
         </View>
-        <View className="goods-more-container">
-           <View className={"goods-more-content"} onClick={this.moreGoods.bind(this)}>
-             <View className="goods-more-des1">更多商品</View>
-             <View className="goods-more-des2">点击购买</View>
-           </View>
-        </View>
+        {
+          base.title === '苏尚儿新品'&&
+          <View className="goods-more-container">
+            <View className={"goods-more-content"} onClick={this.moreGoods.bind(this)}>
+              <View className="goods-more-des1">更多商品</View>
+              <View className="goods-more-des2">点击购买</View>
+            </View>
+          </View>
+        }
+
       </View>
     )
   }
