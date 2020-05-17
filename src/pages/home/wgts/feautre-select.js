@@ -22,28 +22,38 @@ class FeautreSelect extends Component{
           iconClass:'icon-kefu',
           title:'售后无忧'
         }
-        ]
+        ],
+      currentPage:''
     }
   }
   componentDidMount() {
+    let pageList = Taro.getCurrentPages();
+    this.setState({
+      currentPage: pageList[pageList.length -1].route
+    })
   }
   render() {
-    const {selectList} = this.state
+    const {selectList , currentPage} = this.state
     return(
-      <View className="feautre-select-container">
-        {
-          selectList.map((item,index) => {
-            return (
-              <View key={index} className="container-content">
-                <Icon className={`iconfont uu ${item.iconClass}`}/>
-                <Text>{item.title}</Text>
-              </View>
-            )
-          })
+      <View>
+        {currentPage === 'pages/index'&&
+          <View className="feautre-select-container">
+            {
+              selectList.map((item,index) => {
+                return (
+                  <View key={index} className="container-content">
+                    <Icon className={`iconfont uu ${item.iconClass}`}/>
+                    <Text>{item.title}</Text>
+                  </View>
+                )
+              })
+            }
+            <View className="gap-line1 gap-line"/>
+            <View className="gap-line2 gap-line"/>
+          </View>
         }
-          <View className="gap-line1 gap-line"/>
-          <View className="gap-line2 gap-line"/>
       </View>
+
     );
   }
 }

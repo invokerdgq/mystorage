@@ -5,9 +5,11 @@ import { Loading, SearchBar, TabBar } from '@/components'
 import Series from './comps/series'
 import { classNames, pickBy } from '@/utils'
 import api from '@/api'
+import NavGap from'../../components/nav-gap/nav-gap'
 
 import './index.scss'
 import {AtTabs, AtTabsPane} from "taro-ui";
+
 @connect(store => ({
   store
 }))
@@ -26,6 +28,7 @@ export default class Category extends Component {
   }
 
   componentDidMount () {
+    Taro.M(this)
     this.fetch()
   }
 
@@ -118,39 +121,42 @@ export default class Category extends Component {
   render () {
     const { curTabIdx, tabList, list, hasSeries, isChanged } = this.state
     return (
-      <View className='page-category-index'>
-        {
-          tabList.length !== 0
-            ? <AtTabs
-              className='category__tabs'
-              current={curTabIdx}
-              tabList={tabList}
-              onClick={this.handleClickTab}
-            >
-              {
-                tabList.map((panes, pIdx) =>
-                  (<AtTabsPane
-                    current={curTabIdx}
-                    key={pIdx}
-                    index={pIdx}
-                  >
-                  </AtTabsPane>)
-                )
-              }
-            </AtTabs>
-            : null
-				}
-        <View className={`${hasSeries && tabList.length !== 0 ? 'category-comps' : 'category-comps-not'}`}>
-          <Series
-            isChanged={isChanged}
-            info={list}
-          />
+        <View className='page-category-index'>
+          {
+            <NavGap title = '分类'/>
+          }
+          {
+            tabList.length !== 0
+              ? <AtTabs
+                className='category__tabs'
+                current={curTabIdx}
+                tabList={tabList}
+                onClick={this.handleClickTab}
+              >
+                {
+                  tabList.map((panes, pIdx) =>
+                    (<AtTabsPane
+                      current={curTabIdx}
+                      key={pIdx}
+                      index={pIdx}
+                    >
+                    </AtTabsPane>)
+                  )
+                }
+              </AtTabs>
+              : null
+          }
+          <View className={`${hasSeries && tabList.length !== 0 ? 'category-comps' : 'category-comps-not'}`}>
+            <Series
+              isChanged={isChanged}
+              info={list}
+            />
+          </View>
+          {
+            process.env.TARO_ENV === 'weapp'?null:
+              <TabBar />
+          }
         </View>
-        {
-          process.env.TARO_ENV === 'weapp'?null:
-            <TabBar />
-        }
-      </View>
     )
   }
 }

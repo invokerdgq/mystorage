@@ -67,7 +67,7 @@ export default class WgtGoodsGrid extends Component {
           <View className='grid-goods out-padding grid-goods__type-grid'>
             {
               data.map((item, idx) => {
-                const price = ((item.act_price ? item.act_price : item.member_price ? item.member_price : item.price)/100).toFixed(2)
+                const price =parseInt(((item.act_price ? item.act_price : item.member_price ? item.member_price : item.price)/100).toFixed(2))
                 //const marketPrice = ((item.act_price ? item.price : item.member_price ? item.price : item.market_price)/100).toFixed(2)
                 const marketPrice = (item.market_price/100).toFixed(2)
                 return (
@@ -97,13 +97,12 @@ export default class WgtGoodsGrid extends Component {
                         )}
                         <View className={`goods-title ${!config.brand || !item.brand ? 'no-brand' : ''}`}>{item.title}</View>
                         {item.brief && <View className={`goods-brief ${!config.brand || !item.brand ? 'no-brand' : ''}`}>{item.brief}</View>}
+                        <View className="guige">规格规格规？？</View>
                         {
                           config.showPrice
                           && <View className="goods-price">
-                            <Text className="cur">¥{price}</Text>
-                            <View className="speed-buy-container">
-                              <Text className="speed-buy">立即抢购</Text>
-                            </View>
+                                 <Text className="price">¥<Text className="price-inner">{price}</Text></Text>
+                            <Text className="speed-buy"> 立即抢购<Text> > </Text> </Text>
                             </View>
                         }
                       </View>

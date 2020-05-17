@@ -1,6 +1,6 @@
 import Taro, { PureComponent } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import {FeautreSelect, WgtSearchHome, WgtFilm, WgtMarquees, WgtSlider, WgtImgHotZone, WgtNavigation, WgtCoupon, WgtGoodsScroll, WgtGoodsGrid, WgtShowcase } from '../wgts'
+import {FeautreSelect, WgtSearchHome, WgtFilm, WgtMarquees, WgtSlider, WgtImgHotZone, WgtNavigation, WgtCoupon, WgtGoodsScroll, WgtGoodsGrid, WgtShowcase, HotArea } from '../wgts'
 
 export default class HomeWgts extends PureComponent {
   state = {
@@ -14,7 +14,6 @@ export default class HomeWgts extends PureComponent {
   static defaultProps = {
     wgts: []
   }
-
   componentDidMount () {
     Taro.getSystemInfo()
       .then(res =>{
@@ -27,7 +26,6 @@ export default class HomeWgts extends PureComponent {
   render () {
     const { wgts } = this.props
     const { screenWidth } = this.state
-
     return (
       <View>
         {
@@ -40,7 +38,7 @@ export default class HomeWgts extends PureComponent {
                 {item.name === 'slider' &&
                   <View>
                     <WgtSlider isHomeSearch info={item} width={screenWidth} />
-                    <FeautreSelect/>
+                      <FeautreSelect/>
                   </View>
                 }
                 {item.name === 'navigation' && <WgtNavigation info={item} />}
@@ -52,6 +50,9 @@ export default class HomeWgts extends PureComponent {
               </View>
             )
           })
+        }
+        {
+          <HotArea></HotArea>
         }
       </View>
     )

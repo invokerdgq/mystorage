@@ -1,0 +1,20 @@
+.nav-gap{
+  &-container{
+    position: relative;
+    height: 180px;
+    background: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  &-icon{
+    position: absolute;
+    left:40px;
+    top:40px
+  }
+  &-title{
+    font-size: 40px;
+    font-weight: bold;
+  }
+}

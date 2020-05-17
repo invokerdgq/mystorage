@@ -11,16 +11,24 @@ export default class WgtGoodsScroll extends Component {
     addGlobalClass: true,
     info: null
   }
-
+  static width = 0;
   constructor (props) {
     super(props)
     this.state = {
-      timer: null
+      timer: null,
+      showNum:1,
+      initLeft:0
     }
   }
 
   componentDidMount() {
-    let query = Taro.createSelectorQuery()
+    WgtGoodsScroll.width = Taro.getSystemInfoSync().screenWidth;
+    Taro.createSelectorQuery().in(this.$scope).selectAll('.position0'). boundingClientRect( (rect)=> {
+      Taro.M(rect[0].left)
+      this.setState({
+        initLeft:rect[0].left
+      })
+    }).exec()
     const { info } = this.props
     let { config } = info
     if (config.lastSeconds) {
@@ -61,7 +69,14 @@ export default class WgtGoodsScroll extends Component {
       })
     }
   }
-
+ numChange = () => {
+     Taro.createSelectorQuery().in(this.$scope).selectAll('.position0'). boundingClientRect( (rect)=> {
+       console.log(rect[0].left)
+      this.setState({
+        showNum: 1+Math.floor([-(rect[0].left-this.state.initLeft)]/WgtGoodsScroll.width)
+      })
+     }).exec()
+ }
   render () {
     const { info } = this.props
     if (!info) {
@@ -69,7 +84,7 @@ export default class WgtGoodsScroll extends Component {
     }
 
     const { base, data, config } = info
-    const { timer } = this.state
+    const { showNum,timer } = this.state
 
     return (
       <View className={`wgt ${base.padded ? 'wgt__padded' : null}`}>
@@ -105,7 +120,7 @@ export default class WgtGoodsScroll extends Component {
               {
                 config.type === 'goods'?
                   <Text className="more">查看更多>></Text>:
-                  <Text className="more">1/6</Text>
+                  <Text className="num-change"><Text className="num-change-inner">{showNum}</Text>/{data.length}</Text>
               }
             </View>
           </View>
@@ -114,6 +129,7 @@ export default class WgtGoodsScroll extends Component {
           <ScrollView
             className='scroll-goods'
             scrollX
+            onScroll={this.numChange.bind(this)}
           >
             {
               data.map((item, idx) => {
@@ -122,7 +138,7 @@ export default class WgtGoodsScroll extends Component {
                 return (
                   <View
                     key={idx}
-                    className={`${base.title === '限时秒杀'?'scroll-item-limit':'scroll-item'} position`}
+                    className={`${base.title === '限时秒杀'?'scroll-item-limit':'scroll-item'} position${idx}`}
                     onClick={this.navigateTo.bind(this, `/pages/item/espier-detail?id=${item.goodsId}`)}
                   >
                     {config.leaderboard && (
@@ -145,7 +161,10 @@ export default class WgtGoodsScroll extends Component {
                         base.title === '限时秒杀'&&
                         <View className="time-icon">
                           <Icon className="iconfont icon-time1"></Icon>
-                          <Text>{timer.dd}天{timer.hh}时{timer.mm}分{timer.ss}秒</Text>
+                          {
+                           info.config.lastSeconds === 0?
+                           <Text>活动已结束</Text> : <Text>{timer.dd}天{timer.hh}时{timer.mm}分{timer.ss}秒</Text>
+                          }
                         </View>
                       }
                       <View className="goods-name">
@@ -160,8 +179,8 @@ export default class WgtGoodsScroll extends Component {
                           }
                           {
                             base.title === '限时秒杀'?
-                              <Text className="price">秒杀:￥{price}</Text>
-                              :<Text className='cur'>￥<Text className="price">{price}</Text></Text>
+                              <Text className="price">秒杀:￥<Text className="price-inner">{price}</Text></Text>
+                              :<Text className='price'>￥<Text className="price-inner">{price}</Text></Text>
                           }
                         </View>
                       }

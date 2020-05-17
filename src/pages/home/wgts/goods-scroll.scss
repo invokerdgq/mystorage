@@ -5,9 +5,8 @@
     display: inline-block;
     position: relative;
     padding: 6px 0 0 6px;
-    margin-left: 10px;
     &:first-child {
-      margin-left: 20px;
+      //margin-left: 20px;
     }
     &:last-child {
       margin-right: 20px;
@@ -71,6 +70,9 @@
     .price{
       font-size: 24px;
     }
+    .price-inner{
+      font-size: 28px;
+    }
     .market-price {
       color:#c1c1c1;
       font-size: 24px;
@@ -88,14 +90,8 @@
   width: 750px;
   display: inline-block;
   position: relative;
-  padding: 6px 0 0 6px;
-  margin-left: 10px;
-  &:first-child {
-    margin-left: 20px;
-  }
-  &:last-child {
-    margin-right: 20px;
-  }
+  box-sizing: border-box;
+  padding-left: 20px;
    .thumbnail{
      display: inline-block;
      width: 348px;
@@ -136,7 +132,6 @@
       display: inline-block;
       vertical-align: middle;
       font-size: 29px;
-      font-weight: bold;
     }
     .goods-price{
       position: absolute;
@@ -148,6 +143,28 @@
       width: 0;
       height: 100%;
       vertical-align: middle;
+    }
+  }
+}
+.num-change{
+  color:black;
+  margin-right: 10px;
+  &-inner{
+    color:#c1534e;
+    font-size: 30px;
+  }
+}
+.goods-desc{
+  .goods-name{
+    font-weight: bold;
+  }
+  .goods-price{
+    .price{
+      font-size: 25px;
+      color:#c1534e;
+      &-inner{
+        font-size: 35px;
+         }
     }
   }
 }
