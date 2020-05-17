@@ -13,7 +13,7 @@ import _cloneDeep from 'lodash/cloneDeep'
 import CheckoutItems from './checkout-items'
 import PaymentPicker from './comps/payment-picker'
 import DrugInfo from './comps/drug-info'
-import OrderItem from '../../marketing/pages/trade/comps/order-item'
+import OrderItem from "./comps/order-item";
 
 import './espier-checkout.scss'
 
@@ -149,8 +149,6 @@ export default class CartCheckout extends Component {
       items,
       pay_type: payType || 'wxpay'
     }
-    console.log('question where indeed-----')
-    console.log(JSON.stringify(this.params))
 
     this.setState({
       total: {
