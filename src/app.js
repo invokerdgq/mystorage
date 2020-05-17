@@ -39,12 +39,12 @@ if(process.env.TARO_ENV === 'weapp'){
     }
   let originNav1 = Taro.navigateTo
   Taro.navigateTo = function (option) {
-    if(isTradePage(option.url)) option.url = `/marketing/${option.url}`
+    if(isTradePage(option.url)) option.url = `/marketing${option.url}`
     originNav1(option)
   }
   let originRed1 = Taro.redirectTo
   Taro.redirectTo = function (option) {
-    if(isTradePage(option.url)) option.url = `/marketing/${option.url}`
+    if(isTradePage(option.url)) option.url = `/marketing${option.url}`
     originRed1(option)
   }
 }

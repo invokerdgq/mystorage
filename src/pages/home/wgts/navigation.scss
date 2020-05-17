@@ -9,7 +9,9 @@
     flex: 1;
     .nav-img-wrap {
       position: relative;
-      width: 80%;
+      //width: 80%;
+      width: 54px;
+      height: 54px;
       &::after {
         display: flex;
         padding-top: 100%;
