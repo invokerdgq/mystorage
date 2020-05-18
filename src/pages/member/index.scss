@@ -283,7 +283,7 @@
 }
 .member {
   &__scroll {
-    @include page-scroll($navigate-height, $tabbar-height);
+    @include page-scroll($nav-gap-height, $tabbar-height);
   }
 }
 .important-box {

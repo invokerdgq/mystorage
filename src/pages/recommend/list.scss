@@ -1,10 +1,12 @@
 @import "../../style/imports";
 
+
 .page-recommend-list {
   .recommend-list {
     &__toolbar {
       position: fixed;
-      top: 0;
+      padding: 20px 0 0;
+      top: $nav-gap-height;
       left: 0;
       width: 100%;
       z-index: $z-index-toolbar;
@@ -15,6 +17,7 @@
         padding-right: 30px !important;
       }
       .search-input {
+        box-shadow: 0 -2px 0 -2px #dddddd;
         &__focus{
           .at-search-bar {
             padding-right: 30px !important;
@@ -72,7 +75,7 @@
       }
     }
     &__scroll {
-      @include page-scroll($tabs-height + $searchbar-height + $navigate-height, $tabbar-height + floor($edge-margin / 2));
+      @include page-scroll($nav-gap-height+$tabs-height + $searchbar-height + $navigate-height, $tabbar-height + floor($edge-margin / 2));
     }
     &__type-grid {
       display: flex;

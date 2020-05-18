@@ -6,7 +6,7 @@
     margin: 0 -10px;
     &__toolbar {
       position: fixed;
-      top: 0;
+      top: $nav-gap-height;
       left: 0;
       width: 100%;
       z-index: $z-index-toolbar;
@@ -67,9 +67,9 @@
       }
     }
     &__scroll {
-      @include page-scroll($tabs-height + $searchbar-height + $navigate-height, 0);
+      @include page-scroll($tabs-height + $searchbar-height + $nav-gap-height, 0);
       &.with-tag-bar {
-        @include page-scroll($tabs-height + $searchbar-height + $tags-height + $navigate-height, 0);
+        @include page-scroll($tabs-height + $searchbar-height + $tags-height + $nav-gap-height, 0);
       }
     }
     &__type-grid {
@@ -186,4 +186,7 @@
       }
     }
   }
+}
+.search-input{
+  box-shadow:  0 -2px 0 -2px #dddddd!important;
 }

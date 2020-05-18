@@ -7,7 +7,7 @@
     justify-content: center;
     position: fixed;
     left: 0;
-    top: 0;
+    top: $nav-gap-height;
     right: 0;
     height: 70px;
     line-height: 70px;
@@ -64,7 +64,7 @@
 		}
     &__scroll {
 			// @include page-scroll($navigate-height, $toolbar-height + $tabbar-height);
-      @include page-scroll($navigate-height, $tabbar-height);
+      @include page-scroll($nav-gap-height, $tabbar-height);
     }
     &__actions {
       display: flex;
@@ -98,7 +98,7 @@
     }
   }
   .hidden-scroll {
-    @include page-scroll($navigate-height, $toolbar-height);
+    @include page-scroll($nav-gap-height, $toolbar-height);
 	}
   .cart-group {
 		margin: 0 0 $edge-margin;

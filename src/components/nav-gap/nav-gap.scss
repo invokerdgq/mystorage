@@ -1,8 +1,10 @@
+@import "../../style/theme";
+
 .nav-gap{
   &-container{
+    background-color: white;
     position: relative;
-    height: 180px;
-    background: red;
+    height: $nav-gap-height;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -14,7 +16,6 @@
     top:40px
   }
   &-title{
-    font-size: 40px;
-    font-weight: bold;
+    font-size: 35px;
   }
 }

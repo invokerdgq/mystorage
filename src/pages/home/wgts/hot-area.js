@@ -38,7 +38,7 @@ async fetch () {
        <View className='wgt__header'>
          <View className='wgt__title'>
            <Text>热卖专区</Text>
-           <View className='wgt__subtitle'>hot sell area</View>
+           <View className='wgt__subtitle'>hot sale area</View>
          </View>
        </View>
        <FilterBar

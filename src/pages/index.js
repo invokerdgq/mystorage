@@ -93,6 +93,7 @@ export default class HomeIndex extends Component {
   }
 
   componentDidMount () {
+
     this.fetchInfo(async (info) => {
       const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=index&name=search'
       const [fixSetting, { is_open, ad_pic, ad_title }] = await Promise.all([req.get(url), api.promotion.automatic({register_type: 'general'})])//----------request about fix position setting
@@ -300,20 +301,20 @@ export default class HomeIndex extends Component {
             <HomeWgts
               wgts={wgts}
             />
-            {likeList.length > 0 && showLikeList && (
-              <View className='faverite-list'>
-                <WgtGoodsFaverite info={likeList} />
-                {
-                  page.isLoading
-                    ? <Loading>正在加载...</Loading>
-                    : null
-                }
-                {
-                  !page.isLoading && !page.hasNext && !likeList.length
-                  && (<SpNote img='trades_empty.png'>暂无数据~</SpNote>)
-                }
-              </View>
-            )}
+            {/*{likeList.length > 0 && showLikeList && (*/}
+            {/*  <View className='faverite-list'>*/}
+            {/*    <WgtGoodsFaverite info={likeList} />*/}
+            {/*    {*/}
+            {/*      page.isLoading*/}
+            {/*        ? <Loading>正在加载...</Loading>*/}
+            {/*        : null*/}
+            {/*    }*/}
+            {/*    {*/}
+            {/*      !page.isLoading && !page.hasNext && !likeList.length*/}
+            {/*      && (<SpNote img='trades_empty.png'>暂无数据~</SpNote>)*/}
+            {/*    }*/}
+            {/*  </View>*/}
+            {/*)}*/}
 
           </View>
         </View>

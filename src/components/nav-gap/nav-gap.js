@@ -3,7 +3,7 @@ import {View, Text, Icon} from '@tarojs/components'
 import './nav-gap.scss'
 
 
-export default class navGop extends Component{
+export default class NavGap extends Component{
   constructor(props){
     super(props)
     this.props = props

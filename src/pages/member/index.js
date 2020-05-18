@@ -4,6 +4,7 @@ import { connect } from '@tarojs/redux'
 import { SpToast, TabBar, SpCell} from '@/components'
 import api from '@/api'
 import S from '@/spx'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './index.scss'
 
@@ -224,14 +225,16 @@ export default class MemberIndex extends Component {
     const { vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
 
     return (
-      <View className='page-member-index'>
-        <ScrollView
-          className='member__scroll'
-          scrollY
-        >
-          {
-            S.getAuthToken()
-              ?
+      <View>
+        <NavGap title="个人中心"/>
+        <View className='page-member-index'>
+          <ScrollView
+            className='member__scroll'
+            scrollY
+          >
+            {
+              S.getAuthToken()
+                ?
                 <View className={`page-member-header ${memberDiscount === '' ? 'no-card' : ''}`} style={'background: ' + colors.data[0].marketing}>
                   <View className='user-info'>
                     <View className='view-flex view-flex-middle'>
@@ -242,8 +245,8 @@ export default class MemberIndex extends Component {
                         <View className='nickname'>Hi, {info.username}</View>
                         {
                           !vipgrade.is_vip
-                          ? <View className='gradename'>{gradeInfo.grade_name}</View>
-                          : <View className='gradename'>{vipgrade.grade_name}</View>
+                            ? <View className='gradename'>{gradeInfo.grade_name}</View>
+                            : <View className='gradename'>{vipgrade.grade_name}</View>
                         }
                       </View>
                     </View>
@@ -273,7 +276,7 @@ export default class MemberIndex extends Component {
                     </View>
                   </View>
                 </View>
-              : <View
+                : <View
                   className='page-member-header view-flex view-flex-vertical view-flex-middle view-flex-center'
                   style={'background: ' + colors.data[0].marketing}
                   onClick={this.handleLoginClick.bind(this)}>
@@ -281,8 +284,8 @@ export default class MemberIndex extends Component {
                   <View className='unlogin' style={'background: ' + colors.data[0].primary}>请登录</View>
                 </View>
             }
-          {
-            (vipgrade.is_open || !vipgrade.is_open && vipgrade.is_vip) && memberDiscount !== '' &&
+            {
+              (vipgrade.is_open || !vipgrade.is_open && vipgrade.is_vip) && memberDiscount !== '' &&
               <View
                 className='member-card'
                 onClick={this.handleClick.bind(this, '/pages/vip/vipgrades')}
@@ -290,30 +293,30 @@ export default class MemberIndex extends Component {
                 {
                   vipgrade.is_open && !vipgrade.is_vip
                   && <View className='vip-btn'>
-                      <View className='vip-btn__title'>开通VIP会员 <Text className='icon-arrowRight'></Text></View>
-                      {
-                        memberDiscount &&
-                          <View className='vip-btn__desc'>即可享受最高{memberDiscount}折会员优惠</View>
-                      }
-                    </View>
+                    <View className='vip-btn__title'>开通VIP会员 <Text className='icon-arrowRight'></Text></View>
+                    {
+                      memberDiscount &&
+                      <View className='vip-btn__desc'>即可享受最高{memberDiscount}折会员优惠</View>
+                    }
+                  </View>
                 }
                 {
                   vipgrade.is_vip && (
                     <View className='grade-info'>
-                        <View className='member-card-title'>
-                          <Text className='vip-sign'>
-                            {
-                              vipgrade.vip_type === 'svip'
-                                ? <Text>SVIP</Text>
-                                : <Text>VIP</Text>
-                            }
-                          </Text>
-                          会员卡
-                        </View>
-                        <View className='member-card-no'>NO. {gradeInfo.user_card_code}</View>
-                        <View className='member-card-period'>
-                          {vipgrade.end_date} 到期
-                        </View>
+                      <View className='member-card-title'>
+                        <Text className='vip-sign'>
+                          {
+                            vipgrade.vip_type === 'svip'
+                              ? <Text>SVIP</Text>
+                              : <Text>VIP</Text>
+                          }
+                        </Text>
+                        会员卡
+                      </View>
+                      <View className='member-card-no'>NO. {gradeInfo.user_card_code}</View>
+                      <View className='member-card-period'>
+                        {vipgrade.end_date} 到期
+                      </View>
                     </View>
                   )
                 }
@@ -324,71 +327,71 @@ export default class MemberIndex extends Component {
                   vipgrade.is_open && !vipgrade.is_vip && (<Image className='member-info-bg' src={gradeInfo.background_pic_url} mode='widthFix' />)
                 }
               </View>
-          }
-          <View className='page-member-section order-box'>
-            <View className='section-title view-flex view-flex-middle'>
-              <View className='view-flex-item'>订单</View>
-              <View class='section-more' onClick={this.handleTradeClick.bind(this)}>全部订单<Text className='forward-icon icon-arrowRight'></Text></View>
-            </View>
-            <View className='member-trade__ziti' onClick={this.handleTradePickClick.bind(this)}>
-              <View className='view-flex-item'>
-                <View className='member-trade__ziti-title'>自提订单</View>
-                <View className='member-trade__ziti-desc'>您有<Text className='mark'>{orderCount.normal_payed_daiziti || 0}</Text>个等待自提的订单</View>
+            }
+            <View className='page-member-section order-box'>
+              <View className='section-title view-flex view-flex-middle'>
+                <View className='view-flex-item'>订单</View>
+                <View class='section-more' onClick={this.handleTradeClick.bind(this)}>全部订单<Text className='forward-icon icon-arrowRight'></Text></View>
               </View>
-              <View className='icon-arrowRight item-icon-go'></View>
-            </View>
-            <View className='member-trade'>
-              <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 5)}>
-                <View className='icon-wallet'>
-                  {
-                    orderCount.normal_notpay_notdelivery > 0 && (<View className='trade-num' >{orderCount.normal_notpay_notdelivery}</View>)
-                  }
+              <View className='member-trade__ziti' onClick={this.handleTradePickClick.bind(this)}>
+                <View className='view-flex-item'>
+                  <View className='member-trade__ziti-title'>自提订单</View>
+                  <View className='member-trade__ziti-desc'>您有<Text className='mark'>{orderCount.normal_payed_daiziti || 0}</Text>个等待自提的订单</View>
                 </View>
-                <Text>待支付</Text>
+                <View className='icon-arrowRight item-icon-go'></View>
               </View>
-              <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 1)}>
-                <View className='icon-delivery'>
-                  {
-                    orderCount.normal_payed_notdelivery > 0 && (<View className='trade-num'>{orderCount.normal_payed_notdelivery}</View>)
-                  }
+              <View className='member-trade'>
+                <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 5)}>
+                  <View className='icon-wallet'>
+                    {
+                      orderCount.normal_notpay_notdelivery > 0 && (<View className='trade-num' >{orderCount.normal_notpay_notdelivery}</View>)
+                    }
+                  </View>
+                  <Text>待支付</Text>
                 </View>
-                <Text>待收货</Text>
-              </View>
-              <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 3)}>
-                <View className='icon-office-box'>
-                  {
-                    orderCount.normal_payed_delivered > 0 && <View className='trade-num'>{orderCount.normal_payed_delivered}</View>
-                  }
+                <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 1)}>
+                  <View className='icon-delivery'>
+                    {
+                      orderCount.normal_payed_notdelivery > 0 && (<View className='trade-num'>{orderCount.normal_payed_notdelivery}</View>)
+                    }
+                  </View>
+                  <Text>待收货</Text>
                 </View>
-                <Text>已完成</Text>
-              </View>
-              {
-                orderCount.rate_status &&
+                <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 3)}>
+                  <View className='icon-office-box'>
+                    {
+                      orderCount.normal_payed_delivered > 0 && <View className='trade-num'>{orderCount.normal_payed_delivered}</View>
+                    }
+                  </View>
+                  <Text>已完成</Text>
+                </View>
+                {
+                  orderCount.rate_status &&
                   <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 3)}>
                     <View className='icon-daipingjia'></View>
                     <Text className='trade-status'>待评价</Text>
                   </View>
-              }
-              <View className='member-trade__item' onClick={this.viewAftersales.bind(this)}>
-                <View className='icon-repeat'>
-                  {
-                    orderCount.aftersales > 0 && (<View className='trade-num'>{orderCount.aftersales}</View>)
-                  }
+                }
+                <View className='member-trade__item' onClick={this.viewAftersales.bind(this)}>
+                  <View className='icon-repeat'>
+                    {
+                      orderCount.aftersales > 0 && (<View className='trade-num'>{orderCount.aftersales}</View>)
+                    }
+                  </View>
+                  <Text>售后</Text>
                 </View>
-                <Text>售后</Text>
               </View>
             </View>
-          </View>
-          {/*<View className="important-box view-flex">
+            {/*<View className="important-box view-flex">
             <View className="view-flex-item view-flex view-flex-vertical view-flex-middle" onClick={this.toPay.bind(this)}>
               <Image className="icon-img" src="/assets/imgs/buy.png" mode="aspectFit" />
               <View>买单</View>
             </View>
           </View>*/}
 
-          <View className='page-member-section'>
-            {
-              isOpenPopularize &&
+            <View className='page-member-section'>
+              {
+                isOpenPopularize &&
                 <SpCell
                   title={!info.isPromoter ? '我要推广' : '推广管理'}
                   isLink
@@ -396,45 +399,47 @@ export default class MemberIndex extends Component {
                   onClick={this.beDistributor.bind(this)}
                 >
                 </SpCell>
-            }
-            <SpCell
-              title='我的拼团'
-              isLink
-              img='/assets/imgs/group.png'
-              onClick={this.handleClick.bind(this, '/pages/member/group-list')}
-            >
-            </SpCell>
-            <SpCell
-              title='活动预约'
-              isLink
-              img='/assets/imgs/buy.png'
-              onClick={this.handleClick.bind(this, '/marketing/pages/member/item-activity')}
-            >
-            </SpCell>
-          </View>
-          <View className='page-member-section'>
-            <SpCell
-              title='我要分享'
-              isLink
-            >
-              <Button className='btn-share' open-type='share'></Button>
-            </SpCell>
-            <SpCell
-              title='地址管理'
-              isLink
-              onClick={this.handleClick.bind(this, '/pages/member/address')}
-            >
-            </SpCell>
-          </View>
-        </ScrollView>
+              }
+              <SpCell
+                title='我的拼团'
+                isLink
+                img='/assets/imgs/group.png'
+                onClick={this.handleClick.bind(this, '/pages/member/group-list')}
+              >
+              </SpCell>
+              <SpCell
+                title='活动预约'
+                isLink
+                img='/assets/imgs/buy.png'
+                onClick={this.handleClick.bind(this, '/marketing/pages/member/item-activity')}
+              >
+              </SpCell>
+            </View>
+            <View className='page-member-section'>
+              <SpCell
+                title='我要分享'
+                isLink
+              >
+                <Button className='btn-share' open-type='share'></Button>
+              </SpCell>
+              <SpCell
+                title='地址管理'
+                isLink
+                onClick={this.handleClick.bind(this, '/pages/member/address')}
+              >
+              </SpCell>
+            </View>
+          </ScrollView>
 
-        <SpToast />
+          <SpToast />
 
-        {
-          process.env.TARO_ENV === 'weapp'?null:
-            <TabBar />
-        }
+          {
+            process.env.TARO_ENV === 'weapp'?null:
+              <TabBar />
+          }
+        </View>
       </View>
+
     )
   }
 }
