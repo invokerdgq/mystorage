@@ -10,6 +10,7 @@ import { classNames, pickBy, getCurrentRoute} from '@/utils'
 import entry from '@/utils/entry'
 import { WgtFilm, WgtSlider, WgtWriting, WgtGoods, WgtHeading, WgtGoodsFaverite } from '../home/wgts'
 import { HomeWgts } from '../home/comps/home-wgts'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './shop-home.scss'
 
@@ -115,7 +116,7 @@ export default class DistributionShopHome extends Component {
       positionStatus: (fixSetting.length && fixSetting[0].params.config.fixTop) || false
     }, () => {
       this.fetchTpl()
-    })  
+    })
     // const { list, total_count: total, item_params_list = []} = await api.item.search(query)
     // item_params_list.map(item => {
     //   if (selectParams.length < 4) {
@@ -168,10 +169,10 @@ export default class DistributionShopHome extends Component {
     this.setState({
       wgts: info.config
     })
-    
+
   }
 
-  
+
 
   handleFilterChange = (data) => {
     this.setState({
@@ -277,8 +278,8 @@ export default class DistributionShopHome extends Component {
     if (cur !== current) {
       const curTab = this.state.tabList[current]
       const { url, urlRedirect } = curTab
-      
-      const fullPath = ((getCurrentRoute(this.$router).fullPath).split('?'))[0]      
+
+      const fullPath = ((getCurrentRoute(this.$router).fullPath).split('?'))[0]
       if (url && fullPath !== url) {
         if (!urlRedirect || (url === '/pages/member/index' && !S.getAuthToken())) {
           Taro.navigateTo({ url })
@@ -296,54 +297,56 @@ export default class DistributionShopHome extends Component {
     }
 
     return (
-      <View className="page-distribution-shop">
-        <View className="shop-banner">
-          <View className='shop-def'>
-          <Image
+      <View>
+        <NavGap title='shop-home'/>
+        <View className="page-distribution-shop">
+          <View className="shop-banner">
+            <View className='shop-def'>
+              <Image
                 className='banner-img'
                 src={def_pic || null}
                 mode='aspectFill'
-          />
-          </View>
-          <View className="shop-info">
-            <Image
-              className='shopkeeper-avatar'
-              src={info.headimgurl}
-              mode='aspectFill'
-            />
-            <View>
-              <View className='shop-name'>{info.shop_name || `${info.username}的小店`}</View>
-              <View className='shop-desc'>{info.brief || '店主很懒什么都没留下'}</View>
+              />
             </View>
-          </View>    
-        </View>
-        <ScrollView
-          className={`wgts-wrap ${positionStatus ? 'wgts-wrap__fixed' : ''}`}
-          scrollTop={scrollTop}
-          scrollY
-        >
-          <View className='wgts-wrap__cont'>
-            <HomeWgts
-              wgts={wgts}
-            />
+            <View className="shop-info">
+              <Image
+                className='shopkeeper-avatar'
+                src={info.headimgurl}
+                mode='aspectFill'
+              />
+              <View>
+                <View className='shop-name'>{info.shop_name || `${info.username}的小店`}</View>
+                <View className='shop-desc'>{info.brief || '店主很懒什么都没留下'}</View>
+              </View>
+            </View>
           </View>
-        </ScrollView>
-        {/* <FilterBar
+          <ScrollView
+            className={`wgts-wrap ${positionStatus ? 'wgts-wrap__fixed' : ''}`}
+            scrollTop={scrollTop}
+            scrollY
+          >
+            <View className='wgts-wrap__cont'>
+              <HomeWgts
+                wgts={wgts}
+              />
+            </View>
+          </ScrollView>
+          {/* <FilterBar
           className='goods-list__tabs'
           custom
           current={curFilterIdx}
           list={filterList}
           onChange={this.handleFilterChange}
         >
-          
+
             <View className='filter-bar__item' onClick={this.handleClickFilter.bind(this)}>
               <View className='icon-filter'></View>
               <Text>筛选</Text>
             </View>
-         
+
         </FilterBar> */}
 
-        {/* <AtDrawer
+          {/* <AtDrawer
           show={showDrawer}
           right
           mask
@@ -386,7 +389,7 @@ export default class DistributionShopHome extends Component {
           </View>
         </AtDrawer> */}
 
-        {/* <ScrollView
+          {/* <ScrollView
           className='goods-list__scroll'
           scrollY
           scrollTop={scrollTop}
@@ -411,7 +414,7 @@ export default class DistributionShopHome extends Component {
                 {
                   desc.map((item, idx) => {
                     return (
-                      <View className='wgt-wrap' key={idx}>                      
+                      <View className='wgt-wrap' key={idx}>
                         {item.name === 'slider' && <WgtSlider info={item} />}
                         {item.name === 'goods' && <WgtGoods info={item} />}
                       </View>
@@ -419,7 +422,7 @@ export default class DistributionShopHome extends Component {
                   })
                 }
               </View>
-              
+
           } */}
 
 
@@ -434,18 +437,18 @@ export default class DistributionShopHome extends Component {
               && (<SpNote img='trades_empty.png'>暂无数据~</SpNote>)
           }
         </ScrollView> */}
-        <BackToTop
-          show={showBackToTop}
-          onClick={this.scrollBackToTop}
-        />
-        <SpToast />
-        <AtTabBar
-          fixed
-          tabList={tabList}
-          onClick={this.handleClick}  
-          current={localCurrent}   
-        />
-              {/* <AtTabBar
+          <BackToTop
+            show={showBackToTop}
+            onClick={this.scrollBackToTop}
+          />
+          <SpToast />
+          <AtTabBar
+            fixed
+            tabList={tabList}
+            onClick={this.handleClick}
+            current={localCurrent}
+          />
+          {/* <AtTabBar
                 fixed
                 color={color}
                 backgroundColor={backgroundColor}
@@ -454,7 +457,9 @@ export default class DistributionShopHome extends Component {
                 onClick={this.handleClick}
                 current={localCurrent}
               /> */}
+        </View>
       </View>
+
     )
   }
 }

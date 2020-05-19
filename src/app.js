@@ -24,7 +24,7 @@ Taro.M = function (option) {
 // }
 if(process.env.TARO_ENV === 'weapp'){
   function isTabBarPage(url){
-    return /\/(index|category\/index|recomend\/list|cart\/espier-index|member\/index)(.)*/.test(url)
+    return /\/pages\/(index|category\/index|recommend\/list|cart\/espier-index|member\/index)(.)*/.test(url)
   }
   function isTradePage(url) {
     return /\/trade(.)*/.test(url)

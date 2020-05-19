@@ -45,6 +45,8 @@ export function linkPage (type, id) {
     default:
   }
 
+  console.log('00000000000000000000000000000000')
+  console.log(url)
   Taro.navigateTo({
     url
   })

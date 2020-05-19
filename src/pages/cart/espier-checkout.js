@@ -14,6 +14,7 @@ import CheckoutItems from './checkout-items'
 import PaymentPicker from './comps/payment-picker'
 import DrugInfo from './comps/drug-info'
 import OrderItem from "./comps/order-item";
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './espier-checkout.scss'
 
@@ -786,22 +787,24 @@ export default class CartCheckout extends Component {
      : false
 
     return (
-      <View className='page-checkout'>
-        {
-          showAddressPicker === false
-            ? <NavBar
-              title='填写订单信息'
-              leftIconType='chevron-left'
-              fixed='true'
-            />
-            : null
-        }
-        <ScrollView
-          scrollY
-          className='checkout__wrap'
-        >
+      <View>
+        <NavGap title='订单确认'/>
+        <View className='page-checkout'>
           {
-            !isArray(curStore) && curStore.is_ziti && curStore.is_delivery &&
+            showAddressPicker === false
+              ? <NavBar
+                title='填写订单信息'
+                leftIconType='chevron-left'
+                fixed='true'
+              />
+              : null
+          }
+          <ScrollView
+            scrollY
+            className='checkout__wrap'
+          >
+            {
+              !isArray(curStore) && curStore.is_ziti && curStore.is_delivery &&
               <View className='switch-tab'>
                 <View
                   className={classNames('switch-item', express ? 'active' : '')}
@@ -812,13 +815,13 @@ export default class CartCheckout extends Component {
                   onClick={this.handleSwitchExpress.bind(this, false)}
                 >自提</View>
               </View>
-          }
-          {
-            (express && curStore.is_delivery) || (!curStore.is_delivery && !curStore.is_ziti)
-              ? <AddressChoose
-                isAddress={address}
-              />
-              : <View className='address-module'>
+            }
+            {
+              (express && curStore.is_delivery) || (!curStore.is_delivery && !curStore.is_ziti)
+                ? <AddressChoose
+                  isAddress={address}
+                />
+                : <View className='address-module'>
                   <View className='addr'>
                     <View className='view-flex-item'>
                       <View className='addr-title'>{curStore.name}</View>
@@ -840,102 +843,102 @@ export default class CartCheckout extends Component {
                     </View>
                   </View>
                 </View>
-          }
-{/* && type !== 'limited_time_sale' */}
-          {(payType !== 'point' && payType !== 'point' && type !== 'group' && type !== 'seckill') && (
-            <SpCell
-              isLink
-              className='coupons-list'
-              title='选择优惠券'
-              onClick={this.handleCouponsClick}
-              value={couponText || ''}
-            />
-          )}
+            }
+            {/* && type !== 'limited_time_sale' */}
+            {(payType !== 'point' && payType !== 'point' && type !== 'group' && type !== 'seckill') && (
+              <SpCell
+                isLink
+                className='coupons-list'
+                title='选择优惠券'
+                onClick={this.handleCouponsClick}
+                value={couponText || ''}
+              />
+            )}
 
-          <View className='cart-list'>
-            {
-              info.cart.map(cart => {
-                return (
-                  <View
-                    className='cart-group'
-                    key={cart.shop_id}
-                  >
-                    <View className='sec cart-group__cont'>
-                      {
-                        cart.list.map((item, idx) => {
-                          return (
-                            <View
-                              className='order-item__wrap'
-                              key={item.item_id}
-                            >
-                              {
-                                item.order_item_type === 'gift'
-                                  ? (<View className='order-item__idx'><Text>赠品</Text></View>)
-                                  : (<View className='order-item__idx'><Text>第{idx + 1}件商品</Text></View>)
-                              }
-                              <OrderItem
-                                info={item}
-                                showExtra={false}
-                                showDesc = {true}
-                                renderDesc={
-                                  <View className='order-item__desc'>
-                                    {item.discount_info && item.discount_info.map((discount) =>
+            <View className='cart-list'>
+              {
+                info.cart.map(cart => {
+                  return (
+                    <View
+                      className='cart-group'
+                      key={cart.shop_id}
+                    >
+                      <View className='sec cart-group__cont'>
+                        {
+                          cart.list.map((item, idx) => {
+                            return (
+                              <View
+                                className='order-item__wrap'
+                                key={item.item_id}
+                              >
+                                {
+                                  item.order_item_type === 'gift'
+                                    ? (<View className='order-item__idx'><Text>赠品</Text></View>)
+                                    : (<View className='order-item__idx'><Text>第{idx + 1}件商品</Text></View>)
+                                }
+                                <OrderItem
+                                  info={item}
+                                  showExtra={false}
+                                  showDesc = {true}
+                                  renderDesc={
+                                    <View className='order-item__desc'>
+                                      {item.discount_info && item.discount_info.map((discount) =>
                                         <Text
                                           className='order-item__discount'
                                           key={discount.type}
                                         >{discount.info}</Text>
                                       )}
-                                  </View>
-                                }
-                                customFooter
-                                renderFooter={
-                                  <View className='order-item__ft'>
-                                    {
-                                      // payType === 'point'
-                                      // ? <Price className='order-item__price' appendText='积分' noSymbol noDecimal value={item.point}></Price>
-                                      // : <Price className='order-item__price' value={item.price}></Price>
-                                      <Price className='order-item__price' value={item.price}></Price>
-                                    }
-                                    <Text className='order-item__num'>x {item.num}</Text>
-                                  </View>
-                                }
-                              />
-                            </View>
-                          )
-                        })
-                      }
-                    </View>
-                    {/*<View className='cart-group__shop'>{cart.shop_name}</View>*/}
-                    {
-                      isDrug &&
-                      <SpCell
-                        isLink
-                        className='coupons-list'
-                        title='用药人信息'
-                        onClick={this.handleDrugInfoShow}
-                        onChange={this.handleDrugChange}
-                        value={drug ? '已上传' : '用药人及处方上传'}
-                      />
-                    }
-                    <View className='sec cart-group__cont'>
-                      <SpCell
-                        className='sec trade-remark'
-                        border={false}
-                      >
-                        <AtInput
-                          className='trade-remark__input'
-                          placeholder='给商家留言：选填（50字以内）'
-                          onChange={this.handleRemarkChange.bind(this)}
+                                    </View>
+                                  }
+                                  customFooter
+                                  renderFooter={
+                                    <View className='order-item__ft'>
+                                      {
+                                        // payType === 'point'
+                                        // ? <Price className='order-item__price' appendText='积分' noSymbol noDecimal value={item.point}></Price>
+                                        // : <Price className='order-item__price' value={item.price}></Price>
+                                        <Price className='order-item__price' value={item.price}></Price>
+                                      }
+                                      <Text className='order-item__num'>x {item.num}</Text>
+                                    </View>
+                                  }
+                                />
+                              </View>
+                            )
+                          })
+                        }
+                      </View>
+                      {/*<View className='cart-group__shop'>{cart.shop_name}</View>*/}
+                      {
+                        isDrug &&
+                        <SpCell
+                          isLink
+                          className='coupons-list'
+                          title='用药人信息'
+                          onClick={this.handleDrugInfoShow}
+                          onChange={this.handleDrugChange}
+                          value={drug ? '已上传' : '用药人及处方上传'}
                         />
-                      </SpCell>
+                      }
+                      <View className='sec cart-group__cont'>
+                        <SpCell
+                          className='sec trade-remark'
+                          border={false}
+                        >
+                          <AtInput
+                            className='trade-remark__input'
+                            placeholder='给商家留言：选填（50字以内）'
+                            onChange={this.handleRemarkChange.bind(this)}
+                          />
+                        </SpCell>
+                      </View>
                     </View>
-                  </View>
-                )
-              })
-            }
-          </View>
+                  )
+                })
+              }
+            </View>
 
-          {/*<SpCell
+            {/*<SpCell
             isLink
             className='trade-invoice'
             title='开发票'
@@ -944,40 +947,40 @@ export default class CartCheckout extends Component {
             <Text>{invoiceTitle || '否'}</Text>
           </SpCell>*/}
 
-          {/*<SpCell
+            {/*<SpCell
             className='trade-shipping'
             title='配送方式'
             value='[快递免邮]'
           >
           </SpCell>*/}
-          <View className='trade-payment'>
-            <SpCell
-              isLink
-              border={false}
-              title='支付方式'
-              onClick={this.handlePaymentShow}
-            >
-              <Text>{payTypeText[payType]}</Text>
-            </SpCell>
-            {total.deduction && (
-              <View className='trade-payment__hint'>
-                可用{total.remainpt}积分，抵扣 <Price unit='cent' value={total.deduction} /> (包含运费 <Price unit='cent' value={total.freight_fee}></Price>)
-              </View>
-            )}
-          </View>
-
-          {payType === 'point' && (
-            <View className='sec trade-sub-total'>
+            <View className='trade-payment'>
               <SpCell
-                className='trade-sub-total__item'
-                title='运费'
+                isLink
+                border={false}
+                title='支付方式'
+                onClick={this.handlePaymentShow}
               >
-                <Price
-                  unit='cent'
-                  value={total.freight_fee}
-                />
+                <Text>{payTypeText[payType]}</Text>
               </SpCell>
-              {/*
+              {total.deduction && (
+                <View className='trade-payment__hint'>
+                  可用{total.remainpt}积分，抵扣 <Price unit='cent' value={total.deduction} /> (包含运费 <Price unit='cent' value={total.freight_fee}></Price>)
+                </View>
+              )}
+            </View>
+
+            {payType === 'point' && (
+              <View className='sec trade-sub-total'>
+                <SpCell
+                  className='trade-sub-total__item'
+                  title='运费'
+                >
+                  <Price
+                    unit='cent'
+                    value={total.freight_fee}
+                  />
+                </SpCell>
+                {/*
                 <SpCell
                   className='trade-sub-total__item'
                   title='积分'
@@ -990,21 +993,21 @@ export default class CartCheckout extends Component {
                   />
                 </SpCell>
               */}
-            </View>
-          )}
+              </View>
+            )}
 
-          {payType !== 'point' && (
-            <View className='sec trade-sub-total'>
-              <SpCell
-                className='trade-sub-total__item'
-                title='商品金额：'
-              >
-                <Price
-                  unit='cent'
-                  value={total.item_fee}
-                />
-              </SpCell>
-              {/*<SpCell
+            {payType !== 'point' && (
+              <View className='sec trade-sub-total'>
+                <SpCell
+                  className='trade-sub-total__item'
+                  title='商品金额：'
+                >
+                  <Price
+                    unit='cent'
+                    value={total.item_fee}
+                  />
+                </SpCell>
+                {/*<SpCell
                 className='trade-sub-total__item'
                 title='会员折扣：'
               >
@@ -1013,73 +1016,74 @@ export default class CartCheckout extends Component {
                   value={total.member_discount}
                 />
               </SpCell>*/}
-              <SpCell
-                className='trade-sub-total__item'
-                title='优惠金额：'
-              >
-                <Price
-                  unit='cent'
-                  value={total.discount_fee}
-                />
-              </SpCell>
-              <SpCell
-                className='trade-sub-total__item'
-                title='运费：'
-              >
-                <Price
-                  unit='cent'
-                  value={total.freight_fee}
-                />
-              </SpCell>
-            </View>
-          )}
-        </ScrollView>
+                <SpCell
+                  className='trade-sub-total__item'
+                  title='优惠金额：'
+                >
+                  <Price
+                    unit='cent'
+                    value={total.discount_fee}
+                  />
+                </SpCell>
+                <SpCell
+                  className='trade-sub-total__item'
+                  title='运费：'
+                >
+                  <Price
+                    unit='cent'
+                    value={total.freight_fee}
+                  />
+                </SpCell>
+              </View>
+            )}
+          </ScrollView>
 
-        <CheckoutItems
-          isOpened={showCheckoutItems}
-          list={curCheckoutItems}
-          onClickBack={this.toggleCheckoutItems.bind(this, false)}
-        />
-
-        <View className='toolbar checkout-toolbar'>
-          <View className='checkout__total'>
-            共<Text className='total-items'>{total.items_count}</Text>件商品　总计:
-            {
-              payType !== 'point'
-                ? <Price primary unit='cent' value={total.total_fee} />
-                : (total.point && <Price primary value={total.point} noSymbol noDecimal appendText='积分' />)
-            }
-          </View>
-          <AtButton
-            type='primary'
-            className='btn-confirm-order'
-            customStyle={`background: ${colors.data[0].primary}; border-color: ${colors.data[0].primary}`}
-            loading={submitLoading}
-            disabled={isBtnDisabled}
-            onClick={this.submitPay}
-          >{isDrug ? '提交预约' : '提交订单'}</AtButton>
-        </View>
-
-        {
-          <DrugInfo
-            isOpened={isDrugInfoOpend}
-            info={drug}
-            onClose={this.handleLayoutClose}
-            onChange={this.handleChange}
+          <CheckoutItems
+            isOpened={showCheckoutItems}
+            list={curCheckoutItems}
+            onClickBack={this.toggleCheckoutItems.bind(this, false)}
           />
-        }
 
-        <PaymentPicker
-          isOpened={isPaymentOpend}
-          type={payType}
-          isShowPoint
-          isShowBalance={false}
-          disabledPayment={disabledPayment}
-          onClose={this.handleLayoutClose}
-          onChange={this.handlePaymentChange}
-        ></PaymentPicker>
+          <View className='toolbar checkout-toolbar'>
+            <View className='checkout__total'>
+              共<Text className='total-items'>{total.items_count}</Text>件商品　总计:
+              {
+                payType !== 'point'
+                  ? <Price primary unit='cent' value={total.total_fee} />
+                  : (total.point && <Price primary value={total.point} noSymbol noDecimal appendText='积分' />)
+              }
+            </View>
+            <AtButton
+              type='primary'
+              className='btn-confirm-order'
+              customStyle={`background: ${colors.data[0].primary}; border-color: ${colors.data[0].primary}`}
+              loading={submitLoading}
+              disabled={isBtnDisabled}
+              onClick={this.submitPay}
+            >{isDrug ? '提交预约' : '提交订单'}</AtButton>
+          </View>
 
-        <SpToast />
+          {
+            <DrugInfo
+              isOpened={isDrugInfoOpend}
+              info={drug}
+              onClose={this.handleLayoutClose}
+              onChange={this.handleChange}
+            />
+          }
+
+          <PaymentPicker
+            isOpened={isPaymentOpend}
+            type={payType}
+            isShowPoint
+            isShowBalance={false}
+            disabledPayment={disabledPayment}
+            onClose={this.handleLayoutClose}
+            onChange={this.handlePaymentChange}
+          ></PaymentPicker>
+
+          <SpToast />
+        </View>
       </View>
     )
   }

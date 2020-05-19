@@ -3,6 +3,7 @@ import { View, Text, Image } from '@tarojs/components'
 import api from '@/api'
 import { SpHtmlContent } from '@/components'
 import { formatTime } from '@/utils'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './index.scss'
 
@@ -24,9 +25,6 @@ export default class ArticleIndex extends Component {
     const info = await api.article.detail(id)
 
     info.updated_str = formatTime(info.updated * 1000, 'YYYY-MM-DD HH:mm')
-    Taro.setNavigationBarTitle({
-      title: info.title
-    })
     this.setState({
       info
     })
@@ -40,20 +38,23 @@ export default class ArticleIndex extends Component {
     }
 
     return (
-      <View className='article-index'>
-        {info.image_url && (
-          <Image
-            className='article-brand'
-            src={info.image_url}
-            mode='widthFix'
-          />
-        )}
-        <View className='article-info'>
-          <Text className='article-title'>{info.title}</Text>
-          <Text className='article-time'>{info.updated_str}</Text>
-          <SpHtmlContent
-            content={info.content}
-          ></SpHtmlContent>
+      <View>
+        <NavGap title={info.title}/>
+        <View className='article-index'>
+          {info.image_url && (
+            <Image
+              className='article-brand'
+              src={info.image_url}
+              mode='widthFix'
+            />
+          )}
+          <View className='article-info'>
+            <Text className='article-title'>{info.title}</Text>
+            <Text className='article-time'>{info.updated_str}</Text>
+            <SpHtmlContent
+              content={info.content}
+            ></SpHtmlContent>
+          </View>
         </View>
       </View>
     )

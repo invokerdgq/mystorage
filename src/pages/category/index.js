@@ -28,7 +28,6 @@ export default class Category extends Component {
   }
 
   componentDidMount () {
-    Taro.M(this)
     this.fetch()
   }
 

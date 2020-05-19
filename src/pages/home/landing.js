@@ -3,6 +3,7 @@ import Taro, { Component } from '@tarojs/taro'
 import {View } from '@tarojs/components'
 import { connect } from "@tarojs/redux";
 import { normalizeQuerys } from '@/utils'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './landing.scss'
 @connect(() => ({}), (dispatch) => ({
@@ -32,8 +33,11 @@ export default class Landing extends Component {
 
   render () {
     return (
-      <View className='page-member-integral'>
-        <View>跳转中...</View>
+      <View>
+        <NavGap title='landing'/>
+        <View className='page-member-integral'>
+          <View>跳转中...</View>
+        </View>
       </View>
     )
   }

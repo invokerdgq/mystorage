@@ -5,6 +5,7 @@ import { Loading, NavBar } from '@/components'
 import { pickBy } from '@/utils'
 import { withLogin } from '@/hocs'
 import { AlipayPay, WeH5Pay, PointDepositPay, WePay } from './comps'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './index.scss'
 
@@ -56,37 +57,39 @@ export default class Cashier extends Component {
     }
 
     return (
-      <View className='page-cashier-index'>
-        <NavBar
-          title='收银台'
-          handleClickBack={this.handleClickBack}
-        />
-        <View className='cashier-money'>
-          {
-            info.order_type !== 'recharge'
-              ? <View className='cashier-money__tip'>订单提交成功，请选择支付方式</View>
-              : null
-          }
-          <View className='cashier-money__content'>
-            <View className='cashier-money__content-title'>订单编号： { info.order_id }</View>
-            <View className='cashier-money__content-title'>订单名称：{ info.title }</View>
-            <View className='cashier-money__content-title'>应付总额{ info.pay_type === 'point' ? '（积分）' : '（元）'}</View>
-            <View className='cashier-money__content-number'>{ info.pay_type === 'point' ? info.point : info.total_fee }</View>
+      <View>
+        <NavGap title='cashier'/>
+        <View className='page-cashier-index'>
+          <NavBar
+            title='收银台'
+            handleClickBack={this.handleClickBack}
+          />
+          <View className='cashier-money'>
+            {
+              info.order_type !== 'recharge'
+                ? <View className='cashier-money__tip'>订单提交成功，请选择支付方式</View>
+                : null
+            }
+            <View className='cashier-money__content'>
+              <View className='cashier-money__content-title'>订单编号： { info.order_id }</View>
+              <View className='cashier-money__content-title'>订单名称：{ info.title }</View>
+              <View className='cashier-money__content-title'>应付总额{ info.pay_type === 'point' ? '（积分）' : '（元）'}</View>
+              <View className='cashier-money__content-number'>{ info.pay_type === 'point' ? info.point : info.total_fee }</View>
+            </View>
           </View>
-        </View>
-        {
-          info &&
+          {
+            info &&
             <View className='pay-status'>
               {
                 info.order_type === 'recharge'
                   ? <View>
-                      <AlipayPay
-                        orderID={info.order_id}
-                        payType='alipayh5'
-                        orderType={info.order_type}
-                      />
-                      <WeH5Pay orderID={info.order_id} />
-                    </View>
+                    <AlipayPay
+                      orderID={info.order_id}
+                      payType='alipayh5'
+                      orderType={info.order_type}
+                    />
+                    <WeH5Pay orderID={info.order_id} />
+                  </View>
                   : <View>
                     <PointDepositPay
                       orderID={info.order_id}
@@ -99,7 +102,8 @@ export default class Cashier extends Component {
                   </View>
               }
             </View>
-        }
+          }
+        </View>
       </View>
     )
   }

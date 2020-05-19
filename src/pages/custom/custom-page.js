@@ -8,6 +8,7 @@ import { pickBy } from '@/utils'
 import { withBackToTop } from '@/hocs'
 import S from "@/spx";
 import { HomeWgts } from '../home/comps/home-wgts'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './custom-page.scss'
 
@@ -59,25 +60,28 @@ export default class HomeIndex extends Component {
     }
 
     return (
-      <View className='page-index'>
-        <ScrollView
-          className={`wgts-wrap ${positionStatus ? 'wgts-wrap__fixed' : ''}`}
-          scrollTop={scrollTop}
-          scrollY
-        >
-          <View className='wgts-wrap__cont'>
-            <HomeWgts
-              wgts={wgts}
-            />
-          </View>
-        </ScrollView>
+      <View>
+        <NavGap title='custom'/>
+        <View className='page-index'>
+          <ScrollView
+            className={`wgts-wrap ${positionStatus ? 'wgts-wrap__fixed' : ''}`}
+            scrollTop={scrollTop}
+            scrollY
+          >
+            <View className='wgts-wrap__cont'>
+              <HomeWgts
+                wgts={wgts}
+              />
+            </View>
+          </ScrollView>
 
-        <BackToTop
-          show={showBackToTop}
-          onClick={this.scrollBackToTop}
-        />
+          <BackToTop
+            show={showBackToTop}
+            onClick={this.scrollBackToTop}
+          />
 
-        <SpToast />
+          <SpToast />
+        </View>
       </View>
     )
   }

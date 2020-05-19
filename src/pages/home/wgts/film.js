@@ -19,8 +19,6 @@ export default class WgtFilm extends Component {
   }
 
   componentDidMount () {
-    console.log('ooooooopppppppppppppppppppppppp');
-    console.log(data)
     const res = Taro.getSystemInfoSync()
     this.setState({
       screenWidth: res.screenWidth

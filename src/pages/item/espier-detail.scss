@@ -1,6 +1,16 @@
 @import '../../style/imports';
 
 .page-goods-detail {
+  .icon-arrow-left-container{
+    position: absolute;
+    top:50px;
+    left: 50px;
+    z-index: 100;
+    color:black;
+    .icon-arrow-left{
+      font-size: 50px;
+    }
+  }
   .wgts-wrap__cont {
     padding: $edge-size;
     box-sizing: border-box;
@@ -249,7 +259,6 @@
     &__desc {
       display: block;
       font-size: 18px;
-      display: block;
       line-height: 1.4;
       color: $color-gray;
       font-size: $font-size-small;

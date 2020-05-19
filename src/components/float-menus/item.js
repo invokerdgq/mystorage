@@ -26,7 +26,7 @@ export default class Index extends Component {
         openType={openType}
         sessionFrom={sessionFrom || ''}
       >
-        <View className={`${iconPrefixClass} ${iconPrefixClass}-${icon}`}></View>
+        <View className={`${icon}`}></View>
         {this.props.children}
       </Button>
     )

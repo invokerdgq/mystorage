@@ -11,9 +11,13 @@
     align-items: center;
   }
   &-icon{
-    position: absolute;
-    left:40px;
-    top:40px
+    .icon-arrow-left{
+      position: relative;
+      font-size: 55px;
+      height: 100px;
+      line-height: 100px;
+      right: 260px;
+    }
   }
   &-title{
     font-size: 35px;

@@ -55,8 +55,8 @@ export default class GoodsBuyToolbar extends Component {
           >
             {
               info.is_fav
-                ? <View className='icon-star-on' style={`color: ${colors.data[0].primary}`} />
-                : <View className='icon-star' />
+                ? <View className='iconfont icon-xing-quan' style={`color: ${colors.data[0].primary}`} />
+                : <View className='iconfont icon-xingxing' />
             }
           </View>
           {/*{process.env.TARO_ENV === 'weapp' && (
@@ -71,7 +71,7 @@ export default class GoodsBuyToolbar extends Component {
             <AtBadge
               value={cartCount || null}
             >
-              <View className='icon-cart'></View>
+              <View className='iconfont icon-che'></View>
             </AtBadge>
           </View>
         </View>

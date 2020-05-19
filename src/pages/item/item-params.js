@@ -3,6 +3,7 @@ import { View } from '@tarojs/components'
 import { ParamsItem } from './comps'
 import { pickBy } from '@/utils'
 import api from '@/api'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './item-params.scss'
 
@@ -40,18 +41,21 @@ export default class ItemParams extends Component {
     const { list } = this.state
 
     return (
-      <View className="goods-params-wrap">
-        <View className="goods-params">
-          {
-            list.map((item, idx) => {
-              return (
-                <ParamsItem
-                  key={idx}
-                  info={item}
-                />
-              )
-            })
-          }
+      <View>
+        <NavGap title='item-params'/>
+        <View className="goods-params-wrap">
+          <View className="goods-params">
+            {
+              list.map((item, idx) => {
+                return (
+                  <ParamsItem
+                    key={idx}
+                    info={item}
+                  />
+                )
+              })
+            }
+          </View>
         </View>
       </View>
     )

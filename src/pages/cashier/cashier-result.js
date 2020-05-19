@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import {Button, Image, View} from '@tarojs/components'
 import { pickBy, formatDataTime } from '@/utils'
 import api from '@/api'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './cashier-result.scss'
 
@@ -67,33 +68,35 @@ export default class CashierResult extends Component {
     const { info, showTabBar } = this.state
 
     return (
-      <View className='page-cashier-index'>
-        <View className='cashier-content'>
-          <View className='cashier-result'>
-            <View className='cashier-result__img'>
-              <Image
-                className='note__img'
-                mode='aspectFill'
-                src={`/assets/imgs/pay_${info.payStatus}.png`}
-              />
-            </View>
-            <View className='cashier-result__info'>
-              <View className='cashier-result__info-title'>订单支付{info.payStatus === 'fail' ? '失败' : ''}{info.payStatus === 'success' ? '成功' : ''}</View>
-              <View className='cashier-result__info-news'>订单号：{info.order_id}</View>
-              {
-                info.payStatus === 'success' ? <View className='cashier-result__info-news'>支付单号：{info.tradeId}</View> : null
-              }
-              <View className='cashier-result__info-news'>创建时间：{info.create_time}</View>
-              {
-                info.payStatus === 'success' ? <View className='cashier-result__info-news'>支付时间：{info.payDate}</View> : null
-              }
+      <View>
+        <NavGap title='cashier-result'/>
+        <View className='page-cashier-index'>
+          <View className='cashier-content'>
+            <View className='cashier-result'>
+              <View className='cashier-result__img'>
+                <Image
+                  className='note__img'
+                  mode='aspectFill'
+                  src={`/assets/imgs/pay_${info.payStatus}.png`}
+                />
+              </View>
+              <View className='cashier-result__info'>
+                <View className='cashier-result__info-title'>订单支付{info.payStatus === 'fail' ? '失败' : ''}{info.payStatus === 'success' ? '成功' : ''}</View>
+                <View className='cashier-result__info-news'>订单号：{info.order_id}</View>
+                {
+                  info.payStatus === 'success' ? <View className='cashier-result__info-news'>支付单号：{info.tradeId}</View> : null
+                }
+                <View className='cashier-result__info-news'>创建时间：{info.create_time}</View>
+                {
+                  info.payStatus === 'success' ? <View className='cashier-result__info-news'>支付时间：{info.payDate}</View> : null
+                }
+              </View>
             </View>
           </View>
-        </View>
 
-        {
-          showTabBar === 'CZ'
-            ? <View className='goods-buy-toolbar'>
+          {
+            showTabBar === 'CZ'
+              ? <View className='goods-buy-toolbar'>
                 <View className='goods-buy-toolbar__btns'>
                   <Button
                     className='goods-buy-toolbar__btn btn-add-cart'
@@ -101,7 +104,7 @@ export default class CashierResult extends Component {
                   >返回首页</Button>
                 </View>
               </View>
-            : <View className='goods-buy-toolbar'>
+              : <View className='goods-buy-toolbar'>
                 {
                   info.payStatus === 'fail'
                     ? <View className='goods-buy-toolbar__btns'>
@@ -122,10 +125,12 @@ export default class CashierResult extends Component {
                     </View>
                 }
               </View>
-        }
+          }
 
 
+        </View>
       </View>
+
     )
   }
 }

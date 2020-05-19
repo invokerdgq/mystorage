@@ -5,6 +5,7 @@ import { BackToTop, Loading, SpNote } from '@/components'
 import PackageItem from './comps/package-item'
 import api from '@/api'
 import { pickBy } from '@/utils'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './package-list.scss'
 
@@ -74,15 +75,17 @@ export default class PackageList extends Component {
     const { list, showBackToTop, scrollTop, page, currentPackage, buyPanelType } = this.state
 
     return (
-      <View className='page-package-goods'>
-        <ScrollView
-          className='package-goods__scroll'
-          scrollY
-          scrollTop={scrollTop}
-          scrollWithAnimation
-          onScroll={this.handleScroll}
-          onScrollToLower={this.nextPage}
-        >
+      <View>
+        <NavGap title='package'/>
+        <View className='page-package-goods'>
+          <ScrollView
+            className='package-goods__scroll'
+            scrollY
+            scrollTop={scrollTop}
+            scrollWithAnimation
+            onScroll={this.handleScroll}
+            onScrollToLower={this.nextPage}
+          >
             <View className='package-goods__list'>
               {
                 list.map(item => {
@@ -107,15 +110,16 @@ export default class PackageList extends Component {
               }
               {
                 !page.isLoading && !page.hasNext && !list.length
-                  && (<SpNote img='trades_empty.png'>活动已结束~</SpNote>)
+                && (<SpNote img='trades_empty.png'>活动已结束~</SpNote>)
               }
             </View>
-        </ScrollView>
+          </ScrollView>
 
-        <BackToTop
-          show={showBackToTop}
-          onClick={this.scrollBackToTop}
-        />
+          <BackToTop
+            show={showBackToTop}
+            onClick={this.scrollBackToTop}
+          />
+        </View>
       </View>
     )
   }
