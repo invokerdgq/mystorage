@@ -710,7 +710,7 @@ export default class Detail extends Component {
     console.log('ddd',info)
     return (
       <View>
-        <NavGap title='详细信息'/>
+        {/*<NavGap title='详细信息'/>*/}
         <View className='page-goods-detail'>
           <View className='icon-arrow-left-container' onClick={this.handleBack.bind(this)}>
             <Icon className='iconfont icon-arrow-left'/>

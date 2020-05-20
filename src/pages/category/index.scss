@@ -15,13 +15,23 @@
     height: $tabs-height + 10px;
   }
   .category-comps {
+    position: relative;
     box-sizing: border-box;
     background: #ffffff;
     @include page-scroll($tabs-height + 10px, $tabbar-height);
   }
   .category-comps-not {
+    position: relative;
     box-sizing: border-box;
     background: #ffffff;
     @include page-scroll($nav-gap-height, $tabbar-height);
   }
+}
+.line-left{
+  position: absolute;
+  width: 2px;
+  height: VH-last($nav-gap-height + 66px + 40px);
+  left:25vw;
+  background-color: #9b9b9b;
+  top:VH( 40px + 66px)
 }

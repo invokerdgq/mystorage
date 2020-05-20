@@ -150,6 +150,7 @@ export default class Category extends Component {
               isChanged={isChanged}
               info={list}
             />
+            <View className='line-left'/>
           </View>
           {
             process.env.TARO_ENV === 'weapp'?null:

@@ -4,7 +4,7 @@
   height: 100%;
   background: #ffffff;
   display: flex;
-  margin-top:40px;
+  margin-top:VH(40px);
   justify-content: flex-start;
   box-sizing: border-box;
   &__nav {
@@ -19,7 +19,6 @@
     height: 100%;
     background: #fff;
     box-sizing: border-box;
-    border-left: solid 1px #bdb5b5;
     padding-left: 20px;
   }
 }
@@ -131,7 +130,7 @@
 }
 
 .search-bar-container{
-  height: 66px;
+  height: VH(66px);
   position: relative;
 }
 .icon-sousuo{

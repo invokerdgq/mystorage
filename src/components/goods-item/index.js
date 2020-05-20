@@ -27,7 +27,11 @@ export default class GoodsItem extends Component {
     console.log(is_fav, item_id)
     // await api.item.collect(item_id)
   }
-
+  handleCart = (item) =>{
+   Taro.navigateTo({
+     url: `/pages/item/espier-detail?id=${item.item_id}`
+   })
+}
   render () {
     const { info, showMarketPrice, showFav, noCurSymbol, noCurDecimal, onClick, appendText, className, isPointDraw, type } = this.props
     if (!info) {
@@ -106,7 +110,10 @@ export default class GoodsItem extends Component {
               <View className='goods-item__price'>
                 <View className='package-price'>
                   <Text className='goods-item__cur'>¥</Text>
-                  <Text>{price}</Text>
+                  <Text className='price'>{price}</Text>
+                  <View className='che-container' onClick={this.handleCart.bind(this,info)}>
+                    <Icon className='iconfont icon-che'/>
+                  </View>
                 </View>
                 {
                   Boolean(+marketPrice) &&

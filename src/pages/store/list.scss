@@ -8,7 +8,7 @@ $current-shop-height: 150px !default;
   height: 100%;
   box-sizing: border-box;
   &__scroll {
-    @include page-scroll($searchbar-height + $current-shop-height + 10, 0);
+    @include page-scroll($searchbar-height + $current-shop-height + 10px, 0);
   }
   .store-list__search {
     .at-search-bar {

@@ -1,4 +1,16 @@
 @import "variables";
+@import "theme";
+
+@function VH($height1){
+  @if $height1 == 0 {@return 0}@else {
+    @return $height1/($base-height*$px-rpx)*100vh
+  }
+}
+@function VH-last($height1){
+  @if $height1 == 0{@return 0}@else {
+    @return (1 - $height1/($base-height*$px-rpx))*100vh
+  }
+}
 
 @mixin text-overflow(){
   white-space: nowrap;
@@ -111,11 +123,11 @@
   }
 }
 
-@mixin page-scroll ($padding-top: 0, $padding-bottom: 0, $z-index: 1) {
+@mixin page-scroll ($padding-top: 0px, $padding-bottom: 0, $z-index: 1) {
   position: absolute;
   left: 0;
   width: 100%;
-  top: $padding-top;
+  top: VH($padding-top);
   bottom: $padding-bottom;
   overflow-y: auto;
   overflow-x: hidden;

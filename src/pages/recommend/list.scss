@@ -6,7 +6,7 @@
     &__toolbar {
       position: fixed;
       padding: 20px 0 0;
-      top: $nav-gap-height;
+      top: VH($nav-gap-height);
       left: 0;
       width: 100%;
       z-index: $z-index-toolbar;
@@ -75,7 +75,7 @@
       }
     }
     &__scroll {
-      @include page-scroll($nav-gap-height+$tabs-height + $searchbar-height + $navigate-height, $tabbar-height + floor($edge-margin / 2));
+      @include page-scroll($nav-gap-height+$tabs-height + $searchbar-height +30px, $tabbar-height + floor($edge-margin / 2));
     }
     &__type-grid {
       display: flex;

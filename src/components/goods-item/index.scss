@@ -48,7 +48,7 @@ $item-img-size: 240px !default;
     }
   }
   &__caption {
-    height: 180px;
+    height: 80px;
   }
   &__tag-list {
     padding-bottom: 10px;
@@ -85,7 +85,11 @@ $item-img-size: 240px !default;
   }
   &__cur {
     padding-right: 5px;
-    font-size: 20px;
+    font-size: 16px;
+    color:#c1534e;
+    .price{
+      font-size: 35px;
+    }
   }
   &__price {
     flex: 1;
@@ -153,4 +157,35 @@ $item-img-size: 240px !default;
       color: #333;
     }
   }
+}
+.che-container{
+  position: relative;
+  left:120px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  background-color: #c1534e;
+  border-radius: 50%;
+  text-align: center;
+  .icon-che{
+    vertical-align: middle;
+  }
+  &:after{
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    content: '';
+    vertical-align: middle;
+  }
+}
+.icon-che{
+  font-size: 35px;
+  color:white;
+  vertical-align: middle;
+}
+
+.package-price{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

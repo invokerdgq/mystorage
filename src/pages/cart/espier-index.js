@@ -459,7 +459,7 @@ export default class CartIndex extends Component {
                       className='cart-list__shop'
                       key={shopIndex}
                     >
-                      {
+                      { // 购物车名字   一个购物车 一个人可以产生多个购物车 每个购物车中可以有多件物品
                         shopCart.shopInfo.shop_name
                           ? <View className='shop__name'>
                             <Text className='icon-shop'></Text>
@@ -623,8 +623,9 @@ export default class CartIndex extends Component {
                     <AtButton
                       className='btn-rand'
                       type='primary'
+                      circle
                       onClick={this.navigateTo.bind(this, APP_HOME_PAGE, true)}
-                    >随便逛逛</AtButton>
+                    >去逛逛</AtButton>
                   </View>
                 )
               }

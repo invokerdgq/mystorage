@@ -1,10 +1,11 @@
 @import "../../style/theme";
+@import "../../style/mixins";
 
 .nav-gap{
   &-container{
+    height: VH($nav-gap-height);
     background-color: white;
     position: relative;
-    height: $nav-gap-height;
     display: flex;
     flex-direction: row;
     justify-content: center;
