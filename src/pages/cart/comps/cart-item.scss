@@ -5,10 +5,12 @@ $item-img-height: 200px !default;
 
 .cart-item {
   $self: &;
+  display: flex;
+  flex-direction: row;
   align-items: center;
   background: #fff;
   overflow: hidden;
-	padding: 0 0 30px;
+	padding: 20px 0 20px;
 	position: relative;
   &.is-disabled {
     background: #fafafa;
@@ -20,10 +22,11 @@ $item-img-height: 200px !default;
     bottom: 30px;
   }
   &__hd {
-    padding: 25px - 5px;
+    //padding: 25px - 5px;
+    font-size: 23px;
   }
   &__bd {
-    padding: 0 25px;
+    padding: 0 15px;
     display: flex;
     flex: 1;
   }

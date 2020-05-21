@@ -5,7 +5,8 @@
   &-container{
     height: VH($nav-gap-height);
     background-color: white;
-    position: relative;
+    position: fixed;
+    width: 100vw;
     display: flex;
     flex-direction: row;
     justify-content: center;

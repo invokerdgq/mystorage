@@ -16,5 +16,6 @@ export { default as WgtImgHotZone } from './imghot-zone'
 export { default as WgtMarquees } from './marquees'
 export { default as FeautreSelect } from './feautre-select'
 export { default as HotArea } from './hot-area'
+export { default as WgtLimitKill } from './own-limit-kill'
 
 export default {}

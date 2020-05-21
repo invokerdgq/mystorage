@@ -1,0 +1,58 @@
+.timer-controller{
+  height: 90px;
+  box-sizing: border-box;
+  border-bottom: solid 1px #e8e8e8;
+  border-top: solid 1px #e8e8e8;
+  .timer-scroll-content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    .gap{
+      width: 557px;
+      height: 90px;
+      flex:none
+    }
+  }
+}
+.timer-content{
+  width:193px;
+  height: 90px;
+  line-height: 90px;
+  flex:none
+}
+.triangle{
+  width: 0;
+  height: 0;
+  border-left: solid 8px white;
+  border-top: solid 8px #c0534e;
+  border-right: solid 8px white;
+  border-bottom: solid 8px white;
+}
+.triangle-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.limit-goods-detail{
+  padding: 0 25px;
+  .detail-img{
+   text-align: center;
+  }
+}
+.more-toolbar{
+  text-align: center;
+  .dec{
+    font-size:22px ;
+    background-color: black;
+    border-radius: 28px;
+    height: 57px;
+    color:white;
+    padding: 20px 25px;
+    .iconfont{
+      font-size: 30px;
+      color:white;
+      z-index: 700;
+    }
+  }
+
+}

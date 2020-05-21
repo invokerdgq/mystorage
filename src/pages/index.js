@@ -12,6 +12,7 @@ import { WgtGoodsFaverite, HeaderHome } from './home/wgts'
 import { HomeWgts } from './home/comps/home-wgts'
 import Automatic from './home/comps/automatic'
 import { resolveFavsList } from './item/helper'
+import formate from "../utils/formate";
 
 import './home/index.scss'
 
@@ -163,7 +164,7 @@ export default class HomeIndex extends Component {
     const info = await req.get(url)
 
     this.setState({
-      wgts: info.config
+      wgts: formate(info.config)
     },()=>{
       if (cb) {
         cb(info)

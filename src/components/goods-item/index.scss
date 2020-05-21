@@ -28,7 +28,7 @@ $item-img-size: 240px !default;
     overflow: hidden;
   }
   &__cont {
-    height: 290px;
+    height: 180px !important;
     padding: 20px;
   }
   &__img {
@@ -48,7 +48,7 @@ $item-img-size: 240px !default;
     }
   }
   &__caption {
-    height: 80px;
+    height: 80px !important;
   }
   &__tag-list {
     padding-bottom: 10px;
