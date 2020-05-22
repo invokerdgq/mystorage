@@ -11,10 +11,10 @@ import Index from './pages/index'
 import './app.scss'
 import qs from 'qs'
 
-Taro.M = function (option) {
-  console.log('--------------')
+Taro.M = function (option,identifier='') {
+  console.log(identifier)
   console.log(option)
-  console.log('----------------')
+  console.log(identifier)
 }
 
 // 如果需要在 h5 环境中开启 React Devtools
