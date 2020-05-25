@@ -19,7 +19,9 @@ $item-img-size: 240px !default;
   border-radius: $item-border-radius;
   overflow: hidden;
 	box-shadow: 0 5px 5px rgba(0,0,0,0.1);
-
+&__price{
+  width: 100%;
+}
   &__hd {
   }
   &__bd {
@@ -83,22 +85,6 @@ $item-img-size: 240px !default;
     color: $color-gray;
     font-size: $font-size-small;
   }
-  &__cur {
-    padding-right: 5px;
-    font-size: 16px;
-    color:#c1534e;
-    .price{
-      font-size: 35px;
-    }
-  }
-  &__price {
-    flex: 1;
-    padding-right: 24px;
-    line-height: 1;
-    font-size: floor(1.1 * $font-size);
-    color: $color-price;
-    font-family: Arial;
-  }
   &__point {
     color: $color-brand-primary;
   }
@@ -159,33 +145,36 @@ $item-img-size: 240px !default;
   }
 }
 .che-container{
-  position: relative;
-  left:120px;
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
+  margin-left: auto;
+  height: 40px;
+  width: 40px;
   background-color: #c1534e;
   border-radius: 50%;
   text-align: center;
-  .icon-che{
-    vertical-align: middle;
+  position: relative;
+  top: 5px;
+  .icon-gouwuche{
+    font-size: 30px;
+    color:white;
+    position: relative;
+    top: -9px;
   }
-  &:after{
-    display: inline-block;
-    width: 0;
-    height: 100%;
-    content: '';
-    vertical-align: middle;
-  }
-}
-.icon-che{
-  font-size: 35px;
-  color:white;
-  vertical-align: middle;
 }
 
 .package-price{
   display: flex;
+  width: 100%;
   flex-direction: row;
-  align-items: center;
+  justify-content: space-between;
+  align-items: baseline;
+  .goods-item__cur{
+    font-size: 21px;
+    color: #c0534e;
+    line-height: 1;
+  }
+  .price{
+    font-size: 35px;
+    color: #c0534e;
+    line-height: 1;
+  }
 }

@@ -109,10 +109,12 @@ export default class GoodsItem extends Component {
             <View className='goods-item__extra'>
               <View className='goods-item__price'>
                 <View className='package-price'>
-                  <Text className='goods-item__cur'>¥</Text>
-                  <Text className='price'>{price}</Text>
+                  <View>
+                    <Text className='goods-item__cur'>¥</Text>
+                    <Text className='price'>{price}</Text>
+                  </View>
                   <View className='che-container' onClick={this.handleCart.bind(this,info)}>
-                    <Icon className='iconfont icon-che'/>
+                    <Icon className='iconfont icon-gouwuche' />
                   </View>
                 </View>
                 {

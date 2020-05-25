@@ -121,15 +121,15 @@ export default class Series extends Component {
             scrollY
           >
             <View className={classNames(pluralType ? 'category-content' : 'category-content-no')}>
-              {
-                itemsImg
-                && <Image src={itemsImg}  onClick={this.handleCustomClick.bind(this, id)} className='category__banner' />
-              }
+              {/*{*/}
+              {/*  itemsImg*/}
+              {/*  && <Image src={itemsImg}  onClick={this.handleCustomClick.bind(this, id)} className='category__banner' />*/}
+              {/*}*/}
               {
                 items.map(item =>
                   item.children
                     ? <View className='new'>
-                      <View className='group-title'>{item.name}</View>
+                      <View className='group-title'>——<Text className='group-title-inner'>{item.name}</Text>——</View>
                       <View className='content-group'>
                         {
                           item.children.map(child =>

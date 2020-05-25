@@ -20,7 +20,7 @@
   border-bottom: solid 1px #e8e8e8;
   border-top: solid 1px #e8e8e8;
     .gap{
-      width: 150px;
+      width: 187.5px;
       height: 90px;
       flex:none
     }
@@ -30,7 +30,7 @@
   text-align: center;
 }
 .timer-content{
-  width:150px;
+  width:187.5px;
   height: 90px;
   line-height: 90px;
   flex:none;
@@ -94,6 +94,8 @@
   .goods-sell-dec{
     &-num-contain{
       text-align: right;
+      height:40px;
+      line-height: 40px;
       &:first-child{
         font-size: 19px;
         color:#c0534e;
@@ -101,15 +103,39 @@
       }
     }
     &-price-contain{
+      color: #c1534e;
+      padding:5px 0;
+      font-size: 30px;
       display: flex;
-      flex-direction: row;
+      align-items: flex-end;
+      .cur{
+        font-size: 25px;
+        margin-right: 4px;
+      }
+      .price{
+        font-size: 19px;
+        line-height: 1;
+        margin-right: 15px;
+      }
+      .price-inner{
+        line-height: 1;
+        font-size: 34px;
+      }
+      .market-price {
+        color:#c1c1c1;
+        font-size: 24px;
+       line-height: 1;
+        margin-left: 5px;
+        margin-right: 8px;
+        text-decoration: line-through;
+      }
       .speed-buy{
         font-size: 24px;
         color:white;
         background-color: #c76a65;
-        padding: 5px 8px;
         margin-right: 15px;
         border-radius: 8px;
+        margin-left: auto;
       }
     }
   }
@@ -127,6 +153,7 @@
     }
     text-align: left;
     .other-img{
+      flex: 1;
       display: flex;
       flex-direction: column;
       margin-left: 30px;
@@ -157,7 +184,54 @@
       }
     }
   }
+  .goods-sell-dec{
+    &-num-contain{
+     text-align: right;
+      margin-right: 20px;
+      font-size: 19px;
+      color: #c0534e;
+      height: 35px;
+      line-height: 35px;
+    }
+    &-price-contain{
+      color: #c1534e;
+      padding:5px 0;
+      font-size: 30px;
+      display: flex;
+      align-items: flex-end;
+      .cur{
+        font-size: 25px;
+        margin-right: 4px;
+      }
+      .price{
+        font-size: 18px;
+        line-height: 1;
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+      .price-inner{
+        line-height: 1;
+        font-size: 30px;
+      }
+      .market-price {
+        color:#c1c1c1;
+        font-size: 20px;
+        line-height: 1;
+        margin-left: 5px;
+        margin-right: 8px;
+        text-decoration: line-through;
+      }
+      .speed-buy{
+        font-size: 18px;
+        color:white;
+        background-color: #c76a65;
+        margin-right: 15px;
+        border-radius: 8px;
+        margin-left: auto;
+      }
+    }
 
+  }
 }
 .more-toolbar{
   display: flex;
@@ -186,40 +260,6 @@
     vertical-align: middle;
     position: relative;
     top:-5px
-  }
-}
-.goods-sell-dec-price-contain {
-  color: #c1534e;
-  padding:5px 0;
-  font-size: 30px;
-  .cur{
-    font-size: 25px;
-    margin-right: 4px;
-  }
-  .price{
-    font-size: 21px;
-    vertical-align: middle;
-  }
-  .price-inner{
-    font-size: 43px;
-  }
-  .market-price {
-    color:#c1c1c1;
-    font-size: 24px;
-    display: inline-block;
-    margin-left: 5px;
-    margin-right: 8px;
-    text-decoration: line-through;
-    vertical-align: middle;
-  }
-  .speed-buy{
-    font-size: 24px;
-    color:white;
-    background-color: #c76a65;
-    margin-right: 15px;
-    border-radius: 8px;
-    margin-left: auto;
-    vertical-align: middle;
   }
 }
 

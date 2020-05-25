@@ -605,7 +605,7 @@ export default class CartIndex extends Component {
                                   style={`background: ${colors.data[0].primary}`}
                                   disabled={shopCart.shopInfo.cart_total_count <= 0}
                                   onClick={this.handleCheckout.bind(this, shopCart)}>
-                                  {isDrug ? '立即预约' : '结算'}
+                                  {isDrug ? '立即预约' : `结算(${list.length})`}
                                 </Button>
                               </View>
                               : <View className='cart-toolbar__bd'>
