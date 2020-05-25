@@ -1,9 +1,14 @@
 @import '../../style/imports';
 
+.default-color{
+  color:black;
+}
+.theme-color{
+  color:$color-theme
+}
 .price {
   &__primary {
-    color: $color-price;
-    font-size: 26px;
+    font-size: 37px;
   }
   &__symbol {
     margin-right: 5px;

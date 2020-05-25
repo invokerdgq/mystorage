@@ -118,16 +118,31 @@
     margin-right: 15px;
     font-size: 40px;
     font-family: "Helvetica";
-
-    &__symbol {
-      font-size: 32px;
-      font-family: "Helvetica";
+    &__symbol{
+      font-size: 21px;
+      color: #c0534e;
+    }
+    &__int,&__decimal{
+      font-size: 35px;
+      color: #c0534e;
     }
   }
 
   &__wrap {
     display: flex;
     align-items: baseline;
+    .goods-prices{
+      .price-market{
+        .price__symbol{
+          font-size: 16px;
+          color: $color-gray-light;
+        }
+        .price__int,.price__decimal{
+          font-size: 23px;
+          color: $color-gray-light;
+        }
+      }
+    }
   }
 
   &__market {
@@ -267,15 +282,25 @@
   }
   .goods-share {
     &__wrap {
-      padding: 0 10px 0 30px;
-      text-align: center;
-      .icon-share {
-        font-size: 50px;
-        color: $color-brand-accent-light;
+      background-color: #f7f9fb;
+      position: relative;
+      right: -30px;
+      padding-left: 30px;
+      border-radius: 24px 0 0 24px;
+      display: flex;
+      flex-flow:row nowrap;
+      align-items:flex-start;
+      height: 48px;
+      line-height: 48px;
+      .icon-zhuanfa {
+        font-size: 23px;
+        color: #5a5c5c;
       }
       .share-label {
-        font-size: 24px;
-        color: $color-gray;
+        font-size: 23px;
+        color: #5a5c5c;
+        margin-left: 10px;
+        margin-right: 10px;
       }
     }
   }
@@ -346,6 +371,7 @@
 
 .goods-sec-specs {
   display: flex;
+  flex-direction: row;
   background: #fff;
   padding: 30px;
   margin: 0 0 $edge-margin;
@@ -377,9 +403,13 @@
   .sp-cell__bd {
     overflow: hidden;
     white-space: nowrap;
+    flex:none
   }
   .sp-cell__ft {
     padding: 0 15px;
+    &-icon{
+      margin-left: auto;
+    }
   }
   .sp-cell__value {
     color: #333;
@@ -597,9 +627,11 @@
     margin-bottom: 20px;
   }
   &__title {
-    color: $color-brand-primary;
+    font-size: 42px;
+    color: #393838;
+    font-weight: bold;
     margin: 0 auto;
-    border-bottom: 1PX solid $color-brand-primary;
+    //border-bottom: 1PX solid $color-brand-primary;
   }
   &__hd {
     color: $color-gray;

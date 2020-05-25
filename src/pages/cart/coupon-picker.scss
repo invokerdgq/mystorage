@@ -1,6 +1,8 @@
 @import "../../style/imports";
 
 .coupon-picker {
+  position: relative;
+  top:VH($nav-gap-height);
   padding: $edge-margin 0;
   .coupon-item {
     &__nil {

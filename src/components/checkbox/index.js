@@ -58,7 +58,7 @@ export default class SpCheckbox extends Component {
       >
         <View
           className='sp-checkbox'
-          style={isChecked ? 'background: ' + colors.data[0].primary : null}
+          style={isChecked ? 'background: ' + '#c0534e' : null}
         >
           <View className='at-icon at-icon-check'></View>
         </View>

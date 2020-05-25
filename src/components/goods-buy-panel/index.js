@@ -329,10 +329,6 @@ export default class GoodsBuyPanel extends Component {
       } catch (e) {
         console.log(e)
       }
-      console.log('-------------------------------------------');
-      console.log(`type:${type}`)
-      console.log(url)
-      console.log('-------------------------------------------');
       this.setState({
         busy: false
       })
@@ -406,6 +402,7 @@ export default class GoodsBuyPanel extends Component {
             </View>
 						<View className='goods-sku__price'>
 						  <Price
+                className='price'
 								primary
                 symbol='¥'
 								unit='cent'
@@ -474,7 +471,7 @@ export default class GoodsBuyPanel extends Component {
                       className='sku-item__group'
                       key={spec.spec_id}
                     >
-                      {info.item_spec_desc.length > 1 && (<Text className='sku-item__group-hd'>{spec.spec_name}</Text>)}
+                      {info.item_spec_desc.length > 1 && (<Text className='sku-item__group-hd'>{spec.spec_name} :</Text>)}
                       <View className='sku-item__group-bd'>
                         {
                           spec.spec_values.map(sku => {
@@ -495,8 +492,8 @@ export default class GoodsBuyPanel extends Component {
             </ScrollView>
             {
               type !== 'pick' &&
-                <View className='goods-quantity__wrap'>
-                  <Text className='goods-quantity__hd'></Text>
+                <View className={`${info.item_spec_desc.length === 0?'':'add-top'} goods-quantity__wrap`}>
+                  <Text className='goods-quantity__hd'>购买数量 ：</Text>
                   <View className='goods-quantity__bd'>
                     <InputNumber
                       min={1}
@@ -514,7 +511,7 @@ export default class GoodsBuyPanel extends Component {
                 <Button
                   loading={busy}
                   className={classNames('goods-buy-panel__btn btn-add-cart', { 'is-disabled': !curSkus })}
-                  style={`background: ${colors.data[0].accent}`}
+                  // style={`background: ${colors.data[0].accent}`}
                   onClick={this.handleBuyClick.bind(this, 'cart', curSkus, quantity)}
                   disabled={Boolean(!curSkus)}
                 >{isDrug ? '加入药品清单' : '加入购物车'}</Button>
@@ -523,7 +520,7 @@ export default class GoodsBuyPanel extends Component {
                 <Button
                   loading={busy}
                   className={classNames('goods-buy-panel__btn btn-fast-buy', { 'is-disabled': !curSkus })}
-                  style={`background: ${colors.data[0].primary}`}
+                  // style={`background: ${colors.data[0].primary}`}
                   onClick={this.handleBuyClick.bind(this, 'fastbuy', curSkus, quantity)}
                   disabled={Boolean(!curSkus)}
                 >{fastBuyText}</Button>
@@ -532,7 +529,7 @@ export default class GoodsBuyPanel extends Component {
                 <Button
                   loading={busy}
                   className={classNames('goods-buy-panel__btn btn-fast-buy', { 'is-disabled': !curSkus })}
-                  style={`background: ${colors.data[0].primary}`}
+                  // style={`background: ${colors.data[0].primary}`}
                   onClick={this.handleBuyClick.bind(this, 'pick', curSkus, quantity)}
                   disabled={Boolean(!curSkus)}
                 >确定</Button>

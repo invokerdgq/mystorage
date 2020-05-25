@@ -30,7 +30,11 @@ export default class GoodsBuyToolbar extends Component {
       url: `/pages/cart/espier-index?type=${type}`
     })
   }
-
+  handleHome = () => {
+    Taro.navigateTo({
+      url:'/pages/index'
+    })
+  }
   render () {
     const { onClickAddCart, onClickFastBuy, cartCount, type, info, colors } = this.props
 
@@ -51,6 +55,15 @@ export default class GoodsBuyToolbar extends Component {
         <View className='goods-buy-toolbar__menus'>
           <View
             className='goods-buy-toolbar__menu-item'
+            onClick={this.handleHome}
+          >
+           <View>
+             <Icon className='iconfont icon-shouye'/>
+             <View className='dec'>首页</View>
+           </View>
+          </View>
+          <View
+            className='goods-buy-toolbar__menu-item'
             onClick={this.props.onFavItem}
           >
             {
@@ -58,6 +71,7 @@ export default class GoodsBuyToolbar extends Component {
                 ? <View className='iconfont icon-xing-quan' style={`color: ${colors.data[0].primary}`} />
                 : <View className='iconfont icon-xingxing' />
             }
+            <View className='dec'>收藏</View>
           </View>
           {/*{process.env.TARO_ENV === 'weapp' && (
             <Button className='goods-buy-toolbar__menu-item' openType='contact'>
@@ -70,33 +84,39 @@ export default class GoodsBuyToolbar extends Component {
           >
             <AtBadge
               value={cartCount || null}
+              style={{background:'#c0534e'}}
             >
               <View className='iconfont icon-che'></View>
+              <View className='dec'>购物车</View>
             </AtBadge>
           </View>
         </View>
         {this.props.customRender
           ? this.props.children
           : (<View className='goods-buy-toolbar__btns'>
-              {(type === 'normal' || type === 'limited_time_sale') && (
-                <FormIdCollector
-                  sync
-                  onClick={onClickAddCart}
-                >
-                  <View className={`goods-buy-toolbar__btn btn-add-cart ${isDrug && 'drug-btn'}`} style={'background: ' + colors.data[0].accent}>
-                    {isDrug ? '加入药品清单' : '添加至购物车'}
-                  </View>
-                </FormIdCollector>
-              )}
               {!isDrug && (
                   <FormIdCollector
                     sync
                     onClick={onClickFastBuy}
                   >
-                    <View className={`goods-buy-toolbar__btn btn-fast-buy ${type !== 'normal' && type !== 'limited_time_sale' && 'marketing-btn'}`} style={'background: ' + colors.data[0].primary}>{fastBuyText}</View>
+                    <View className='btn-fast-buy-container'>
+                      <View className={`goods-buy-toolbar__btn btn-fast-buy ${type !== 'normal' && type !== 'limited_time_sale' && 'marketing-btn'}`}>{fastBuyText}</View>
+                    {/*<View className={`goods-buy-toolbar__btn btn-fast-buy ${type !== 'normal' && type !== 'limited_time_sale' && 'marketing-btn'}`} style={'background: ' + colors.data[0].primary}>{fastBuyText}</View>*/}
+                    </View>
                   </FormIdCollector>
                 )
               }
+            {(type === 'normal' || type === 'limited_time_sale') && (
+              <FormIdCollector
+                sync
+                onClick={onClickAddCart}
+              >
+                <View className='btn-add-cart-container'>
+                  <View className={`goods-buy-toolbar__btn btn-add-cart ${isDrug && 'drug-btn'}`}>{isDrug ? '加入药品清单' : '加入购物车'}</View>
+                  {/*<View className={`goods-buy-toolbar__btn btn-add-cart ${isDrug && 'drug-btn'}`} style={'background: ' + colors.data[0].accent}>{isDrug ? '加入药品清单' : '加入购物车'}</View>*/}
+                </View>
+              </FormIdCollector>
+            )}
             </View>)
         }
       </View>

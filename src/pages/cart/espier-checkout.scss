@@ -1,7 +1,10 @@
 @import '../../style/imports';
 
 .page-checkout {
-  margin: $edge-size $edge-margin;
+  position: absolute;
+  top:VH($nav-gap-height);
+  //margin: $edge-size $edge-margin;
+  width: 100%;
   .switch-tab {
     display: flex;
     align-items: flex-end;
@@ -28,7 +31,7 @@
 
   .checkout {
     &__wrap {
-      height: 100vh;
+      //height: 100vh;
       box-sizing: border-box;
       padding-bottom: $toolbar-height;
     }
@@ -136,7 +139,7 @@
       position: absolute;
       bottom: 20px;
       right: 50px;
-      left: 280px;
+      left: 200px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -146,7 +149,7 @@
       color: #333333;
     }
     &__price {
-      color: $color-brand-primary;
+      color: $color-theme;
       font-size: 28px;
       .price__symbol {
         font-size: $font-size-small;
@@ -156,7 +159,7 @@
       margin: 0 0 46px;
     }
     &__discount {
-      background: $color-brand-primary;
+      background: $color-theme;
       color: #fff;
       font-size: $font-size-small;
       display: inline-block;
@@ -182,7 +185,7 @@
       justify-content: flex-end;
     }
     &__hint {
-      color: $color-brand-primary;
+      color: $color-theme;
       font-size: $font-size-small;
     }
     &__input {
@@ -248,10 +251,9 @@
       }
       &__hd {
         width: 140px;
-        text-align: right;
       }
       &__bd {
-        color: $color-brand-primary;
+        color: $color-theme;
         display: flex;
         justify-content: flex-end;
       }
@@ -314,12 +316,12 @@
   }
 
   .btn-confirm-order {
-    width: 256px;
-    margin: 0 0 0 24px;
-    height: $toolbar-height;
-    line-height: $toolbar-height;
+    width: 232px;
+    margin: 0 24px 0 24px;
+    height: $toolbar-height - 50px;
+    line-height: $toolbar-height - 50px;
     border: none;
-    border-radius: 0;
+    border-radius: ($toolbar-height - 50px)/2;
     font-weight: bold;
     font-size: $font-size;
     &:before, &:after {

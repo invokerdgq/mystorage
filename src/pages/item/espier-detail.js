@@ -851,7 +851,7 @@ export default class Detail extends Component {
                   className='goods-share__wrap'
                   onClick={this.handleShare.bind(this)}
                 >
-                  <View className='icon-share'></View>
+                  <View className='iconfont icon-zhuanfa'></View>
                   <View className='share-label'>分享</View>
                 </View>
               </View>
@@ -945,7 +945,36 @@ export default class Detail extends Component {
                 </View>
               </View>
             }
-
+            {
+              !info.nospec &&
+              <SpCell
+                className='goods-sec-specs'
+                isLink
+                title='选择'
+                onClick={this.handleBuyBarClick.bind(this, 'pick')}
+                value={curSku ? curSku.propsText : '请选择产品规格'}
+              />
+            }
+            {
+              itemParams.length &&
+              <View
+                className='goods-sec-specs'
+                onClick={this.handleParamsClick.bind(this)}
+              >
+                <View className='goods-sec-label'>商品参数</View>
+                <View className='goods-sec-value'>
+                  {
+                    itemParams.map((item, idx) =>
+                      <ParamsItem
+                        key={idx}
+                        info={item}
+                      />
+                    )
+                  }
+                </View>
+                <View className='goods-sec-icon at-icon at-icon-chevron-right'></View>
+              </View>
+            }
             <SpCell
               className='goods-sec-specs'
               title='领券'
@@ -984,38 +1013,6 @@ export default class Detail extends Component {
                 title='优惠组合'
                 onClick={this.handlePackageClick}
                 value={`共${promotion_package}种组合随意搭配`}
-              />
-            }
-
-            {
-              itemParams.length &&
-              <View
-                className='goods-sec-specs'
-                onClick={this.handleParamsClick.bind(this)}
-              >
-                <View className='goods-sec-label'>商品参数</View>
-                <View className='goods-sec-value'>
-                  {
-                    itemParams.map((item, idx) =>
-                      <ParamsItem
-                        key={idx}
-                        info={item}
-                      />
-                    )
-                  }
-                </View>
-                <View className='goods-sec-icon at-icon at-icon-chevron-right'></View>
-              </View>
-            }
-
-            {
-              !info.nospec &&
-              <SpCell
-                className='goods-sec-specs'
-                isLink
-                title='规格'
-                onClick={this.handleBuyBarClick.bind(this, 'pick')}
-                value={curSku ? curSku.propsText : '请选择'}
               />
             }
 
@@ -1112,20 +1109,20 @@ export default class Detail extends Component {
           </ScrollView>
 
           <FloatMenus>
+            {/*<FloatMenuItem*/}
+            {/*  iconPrefixClass='icon'*/}
+            {/*  icon='iconfont icon-shouye'*/}
+            {/*  onClick={this.handleBackHome.bind(this)}*/}
+            {/*/>*/}
             <FloatMenuItem
               iconPrefixClass='icon'
-              icon='iconfont icon-shouye'
-              onClick={this.handleBackHome.bind(this)}
-            />
-            <FloatMenuItem
-              iconPrefixClass='icon'
-              icon='iconfont icon-kefu'
+              icon='iconfont icon-kefu1'
               openType='contact'
               sessionFrom={sessionFrom}
             />
             <FloatMenuItem
               iconPrefixClass='icon'
-              icon='iconfont icon--arrow-up'
+              icon='iconfont icon-dingbu'
               hide={!showBackToTop}
               onClick={this.scrollBackToTop}
             />

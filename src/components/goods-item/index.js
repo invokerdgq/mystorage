@@ -112,15 +112,15 @@ export default class GoodsItem extends Component {
                   <View>
                     <Text className='goods-item__cur'>¥</Text>
                     <Text className='price'>{price}</Text>
+                    {
+                      Boolean(+marketPrice) &&
+                      <Text className='goods-item__price-market'>¥{marketPrice}</Text>
+                    }
                   </View>
                   <View className='che-container' onClick={this.handleCart.bind(this,info)}>
                     <Icon className='iconfont icon-gouwuche' />
                   </View>
                 </View>
-                {
-                  Boolean(+marketPrice) &&
-                    <Text className='goods-item__price-market'>¥{marketPrice}</Text>
-                }
 							</View>
 							{this.props.children}
               {

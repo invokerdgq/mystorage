@@ -230,8 +230,8 @@
     line-height: 80px;
     margin: 0 auto;
     display: block;
-    background: $color-brand-primary;
-    border-color: $color-brand-primary;
+    background: $color-theme;
+    border-color: $color-theme;
   }
   .at-action-sheet__container {
     z-index: $z-index-modal;
@@ -286,6 +286,7 @@
     }
   }
   .btn-checkout {
+    background-color: $color-theme;
     width: 200px;
     margin: 0 0 0 24px;
     height: 68px;

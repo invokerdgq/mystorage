@@ -602,7 +602,7 @@ export default class CartIndex extends Component {
                                 <Button
                                   type='primary'
                                   className='btn-checkout'
-                                  style={`background: ${colors.data[0].primary}`}
+                                  // style={`background: ${colors.data[0].primary}`}
                                   disabled={shopCart.shopInfo.cart_total_count <= 0}
                                   onClick={this.handleCheckout.bind(this, shopCart)}>
                                   {isDrug ? '立即预约' : `结算(${list.length})`}

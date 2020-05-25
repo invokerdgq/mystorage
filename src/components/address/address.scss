@@ -5,6 +5,9 @@
   color: $color-weixin;
 }
 
+.address-container{
+  padding-left: 60px;
+}
 .address-picker {
   //@include page-view();
   .address {
@@ -55,12 +58,25 @@
     }
     .info-trade {
       flex: 1;
+      .address-container{
+        display: flex;
+        flex-direction: row;
+      }
     }
     .user-info-trade {
       color: #666;
       font-size: 26px;
+      padding-left: 60px;
       .name {
         margin-right: $edge-margin;
+      }
+      .icon-dizhi{
+        position: absolute;
+        top:8px;
+        left:40px;
+        font-size: 26px;
+        color:#393838;
+        margin-right: 8px;
       }
     }
     .address-detail {
@@ -72,6 +88,7 @@
     .address-area {
       color: #666;
       font-size: 26px;
+      margin-right: 15px;
     }
   }
   .other-address {

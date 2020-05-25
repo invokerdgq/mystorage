@@ -1,5 +1,11 @@
 @import '../../../style/imports';
 
+.at-badge{
+  &__num{
+    background: #c0534e !important;
+    width: 100px;
+  }
+}
 .goods-buy-toolbar {
   background: #fff;
   height: $toolbar-height;
@@ -41,8 +47,13 @@
       margin: 0 0 8px;
       color: #9d9d9d;
     }
-    .icon-xingxing , .icon-che {
-      font-size: 55px;
+    .icon-xingxing , .icon-che,.icon-shouye {
+      font-size: 50px;
+      text-align: center;
+    }
+    .dec{
+      font-size: 20px;
+      margin-top: 5px;
     }
     &-text {
       font-size: $font-size-small;
@@ -50,41 +61,59 @@
     }
   }
   &__btns {
-    width: 500px;
+    width: 450px;
     display: flex;
     align-items: center;
     overflow: hidden;
     height: $toolbar-height;
   }
   &__btn {
-    width: 250px;
-    font-size: $font-size;
+    //width: 200px;
+    //font-size: $font-size;
+    font-size: 28px;
+    font-weight: normal;
     flex: 1;
     text-align: center;
-    height: $toolbar-height;
-    line-height: $toolbar-height;
+    height: $toolbar-height - 60px;
+    line-height: $toolbar-height - 60px;
     color: #fff;
     border: none;
-    border-radius: 0;
-    font-weight: bold;
+    border-radius: ($toolbar-height - 60px)/2;
+    //font-weight: bold;
     white-space: nowrap;
     &.drug-btn {
-      width: 500px;
+      width: 450px;
     }
     &.marketing-btn {
-      width: 500px;
+      width: 450px;
     }
     &:before, &:after {
       display: none;
     }
   }
-  .btn-add-cart {
+  .btn-add-cart-container {
+    width: 225px;
+    background-color: white;
+    padding: 30px 10px;
+  }
+  .btn-fast-buy-container {
+    width: 225px;
+    background-color: white;
+    padding: 30px 10px;
+  }
+  .btn-add-cart{
+    background-color: #c0534e;
+    color:white;
   }
   .btn-fast-buy {
     margin-left: -1px;
+    background-color: white;
+    color:#c0534e;
+    border: solid 1px #c0534e;
   }
   .form-id-collector {
     flex: 1;
     overflow: hidden;
   }
+
 }

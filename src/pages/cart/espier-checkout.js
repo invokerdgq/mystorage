@@ -788,7 +788,7 @@ export default class CartCheckout extends Component {
 
     return (
       <View>
-        <NavGap title='订单确认'/>
+        <NavGap title='确认订单'/>
         <View className='page-checkout'>
           {
             showAddressPicker === false
@@ -830,7 +830,7 @@ export default class CartCheckout extends Component {
                     <View
                       className='icon-location'
                       onClick={this.handleMapClick.bind(this)}
-                    ></View>
+                    />
                   </View>
                   <View className='view-flex'>
                     <View className='view-flex-item'>
@@ -845,16 +845,6 @@ export default class CartCheckout extends Component {
                 </View>
             }
             {/* && type !== 'limited_time_sale' */}
-            {(payType !== 'point' && payType !== 'point' && type !== 'group' && type !== 'seckill') && (
-              <SpCell
-                isLink
-                className='coupons-list'
-                title='选择优惠券'
-                onClick={this.handleCouponsClick}
-                value={couponText || ''}
-              />
-            )}
-
             <View className='cart-list'>
               {
                 info.cart.map(cart => {
@@ -920,24 +910,32 @@ export default class CartCheckout extends Component {
                           value={drug ? '已上传' : '用药人及处方上传'}
                         />
                       }
-                      <View className='sec cart-group__cont'>
-                        <SpCell
-                          className='sec trade-remark'
-                          border={false}
-                        >
-                          <AtInput
-                            className='trade-remark__input'
-                            placeholder='给商家留言：选填（50字以内）'
-                            onChange={this.handleRemarkChange.bind(this)}
-                          />
-                        </SpCell>
-                      </View>
+                      {/*<View className='sec cart-group__cont'>*/}
+                      {/*  <SpCell*/}
+                      {/*    className='sec trade-remark'*/}
+                      {/*    border={false}*/}
+                      {/*  >*/}
+                      {/*    <AtInput*/}
+                      {/*      className='trade-remark__input'*/}
+                      {/*      placeholder='给商家留言：选填（50字以内）'*/}
+                      {/*      onChange={this.handleRemarkChange.bind(this)}*/}
+                      {/*    />*/}
+                      {/*  </SpCell>*/}
+                      {/*</View>*/}
                     </View>
                   )
                 })
               }
             </View>
-
+            {(payType !== 'point' && payType !== 'point' && type !== 'group' && type !== 'seckill') && (
+              <SpCell
+                isLink
+                className='coupons-list'
+                title='选择优惠券'
+                onClick={this.handleCouponsClick}
+                value={couponText || ''}
+              />
+            )}
             {/*<SpCell
             isLink
             className='trade-invoice'
@@ -1000,11 +998,12 @@ export default class CartCheckout extends Component {
               <View className='sec trade-sub-total'>
                 <SpCell
                   className='trade-sub-total__item'
-                  title='商品金额：'
+                  title='商品总价'
                 >
                   <Price
                     unit='cent'
                     value={total.item_fee}
+                    choiceColor={false}
                   />
                 </SpCell>
                 {/*<SpCell
@@ -1018,24 +1017,49 @@ export default class CartCheckout extends Component {
               </SpCell>*/}
                 <SpCell
                   className='trade-sub-total__item'
-                  title='优惠金额：'
+                  title='活动优惠'
                 >
                   <Price
                     unit='cent'
                     value={total.discount_fee}
+                    choiceColor={true}
                   />
                 </SpCell>
                 <SpCell
                   className='trade-sub-total__item'
-                  title='运费：'
+                  title='优惠券'
+                >
+                  <Price
+                    unit='cent'
+                    value={total.discount_fee}
+                    choiceColor={true}
+                  />
+                </SpCell>
+                <SpCell
+                  className='trade-sub-total__item'
+                  title='运费'
                 >
                   <Price
                     unit='cent'
                     value={total.freight_fee}
+                    choiceColor={false}
                   />
                 </SpCell>
               </View>
             )}
+            {<View className='sec cart-group__cont'>
+              <SpCell
+                className='sec trade-remark'
+                border={false}
+              >
+                <AtInput
+                  className='trade-remark__input'
+                  placeholder='给商家留言：选填（50字以内）'
+                  onChange={this.handleRemarkChange.bind(this)}
+                />
+              </SpCell>
+            </View>}
+
           </ScrollView>
 
           <CheckoutItems
@@ -1049,18 +1073,18 @@ export default class CartCheckout extends Component {
               共<Text className='total-items'>{total.items_count}</Text>件商品　总计:
               {
                 payType !== 'point'
-                  ? <Price primary unit='cent' value={total.total_fee} />
+                  ? <Price primary unit='cent' value={total.total_fee} choiceColor={true} />
                   : (total.point && <Price primary value={total.point} noSymbol noDecimal appendText='积分' />)
               }
             </View>
             <AtButton
               type='primary'
               className='btn-confirm-order'
-              customStyle={`background: ${colors.data[0].primary}; border-color: ${colors.data[0].primary}`}
+              customStyle={{background: '#c0534e'}}
               loading={submitLoading}
               disabled={isBtnDisabled}
               onClick={this.submitPay}
-            >{isDrug ? '提交预约' : '提交订单'}</AtButton>
+            >{isDrug ? '提交预约' : '去支付'}</AtButton>
           </View>
 
           {

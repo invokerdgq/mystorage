@@ -23,6 +23,11 @@ page, body {
   background: $color-bg-gray;
   color: $color-primary-text;
 }
+.at-badge{
+  &__num{
+    background: #c0534e;
+  }
+}
 
 .lnk {
   color: $color-link;

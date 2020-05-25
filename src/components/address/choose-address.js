@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text ,Icon} from '@tarojs/components'
 import { SpCell, SpToast, SpNote } from '@/components'
 import { pickBy, log } from '@/utils'
 import { connect } from '@tarojs/redux'
@@ -55,11 +55,14 @@ export default class AddressChoose extends Component {
                 ? <View className='address-picker__bd'>
                     <View className='address-receive'>
                       <View className='info-trade'>
-                        <View className='address-area'>{isAddress.province}{isAddress.state}{isAddress.district}</View>
-                        <View className='address-detail'>{isAddress.address}</View>
                         <View className='user-info-trade'>
+                          <Icon className='iconfont icon-dizhi'/>
                           <Text className='name'>{isAddress.name}</Text>
                           <Text>{isAddress.mobile}</Text>
+                        </View>
+                        <View className='address-container'>
+                          <View className='address-area'>{isAddress.province}{isAddress.state}{isAddress.district}</View>
+                          <View className='address-area'>{isAddress.address}</View>
                         </View>
                       </View>
                     </View>
