@@ -1,6 +1,8 @@
 @import "../../style/imports";
 
 .page-address-index {
+  position: relative;
+  top:VH($nav-gap-height);
   background: #f5f5f5;
   .member-address-list {
     padding: 53px 30px 120px 40px;

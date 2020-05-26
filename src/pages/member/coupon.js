@@ -5,6 +5,7 @@ import { Loading, SpNote, NavBar, CouponItem } from '@/components'
 import api from '@/api'
 import { withPager } from '@/hocs'
 import { classNames, pickBy } from '@/utils'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './coupon.scss'
 
@@ -108,56 +109,59 @@ export default class Coupon extends Component {
     const { curTabIdx, tabList, list, page } = this.state
 
     return (
-      <View className='coupon-list'>
-        <NavBar
-          title='优惠券列表'
-          leftIconType='chevron-left'
-          fixed='true'
-        />
-        <AtTabs
-          className='coupon-list__tabs'
-          current={curTabIdx}
-          tabList={tabList}
-          onClick={this.handleClickTab}
-        >
-          {
-            tabList.map((panes, pIdx) =>
-              (<AtTabsPane
-                current={curTabIdx}
-                key={pIdx}
-                index={pIdx}
-              >
-              </AtTabsPane>)
-            )
-          }
-        </AtTabs>
+      <View>
+        <NavGap title='优惠券'/>
+        <View className='coupon-list'>
+          <NavBar
+            title='优惠券列表'
+            leftIconType='chevron-left'
+            fixed='true'
+          />
+          <AtTabs
+            className='coupon-list__tabs'
+            current={curTabIdx}
+            tabList={tabList}
+            onClick={this.handleClickTab}
+          >
+            {
+              tabList.map((panes, pIdx) =>
+                (<AtTabsPane
+                  current={curTabIdx}
+                  key={pIdx}
+                  index={pIdx}
+                >
+                </AtTabsPane>)
+              )
+            }
+          </AtTabs>
 
-        <ScrollView
-          scrollY
-          className='coupon-list__scroll'
-          onScrollToLower={this.nextPage}
-        >
-          <View className='coupon-list-ticket'>
-            {
-              list.map(item => {
-                return (
-                  <CouponItem
-                    info={item}
-                    key={item.id}
-                    onClick={this.handleClick.bind(this, item.card_id, item.code)}
-                  />
-                )
-              })
-            }
-            {
-              page.isLoading && <Loading>正在加载...</Loading>
-            }
-            {
-              !page.isLoading && !page.hasNext && !list.length
-              && (<SpNote img='trades_empty.png'>赶快去添加吧~</SpNote>)
-            }
-          </View>
-        </ScrollView>
+          <ScrollView
+            scrollY
+            className='coupon-list__scroll'
+            onScrollToLower={this.nextPage}
+          >
+            <View className='coupon-list-ticket'>
+              {
+                list.map(item => {
+                  return (
+                    <CouponItem
+                      info={item}
+                      key={item.id}
+                      onClick={this.handleClick.bind(this, item.card_id, item.code)}
+                    />
+                  )
+                })
+              }
+              {
+                page.isLoading && <Loading>正在加载...</Loading>
+              }
+              {
+                !page.isLoading && !page.hasNext && !list.length
+                && (<SpNote img='trades_empty.png'>赶快去添加吧~</SpNote>)
+              }
+            </View>
+          </ScrollView>
+        </View>
       </View>
     )
   }

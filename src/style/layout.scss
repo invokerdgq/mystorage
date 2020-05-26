@@ -197,7 +197,7 @@ scroll-view, view, text {
       height: 0;
     }
     &.icon-align-top {
-      align-items: top;
+      align-items: flex-start;
     }
     .item-icon {
       font-size: 45px;

@@ -74,6 +74,11 @@ export default class Series extends Component {
   onActionClick = ()=> {
 
   }
+  handleSearchClick = () => {
+    Taro.navigateTo({
+      url: '/pages/item/list'
+    })
+  }
   render () {
     const { info, isChanged, pluralType, imgType, colors } = this.props
     const { currentIndex } = this.state
@@ -87,7 +92,7 @@ export default class Series extends Component {
 
     return (
       <View>
-        <View className="search-bar-container">
+        <View className="search-bar-container" onClick={this.handleSearchClick}>
            <Icon className='iconfont icon-sousuo'></Icon>
            <View className='glory-container'>
              <Icon className='iconfont icon-huangguan'></Icon>
@@ -129,7 +134,7 @@ export default class Series extends Component {
                 items.map(item =>
                   item.children
                     ? <View className='new'>
-                      <View className='group-title'>——<Text className='group-title-inner'>{item.name}</Text>——</View>
+                      <View className='group-title'><View className='line-middle'/><Text className='group-title-inner'>{item.name}</Text><View className='line-middle'/></View>
                       <View className='content-group'>
                         {
                           item.children.map(child =>

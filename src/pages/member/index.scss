@@ -1,12 +1,47 @@
 @import "../../style/imports";
 
-.page-member-index {
+.member__scroll{
+  @include page-scroll($nav-gap-height)
+}
+.page-member-header-false{
+  width: 100%;
+  height: 295px;
+  padding-top: 70px;
+  background: $color-theme;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .icon-container{
+    width: 104px;
+    height: 104px;
+    border-radius: 52px;
+    background: white;
+    text-align: center;
+    line-height: 104px;
+    margin-bottom: 15px;
+    .icon-weidenglu{
+      font-size: 70px;
+      color:grey;
+    }
+  }
+  .login{
+    height: 40px;
+    border-radius: 20px;
+    padding:  0 20px;
+    line-height: 40px;
+    background: white;
+    font-size: 24px;
+    color: $color-theme;
+  }
+}
 
+.page-member-index {
   .icon-daipingjia:before {
     content: "\e607";
   }
   .page-member-header {
-    padding: 40px 60px 80px 60px;
+    height: 295px;
+    padding: 40px 60px 40px 60px;
     margin-bottom: 30px;
     color: #fff;
     &.no-card {
@@ -15,7 +50,7 @@
   }
   .page-member-section {
     width: 92vw;
-    margin: 0 auto 25px auto;
+    margin: 25px auto 25px auto;
     background: #fff;
     overflow: hidden;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
@@ -25,7 +60,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding-bottom: 50px;
+  padding-bottom: 30px;
   .avatar {
     position: relative;
     width: 120px;
@@ -71,11 +106,11 @@
     background: linear-gradient(to right bottom, #fca280, #e75fa9);
     border-radius: 50px;
   }
-  .icon-qrcode {
+  .icon-erweima {
     margin-right: 20px;
     font-size: 35px;
   }
-  .icon-setting {
+  .icon-setting-copy {
     margin-left: 10px;
     font-size: 40px;
     color: #fff;
@@ -142,12 +177,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -80px auto 20px auto;
+  margin: 20px auto 20px auto;
   width: 92vw;
   height: 24vw;
   z-index: 1;
   overflow: hidden;
   border-radius: 16px 16px 0 0;
+  .normal-vip{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    color: #f4d09e;
+    font-size: 34px;
+    z-index: 30;
+  }
   .member-info-bg {
     position: absolute;
     left: 0;
@@ -171,6 +216,9 @@
     color: #f4d09e;
     z-index: 20;
     text-align: center;
+    .icon-chakan{
+    font-size: 34px;
+  }
     &__title {
       font-size: 34px;
     }
@@ -184,7 +232,18 @@
     width: 100%;
     color: #e8bd7f;
     z-index: 30;
-    text-align: right;
+    text-align: left;
+    .VIP-detail{
+      position: absolute;
+      height: 40px;
+      line-height: 40px;
+      background: white;
+      border-radius: 20px;
+      padding: 0 25px;
+      right:80px;
+      top:50%;
+      transform: translate(0,-50%);
+    }
     .member-card-no {
       padding-top: 20px;
       font-size: 22px;
@@ -299,6 +358,9 @@
   }
 }
 .order-box {
+  .iconfont{
+    font-size: 60px;
+  }
   .icon-ziti {
     margin-right: 10px;
     font-size: 60px;
@@ -411,5 +473,40 @@
     padding: 0px;
     opacity: 0;
     z-index: 100;
+  }
+}
+.icon-chakan{
+  font-size: 24px;
+}
+.section-more{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.vip-show{
+  display: flex;
+  width: 84vw;
+  margin: 20px auto 0;
+  height: 75px;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 15px 15px 0 0 ;
+  background: $button-back-black;
+  opacity: 0.9;
+  &-feature{
+    margin-left: auto;
+    font-size: 24px;
+    color:$button-back-black;
+    margin-right: 15px;
+    padding: 0 30px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    background: white;
+  }
+  &-title{
+    font-size: 24px;
+    color:white;
+    margin-left: 15px;
   }
 }

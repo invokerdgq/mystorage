@@ -118,7 +118,7 @@ export default class GoodsItem extends Component {
                     }
                   </View>
                   <View className='che-container' onClick={this.handleCart.bind(this,info)}>
-                    <Icon className='iconfont icon-gouwuche' />
+                    <View className='iconfont icon-gouwuche' />
                   </View>
                 </View>
 							</View>

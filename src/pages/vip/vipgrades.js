@@ -7,6 +7,7 @@ import api from '@/api'
 import S from '@/spx'
 import { classNames, pickBy } from '@/utils'
 import './vipgrades.scss'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 @connect(({ colors }) => ({
   colors: colors.current
@@ -143,72 +144,74 @@ export default class VipIndex extends Component {
 		const { userInfo, list, cur, curTabIdx, userVipInfo, tabList } = this.state
 		return (
 			<View>
-				<View className='header' style={'background: ' + colors.data[0].marketing}>
-					<View className='header-isauth'>
-						<Image className='header-isauth__avatar' src={userInfo.avatar} mode='aspectFill'/>
-						<View className='header-isauth__info'>
-							<View className='nickname'>{userInfo.username}
-								<Image  className='icon-vip' src='/assets/imgs/svip.png' />
-							</View>
-							<View className='mcode'>{userVipInfo.end_time} 到期，购买后有效期将延续</View>
-						</View>
-					</View>
-					<AtTabs className='header-tab'
-						current={curTabIdx}
-						tabList={tabList}
-						onClick={this.handleClickTab} >
-           {
-             tabList.map((panes, pIdx) =>
-               (<AtTabsPane
-                 current={curTabIdx}
-                 key={pIdx}
-                 index={pIdx}
-               >
-               </AtTabsPane>)
-             )
-           }
-        	</AtTabs>
-				</View>
-				<View className='section'>
-					<View className='section-body'>
-					 	{
-							cur && cur.rate && cur.rate != 1 && (
-								<View className='text-muted'>
-									<text className='icon-info'></text> 货币汇率：1{cur.title} = {cur.rate}RMB
-								</View>
-							)
-						}
-						<View className='grade-list'>
-						{
-							list[curTabIdx]&&list[curTabIdx].price_list.map((item,index) => {
-								return (
-									(item.price != 0 && item.price != null)&&(
-										<View className={`grade-item ${index == curCellIdx && 'active'}`} key={index} onClick={this.checkHandle.bind(this,index)}>
-											<View className='item-content'>
-												<View className='desc'>{item.desc}</View>
-												<View className='amount'>
-													<Price primary value={Number(item.price)} />
-												</View>
-											</View>
-										</View>
-									)
-								)
-							})
-						}
-						</View>
-						<Button className='pay-btn' onClick={this.handleCharge}>立即支付</Button>
-						<View className='content-v-padded'>会员权益</View>
-						<View className='text-muted'>
-							{
-								list[curTabIdx] && list[curTabIdx].description.split('\n').map((item,index)=> {
-									return (
-										<View key={index}>{item}</View>
-									)
-								})
-							}
-						</View>
-					</View>
-				</View>
+        <NavGap title='会员中心'/>
+
+				{/*<View className='header' style={'background: ' + colors.data[0].marketing}>*/}
+				{/*	<View className='header-isauth'>*/}
+				{/*		<Image className='header-isauth__avatar' src={userInfo.avatar} mode='aspectFill'/>*/}
+				{/*		<View className='header-isauth__info'>*/}
+				{/*			<View className='nickname'>{userInfo.username}*/}
+				{/*				<Image  className='icon-vip' src='/assets/imgs/svip.png' />*/}
+				{/*			</View>*/}
+				{/*			<View className='mcode'>{userVipInfo.end_time} 到期，购买后有效期将延续</View>*/}
+				{/*		</View>*/}
+				{/*	</View>*/}
+				{/*	<AtTabs className='header-tab'*/}
+				{/*		current={curTabIdx}*/}
+				{/*		tabList={tabList}*/}
+				{/*		onClick={this.handleClickTab} >*/}
+        {/*   {*/}
+        {/*     tabList.map((panes, pIdx) =>*/}
+        {/*       (<AtTabsPane*/}
+        {/*         current={curTabIdx}*/}
+        {/*         key={pIdx}*/}
+        {/*         index={pIdx}*/}
+        {/*       >*/}
+        {/*       </AtTabsPane>)*/}
+        {/*     )*/}
+        {/*   }*/}
+        {/*	</AtTabs>*/}
+				{/*</View>*/}
+				{/*<View className='section'>*/}
+				{/*	<View className='section-body'>*/}
+				{/*	 	{*/}
+				{/*			cur && cur.rate && cur.rate != 1 && (*/}
+				{/*				<View className='text-muted'>*/}
+				{/*					<text className='icon-info'></text> 货币汇率：1{cur.title} = {cur.rate}RMB*/}
+				{/*				</View>*/}
+				{/*			)*/}
+				{/*		}*/}
+				{/*		<View className='grade-list'>*/}
+				{/*		{*/}
+				{/*			list[curTabIdx]&&list[curTabIdx].price_list.map((item,index) => {*/}
+				{/*				return (*/}
+				{/*					(item.price != 0 && item.price != null)&&(*/}
+				{/*						<View className={`grade-item ${index == curCellIdx && 'active'}`} key={index} onClick={this.checkHandle.bind(this,index)}>*/}
+				{/*							<View className='item-content'>*/}
+				{/*								<View className='desc'>{item.desc}</View>*/}
+				{/*								<View className='amount'>*/}
+				{/*									<Price primary value={Number(item.price)} />*/}
+				{/*								</View>*/}
+				{/*							</View>*/}
+				{/*						</View>*/}
+				{/*					)*/}
+				{/*				)*/}
+				{/*			})*/}
+				{/*		}*/}
+				{/*		</View>*/}
+				{/*		<Button className='pay-btn' onClick={this.handleCharge}>立即支付</Button>*/}
+				{/*		<View className='content-v-padded'>会员权益</View>*/}
+				{/*		<View className='text-muted'>*/}
+				{/*			{*/}
+				{/*				list[curTabIdx] && list[curTabIdx].description.split('\n').map((item,index)=> {*/}
+				{/*					return (*/}
+				{/*						<View key={index}>{item}</View>*/}
+				{/*					)*/}
+				{/*				})*/}
+				{/*			}*/}
+				{/*		</View>*/}
+				{/*	</View>*/}
+				{/*</View>*/}
 			</View>
 		)
 	}

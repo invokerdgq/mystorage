@@ -569,13 +569,6 @@ export default class CartIndex extends Component {
 
 
                         <View className={`toolbar cart-toolbar ${isEmpty && 'hidden'}`}>
-                          {/*<View className='cart-toolbar__hd'>*/}
-                          {/*  <SpCheckbox*/}
-                          {/*    // checked={this.isTotalChecked[shopIndex]}*/}
-                          {/*    checked={checked_all}*/}
-                          {/*    onChange={this.handleAllSelect.bind(this,!checked_all,shopIndex)}*/}
-                          {/*  >全选</SpCheckbox>*/}
-                          {/*</View>*/}
                           {
                             cartMode !== 'edit'
                               ? <View className='cart-toolbar__bd'>

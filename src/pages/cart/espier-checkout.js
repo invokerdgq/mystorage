@@ -818,9 +818,13 @@ export default class CartCheckout extends Component {
             }
             {
               (express && curStore.is_delivery) || (!curStore.is_delivery && !curStore.is_ziti)
-                ? <AddressChoose
-                  isAddress={address}
-                />
+                ?
+                <View style={{position:'relative'}}>
+                  <AddressChoose
+                    isAddress={address}
+                  />
+                  <Image src='../../assets/imgs/dash.jpg' className='dash'/>
+                </View>
                 : <View className='address-module'>
                   <View className='addr'>
                     <View className='view-flex-item'>
@@ -1045,21 +1049,42 @@ export default class CartCheckout extends Component {
                     choiceColor={false}
                   />
                 </SpCell>
+                  <SpCell
+                    className='trade-sub-total__item position'
+                    title='订单备注'
+                  >
+                    <AtInput
+                      border={false}
+                      maxLength='650'
+                      name='value1'
+                      type='text'
+                      placeholder='选填，请先与客服协商一致'
+                      onChange={this.handleRemarkChange.bind(this)}
+                    />
+                  </SpCell>
               </View>
             )}
-            {<View className='sec cart-group__cont'>
-              <SpCell
-                className='sec trade-remark'
-                border={false}
-              >
-                <AtInput
-                  className='trade-remark__input'
-                  placeholder='给商家留言：选填（50字以内）'
-                  onChange={this.handleRemarkChange.bind(this)}
+            {
+              <View className='total-count'>
+                合计:<Price
+                  unit='cent'
+                  value={total.total_fee}
+                  choiceColor={true}
                 />
-              </SpCell>
-            </View>}
-
+              </View>
+            }
+            {/*{<View className='sec cart-group__cont'>*/}
+            {/*  <SpCell*/}
+            {/*    className='sec trade-remark'*/}
+            {/*    border={false}*/}
+            {/*  >*/}
+            {/*    <AtInput*/}
+            {/*      className='trade-remark__input'*/}
+            {/*      placeholder=''*/}
+            {/*      onChange={this.handleRemarkChange.bind(this)}*/}
+            {/*    />*/}
+            {/*  </SpCell>*/}
+            {/*</View>}*/}
           </ScrollView>
 
           <CheckoutItems
@@ -1070,7 +1095,8 @@ export default class CartCheckout extends Component {
 
           <View className='toolbar checkout-toolbar'>
             <View className='checkout__total'>
-              共<Text className='total-items'>{total.items_count}</Text>件商品　总计:
+              {/*共<Text className='total-items'>{total.items_count}</Text>件商品　总计:*/}
+              需支付 :
               {
                 payType !== 'point'
                   ? <Price primary unit='cent' value={total.total_fee} choiceColor={true} />

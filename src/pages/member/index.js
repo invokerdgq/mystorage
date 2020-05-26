@@ -1,10 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, ScrollView, Text, Image, Navigator, Button } from '@tarojs/components'
+import {View, ScrollView, Text, Image, Navigator, Button, Icon} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { SpToast, TabBar, SpCell} from '@/components'
 import api from '@/api'
 import S from '@/spx'
 import NavGap from "../../components/nav-gap/nav-gap";
+import { AtAvatar } from 'taro-ui'
 
 import './index.scss'
 
@@ -48,6 +49,15 @@ export default class MemberIndex extends Component {
       salespersonData:null
 
     }
+    this.userFeature = [
+      {title:'收货地址管理',to:''},
+      {title:'我的拼团',to:''},
+      {title:'客服',to:''},
+      {title:'退换货政策',to:''},
+      {title:'商务合作',to:''},
+      {title:'协议规则',to:''},
+      {title:'个人信息',to:''},
+      ]
   }
 
   navigateTo (url) {
@@ -232,10 +242,46 @@ export default class MemberIndex extends Component {
             className='member__scroll'
             scrollY
           >
+            {/*  <View className='page-member-feature'>*/}
+            {/*    <View className='page-member-feature-order'>*/}
+            {/*      <View><Text>订单</Text> <View><Text>全部订单</Text><Icon className='iconfont icon-chakan'/></View></View>*/}
+            {/*      <View className='order-detail'>*/}
+            {/*        <View className='order-detail-wait-pay'>*/}
+            {/*          <Icon className='iconfont icon-daifukuan'/>*/}
+            {/*          <Text>待付款</Text>*/}
+            {/*        </View>*/}
+            {/*        <View className='order-detail-wait-receive'>*/}
+            {/*          <Icon className='iconfont icon-daishouhuo'/>*/}
+            {/*          <Text>待收货</Text>*/}
+            {/*        </View>*/}
+            {/*        <View className='order-detail-complete'>*/}
+            {/*          <Icon className='iconfont icon-jiuzhouyiwancheng'/>*/}
+            {/*          <Text>已完成</Text>*/}
+            {/*        </View>*/}
+            {/*        <View className='order-detail-wait-deliver'>*/}
+            {/*          <Icon className='iconfont icon-daifahuo'/>*/}
+            {/*          <Text>售后</Text>*/}
+            {/*        </View>*/}
+            {/*      </View>*/}
+            {/*    </View>*/}
+            {/*    <View className='page-member-feature-user'>*/}
+            {/*      {*/}
+            {/*        this.userFeature.map((item,index) => {*/}
+            {/*           return (*/}
+            {/*             <View className='feature-item-container'>*/}
+            {/*               <SpCell title={item.title} onClick={this.handleTradeClick.bind(this, 5)}/>*/}
+            {/*             </View>*/}
+            {/*           )*/}
+            {/*        })*/}
+            {/*      }*/}
+            {/*    </View>*/}
+            {/*  </View>*/}
+
+
             {
               S.getAuthToken()
                 ?
-                <View className={`page-member-header ${memberDiscount === '' ? 'no-card' : ''}`} style={'background: ' + colors.data[0].marketing}>
+                <View className={`page-member-header ${memberDiscount === '' ? 'no-card' : ''}`} style={'background: ' + '#c0534e'}>
                   <View className='user-info'>
                     <View className='view-flex view-flex-middle'>
                       <View className='avatar'>
@@ -251,8 +297,8 @@ export default class MemberIndex extends Component {
                       </View>
                     </View>
                     <View className='view-flex'>
-                      <View className='icon-qrcode' onClick={this.handleCodeClick.bind(this)}></View>
-                      <View className='icon-setting' onClick={this.handleClick.bind(this, '/marketing/pages/member/user-info')}></View>
+                      <View className='iconfont icon-erweima' onClick={this.handleCodeClick.bind(this)}></View>
+                      <View className='iconfont icon-setting-copy' onClick={this.handleClick.bind(this, '/marketing/pages/member/user-info')}></View>
                     </View>
                   </View>
                   <View className='member-assets view-flex'>
@@ -276,29 +322,42 @@ export default class MemberIndex extends Component {
                     </View>
                   </View>
                 </View>
-                : <View
-                  className='page-member-header view-flex view-flex-vertical view-flex-middle view-flex-center'
-                  style={'background: ' + colors.data[0].marketing}
-                  onClick={this.handleLoginClick.bind(this)}>
-                  <View className='avatar-placeholder icon-member'></View>
-                  <View className='unlogin' style={'background: ' + colors.data[0].primary}>请登录</View>
+                :
+                <View className='page-member-header-false'>
+                  <View className='icon-container'>
+                    <Icon className='iconfont icon-weidenglu'/>
+                  </View>
+                  <View className='login' onClick={this.handleLoginClick.bind(this)}>登入/注册</View>
                 </View>
+                // <View
+                //   className='page-member-header view-flex view-flex-vertical view-flex-middle view-flex-center'
+                //   style={'background: ' + colors.data[0].marketing}
+                //   onClick={this.handleLoginClick.bind(this)}>
+                //   <View className='avatar-placeholder icon-member'></View>
+                //   <View className='unlogin' style={'background: ' + colors.data[0].primary}>请登录</View>
+                // </View>
             }
+
             {
               (vipgrade.is_open || !vipgrade.is_open && vipgrade.is_vip) && memberDiscount !== '' &&
               <View
                 className='member-card'
-                onClick={this.handleClick.bind(this, '/pages/vip/vipgrades')}
               >
                 {
                   vipgrade.is_open && !vipgrade.is_vip
-                  && <View className='vip-btn'>
-                    <View className='vip-btn__title'>开通VIP会员 <Text className='icon-arrowRight'></Text></View>
-                    {
-                      memberDiscount &&
-                      <View className='vip-btn__desc'>即可享受最高{memberDiscount}折会员优惠</View>
-                    }
-                  </View>
+                  &&
+                    <View className='normal-vip'>
+                      <View>
+                        {gradeInfo.grade_name}
+                      </View>
+                      <View className='vip-btn'>
+                        <View className='vip-btn__title'   onClick={this.handleClick.bind(this, '/pages/vip/vipgrades')}>开通VIP会员 <Text className='iconfont icon-chakan'/></View>
+                        {
+                          memberDiscount &&
+                          <View className='vip-btn__desc'>即可享受最高{memberDiscount}折会员优惠</View>
+                        }
+                      </View>
+                    </View>
                 }
                 {
                   vipgrade.is_vip && (
@@ -306,9 +365,13 @@ export default class MemberIndex extends Component {
                       <View className='member-card-title'>
                         <Text className='vip-sign'>
                           {
-                            vipgrade.vip_type === 'svip'
-                              ? <Text>SVIP</Text>
-                              : <Text>VIP</Text>
+                            vipgrade.vip_type === 'svip'&&
+                              <Text>SVIP</Text>
+                          }
+                          {
+                            vipgrade.vip_type === 'svvip'&&
+                              <Text>SVVIP</Text>
+
                           }
                         </Text>
                         会员卡
@@ -317,6 +380,7 @@ export default class MemberIndex extends Component {
                       <View className='member-card-period'>
                         {vipgrade.end_date} 到期
                       </View>
+                      <View className='VIP-detail'   onClick={this.handleClick.bind(this, '/pages/vip/vipgrades')}>查看会员权益</View>
                     </View>
                   )
                 }
@@ -328,21 +392,23 @@ export default class MemberIndex extends Component {
                 }
               </View>
             }
+
+
             <View className='page-member-section order-box'>
               <View className='section-title view-flex view-flex-middle'>
                 <View className='view-flex-item'>订单</View>
-                <View class='section-more' onClick={this.handleTradeClick.bind(this)}>全部订单<Text className='forward-icon icon-arrowRight'></Text></View>
+                <View class='section-more' onClick={this.handleTradeClick.bind(this)}>全部订单<Text className='iconfont icon-chakan'></Text></View>
               </View>
               <View className='member-trade__ziti' onClick={this.handleTradePickClick.bind(this)}>
                 <View className='view-flex-item'>
                   <View className='member-trade__ziti-title'>自提订单</View>
                   <View className='member-trade__ziti-desc'>您有<Text className='mark'>{orderCount.normal_payed_daiziti || 0}</Text>个等待自提的订单</View>
                 </View>
-                <View className='icon-arrowRight item-icon-go'></View>
+                <View className='iconfont icon-chakan'></View>
               </View>
               <View className='member-trade'>
                 <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 5)}>
-                  <View className='icon-wallet'>
+                  <View className='iconfont icon-daifukuan'>
                     {
                       orderCount.normal_notpay_notdelivery > 0 && (<View className='trade-num' >{orderCount.normal_notpay_notdelivery}</View>)
                     }
@@ -350,7 +416,7 @@ export default class MemberIndex extends Component {
                   <Text>待支付</Text>
                 </View>
                 <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 1)}>
-                  <View className='icon-delivery'>
+                  <View className='iconfont icon-daishouhuo'>
                     {
                       orderCount.normal_payed_notdelivery > 0 && (<View className='trade-num'>{orderCount.normal_payed_notdelivery}</View>)
                     }
@@ -358,7 +424,7 @@ export default class MemberIndex extends Component {
                   <Text>待收货</Text>
                 </View>
                 <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 3)}>
-                  <View className='icon-office-box'>
+                  <View className='iconfont icon-jiuzhouyiwancheng'>
                     {
                       orderCount.normal_payed_delivered > 0 && <View className='trade-num'>{orderCount.normal_payed_delivered}</View>
                     }
@@ -368,12 +434,12 @@ export default class MemberIndex extends Component {
                 {
                   orderCount.rate_status &&
                   <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 3)}>
-                    <View className='icon-daipingjia'></View>
+                    <View className='iconfont icon-daipingjia'/>
                     <Text className='trade-status'>待评价</Text>
                   </View>
                 }
                 <View className='member-trade__item' onClick={this.viewAftersales.bind(this)}>
-                  <View className='icon-repeat'>
+                  <View className='iconfont icon-shouhou'>
                     {
                       orderCount.aftersales > 0 && (<View className='trade-num'>{orderCount.aftersales}</View>)
                     }

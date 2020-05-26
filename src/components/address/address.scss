@@ -64,8 +64,8 @@
       }
     }
     .user-info-trade {
-      color: #666;
-      font-size: 26px;
+      color: $button-back-black;
+      font-size: 31px;
       padding-left: 60px;
       .name {
         margin-right: $edge-margin;
@@ -102,4 +102,14 @@
       margin-right: 10px;
     }
   }
+}
+.address-add-container{
+  text-align: center;
+  .icon-tianjiadizhi{
+    font-size: 72px;
+    color: #edecec;
+  }
+}
+.none{
+  display: none;
 }

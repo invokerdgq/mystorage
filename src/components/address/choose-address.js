@@ -47,7 +47,7 @@ export default class AddressChoose extends Component {
           onClick={this.clickTo.bind(this, 'choose')}
         >
           <SpCell
-            isLink
+            isLink={isAddress}
             // icon='map-pin'
           >
             {
@@ -67,7 +67,11 @@ export default class AddressChoose extends Component {
                       </View>
                     </View>
                   </View>
-                : <View className='address-info__bd'>请选择收货地址</View>
+                :
+                <View className='address-add-container'>
+                  <View className='iconfont icon-tianjiadizhi' onClick={this.clickTo.bind(this, 'choose')}/>
+                  <View className='address-info__bd'>点击填写收货地址</View>
+                </View>
             }
           </SpCell>
         </View>

@@ -5,6 +5,7 @@ import { connect } from '@tarojs/redux'
 import { SpToast, SpCell } from '@/components'
 import S from '@/spx'
 import api from '@/api'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './address.scss'
 
@@ -116,71 +117,74 @@ export default class AddressIndex extends Component {
     const { colors } = this.props
     const { selectedId, isItemChecked, isPicker, list } = this.state
     return (
-      <View className='page-address-index'>
-        {
-          process.env.TARO_ENV === 'weapp'
-            ? <SpCell
+      <View>
+        <NavGap title='地址管理'/>
+        <View className='page-address-index'>
+          {
+            process.env.TARO_ENV === 'weapp'
+              ? <SpCell
                 isLink
                 iconPrefix='sp-icon'
                 icon='weixin'
                 title='获取微信收货地址'
                 onClick={this.wxAddress.bind(this)}
               />
-            : null
-        }
-        <View className='member-address-list'>
-          {
-            list.map((item, index) => {
-              return (
-                <View key={item[ADDRESS_ID]} className='address-item'>
-                  {
-                    isPicker && <View className='address-item__check' onClick={this.handleClickChecked.bind(this, item)}>
-                      {
-                        item[ADDRESS_ID] === selectedId
-                          ? <Text className='icon-check address-item__checked'></Text>
-                          : <Text className='address-item__unchecked'> </Text>
-                      }
-                    </View>
-                  }
-
-                  <View className='address-item__content'>
-                    <View className='address-item__title'>
-                      <Text className='address-item__info'>{item.username}</Text>
-                      <Text className='address-item__info'>{item.telephone}</Text>
-                    </View>
-                    <View className='address-item__detail'>{item.province}{item.city}{item.county}{item.adrdetail}</View>
-                    <View className='address-item__footer'>
-                      <View className='address-item__footer_default' onClick={this.handleChangeDefault.bind(this, item)}>
+              : null
+          }
+          <View className='member-address-list'>
+            {
+              list.map((item, index) => {
+                return (
+                  <View key={item[ADDRESS_ID]} className='address-item'>
+                    {
+                      isPicker && <View className='address-item__check' onClick={this.handleClickChecked.bind(this, item)}>
                         {
-                          item.is_def
-                            ? <Text className='icon-check default__icon default__checked'> </Text>
-                            : <Text className='icon-check default__icon'> </Text>
+                          item[ADDRESS_ID] === selectedId
+                            ? <Text className='icon-check address-item__checked'></Text>
+                            : <Text className='address-item__unchecked'> </Text>
                         }
-                        <Text className='default-text'>设为默认</Text>
                       </View>
-                      <View className='address-item__footer_edit'>
-                        <View className='footer-text' onClick={this.handleClickToEdit.bind(this, item)}>
-                          <Text className='icon-edit footer-icon'> </Text>
-                          <Text>编辑</Text>
+                    }
+
+                    <View className='address-item__content'>
+                      <View className='address-item__title'>
+                        <Text className='address-item__info'>{item.username}</Text>
+                        <Text className='address-item__info'>{item.telephone}</Text>
+                      </View>
+                      <View className='address-item__detail'>{item.province}{item.city}{item.county}{item.adrdetail}</View>
+                      <View className='address-item__footer'>
+                        <View className='address-item__footer_default' onClick={this.handleChangeDefault.bind(this, item)}>
+                          {
+                            item.is_def
+                              ? <Text className='icon-check default__icon default__checked'> </Text>
+                              : <Text className='icon-check default__icon'> </Text>
+                          }
+                          <Text className='default-text'>设为默认</Text>
                         </View>
-                        <View className='footer-text' onClick={this.handleDelete.bind(this, item)}>
-                          <Text className='icon-trash footer-icon'> </Text>
-                          <Text>删除</Text>
+                        <View className='address-item__footer_edit'>
+                          <View className='footer-text' onClick={this.handleClickToEdit.bind(this, item)}>
+                            <Text className='icon-edit footer-icon'> </Text>
+                            <Text>编辑</Text>
+                          </View>
+                          <View className='footer-text' onClick={this.handleDelete.bind(this, item)}>
+                            <Text className='icon-trash footer-icon'> </Text>
+                            <Text>删除</Text>
+                          </View>
                         </View>
                       </View>
                     </View>
                   </View>
-                </View>
-              )
-            })
-          }
-        </View>
-        <View
-          className='member-address-add'
-          style={'background: ' + colors.data[0].primary}
-          onClick={this.handleClickToEdit.bind(this)}>添加新地址</View>
+                )
+              })
+            }
+          </View>
+          <View
+            className='member-address-add'
+            style={'background: ' + colors.data[0].primary}
+            onClick={this.handleClickToEdit.bind(this)}>添加新地址</View>
 
-        <SpToast />
+          <SpToast />
+        </View>
       </View>
     )
   }

@@ -28,6 +28,12 @@
       }
     }
   }
+  .dash{
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    bottom:4px;
+  }
 
   .checkout {
     &__wrap {
@@ -131,15 +137,15 @@
       display: block;
     }
     &__img {
-      width: 200px;
-      height: 200px;
+      width: 175px;
+      height: 175px;
       margin-right: 34px;
     }
     &__ft {
       position: absolute;
       bottom: 20px;
       right: 50px;
-      left: 200px;
+      left: 255px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -169,8 +175,11 @@
     }
   }
 
-  .trade-shipping, .trade-invoice, .trade-remark, .trade-point, .trade-sub-total, .trade-payment {
+  .trade-shipping, .trade-invoice, .trade-remark, .trade-point, .trade-payment {
     margin: 0 0 $edge-margin;
+  }
+  .trade-sub-total{
+    margin: 0 ;
   }
 
   .trade-point {
@@ -242,8 +251,9 @@
   .trade-sub-total {
     padding: $edge-margin 0;
     &__item {
-      padding-top: 8px;
-      padding-bottom: 8px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-bottom: solid 1px #eeeeee;
     }
     .sp-cell {
       &:before {
@@ -327,5 +337,21 @@
     &:before, &:after {
       border: none;
     }
+  }
+}
+.total-count{
+  text-align: right;
+  line-height: 100px;
+  height: 100px;
+  background: white;
+  padding-right: 50px;
+}
+.position{
+  .sp-cell__bd{
+    justify-content: flex-start !important;
+  }
+  .at-input{
+    margin: 0;
+    width: 550px;
   }
 }
