@@ -3,6 +3,7 @@ import { View, Text, Image } from '@tarojs/components'
 import { withLogin } from '@/hocs'
 import S from '@/spx'
 import api from '@/api'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './member-code.scss'
 
@@ -24,7 +25,8 @@ export default class MemberCode extends Component {
     const { memberInfo, vipgrade, cardInfo } = await api.member.memberInfo()
     const params = {
       code_type: (cardInfo && cardInfo.code_type) || {},
-      content: memberInfo.user_card_code
+      content: memberInfo.user_card_code,
+      appid:'wxde87f955d769c707'
     }
     const res = await api.member.memberCode(params)
 
@@ -42,20 +44,23 @@ export default class MemberCode extends Component {
     const { info } = this.state
 
     return (
-      <View className="member-code-wrap">
-        <View className="member-code">
-          <View className="avatar">
-            <Image className="avatar-img" src={avatar} mode="aspectFill" />
-            {
-              info.vipType && (info.vipType === 'vip' || info.vipType === 'svip')
+      <View>
+        <NavGap title='分享二维码'/>
+        <View className="member-code-wrap">
+          <View className="member-code">
+            <View className="avatar">
+              <Image className="avatar-img" src={avatar} mode="aspectFill" />
+              {
+                info.vipType && (info.vipType === 'vip' || info.vipType === 'svip')
                 && <Image className="icon-vip" src="../images/svip.png" />
-            }
+              }
+            </View>
+            <View className="nickname">{username}</View>
+            {/*<Image className="member-code-bar" mode="aspectFill" src={info.barcode_url} />*/}
+            <Image className="member-code-qr" mode="aspectFit" src={info.qrcode_url} />
+            <View>{info.userCardCode}</View>
+            <View className="muted">使用时，出示此码</View>
           </View>
-          <View className="nickname">{username}</View>
-          <Image className="member-code-bar" mode="aspectFill" src={info.barcode_url} />
-          <Image className="member-code-qr" mode="aspectFit" src={info.qrcode_url} />
-          <View>{info.userCardCode}</View>
-          <View className="muted">使用时，出示此码</View>
         </View>
       </View>
     )

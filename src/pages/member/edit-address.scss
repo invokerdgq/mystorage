@@ -1,6 +1,8 @@
 @import '../../style/imports';
 
 .page-address-edit {
+  position: relative;
+  top:VH($navigate-height);
   &__form {
     background: #fff;
     padding: $edge-size;

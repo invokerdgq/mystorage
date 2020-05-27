@@ -7,6 +7,7 @@ import req from '@/api/req'
 import api from '@/api'
 import { FormIds, WxAuth } from '@/service'
 import Index from './pages/index'
+import entry from "./utils/entry";
 
 import './app.scss'
 import qs from 'qs'
@@ -56,7 +57,18 @@ useHooks()
   class App extends Component {
     // eslint-disable-next-line react/sort-comp
     componentWillMount () {
-
+      // entry.entryLaunch({scene:`uid=${this.$router.params.query.scene}`})
+      if(this.$router.params.query.scene){
+        try{Taro.setStorageSync('scene',this.$router.params.query.scene)}
+        catch (e) {
+          console.log(e)
+        }
+      }else {
+        try{Taro.setStorageSync('scene','')}
+        catch (e) {
+          console.log(e)
+        }
+      }
     }
     componentDidMount () {
       const promoterExp = Taro.getStorageSync('distribution_shop_exp')
@@ -130,6 +142,7 @@ useHooks()
         'pages/member/item-guess',
         'pages/member/group-list',
         'pages/member/member-code',
+        'pages/member/vip',
         'pages/qrcode-buy',
 
          'pages/manager/manager',

@@ -7,6 +7,7 @@ import { SpCell, SpToast } from '@/components'
 import api from '@/api'
 import { pickBy, log } from '@/utils'
 import S from '@/spx'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './edit-address.scss'
 
@@ -270,99 +271,101 @@ export default class AddressIndex extends Component {
     const { info, multiIndex, areaList } = this.state
 
     return (
-      <View className='page-address-edit'>
-        {/*<EditAddress*/}
+      <View>
+        <NavGap title='地址编辑'/>
+        <View className='page-address-edit'>
+          {/*<EditAddress*/}
           {/*address={this.$router.params.address}*/}
           {/*addressID={this.$router.params.address_id}*/}
-        {/*/>*/}
-        <AtForm
-          onSubmit={this.handleSubmit}
-        >
-          <View className='page-address-edit__form'>
-            <AtInput
-              title='收件人姓名'
-              name='username'
-              value={info.username}
-              onChange={this.handleChange.bind(this, 'username')}
-            />
-            <AtInput
-              title='手机号码'
-              name='telephone'
-              maxLength={11}
-              value={info.telephone}
-              onChange={this.handleChange.bind(this, 'telephone')}
-            />
-            <Picker
-              mode='multiSelector'
-              onClick={this.handleClickPicker}
-              onChange={this.bindMultiPickerChange}
-              onColumnChange={this.bindMultiPickerColumnChange}
-              value={multiIndex}
-              range={areaList}
-            >
-              <View className='picker'>
-                <View className='picker__title'>所在区域</View>
-                {
-                  info.address_id || (this.$router.params.isWechatAddress && info.province)
-                    ? `${info.province}${info.city}${info.county}`
-                    : <View>
-                      {
-                        multiIndex.length > 0
-                          ? <Text>{areaList[0][multiIndex[0]]}{areaList[1][multiIndex[1]]}{areaList[2][multiIndex[2]]}</Text>
-                          : null
-                      }
-                    </View>
-                }
-              </View>
-            </Picker>
-
-            <AtInput
-              title='详细地址'
-              name='adrdetail'
-              value={info.adrdetail}
-              onChange={this.handleChange.bind(this, 'adrdetail')}
-            />
-            <AtInput
-              title='邮政编码'
-              name='postalCode'
-              value={info.postalCode}
-              onChange={this.handleChange.bind(this, 'postalCode')}
-            />
-          </View>
-
-          <View className='sec'>
-            <SpCell
-              title='设为默认地址'
-            >
-              <Switch
-                checked={info.is_def}
-                onChange={this.handleDefChange.bind(this)}
+          {/*/>*/}
+          <AtForm
+            onSubmit={this.handleSubmit}
+          >
+            <View className='page-address-edit__form'>
+              <AtInput
+                title='收件人姓名'
+                name='username'
+                value={info.username}
+                onChange={this.handleChange.bind(this, 'username')}
               />
-            </SpCell>
-          </View>
+              <AtInput
+                title='手机号码'
+                name='telephone'
+                maxLength={11}
+                value={info.telephone}
+                onChange={this.handleChange.bind(this, 'telephone')}
+              />
+              <Picker
+                mode='multiSelector'
+                onClick={this.handleClickPicker}
+                onChange={this.bindMultiPickerChange}
+                onColumnChange={this.bindMultiPickerColumnChange}
+                value={multiIndex}
+                range={areaList}
+              >
+                <View className='picker'>
+                  <View className='picker__title'>所在区域</View>
+                  {
+                    info.address_id || (this.$router.params.isWechatAddress && info.province)
+                      ? `${info.province}${info.city}${info.county}`
+                      : <View>
+                        {
+                          multiIndex.length > 0
+                            ? <Text>{areaList[0][multiIndex[0]]}{areaList[1][multiIndex[1]]}{areaList[2][multiIndex[2]]}</Text>
+                            : null
+                        }
+                      </View>
+                  }
+                </View>
+              </Picker>
 
-          <View className='btns'>
-            {
-              process.env.TARO_ENV === 'weapp'
-                ? <Button
+              <AtInput
+                title='详细地址'
+                name='adrdetail'
+                value={info.adrdetail}
+                onChange={this.handleChange.bind(this, 'adrdetail')}
+              />
+              <AtInput
+                title='邮政编码'
+                name='postalCode'
+                value={info.postalCode}
+                onChange={this.handleChange.bind(this, 'postalCode')}
+              />
+            </View>
+
+            <View className='sec'>
+              <SpCell
+                title='设为默认地址'
+              >
+                <Switch
+                  checked={info.is_def}
+                  onChange={this.handleDefChange.bind(this)}
+                />
+              </SpCell>
+            </View>
+
+            <View className='btns'>
+              {
+                process.env.TARO_ENV === 'weapp'
+                  ? <Button
                     type='primary'
                     onClick={this.handleSubmit}
                     formType='submit'
                     style={`background: ${colors.data[0].primary}; border-color: ${colors.data[0].primary}`}
-                    >提交</Button>
-                : <Button
+                  >提交</Button>
+                  : <Button
                     type='primary'
                     onClick={this.handleSubmit}
                     formType='submit'
                     style={`background: ${colors.data[0].primary}; border-color: ${colors.data[0].primary}`}
-                    >提交</Button>
-            }
-          </View>
-        </AtForm>
+                  >提交</Button>
+              }
+            </View>
+          </AtForm>
 
-        <SpToast />
+          <SpToast />
+        </View>
       </View>
-
     )
   }
 }

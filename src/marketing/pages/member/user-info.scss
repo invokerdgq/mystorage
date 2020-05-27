@@ -4,6 +4,7 @@
   height: 100vh;
   padding-top: 92px;
   position: relative;
+  top:VH($nav-gap-height);
   box-sizing: border-box;
   background: $color-brand-primary-text;
   &__form {

@@ -3,6 +3,8 @@
 .page-recommend-detail {
   background: #fff;
   height: 100vh;
+  position: relative;
+  top:VH($nav-gap-height)
 }
 
 .wgt {

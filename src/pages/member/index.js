@@ -68,7 +68,7 @@ export default class MemberIndex extends Component {
     const { colors } = this.props
     Taro.setNavigationBarColor({
       backgroundColor: colors.data[0].marketing,
-      frontColor: '#ffffff'
+      frontColor: 'black'
     })
     this.fetch()
 
@@ -229,6 +229,11 @@ export default class MemberIndex extends Component {
       url: `/pages/member/member-code`
     })
   }
+  handlePresist = (grade_name) => {
+    Taro.navigateTo({
+      url:`/pages/vip/vipgrades?grade_name${grade_name}`
+    })
+  }
 
   render () {
     const { colors } = this.props
@@ -242,42 +247,6 @@ export default class MemberIndex extends Component {
             className='member__scroll'
             scrollY
           >
-            {/*  <View className='page-member-feature'>*/}
-            {/*    <View className='page-member-feature-order'>*/}
-            {/*      <View><Text>订单</Text> <View><Text>全部订单</Text><Icon className='iconfont icon-chakan'/></View></View>*/}
-            {/*      <View className='order-detail'>*/}
-            {/*        <View className='order-detail-wait-pay'>*/}
-            {/*          <Icon className='iconfont icon-daifukuan'/>*/}
-            {/*          <Text>待付款</Text>*/}
-            {/*        </View>*/}
-            {/*        <View className='order-detail-wait-receive'>*/}
-            {/*          <Icon className='iconfont icon-daishouhuo'/>*/}
-            {/*          <Text>待收货</Text>*/}
-            {/*        </View>*/}
-            {/*        <View className='order-detail-complete'>*/}
-            {/*          <Icon className='iconfont icon-jiuzhouyiwancheng'/>*/}
-            {/*          <Text>已完成</Text>*/}
-            {/*        </View>*/}
-            {/*        <View className='order-detail-wait-deliver'>*/}
-            {/*          <Icon className='iconfont icon-daifahuo'/>*/}
-            {/*          <Text>售后</Text>*/}
-            {/*        </View>*/}
-            {/*      </View>*/}
-            {/*    </View>*/}
-            {/*    <View className='page-member-feature-user'>*/}
-            {/*      {*/}
-            {/*        this.userFeature.map((item,index) => {*/}
-            {/*           return (*/}
-            {/*             <View className='feature-item-container'>*/}
-            {/*               <SpCell title={item.title} onClick={this.handleTradeClick.bind(this, 5)}/>*/}
-            {/*             </View>*/}
-            {/*           )*/}
-            {/*        })*/}
-            {/*      }*/}
-            {/*    </View>*/}
-            {/*  </View>*/}
-
-
             {
               S.getAuthToken()
                 ?
@@ -292,13 +261,13 @@ export default class MemberIndex extends Component {
                         {
                           !vipgrade.is_vip
                             ? <View className='gradename'>{gradeInfo.grade_name}</View>
-                            : <View className='gradename'>{vipgrade.grade_name}</View>
+                            : <View className='gradename' onClick={this.handlePresist.bind(this,vipgrade.grade_name)}>{vipgrade.grade_name} 续费</View>
                         }
                       </View>
                     </View>
                     <View className='view-flex'>
-                      <View className='iconfont icon-erweima' onClick={this.handleCodeClick.bind(this)}></View>
-                      <View className='iconfont icon-setting-copy' onClick={this.handleClick.bind(this, '/marketing/pages/member/user-info')}></View>
+                      <View className='iconfont icon-erweima' onClick={this.handleCodeClick.bind(this)}/>
+                      <View className='iconfont icon-setting-copy' onClick={this.handleClick.bind(this, '/marketing/pages/member/user-info')}/>
                     </View>
                   </View>
                   <View className='member-assets view-flex'>
@@ -374,7 +343,7 @@ export default class MemberIndex extends Component {
 
                           }
                         </Text>
-                        会员卡
+                        {!vipgrade.is_vip?gradeInfo.grade_name:vipgrade.grade_name}
                       </View>
                       <View className='member-card-no'>NO. {gradeInfo.user_card_code}</View>
                       <View className='member-card-period'>

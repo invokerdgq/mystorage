@@ -6,6 +6,7 @@ import { SpToast, Timer, NavBar, FormIdCollector, SpCheckbox } from '@/component
 import { classNames, isString, isArray } from '@/utils'
 import S from '@/spx'
 import api from '@/api'
+import NavGap from "../../../components/nav-gap/nav-gap";
 
 import './user-info.scss'
 
@@ -330,82 +331,84 @@ export default class Reg extends Component {
     const { info, isHasValue, isVisible, isHasData, list, imgVisible, imgInfo, option_list, showCheckboxPanel } = this.state
 
     return (
-      <View className='auth-reg'>
-        <NavBar
-          title='注册'
-          leftIconType='chevron-left'
-        />
-        <AtForm
-          onSubmit={this.handleSubmit}
-        >
-          <View className='sec auth-reg__form'>
-            {process.env.TARO_ENV === 'weapp' && (
-              <View className='at-input'>
-                <View className='at-input__container'>
-                  <View className='at-input__title'>手机号码</View>
-                  <View className='at-input__input'>{info.mobile}</View>
-                  <View className='at-input__children'>
-                    <AtButton
-                      openType='getPhoneNumber'
-                      onGetPhoneNumber={this.handleGetPhoneNumber}
-                    >获取手机号码</AtButton>
+      <View>
+        <NavGap title='注册'/>
+        <View className='auth-reg'>
+          <NavBar
+            title='注册'
+            leftIconType='chevron-left'
+          />
+          <AtForm
+            onSubmit={this.handleSubmit}
+          >
+            <View className='sec auth-reg__form'>
+              {process.env.TARO_ENV === 'weapp' && (
+                <View className='at-input'>
+                  <View className='at-input__container'>
+                    <View className='at-input__title'>手机号码</View>
+                    <View className='at-input__input'>{info.mobile}</View>
+                    <View className='at-input__children'>
+                      <AtButton
+                        openType='getPhoneNumber'
+                        onGetPhoneNumber={this.handleGetPhoneNumber}
+                      >获取手机号码</AtButton>
+                    </View>
                   </View>
                 </View>
-              </View>
 
-              // <AtInput
-              //   title='手机号码'
-              //   className='input-phone'
-              //   name='mobile'
-              //   type='number'
-              //   // disabled={isHasValue}
-              //   maxLength={11}
-              //   value={info.mobile}
-              //   placeholder=''
-              //   onFocus={this.handleErrorToastClose}
-              //   onChange={this.handleChange.bind(this, 'mobile')}
-              // >
-              //   <AtButton
-              //     openType='getPhoneNumber'
-              //     onGetPhoneNumber={this.handleGetPhoneNumber}
-              //   >获取手机号码</AtButton>
-              // </AtInput>
-            )}
-            {Taro.getEnv() !== Taro.ENV_TYPE.WEAPP && (
-              <View>
-                <AtInput
-                  title='手机号码'
-                  name='mobile'
-                  type='number'
-                  maxLength={11}
-                  value={info.mobile}
-                  placeholder='请输入手机号码'
-                  onFocus={this.handleErrorToastClose}
-                  onChange={this.handleChange.bind(this, 'mobile')}
-                />
-                {
-                  imgVisible
-                    ? <AtInput title='图片验证码' name='yzm' value={info.yzm} placeholder='请输入图片验证码' onFocus={this.handleErrorToastClose} onChange={this.handleChange.bind(this, 'yzm')}>
-                      <Image src={`${imgInfo.imageData}`} onClick={this.handleClickImgcode} />
-                    </AtInput>
-                    : null
-                }
-                <AtInput
-                  title='验证码'
-                  name='vcode'
-                  value={info.vcode}
-                  placeholder='请输入验证码'
-                  onFocus={this.handleErrorToastClose}
-                  onChange={this.handleChange.bind(this, 'vcode')}
-                >
-                  <Timer
-                    onStart={this.handleTimerStart}
-                    onStop={this.handleTimerStop}
+                // <AtInput
+                //   title='手机号码'
+                //   className='input-phone'
+                //   name='mobile'
+                //   type='number'
+                //   // disabled={isHasValue}
+                //   maxLength={11}
+                //   value={info.mobile}
+                //   placeholder=''
+                //   onFocus={this.handleErrorToastClose}
+                //   onChange={this.handleChange.bind(this, 'mobile')}
+                // >
+                //   <AtButton
+                //     openType='getPhoneNumber'
+                //     onGetPhoneNumber={this.handleGetPhoneNumber}
+                //   >获取手机号码</AtButton>
+                // </AtInput>
+              )}
+              {Taro.getEnv() !== Taro.ENV_TYPE.WEAPP && (
+                <View>
+                  <AtInput
+                    title='手机号码'
+                    name='mobile'
+                    type='number'
+                    maxLength={11}
+                    value={info.mobile}
+                    placeholder='请输入手机号码'
+                    onFocus={this.handleErrorToastClose}
+                    onChange={this.handleChange.bind(this, 'mobile')}
                   />
-                </AtInput>
-              </View>
-            )}
-            {/*<AtInput
+                  {
+                    imgVisible
+                      ? <AtInput title='图片验证码' name='yzm' value={info.yzm} placeholder='请输入图片验证码' onFocus={this.handleErrorToastClose} onChange={this.handleChange.bind(this, 'yzm')}>
+                        <Image src={`${imgInfo.imageData}`} onClick={this.handleClickImgcode} />
+                      </AtInput>
+                      : null
+                  }
+                  <AtInput
+                    title='验证码'
+                    name='vcode'
+                    value={info.vcode}
+                    placeholder='请输入验证码'
+                    onFocus={this.handleErrorToastClose}
+                    onChange={this.handleChange.bind(this, 'vcode')}
+                  >
+                    <Timer
+                      onStart={this.handleTimerStart}
+                      onStop={this.handleTimerStop}
+                    />
+                  </AtInput>
+                </View>
+              )}
+              {/*<AtInput
               title='密码'
               name='password'
               type={isVisible ? 'text' : 'password'}
@@ -421,13 +424,13 @@ export default class Reg extends Component {
                   : <View className='sp-icon sp-icon-icon6 icon-pwd' onClick={this.handleClickIconpwd}> </View>
               }
             </AtInput>*/}
-            {
-              isHasData && list.map((item, index) => {
-                return (
-                  <View key={index}>
-                    {
-                      item.element_type === 'input'
-                        ? <View key={index}>
+              {
+                isHasData && list.map((item, index) => {
+                  return (
+                    <View key={index}>
+                      {
+                        item.element_type === 'input'
+                          ? <View key={index}>
                             <AtInput
                               key={index}
                               title={item.name}
@@ -439,11 +442,11 @@ export default class Reg extends Component {
                               ref={(input) => { this.textInput = input }}
                             />
                           </View>
-                        : null
-                    }
-                    {
-                      item.element_type === 'select'
-                        ? <View className='page-section'>
+                          : null
+                      }
+                      {
+                        item.element_type === 'select'
+                          ? <View className='page-section'>
                             <View key={index}>
                               {
                                 item.key === 'birthday'
@@ -466,11 +469,11 @@ export default class Reg extends Component {
                               }
                             </View>
                           </View>
-                        : null
-                    }
-                    {
-                      item.element_type === 'checkbox'
-                        ? <View className='page-section'>
+                          : null
+                      }
+                      {
+                        item.element_type === 'checkbox'
+                          ? <View className='page-section'>
                             <AtInput
                               key={index}
                               title={item.name}
@@ -480,39 +483,39 @@ export default class Reg extends Component {
                               onFocus={this.showCheckboxPanel.bind(this, item.items, item.key)}
                             />
                           </View>
-                        : null
-                    }
-                  </View>
-                )
-              })
+                          : null
+                      }
+                    </View>
+                  )
+                })
 
-            }
-          </View>
-          <View className='btns'>
-            {
-              process.env.TARO_ENV === 'weapp'
-                ? <FormIdCollector
-                  sync
-                >
+              }
+            </View>
+            <View className='btns'>
+              {
+                process.env.TARO_ENV === 'weapp'
+                  ? <FormIdCollector
+                    sync
+                  >
                     <AtButton className='submit-btn' type='primary' formType='submit'>同意协议并注册</AtButton>
                     <AtButton type='default' onClick={this.handleBackHome.bind(this)}>暂不注册，随便逛逛</AtButton>
                   </FormIdCollector>
-                : <AtButton type='primary' onClick={this.handleSubmit} formType='submit'>同意协议并注册</AtButton>
-            }
-            <View className='accountAgreement'>
-              已阅读并同意
-              <Text
-                className='accountAgreement__text'
-                onClick={this.handleClickAgreement.bind(this)}
-              >
-                《用户协议》
-              </Text>
+                  : <AtButton type='primary' onClick={this.handleSubmit} formType='submit'>同意协议并注册</AtButton>
+              }
+              <View className='accountAgreement'>
+                已阅读并同意
+                <Text
+                  className='accountAgreement__text'
+                  onClick={this.handleClickAgreement.bind(this)}
+                >
+                  《用户协议》
+                </Text>
+              </View>
             </View>
-          </View>
-        </AtForm>
-        {
-          showCheckboxPanel
-            ? <View className='checkBoxPanel'>
+          </AtForm>
+          {
+            showCheckboxPanel
+              ? <View className='checkBoxPanel'>
                 <View className='checkBoxPanel-content'>
                   {
                     option_list.map((item, index) => {
@@ -535,9 +538,10 @@ export default class Reg extends Component {
                   <View className='panel-btn require-btn' onClick={this.btnClick.bind(this, 'require')}>确定</View>
                 </View>
               </View>
-          : null
-        }
-        <SpToast />
+              : null
+          }
+          <SpToast />
+        </View>
       </View>
     )
   }

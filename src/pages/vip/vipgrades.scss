@@ -1,10 +1,12 @@
 @import "../../style/imports";
 
+.container{
+  position: relative;
+  top:VH($nav-gap-height);
+}
 .header {
-    position: relative;
-    top:VH($nav-gap-height);
-    padding: 30px 30px 10px 30px;
-		color: #ffffff;
+    padding: 30px 30px 10px ;
+		color:white;
 		.header-isauth{
 			display: flex;
 			align-items: center;

@@ -29,11 +29,12 @@ export function login (params) {
 
 export function prelogin (params) {
   const appid = getAppId()
-  return req.post('/prelogin', {
-    ...params,
-    appid,
-    auth_type: 'wxapp'
-  })
+  let scene = null
+    return req.post('/prelogin', {
+      ...params,
+      appid,
+      auth_type: 'wxapp'
+    })
 }
 
 export function decryptPhone (params) {
