@@ -64,7 +64,7 @@ export default class MemberIndex extends Component {
     Taro.navigateTo({ url })
   }
 
-  componentDidMount () {
+  componentDidShow () {
     const { colors } = this.props
     Taro.setNavigationBarColor({
       backgroundColor: colors.data[0].marketing,
@@ -149,6 +149,7 @@ export default class MemberIndex extends Component {
     if (!S.getAuthToken()) {
       return S.toast('请先登录')
     }
+    url = url + `?grade_name=${this.state.vipgrade.is_vip?this.state.vipgrade.grade_name:this.state.gradeInfo.grade_name}`
     Taro.navigateTo({url})
   }
 
@@ -349,7 +350,7 @@ export default class MemberIndex extends Component {
                       <View className='member-card-period'>
                         {vipgrade.end_date} 到期
                       </View>
-                      <View className='VIP-detail'   onClick={this.handleClick.bind(this, '/pages/vip/vipgrades')}>查看会员权益</View>
+                      <View className='VIP-detail'   onClick={this.handleClick.bind(this, '/pages/member/vip')}>查看会员权益</View>
                     </View>
                   )
                 }

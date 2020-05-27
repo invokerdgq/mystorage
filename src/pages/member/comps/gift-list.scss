@@ -1,0 +1,43 @@
+@import '../../../style/imports';
+
+.gift{
+  padding-left: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 100%;
+  margin: 20px 0;
+  text-align: left;
+  box-shadow:  0 0 8px #999999;
+  &-title{
+    font-size: 28px;
+    font-weight: bold;
+    margin: 20px 0 20px 0;
+  }
+  &-code{
+    font-size: 24px;
+  }
+  .use-limit{
+    font-size: 24px;
+    color:#999999
+  }
+  &-status{
+    font-size: 24px;
+    display: inline-block;
+    position: absolute;
+    top:0;
+    right: 0;
+    height: 45px;
+    line-height: 45px;
+    padding-right: 20px;
+    padding-left: 50px;
+    border-radius: 0 8px 0 90px;
+  }
+  .used{
+    background: #999999;
+    color:white;
+  }
+  .unused{
+    background: $color-theme;
+    color:white;
+  }
+}
