@@ -2,6 +2,8 @@
 
 .auth-login {
   height: 100vh;
+  position: relative;
+  top:VH($nav-gap-height);
   //padding-top: 160px;
   background: $color-brand-primary-text;
   &__reg {

@@ -3,10 +3,26 @@
 .container{
   position: relative;
   top:VH($nav-gap-height);
+  min-height: VH-last($nav-gap-height);
+  background: white;
 }
 .header {
-    padding: 30px 30px 10px ;
+    padding: 30px;
 		color:white;
+    background: $color-theme;
+  &-title{
+    text-align: center;
+    font-size: 32px;
+  }
+  &-grade_name{
+    font-size: 23px;
+    background: linear-gradient(to right bottom, #fca280, #e75fa9);
+    height: 30px;
+    border-radius: 15px;
+    width: 120px;
+    text-align: center;
+
+  }
 		.header-isauth{
 			display: flex;
 			align-items: center;
@@ -26,107 +42,215 @@
 				padding-left: 26px;
 				.mcode {
 					font-size: 24px;
-					color: #999;
+					color: #ffffff;
 				}
 				.nickname {
-					font-size: 32px;
+					font-size: 28px;
 					margin-bottom: 5px;
 				}
 			}
-		}
-		.header-tab{
-			&.at-tabs{
-				position: relative;
-			}
-			.at-tabs__item-underline{
-				height: 8px;
-        background: #eac18b;
-			}
-			.at-tabs__header{
-				background: transparent;
-				.at-tabs__item{
-					color: #7a7867;
-					&.at-tabs__item--active {
-						color: #eac18b;
-					}
-				}
-			}
-		}
-    .member-acount {
-      padding: 5px 10px;
-      margin-right: 10px;
-      border: 1px solid #ccc;
-      border-radius: 60px;
-      font-size: 22px;
-      line-height: 1;
-      color: #ccc;
-    }
-    .icon-forward {
-      color: #ccc;
-    }
-    .icon-vip {
-      display: inline-block;
-      width: 32px;
-      height: 32px;
-      vertical-align: middle;
-    }
-    .authorized-btn {
-      position: relative;
-      border-radius: 50px;
-      background: linear-gradient(to right, #f4d09e, #e8bd7f);
-      vertical-align: middle;
-      line-height: 40px;
-      padding: 0 20px;
-      color: #6f3c09;
-      z-index: 10;
-      margin-left: 10px;
-      &::after {
-        content: none;
+		}}
+//		.header-tab{
+//			&.at-tabs{
+//				position: relative;
+//			}
+//			.at-tabs__item-underline{
+//				height: 8px;
+//        background: #eac18b;
+//			}
+//			.at-tabs__header{
+//				background: transparent;
+//				.at-tabs__item{
+//					color: #7a7867;
+//					&.at-tabs__item--active {
+//						color: #eac18b;
+//					}
+//				}
+//			}
+//		}
+//    .member-acount {
+//      padding: 5px 10px;
+//      margin-right: 10px;
+//      border: 1px solid #ccc;
+//      border-radius: 60px;
+//      font-size: 22px;
+//      line-height: 1;
+//      color: #ccc;
+//    }
+//    .icon-forward {
+//      color: #ccc;
+//    }
+//    .icon-vip {
+//      display: inline-block;
+//      width: 32px;
+//      height: 32px;
+//      vertical-align: middle;
+//    }
+//    .authorized-btn {
+//      position: relative;
+//      border-radius: 50px;
+//      background: linear-gradient(to right, #f4d09e, #e8bd7f);
+//      vertical-align: middle;
+//      line-height: 40px;
+//      padding: 0 20px;
+//      color: #6f3c09;
+//      z-index: 10;
+//      margin-left: 10px;
+//      &::after {
+//        content: none;
+//      }
+//    }
+//}
+//
+//.grade-list {
+//	display: flex;
+//	padding: 30px 0;
+//	.grade-item {
+//		flex: 1;
+//		padding: 0 10px;
+//		.item-content {
+//			display: flex;
+//			flex-direction: column;
+//			align-items: center;
+//			justify-content: center;
+//			height: 240px;
+//			border: 1px solid #f8f8f8;
+//			border-radius: 10px;
+//			.desc {
+//				font-size: 30px;
+//				color: #555;
+//				font-weight: 500;
+//			}
+//			.amount {
+//				font-family: "Helvetica Neue";
+//				font-weight: 800;
+//				font-size: 55px;
+//				color: #b86c53;
+//				letter-spacing: 0;
+//			}
+//		}
+//		&.active {
+//			.item-content {
+//				border-color: #e4dad2;
+//				background: #fffff2;
+//			}
+//		}
+//	}
+//}
+//.pay-btn {
+//	margin-bottom: 20px;
+//	background: linear-gradient(to right, #f4d09e, #e8bd7f);
+//	color: #6f3c09;
+//	line-height: 80px;
+//	border-radius: 10px;
+//	z-index: 10;
+//	font-size: 30px;
+//}
+
+.vip-1,.vip-2{
+  &-button{
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    line-height: 60px;
+    justify-content: center;
+    color:white;
+    margin-top: 50px;
+    &-dec{
+      flex:3;
+      background: #5f5f5f;
+      border-radius: 30px 0 0 30px;
+      text-align: center;
+      &-1{
+        font-size: 30px;
+        margin-right: 15px;
+      }
+      &-2{
+        font-size: 16px;
+      }
+      &-3{
+        font-size: 23px;
       }
     }
+    &-click{
+      flex:2;
+      background: $color-theme;
+      border-radius:  0 30px 30px 0;
+      text-align: center;
+    }
+  }
 }
-
-.grade-list {
-	display: flex;
-	padding: 30px 0;
-	.grade-item {
-		flex: 1;
-		padding: 0 10px;
-		.item-content {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			height: 240px;
-			border: 1px solid #f8f8f8;
-			border-radius: 10px;
-			.desc {
-				font-size: 30px;
-				color: #555;
-				font-weight: 500;
-			}
-			.amount {
-				font-family: "Helvetica Neue";
-				font-weight: 800;
-				font-size: 55px;
-				color: #b86c53;
-				letter-spacing: 0;
-			}
-		}
-		&.active {
-			.item-content {
-				border-color: #e4dad2;
-				background: #fffff2;
-			}
-		}
-	}
+.vip-1,.vip-2{
+  width: 700px;
+  margin: 0 auto;
+  &-title{
+    font-size: 30px;
+    font-weight: bold;
+    display: inline-block;
+    color: $button-back-black;
+    .dot{
+      position: relative;
+      top:-10px
+    }
+    margin-bottom: 15px;
+  }
+  &-content{
+    width: 700px;
+    margin: 30px 0;
+    padding: 15px 25px;
+    box-shadow: 0 0 6px 0 #b3b1b1;
+    text-align: left;
+    color:#2f2f2f;
+    &-title{
+      font-size: 23px;
+      font-weight: bold;
+    }
+    .icon{
+      display: inline-block;
+      font-style: italic;
+      width: 18px;
+      height: 18px;
+      font-size: 17px;
+      border-radius: 8px;
+      background:#2f2f2f;
+      color:white;
+      text-align: center;
+      line-height: 18px;
+    }
+    &-subtitle{
+      font-size: 17px;
+    }
+  }
 }
-.pay-btn {
-	margin-bottom: 20px;
-	background: linear-gradient(to right, #f4d09e, #e8bd7f);
-	color: #6f3c09;
-	line-height: 80px;
-	border-radius: 10px;
-	z-index: 10;
-	font-size: 30px;
+.section-body-vip{
+  width: 700px;
+  margin: 0 auto;
+  .card-container{
+    width: 600px;
+    height: 350px;
+    background: $color-theme;
+    margin:  25px auto;
+    border-radius: 30px;
+  }
+  .code{
+    margin: 20px 0;
+    &-inner{
+      font-size: 32px;
+      padding: 15px 50px;
+      display: flex;
+      flex-direction: row;
+      color:#2f2f2f;
+      justify-content: space-between;
+    }
+  }
+}
+.body-presist{
+  text-align: center;
+  color: white;
+  width: 400px;
+  height: 48px;
+  line-height: 48px;
+  border-radius: 24px;
+  background: $color-theme;
+  margin: 80px auto;
 }

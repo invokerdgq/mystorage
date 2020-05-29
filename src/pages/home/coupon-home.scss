@@ -1,6 +1,8 @@
 @import "../../style/imports";
 
 .coupon-list {
+  position: relative;
+  top:VH($nav-gap-height);
   .at-tabs__header {
     position: absolute;
     top: $navigate-height;

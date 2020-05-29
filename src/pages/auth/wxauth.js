@@ -5,6 +5,7 @@ import { AtButton } from 'taro-ui'
 import api from '@/api'
 import S from '@/spx'
 import { log } from '@/utils'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './wxauth.scss'
 
@@ -152,24 +153,27 @@ export default class WxAuth extends Component {
     const extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {}
 
     return (
-      <View className='page-wxauth'>
-        {isAuthShow && (
-          <View className='sec-auth'>
-            <View className='auth-title'>用户授权</View>
-            <Text className='auth-hint'>{extConfig.wxa_name}申请获得你的公开信息（昵称、头像等）</Text>
-            <View className='auth-btns'>
-              <AtButton
-                type='primary'
-                lang='zh_CN'
-                customStyle={`background: ${colors.data[0].primary}; border-color: ${colors.data[0].primary}`}
-                openType='getUserInfo'
-                onClick={this.handleNews.bind(this)}
-                onGetUserInfo={this.handleGetUserInfo}
-              >授权允许</AtButton>
-              <AtButton className='back-btn' type='default' onClick={this.handleBackHome.bind(this)}>拒绝</AtButton>
+      <View>
+        <NavGap title='授权'/>
+        <View className='page-wxauth'>
+          {isAuthShow && (
+            <View className='sec-auth'>
+              <View className='auth-title'>用户授权</View>
+              <Text className='auth-hint'>{extConfig.wxa_name}申请获得你的公开信息（昵称、头像等）</Text>
+              <View className='auth-btns'>
+                <AtButton
+                  type='primary'
+                  lang='zh_CN'
+                  customStyle={`background: ${colors.data[0].primary}; border-color: ${colors.data[0].primary}`}
+                  openType='getUserInfo'
+                  onClick={this.handleNews.bind(this)}
+                  onGetUserInfo={this.handleGetUserInfo}
+                >授权允许</AtButton>
+                <AtButton className='back-btn' type='default' onClick={this.handleBackHome.bind(this)}>拒绝</AtButton>
+              </View>
             </View>
-          </View>
-        )}
+          )}
+        </View>
       </View>
     )
   }

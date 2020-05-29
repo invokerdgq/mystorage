@@ -7,6 +7,7 @@ import api from '@/api'
 import { withPager } from '@/hocs'
 import { calcTimer } from '@/utils'
 import './group-list.scss'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 @withPager
 export default class myGroupList extends Component {
@@ -67,61 +68,64 @@ export default class myGroupList extends Component {
     const { tabList, curTabIdx, list, page } = this.state
 
     return (
-      <View className='page-my-group-list'>
-				{
-					list.map((item, idx) => {
-						const { remaining_time_obj } = item
-						return (
-							<View
-								className='group-item'
-								key={item.groups_activity_id}
-								onClick={this.handleClickItem.bind(this, item)}
-							>
-								<View className='group-item__hd'>
-									<Image className='group-item__img'
-										mode='aspectFill'
-										src={item.pics[0]}
-									/>
-								</View>
-								<View className='group-item__bd'>
-									<View className='group-item__cont'>
-										{item.team_status == 2 && <View className='icon icon-over-group'></View>}
-										{item.team_status == 3 && <View className='icon icon-ungroup'></View>}
-										<Text className='group-item__title'>{item.itemName}</Text>
-										<View className='group-item__desc'>
-											<View className='group-item__tuan'><Text className='group-item__tuan-num'>{item.person_num}</Text><Text className='group-item__tuan-txt'>人团</Text></View>
-											<Price
-												primary
-												className='group-item__price'
-												value={item.price}
-												unit='cent'
-											/>
-										</View>
-									</View>
-                  <View className='group-item__footer'>
-  									<View className='group-item__avatar'>
-  										{item.member_list.map((avatar, index) => {
-  											return(
-  												<Image key={index}  mode='aspectFill' className='user-avatar' src={avatar.member_info.headimgurl}/>
-  												)
-  										})}
-  									</View>
-                    {item.team_status == 1 && (
-											<View className='group-item__tips'>还差<Text className='mark'>{item.person_num - item.join_person_num}</Text>人成团</View>
-										)}
+      <View>
+        <NavGap title='我的拼团'/>
+        <View className='page-my-group-list'>
+          {
+            list.map((item, idx) => {
+              const { remaining_time_obj } = item
+              return (
+                <View
+                  className='group-item'
+                  key={item.groups_activity_id}
+                  onClick={this.handleClickItem.bind(this, item)}
+                >
+                  <View className='group-item__hd'>
+                    <Image className='group-item__img'
+                           mode='aspectFill'
+                           src={item.pics[0]}
+                    />
                   </View>
-								</View>
-							</View>
-						)
-					})
-				}
-				{
-					page.isLoading && <Loading>正在加载...</Loading>
-				}
-				{
-					!page.isLoading && !page.hasNext && !list.length
-						&& (<SpNote img='trades_empty.png'>暂无拼团~</SpNote>)
-				}
+                  <View className='group-item__bd'>
+                    <View className='group-item__cont'>
+                      {item.team_status == 2 && <View className='icon icon-over-group'></View>}
+                      {item.team_status == 3 && <View className='icon icon-ungroup'></View>}
+                      <Text className='group-item__title'>{item.itemName}</Text>
+                      <View className='group-item__desc'>
+                        <View className='group-item__tuan'><Text className='group-item__tuan-num'>{item.person_num}</Text><Text className='group-item__tuan-txt'>人团</Text></View>
+                        <Price
+                          primary
+                          className='group-item__price'
+                          value={item.price}
+                          unit='cent'
+                        />
+                      </View>
+                    </View>
+                    <View className='group-item__footer'>
+                      <View className='group-item__avatar'>
+                        {item.member_list.map((avatar, index) => {
+                          return(
+                            <Image key={index}  mode='aspectFill' className='user-avatar' src={avatar.member_info.headimgurl}/>
+                          )
+                        })}
+                      </View>
+                      {item.team_status == 1 && (
+                        <View className='group-item__tips'>还差<Text className='mark'>{item.person_num - item.join_person_num}</Text>人成团</View>
+                      )}
+                    </View>
+                  </View>
+                </View>
+              )
+            })
+          }
+          {
+            page.isLoading && <Loading>正在加载...</Loading>
+          }
+          {
+            !page.isLoading && !page.hasNext && !list.length
+            && (<SpNote img='trades_empty.png'>暂无拼团~</SpNote>)
+          }
+        </View>
       </View>
     )
   }

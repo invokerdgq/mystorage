@@ -1,6 +1,8 @@
 @import '../../../style/imports';
 
 .page-refund-sendback {
+  position: relative;
+  top:VH($nav-gap-height);
   .at-input {
     padding-left: $edge-size;
     padding-right: $edge-size;

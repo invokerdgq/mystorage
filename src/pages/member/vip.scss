@@ -100,7 +100,7 @@
       width: 700px;
       margin: 30px 0;
       padding: 15px 25px;
-      box-shadow: 0 0 6px 0 #b3b1b1;
+      box-shadow: 0 0 6px 0 #ededed;
       text-align: left;
       color:#2f2f2f;
       &-title{
@@ -155,4 +155,141 @@
       }
     }
   }
+}
+.vip-fixed{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  opacity: 0.38;
+  z-index:300
+}
+.vip-fixed-top{
+  position: fixed;
+  flex-direction: column;
+  bottom: 170px;
+  left:50vw;
+  transform: translate(-50%,0);
+  width: 360px;
+  height: 450px;
+  border-radius: 40px;
+  background: white;
+  z-index:400;
+  box-shadow: 0 0 8px 0 #ededed;
+  &-body{
+    text-align: center;
+    Image{
+      width: 230px;
+      height: 230px;
+    }
+  }
+  &-title{
+    text-align: center;
+    margin-top: 30px;
+    &-dec{
+      font-size: 20px;
+    }
+    &-code{
+      font-size: 40px;
+    }
+  }
+  &-body{
+    border-top:dashed 1px grey;
+  }
+  &-bottom{
+    height: 48px;
+    line-height: 48px;
+    width: 330px;
+    color:white;
+    font-size: 22px;
+    background: $color-theme;
+    border-radius: 24px;
+    text-align: center;
+    margin: 10px auto;
+  }
+}
+.vip-fixed-bottom{
+  position: fixed;
+  flex-direction: column;
+  justify-content: flex-end;
+  bottom: 0;
+  width: 100vw;
+  height: 180px;
+  background: #f6f5f5;
+  z-index:300;
+  &-container{
+    display: flex;
+    flex-direction: row;
+    .message-item{
+      position: relative;
+      top:10px;
+      width: 250px;
+      text-align: center;
+    }
+    .iconfont{
+      font-size: 50px;
+    }
+}
+  &-controll{
+    text-align: center;
+    background: white;
+    height: 60px;
+    line-height: 60px;
+    margin: 20px 0 0 ;
+  }
+}
+.canvas-container{
+  width: 100vw;
+  height: 100vh;
+  color:#000000;
+  opacity: 0.38;
+  position: absolute;
+  z-index: 1000;
+}
+.own-canvas{
+  z-index: 1001;
+  position: fixed;
+  bottom:170px;
+  background: white;
+  left:50%;
+  transform: translate(-50%,0);
+  border-radius: 30px;
+  box-shadow: 0 0 8px 0 #ededed;
+}
+
+
+.test{
+  z-index: 1300;
+  width: 400px;
+  height: 400px;
+}
+.img-container{
+  z-index: 1300;
+  position: fixed;
+  width: 70vw;
+  text-align: center;
+  padding:100px 0;
+  background: white;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  border-radius: 40px;
+  .img-controll{
+    text-align: center;
+    margin-top: 30px;
+  }
+  .close{
+    background: grey;
+    color: white;
+    position: absolute;
+    top:20px;
+    right: 20px;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+  }
+
 }

@@ -58,10 +58,17 @@ useHooks()
     // eslint-disable-next-line react/sort-comp
     componentWillMount () {
       // entry.entryLaunch({scene:`uid=${this.$router.params.query.scene}`})
-      if(this.$router.params.query.scene){
-        try{Taro.setStorageSync('scene',this.$router.params.query.scene)}
-        catch (e) {
-          console.log(e)
+      let option = this.$router.params.query.scene
+      if(option){
+        if(/&/.test(option)){
+          let array = option.split('&')
+          Taro.setStorageSync('scene',array[0])
+          Taro.setStorageSync('inviteCode',array[1])
+        }else{
+          try{Taro.setStorageSync('scene',this.$router.params.query.scene)}
+          catch (e) {
+            console.log(e)
+          }
         }
       }else {
         try{Taro.setStorageSync('scene','')}
@@ -145,7 +152,6 @@ useHooks()
         'pages/member/vip',
         'pages/qrcode-buy',
 
-         'pages/manager/manager',
         'pages/distribution/shop-home',
 
         'pages/store/index',

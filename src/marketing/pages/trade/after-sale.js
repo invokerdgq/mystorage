@@ -8,6 +8,7 @@ import { withLogin, withPager } from '@/hocs'
 import { AFTER_SALE_STATUS } from '@/consts'
 import _mapKeys from 'lodash/mapKeys'
 import TradeItem from './comps/item'
+import NavGap from "../../../components/nav-gap/nav-gap";
 
 import './list.scss'
 
@@ -117,61 +118,64 @@ export default class AfterSale extends Component {
     const { curTabIdx, tabList, list, page } = this.state
 
     return (
-      <View className='page-after-sale trade-list'>
-        <NavBar
-          title='售后订单列表'
-          leftIconType='chevron-left'
-          fixed='true'
-        />
-        <AtTabs
-          className='trade-list__tabs'
-          current={curTabIdx}
-          tabList={tabList}
-          onClick={this.handleClickTab}
-        >
-          {
-            tabList.map((panes, pIdx) =>
-              (<AtTabsPane
-                current={curTabIdx}
-                key={pIdx}
-                index={pIdx}
-              >
-              </AtTabsPane>)
-            )
-          }
-        </AtTabs>
-
-        <ScrollView
-          scrollY
-          className='trade-list__scroll'
-          onScrollToLower={this.nextPage}
-        >
-          {
-            list.map((item, idx) => {
-              return (
-                <TradeItem
-                  key={idx}
-                  payType={item.pay_type}
-                  customHeader
-                  renderHeader={
-                    <View className='trade-item__hd-cont'>
-                      <Text className='trade-item__shop'>订单号：{item.id}</Text>
-                      <Text className='more'>{item.status_desc}</Text>
-                    </View>
-                  }
-                  customFooter
-                  renderFooter={
-                    <View></View>
-                  }
-                  info={item}
-                  onClick={this.handleClickItem.bind(this, item)}
-                />
+      <View>
+        <NavGap title='售后订单列表'/>
+        <View className='page-after-sale trade-list'>
+          <NavBar
+            title='售后订单列表'
+            leftIconType='chevron-left'
+            fixed='true'
+          />
+          <AtTabs
+            className='trade-list__tabs'
+            current={curTabIdx}
+            tabList={tabList}
+            onClick={this.handleClickTab}
+          >
+            {
+              tabList.map((panes, pIdx) =>
+                (<AtTabsPane
+                  current={curTabIdx}
+                  key={pIdx}
+                  index={pIdx}
+                >
+                </AtTabsPane>)
               )
-            })
-          }
-          {page.isLoading && (<Loading>正在加载...</Loading>)}
-          {!page.isLoading && !page.hasNext && !list.length && (<SpNote img='trades_empty.png'>暂无数据</SpNote>)}
-        </ScrollView>
+            }
+          </AtTabs>
+
+          <ScrollView
+            scrollY
+            className='trade-list__scroll'
+            onScrollToLower={this.nextPage}
+          >
+            {
+              list.map((item, idx) => {
+                return (
+                  <TradeItem
+                    key={idx}
+                    payType={item.pay_type}
+                    customHeader
+                    renderHeader={
+                      <View className='trade-item__hd-cont'>
+                        <Text className='trade-item__shop'>订单号：{item.id}</Text>
+                        <Text className='more'>{item.status_desc}</Text>
+                      </View>
+                    }
+                    customFooter
+                    renderFooter={
+                      <View></View>
+                    }
+                    info={item}
+                    onClick={this.handleClickItem.bind(this, item)}
+                  />
+                )
+              })
+            }
+            {page.isLoading && (<Loading>正在加载...</Loading>)}
+            {!page.isLoading && !page.hasNext && !list.length && (<SpNote img='trades_empty.png'>暂无数据</SpNote>)}
+          </ScrollView>
+        </View>
       </View>
     )
   }

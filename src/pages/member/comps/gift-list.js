@@ -5,7 +5,9 @@ import './gift-list.scss'
 export default class GiftListItem extends Component{
   static defaultprops = {
     info:null,
-    index:0
+    index:0,
+    onclick:() =>{
+}
   }
   constructor(props) {
     super(props);
@@ -13,13 +15,16 @@ export default class GiftListItem extends Component{
   componentDidMount() {
   }
   render() {
-    const {index ,info} =this.props
+    const {index ,info,onclick} =this.props
     return(
       <View className='gift'>
         <View className='gift-title'>礼包{index+1}</View>
         <View className='gift-code'>电子码 ：{info.code}</View>
-        <View className='use-limit'>使用日期 ：{info.date}</View>
-        <View className={`gift-status ${info.status?'used':'unused'}`}>{info.status?'已使用':'去使用'}</View>
+        {
+          info.use_date&&
+          <View className='use-limit'>使用日期 ：{info.use_date}</View>
+        }
+        <View className={`gift-status ${info.status?'used':'unused'}`} onClick={this.props.onclick.bind(this,index)}>{info.is_use?'已使用':'去使用'}</View>
       </View>
     )
   }

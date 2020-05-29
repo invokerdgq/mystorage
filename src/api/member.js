@@ -7,7 +7,9 @@ export function memberInfo () {
 export function setMemberInfo (params = {}) {
   return req.put('/member', params)
 }
-
+export function getGiftList(params={page:1}) {
+   return req.get('/member/invitecode',params)
+}
 export function pointDetail () {
   return req.get('/member.point.detail')
 }

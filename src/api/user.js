@@ -21,7 +21,7 @@ export function reg (params) {
   const appid = getAppId()
   return req.post('/member', {
     ...params,
-    appid
+    appid,
   })
 }
 

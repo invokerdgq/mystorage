@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Text, Image,Button } from '@tarojs/components'
 import { withLogin } from '@/hocs'
 import S from '@/spx'
 import api from '@/api'
@@ -19,6 +19,22 @@ export default class MemberCode extends Component {
 
   componentDidMount () {
     this.fetch()
+    Taro.showShareMenu({
+      success(){
+        Taro.showToast({
+          title:'分享成功',
+          icon:'success',
+          duration:1500
+        })
+      },
+      fail(){
+        Taro.showToast({
+          title:'分享失败，请重试',
+          icon:'none',
+          duration:1500
+        })
+      }
+    })
   }
 
   async fetch() {

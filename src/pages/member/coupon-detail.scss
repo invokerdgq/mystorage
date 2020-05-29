@@ -1,6 +1,8 @@
 @import "../../style/imports";
 
 .page-coupon-detail {
+  position: relative;
+  top:VH($nav-gap-height);
   min-height: 100vh;
   background: #2f3030;
   .store-box {

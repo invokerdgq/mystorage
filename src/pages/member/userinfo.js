@@ -6,6 +6,7 @@ import api from '@/api'
 import { withLogin } from '@/hocs'
 import S from '@/spx'
 import azureUploader from '@/utils/azure-wry'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './userinfo.scss'
 
@@ -98,44 +99,47 @@ export default class UserInfo extends Component {
     const { isHasAvator, info, imgs } = this.state
 
     return (
-      <View class='page-member-setting'>
-        <NavBar
-          title='用户信息'
-        />
+      <View>
+        <NavGap title='用户信息'/>
+        <View class='page-member-setting'>
+          <NavBar
+            title='用户信息'
+          />
 
-        <AtForm
-          onSubmit={this.handleSubmit}
-        >
-          <View className='sec auth-login__form'>
-            <View className='avatar-user'>
-              <View className='avatar-user-text'>头像</View>
-              <AtImagePicker
-                showAddBtn={isHasAvator}
-                mode='aspectFill'
-                length={1}
-                files={imgs}
-                onChange={this.handleImageChange}
-                onImageClick={this.handleImageClick}
-              > </AtImagePicker>
+          <AtForm
+            onSubmit={this.handleSubmit}
+          >
+            <View className='sec auth-login__form'>
+              <View className='avatar-user'>
+                <View className='avatar-user-text'>头像</View>
+                <AtImagePicker
+                  showAddBtn={isHasAvator}
+                  mode='aspectFill'
+                  length={1}
+                  files={imgs}
+                  onChange={this.handleImageChange}
+                  onImageClick={this.handleImageClick}
+                > </AtImagePicker>
+              </View>
+              <AtInput
+                title='昵称'
+                value={info.user_name}
+                placeholder='请输入昵称'
+                onFocus={this.handleErrorToastClose}
+                onChange={this.handleChange.bind(this, 'user_name')}
+              />
             </View>
-            <AtInput
-              title='昵称'
-              value={info.user_name}
-              placeholder='请输入昵称'
-              onFocus={this.handleErrorToastClose}
-              onChange={this.handleChange.bind(this, 'user_name')}
-            />
-          </View>
 
-          <View className='btns'>
-            {
-              process.env.TARO_ENV === 'weapp'
-                ? <AtButton type='primary' formType='submit'>保存</AtButton>
-                : <AtButton type='primary' onClick={this.handleSubmit} formType='submit'>保存</AtButton>
-            }
-          </View>
-        </AtForm>
-        <SpToast />
+            <View className='btns'>
+              {
+                process.env.TARO_ENV === 'weapp'
+                  ? <AtButton type='primary' formType='submit'>保存</AtButton>
+                  : <AtButton type='primary' onClick={this.handleSubmit} formType='submit'>保存</AtButton>
+              }
+            </View>
+          </AtForm>
+          <SpToast />
+        </View>
       </View>
     )
   }

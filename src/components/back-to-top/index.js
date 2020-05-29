@@ -22,7 +22,7 @@ export default class BackToTop extends Component {
         style={styleNames(bottom ? { bottom: `${Taro.pxTransform(bottom)}` } : null)}
         onClick={onClick}
       >
-        <View className='iconfont icon-shouye'></View>
+        <View className='iconfont icon-dingbu'></View>
       </View>
     )
   }

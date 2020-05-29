@@ -1,5 +1,7 @@
 @import "../../../style/imports";
 .delivery-detail {
+  position: relative;
+  top:VH($nav-gap-height);
   width: 100%;
   padding:20px 28px;
   box-sizing: border-box;

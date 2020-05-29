@@ -7,6 +7,7 @@ import api from '@/api'
 import { withPager, withLogin } from '@/hocs'
 import { log, pickBy, resolveOrderStatus, authSetting } from '@/utils'
 import TradeItem from './comps/item'
+import NavGap from "../../../components/nav-gap/nav-gap";
 
 import './invoice-list.scss'
 
@@ -126,51 +127,54 @@ export default class InvoiceList extends Component {
     const { list, page } = this.state
 
     return (
-      <View className='page-trade-list page-invoice-list'>
-        <NavBar
-          title='发票管理'
-          leftIconType='chevron-left'
-          fixed='true'
-        />
+      <View>
+        <NavGap title='发票管理'/>
+        <View className='page-trade-list page-invoice-list'>
+          <NavBar
+            title='发票管理'
+            leftIconType='chevron-left'
+            fixed='true'
+          />
 
-        <ScrollView
-          scrollY
-          className='trade-list__scroll'
-          onScrollToLower={this.nextPage}
-        >
-          {
-            list.map((item) => {
-              return (
-                <TradeItem
-                  customFooter
-                  payType={item.pay_type}
-                  key={item.tid}
-                  info={item}
-                  onClick={this.handleClickItem.bind(this, item)}
-                  onClickBtn={this.handleClickItemBtn}
-                  renderFooter={
-                    <View className='trade-item__ft'>
-                      <Text className='trade-item__status'>已开票</Text>
-                    </View>
-                  }
-                />
-              )
-            })
-          }
-          {/*<AtButton
+          <ScrollView
+            scrollY
+            className='trade-list__scroll'
+            onScrollToLower={this.nextPage}
+          >
+            {
+              list.map((item) => {
+                return (
+                  <TradeItem
+                    customFooter
+                    payType={item.pay_type}
+                    key={item.tid}
+                    info={item}
+                    onClick={this.handleClickItem.bind(this, item)}
+                    onClickBtn={this.handleClickItemBtn}
+                    renderFooter={
+                      <View className='trade-item__ft'>
+                        <Text className='trade-item__status'>已开票</Text>
+                      </View>
+                    }
+                  />
+                )
+              })
+            }
+            {/*<AtButton
                         circle
                         type='primary'
                         size='small'
                         onClick={this.handleClickBtn.bind(this, 'add-card')}
                       >下载</AtButton>*/}
-          {
-            page.isLoading && <Loading>正在加载...</Loading>
-          }
-          {
-            !page.isLoading && !page.hasNext && !list.length
+            {
+              page.isLoading && <Loading>正在加载...</Loading>
+            }
+            {
+              !page.isLoading && !page.hasNext && !list.length
               && (<SpNote img='trades_empty.png'>赶快去添加吧~</SpNote>)
-          }
-        </ScrollView>
+            }
+          </ScrollView>
+        </View>
       </View>
     )
   }

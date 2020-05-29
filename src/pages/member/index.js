@@ -68,12 +68,35 @@ export default class MemberIndex extends Component {
     const { colors } = this.props
     Taro.setNavigationBarColor({
       backgroundColor: colors.data[0].marketing,
-      frontColor: 'black'
+      frontColor: '#000000'
     })
     this.fetch()
+    if(S.getAuthToken()){
+      this.toActiveVip()
+    }
 
   }
-
+  toActiveVip(){
+    let inviteCode  = null
+    try{
+     inviteCode =  Taro.getStorageSync('inviteCode')
+      if(inviteCode){
+        Taro.showModal({
+          title:'立刻去激活至尊会员',
+          content:'使用邀请码免费成为至尊会员',
+          success:(res) => {
+             if(res.confirm){
+               Taro.navigateTo({
+                 url:'/pages/vip/vipgrades?grade_name=至尊会员'
+               })
+             }
+          }
+        })
+      }
+    }catch (e) {
+      console.log(e)
+    }
+  }
   async fetch () {
     if (!S.getAuthToken()) return
 
@@ -232,7 +255,7 @@ export default class MemberIndex extends Component {
   }
   handlePresist = (grade_name) => {
     Taro.navigateTo({
-      url:`/pages/vip/vipgrades?grade_name${grade_name}`
+      url:`/pages/vip/vipgrades?grade_name=${grade_name}&presist=true`
     })
   }
 
@@ -321,7 +344,7 @@ export default class MemberIndex extends Component {
                         {gradeInfo.grade_name}
                       </View>
                       <View className='vip-btn'>
-                        <View className='vip-btn__title'   onClick={this.handleClick.bind(this, '/pages/vip/vipgrades')}>开通VIP会员 <Text className='iconfont icon-chakan'/></View>
+                        <View className='vip-btn__title'   onClick={this.handleClick.bind(this, '/pages/member/vip')}>开通VIP会员 <Text className='iconfont icon-chakan'/></View>
                         {
                           memberDiscount &&
                           <View className='vip-btn__desc'>即可享受最高{memberDiscount}折会员优惠</View>

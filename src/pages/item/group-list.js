@@ -7,6 +7,7 @@ import _mapKeys from 'lodash/mapKeys'
 import api from '@/api'
 import { withPager } from '@/hocs'
 import { calcTimer } from '@/utils'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './group-list.scss'
 
@@ -97,97 +98,100 @@ export default class GroupList extends Component {
     const { tabList, curTabIdx, list, page } = this.state
 
     return (
-      <View className='page-group-list'>
-        <AtTabs
-          className='group-list__tabs'
-          current={curTabIdx}
-          tabList={tabList}
-          onClick={this.handleClickTab}
-        >
-          {
-            tabList.map((panes, pIdx) =>
-              (<AtTabsPane
-                current={curTabIdx}
-                key={pIdx}
-                index={pIdx}
-              >
-              </AtTabsPane>)
-            )
-          }
-        </AtTabs>
-
-        <ScrollView
-          scrollY
-          className='groups-list__scroll'
-          onScrollToLower={this.nextPage}
-        >
-          {
-            list.map((item, idx) => {
-              const { remaining_time_obj } = item
-              return (
-                <View
-                  className="group-item"
-                  key={item.groups_activity_id}
-                  onClick={this.handleClickItem.bind(this, item)}
+      <View>
+        <NavGap title='列表'/>
+        <View className='page-group-list'>
+          <AtTabs
+            className='group-list__tabs'
+            current={curTabIdx}
+            tabList={tabList}
+            onClick={this.handleClickTab}
+          >
+            {
+              tabList.map((panes, pIdx) =>
+                (<AtTabsPane
+                  current={curTabIdx}
+                  key={pIdx}
+                  index={pIdx}
                 >
-                  <View className="group-item__hd">
-                    <Image className='group-item__img'
-                      mode='aspectFill'
-                      src={item.pics}
-                    />
-                  </View>
-                  <View className="group-item__bd">
-                    <View className="group-item__cont">
-                      <Text className='group-item__title'>
-                        {item.team_status == 2 && (<Text className='group-item__title-status'>【已满团】</Text>)}
-                        {item.team_status == 3 && (<Text className='group-item__title-status'>【未成团】</Text>)}
-                        {item.goods_name}
-                      </Text>
-                      <View className='group-item__desc'>
-                        <View className='group-item__tuan' style={`border-color: ${colors.data[0].primary}; color: ${colors.data[0].primary};`}>
-                          <Text className='group-item__tuan-num' style={`background: ${colors.data[0].primary}`}>{item.person_num}</Text>
-                          <Text className='group-item__tuan-txt'>人团</Text>
-                        </View>
-                        <Price
-                          primary
-                          className='group-item__price'
-                          value={item.act_price}
-                          unit='cent'
-                        />
-                      </View>
+                </AtTabsPane>)
+              )
+            }
+          </AtTabs>
+
+          <ScrollView
+            scrollY
+            className='groups-list__scroll'
+            onScrollToLower={this.nextPage}
+          >
+            {
+              list.map((item, idx) => {
+                const { remaining_time_obj } = item
+                return (
+                  <View
+                    className="group-item"
+                    key={item.groups_activity_id}
+                    onClick={this.handleClickItem.bind(this, item)}
+                  >
+                    <View className="group-item__hd">
+                      <Image className='group-item__img'
+                             mode='aspectFill'
+                             src={item.pics}
+                      />
                     </View>
-                    <View className="group-item__action">
-                      {remaining_time_obj && (
-                        <View className="timer">
-                          <View className='at-icon at-icon-clock'></View>
-                          <AtCountdown
-                            isShowDay
-                            format={{ day: '天', hours: ':', minutes: ':', seconds: '' }}
-                            day={remaining_time_obj.dd}
-                            hours={remaining_time_obj.hh}
-                            minutes={remaining_time_obj.mm}
-                            seconds={remaining_time_obj.ss}
+                    <View className="group-item__bd">
+                      <View className="group-item__cont">
+                        <Text className='group-item__title'>
+                          {item.team_status == 2 && (<Text className='group-item__title-status'>【已满团】</Text>)}
+                          {item.team_status == 3 && (<Text className='group-item__title-status'>【未成团】</Text>)}
+                          {item.goods_name}
+                        </Text>
+                        <View className='group-item__desc'>
+                          <View className='group-item__tuan' style={`border-color: ${colors.data[0].primary}; color: ${colors.data[0].primary};`}>
+                            <Text className='group-item__tuan-num' style={`background: ${colors.data[0].primary}`}>{item.person_num}</Text>
+                            <Text className='group-item__tuan-txt'>人团</Text>
+                          </View>
+                          <Price
+                            primary
+                            className='group-item__price'
+                            value={item.act_price}
+                            unit='cent'
                           />
                         </View>
-                      )}
-                      {curTabIdx === 0
-                        ?<View className='btn-go' style={`background: ${colors.data[0].primary}`}>去开团</View>
-                        : <View className='btn-go disabled' style={`background: ${colors.data[0].primary}`}>未开始</View>
-                      }
+                      </View>
+                      <View className="group-item__action">
+                        {remaining_time_obj && (
+                          <View className="timer">
+                            <View className='at-icon at-icon-clock'></View>
+                            <AtCountdown
+                              isShowDay
+                              format={{ day: '天', hours: ':', minutes: ':', seconds: '' }}
+                              day={remaining_time_obj.dd}
+                              hours={remaining_time_obj.hh}
+                              minutes={remaining_time_obj.mm}
+                              seconds={remaining_time_obj.ss}
+                            />
+                          </View>
+                        )}
+                        {curTabIdx === 0
+                          ?<View className='btn-go' style={`background: ${colors.data[0].primary}`}>去开团</View>
+                          : <View className='btn-go disabled' style={`background: ${colors.data[0].primary}`}>未开始</View>
+                        }
+                      </View>
                     </View>
                   </View>
-                </View>
-              )
-            })
-          }
-          {
-            page.isLoading && <Loading>正在加载...</Loading>
-          }
-          {
-            !page.isLoading && !page.hasNext && !list.length
+                )
+              })
+            }
+            {
+              page.isLoading && <Loading>正在加载...</Loading>
+            }
+            {
+              !page.isLoading && !page.hasNext && !list.length
               && (<SpNote img='trades_empty.png'>暂无数据~</SpNote>)
-          }
-        </ScrollView>
+            }
+          </ScrollView>
+        </View>
       </View>
     )
   }

@@ -3,6 +3,8 @@
 $item-img-size: 240px !default;
 
 .page-group-list {
+  position: relative;
+  top:VH($nav-gap-height);
   .at-tabs {
     height: $tabs-height;
     box-shadow: 0 10px 10px rgba(#000, 0.05);

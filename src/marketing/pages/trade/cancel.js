@@ -5,6 +5,7 @@ import { connect } from '@tarojs/redux'
 import S from '@/spx'
 import api from '@/api'
 import { AtTag, AtTextarea, AtButton } from 'taro-ui'
+import NavGap from "../../../components/nav-gap/nav-gap";
 
 import './cancel.scss';
 
@@ -68,48 +69,51 @@ export default class TradeCancel extends Component {
     const { colors } = this.props
 
     return (
-      <View className='page-trade-cancel'>
-        <NavBar
-          title='取消订单'
-          leftIconType='chevron-left'
-          fixed='true'
-        />
+      <View>
+        <NavGap title='取消订单'/>
+        <View className='page-trade-cancel'>
+          <NavBar
+            title='取消订单'
+            leftIconType='chevron-left'
+            fixed='true'
+          />
 
-        <View className='sec'>
-          <SpCell title='请选择取消理由'>
-            {reason.map((item, idx) => {
-              return (
-                <AtTag
-                  className='cancel-reason'
-                  key={item}
-                  active={idx === curReasonIdx}
-                  name={item}
-                  onClick={this.handleClickTag}
-                >{item}</AtTag>
-              )
-            })}
-          </SpCell>
-          {curReasonIdx === 3 && (
-            <SpCell title='其他理由'>
-              <AtTextarea
-                value={otherReason}
-                onChange={this.handleTextChange}
-                maxLength={textCount}
-                placeholder='请输入您的理由...'
-              ></AtTextarea>
+          <View className='sec'>
+            <SpCell title='请选择取消理由'>
+              {reason.map((item, idx) => {
+                return (
+                  <AtTag
+                    className='cancel-reason'
+                    key={item}
+                    active={idx === curReasonIdx}
+                    name={item}
+                    onClick={this.handleClickTag}
+                  >{item}</AtTag>
+                )
+              })}
             </SpCell>
-          )}
-        </View>
+            {curReasonIdx === 3 && (
+              <SpCell title='其他理由'>
+                <AtTextarea
+                  value={otherReason}
+                  onChange={this.handleTextChange}
+                  maxLength={textCount}
+                  placeholder='请输入您的理由...'
+                ></AtTextarea>
+              </SpCell>
+            )}
+          </View>
 
-        <View className='trade-cancel-footer'>
-          <View
-            onClick={this.handleSubmit}
-            className='toolbar_btn'
-            style={`background: ${colors.data[0].primary}`}
+          <View className='trade-cancel-footer'>
+            <View
+              onClick={this.handleSubmit}
+              className='toolbar_btn'
+              style={`background: ${colors.data[0].primary}`}
             >确定取消</View>
-        </View>
+          </View>
 
-        <SpToast />
+          <SpToast />
+        </View>
       </View>
     )
   }

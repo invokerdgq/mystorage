@@ -6,6 +6,7 @@ import api from '@/api'
 import S from '@/spx'
 import { withPager } from '@/hocs'
 import { classNames, pickBy, formatTime } from '@/utils'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import '../home/coupon-home.scss'
 
@@ -134,49 +135,52 @@ export default class CouponHome extends Component { // ------------------优惠�
     const { list, page } = this.state
 
     return (
-      <View className='coupon-list'>
-        <NavBar
-          title='优惠券列表'
-          leftIconType='chevron-left'
-          fixed='true'
-        />
+      <View>
+        <NavGap title='优惠券列表'/>
+        <View className='coupon-list'>
+          <NavBar
+            title='优惠券列表'
+            leftIconType='chevron-left'
+            fixed='true'
+          />
 
-        <ScrollView
-          scrollY
-          className='home_coupon-list__scroll'
-          onScrollToLower={this.nextPage}
-        >
-          <View className='coupon-list-ticket'>
-            {
-              list.map((item, idx) => {
-                return (
-                  <CouponItem
-                    info={item}
-                    key={item.card_id}
-                  >
-                    <View
-                      className={`coupon-btn ${(item.getted === 2 || item.getted === 1) ? 'coupon-btn__done' : ''}`}
-                      style={`background: ${colors.data[0].primary}`}
-                      onClick={this.handleClickNews.bind(this, item, idx)}
+          <ScrollView
+            scrollY
+            className='home_coupon-list__scroll'
+            onScrollToLower={this.nextPage}
+          >
+            <View className='coupon-list-ticket'>
+              {
+                list.map((item, idx) => {
+                  return (
+                    <CouponItem
+                      info={item}
+                      key={item.card_id}
                     >
-                      {item.getted === 1 ? '已领取' : ''}
-                      {item.getted === 2 ? '已领完' : ''}
-                      {(item.getted !== 2 && item.getted !== 1) ? '立即领取' : ''}
-                    </View>
-                  </CouponItem>
-                )
-              })
-            }
-            {
-              page.isLoading && <Loading>正在加载...</Loading>
-            }
-            {
-              !page.isLoading && !page.hasNext && !list.length
-              && (<SpNote img='trades_empty.png'>赶快去添加吧~</SpNote>)
-            }
-          </View>
-        </ScrollView>
-        <SpToast />
+                      <View
+                        className={`coupon-btn ${(item.getted === 2 || item.getted === 1) ? 'coupon-btn__done' : ''}`}
+                        style={`background: ${colors.data[0].primary}`}
+                        onClick={this.handleClickNews.bind(this, item, idx)}
+                      >
+                        {item.getted === 1 ? '已领取' : ''}
+                        {item.getted === 2 ? '已领完' : ''}
+                        {(item.getted !== 2 && item.getted !== 1) ? '立即领取' : ''}
+                      </View>
+                    </CouponItem>
+                  )
+                })
+              }
+              {
+                page.isLoading && <Loading>正在加载...</Loading>
+              }
+              {
+                !page.isLoading && !page.hasNext && !list.length
+                && (<SpNote img='trades_empty.png'>赶快去添加吧~</SpNote>)
+              }
+            </View>
+          </ScrollView>
+          <SpToast />
+        </View>
       </View>
     )
   }

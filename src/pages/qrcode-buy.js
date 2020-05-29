@@ -8,6 +8,7 @@ import api from '@/api'
 import { pickBy, normalizeQuerys } from '@/utils'
 import S from '@/spx'
 import entry from '@/utils/entry'
+import NavGap from "../components/nav-gap/nav-gap";
 
 import './member/qrcode-buy.scss'
 
@@ -177,21 +178,24 @@ export default class QrcodeBuy extends Component {
     }
 
     return (
-      <View className='qrcode-buy'>
-        <View className='qrcode-buy__top'>
+      <View>
+        <NavGap title='积分购买'
+        />
+        <View className='qrcode-buy'>
+          <View className='qrcode-buy__top'>
             {
-                isLogin === true
+              isLogin === true
                 ? <View className='islogin_user'>
-                    <View className='islogin_user__content'>
-                        <Image src={bg_img} mode='widthFix' className='qrcode-buy__bgimg'></Image>
-                        <View className='islogin_user_info'>
-                            <View className='islogin_user_left'>
-                                <View>{userInfo.username}</View>
-                                <View>{userInfo.user_card_code}</View>
-                            </View>
-                            <View className='islogin_user_right'>积分</View>
-                        </View>
+                  <View className='islogin_user__content'>
+                    <Image src={bg_img} mode='widthFix' className='qrcode-buy__bgimg'></Image>
+                    <View className='islogin_user_info'>
+                      <View className='islogin_user_left'>
+                        <View>{userInfo.username}</View>
+                        <View>{userInfo.user_card_code}</View>
+                      </View>
+                      <View className='islogin_user_right'>积分</View>
                     </View>
+                  </View>
                 </View>
                 : <Image src={banner_img} mode='widthFix' className='qrcode-buy__img'></Image>
             }
@@ -199,46 +203,47 @@ export default class QrcodeBuy extends Component {
               info={couponData}
             />
             <View className='scancode-view' onClick={this.handleCamera.bind(this)}>
-                <Image src='/assets/imgs/bt_scanning.png' mode='widthFix' className='qrcode-buy__scanning'></Image>
-                <View>扫描商品条码</View>
+              <Image src='/assets/imgs/bt_scanning.png' mode='widthFix' className='qrcode-buy__scanning'></Image>
+              <View>扫描商品条码</View>
             </View>
-        </View>
+          </View>
 
-        {
+          {
             isLogin === false
-                ? <View className='wauth-btn'>
-                    <View
-                      className='wauth-btn__btn'
-                      onClick={this.handleLoginClick.bind(this)}
-                      style={`background: ${colors.data[0].primary}`}
-                      >立即授权</View>
-                    <View className='wauth-btn__tips'>
-                        <SpCheckbox checked={isCkeckTips} />
-                        <Text className='wauth-btn__text' onClick={this.handleTips.bind(this)}>用户协议</Text>
-                    </View>
+              ? <View className='wauth-btn'>
+                <View
+                  className='wauth-btn__btn'
+                  onClick={this.handleLoginClick.bind(this)}
+                  style={`background: ${colors.data[0].primary}`}
+                >立即授权</View>
+                <View className='wauth-btn__tips'>
+                  <SpCheckbox checked={isCkeckTips} />
+                  <Text className='wauth-btn__text' onClick={this.handleTips.bind(this)}>用户协议</Text>
                 </View>
-                : <View className='auth-btns'>
-                    <View className='auth-btns__item' onClick={this.handleHome.bind(this)}>
-                        <View className='icon icon-home'></View>
-                        <View>商城首页</View>
-                    </View>
-                    <View className='auth-btns__item' onClick={this.handleCart.bind(this)}>
-                        <View className='icon icon-cart'></View>
-                        <View>购物车</View>
-                    </View>
-                    <View className='auth-btns__item' onClick={this.handleTrade.bind(this)}>
-                        <View className='icon icon-home'></View>
-                        <View>我的订单</View>
-                    </View>
+              </View>
+              : <View className='auth-btns'>
+                <View className='auth-btns__item' onClick={this.handleHome.bind(this)}>
+                  <View className='icon icon-home'></View>
+                  <View>商城首页</View>
                 </View>
-        }
+                <View className='auth-btns__item' onClick={this.handleCart.bind(this)}>
+                  <View className='icon icon-cart'></View>
+                  <View>购物车</View>
+                </View>
+                <View className='auth-btns__item' onClick={this.handleTrade.bind(this)}>
+                  <View className='icon icon-home'></View>
+                  <View>我的订单</View>
+                </View>
+              </View>
+          }
 
-        <AtFloatLayout isOpened={tipsInfoShow} title='用户协议' onClose={this.handleClose.bind(this)}>
+          <AtFloatLayout isOpened={tipsInfoShow} title='用户协议' onClose={this.handleClose.bind(this)}>
             {
-                tipsInfo && (<SpHtmlContent className='pay-rule-style' content={tipsInfo} />)
+              tipsInfo && (<SpHtmlContent className='pay-rule-style' content={tipsInfo} />)
             }
-        </AtFloatLayout>
-        <SpToast />
+          </AtFloatLayout>
+          <SpToast />
+        </View>
       </View>
     )
   }

@@ -222,7 +222,9 @@ export default class AddressIndex extends Component {
     if(this.state.listLength === 0) {
       data.is_def = '1'
     }
-
+    if(/\D/.test(data.telephone)){
+      return S.toast('请输入正确的电话号码')
+    }
     if (!data.username) {
       return S.toast('请输入收件人')
     }
@@ -289,6 +291,7 @@ export default class AddressIndex extends Component {
                 onChange={this.handleChange.bind(this, 'username')}
               />
               <AtInput
+                type={'phone'}
                 title='手机号码'
                 name='telephone'
                 maxLength={11}

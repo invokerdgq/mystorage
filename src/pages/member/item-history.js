@@ -4,6 +4,7 @@ import { withPager, withBackToTop } from '@/hocs'
 import { BackToTop, Loading, GoodsItem, NavBar, SpNote } from '@/components'
 import api from '@/api'
 import { pickBy } from '@/utils'
+import NavGap from "../../components/nav-gap/nav-gap";
 
 import './item-history.scss'
 
@@ -66,50 +67,53 @@ export default class ItemHistory extends Component {
     const { list, showBackToTop, scrollTop, page } = this.state
 
     return (
-      <View className='page-goods-list page-goods-history'>
-        <View className='goods-list__toolbar'>
-          <NavBar
-            leftIconType='chevron-left'
-            fixed='true'
+      <View>
+        <NavGap title='历史'/>
+        <View className='page-goods-list page-goods-history'>
+          <View className='goods-list__toolbar'>
+            <NavBar
+              leftIconType='chevron-left'
+              fixed='true'
+            />
+          </View>
+
+          <ScrollView
+            className='goods-list__scroll'
+            scrollY
+            scrollTop={scrollTop}
+            scrollWithAnimation
+            onScroll={this.handleScroll}
+            onScrollToLower={this.nextPage}
+          >
+            <View className='goods-list goods-list__type-grid'>
+              {
+                list.map(item => {
+                  return (
+                    <GoodsItem
+                      key={item.item_id}
+                      info={item}
+                      onClick={() => this.handleClickItem(item)}
+                    />
+                  )
+                })
+              }
+            </View>
+            {
+              page.isLoading
+                ? <Loading>正在加载...</Loading>
+                : null
+            }
+            {
+              !page.isLoading && !page.hasNext && !list.length
+              && (<SpNote img='trades_empty.png'>暂无数据~</SpNote>)
+            }
+          </ScrollView>
+
+          <BackToTop
+            show={showBackToTop}
+            onClick={this.scrollBackToTop}
           />
         </View>
-
-        <ScrollView
-          className='goods-list__scroll'
-          scrollY
-          scrollTop={scrollTop}
-          scrollWithAnimation
-          onScroll={this.handleScroll}
-          onScrollToLower={this.nextPage}
-        >
-          <View className='goods-list goods-list__type-grid'>
-            {
-              list.map(item => {
-                return (
-                  <GoodsItem
-                    key={item.item_id}
-                    info={item}
-                    onClick={() => this.handleClickItem(item)}
-                  />
-                )
-              })
-            }
-          </View>
-          {
-            page.isLoading
-              ? <Loading>正在加载...</Loading>
-              : null
-          }
-          {
-            !page.isLoading && !page.hasNext && !list.length
-              && (<SpNote img='trades_empty.png'>暂无数据~</SpNote>)
-          }
-        </ScrollView>
-
-        <BackToTop
-          show={showBackToTop}
-          onClick={this.scrollBackToTop}
-        />
       </View>
     )
   }

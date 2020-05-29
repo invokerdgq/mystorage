@@ -4,6 +4,7 @@ import { AtTimeline } from 'taro-ui'
 import { Loading, NavBar, SpNote } from '@/components'
 import { pickBy } from '@/utils'
 import api from '@/api'
+import NavGap from "../../../components/nav-gap/nav-gap";
 
 import './delivery-info.scss'
 
@@ -36,7 +37,7 @@ export default class TradeDetail extends Component {
     this.setState({
       list: nList,
       deliverycorp:this.$router.params.delivery_corp,
-      deliverycode:this.$router.params.delivery_code,      
+      deliverycode:this.$router.params.delivery_code,
       deliveryname:this.$router.params.delivery_name,
     })
     Taro.hideLoading()
@@ -50,32 +51,35 @@ export default class TradeDetail extends Component {
     }
 
     return (
-      <View className='delivery-detail'>
-        <NavBar
-          title='物流信息'
-          leftIconType='chevron-left'
-          fixed='true'
-        />
-        <View className='delivery-detail__status'>
-          <View className='delivery-detail__status-text'>物流公司：
-            {
-            deliveryname!=='undefined'&&deliveryname!=='null'
-            ? deliveryname
-            :''
-            }
+      <View>
+        <NavGap title='物流信息'/>
+        <View className='delivery-detail'>
+          <NavBar
+            title='物流信息'
+            leftIconType='chevron-left'
+            fixed='true'
+          />
+          <View className='delivery-detail__status'>
+            <View className='delivery-detail__status-text'>物流公司：
+              {
+                deliveryname!=='undefined'&&deliveryname!=='null'
+                  ? deliveryname
+                  :''
+              }
             </View>
-          <View className='delivery-detail__status-ordertext'>物流信单号：{deliverycode!=='undefined'&&deliverycode!=='null'?deliverycode:''}</View>
-          {/* <Text className='delivery-detail__status-text'>物流信息</Text> */}
-        </View>
+            <View className='delivery-detail__status-ordertext'>物流信单号：{deliverycode!=='undefined'&&deliverycode!=='null'?deliverycode:''}</View>
+            {/* <Text className='delivery-detail__status-text'>物流信息</Text> */}
+          </View>
 
-        <View className='delivery-info'>
-          {
-            list.length === 0
-              ? <SpNote img='plane.png'>目前暂无物流信息~</SpNote>
-              : <AtTimeline items={list} ></AtTimeline>
+          <View className='delivery-info'>
+            {
+              list.length === 0
+                ? <SpNote img='plane.png'>目前暂无物流信息~</SpNote>
+                : <AtTimeline items={list} ></AtTimeline>
 
-          }
+            }
 
+          </View>
         </View>
       </View>
     )

@@ -1,6 +1,8 @@
 @import "../../../style/imports";
 
 .trade-refund-detail {
+  position: relative;
+  top:VH($nav-gap-height);
   .refund-status {
     background: $color-brand-primary;
     color: #ffffff;

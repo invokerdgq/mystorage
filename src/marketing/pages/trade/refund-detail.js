@@ -4,6 +4,7 @@ import { REFUND_STATUS } from '@/consts'
 import { formatTime } from '@/utils'
 import { SpCell, Price, FloatMenus, FloatMenuItem, Loading, NavBar } from '@/components'
 import api from '@/api'
+import NavGap from "../../../components/nav-gap/nav-gap";
 
 import './refund-detail.scss'
 
@@ -83,48 +84,50 @@ export default class TradeRefundDetail extends Component {
     }
 
     return (
-      <View className='trade-refund-detail'>
-        <View className='refund-status'>
-          <Text className='refund-status__text text-status'>{info.status_str}</Text>
-          {progress == 0 ? <Text className='refund-status__text'>正在审核订单</Text> : null}
-          {progress == 1 ? <Text className='refund-status__text'>已接受申请，等回寄</Text> : null}
-          {progress == 2 ? <Text className='refund-status__text'>客户已回寄，等待商家收货确认</Text> : null}
-          {progress == 3 ? <Text className='refund-status__text'>申请已驳回</Text> : null}
-          {progress == 4 ? <Text className='refund-status__text'>物流信息：已发货</Text> : null}
-          {progress == 5 ? <Text className='refund-status__text'>时间</Text> : null}
-          {progress == 6 ? <Text className='refund-status__text'>时间</Text> : null}
-          {progress == 7 ? <Text className='refund-status__text'>时间</Text> : null}
+      <View>
+        <NavGap title='订单详情'/>
+        <View className='trade-refund-detail'>
+          <View className='refund-status'>
+            <Text className='refund-status__text text-status'>{info.status_str}</Text>
+            {progress == 0 ? <Text className='refund-status__text'>正在审核订单</Text> : null}
+            {progress == 1 ? <Text className='refund-status__text'>已接受申请，等回寄</Text> : null}
+            {progress == 2 ? <Text className='refund-status__text'>客户已回寄，等待商家收货确认</Text> : null}
+            {progress == 3 ? <Text className='refund-status__text'>申请已驳回</Text> : null}
+            {progress == 4 ? <Text className='refund-status__text'>物流信息：已发货</Text> : null}
+            {progress == 5 ? <Text className='refund-status__text'>时间</Text> : null}
+            {progress == 6 ? <Text className='refund-status__text'>时间</Text> : null}
+            {progress == 7 ? <Text className='refund-status__text'>时间</Text> : null}
 
-        </View>
-        <View className='refund-detail'>
-          {progress == 0 ?  <Text className='refund-detail__title'>您已成功发起退款申请，请耐心等待商家处理</Text> : null}
-          <Text className='refund-detail__descr'>{info.description}</Text>
-          {
-            progress == 0
-              ? <View>
+          </View>
+          <View className='refund-detail'>
+            {progress == 0 ?  <Text className='refund-detail__title'>您已成功发起退款申请，请耐心等待商家处理</Text> : null}
+            <Text className='refund-detail__descr'>{info.description}</Text>
+            {
+              progress == 0
+                ? <View>
                   <Text className='refund-detail__btn' onClick={this.handleBtnClick.bind(this, 'edit')}>修改申请</Text>
                   <Text className='refund-detail__btn refund-detail__cancel' onClick={this.handleBtnClick.bind(this, 'cancel')}>撤销申请</Text>
                 </View>
-              : null
-          }
-          {
-            (progress == 3 || progress == 5)
-              ? <View>
+                : null
+            }
+            {
+              (progress == 3 || progress == 5)
+                ? <View>
                   <Text className='refund-detail__btn' onClick={this.handleBtnClick.bind(this, 'refund')}>再次申请</Text>
                   <Text className='refund-detail__btn refund-detail__cancel' onClick={this.handleBtnClick.bind(this, 'cancel')}>撤销申请</Text>
                 </View>
-              : null
-          }
-          {
-            progress == 1
-              ? <View>
+                : null
+            }
+            {
+              progress == 1
+                ? <View>
                   <Text className='refund-detail__btn' onClick={this.handleBtnClick.bind(this, 'refund_send')}>填写物流信息</Text>
                   <Text className='refund-detail__btn refund-detail__cancel' onClick={this.handleBtnClick.bind(this, 'cancel')}>撤销申请</Text>
                 </View>
-              : null
-          }
-        </View>
-        {/*<View className='refund-info'>
+                : null
+            }
+          </View>
+          {/*<View className='refund-info'>
           <View className='refund-info__num'>
             <Text className='refund-info__text'>商品数量：</Text>
             <Text className='refund-info__text text-primary'>3</Text>
@@ -137,18 +140,18 @@ export default class TradeRefundDetail extends Component {
             </View>
           </View>
         </View>*/}
-        <View className='refund-detail-info'>
-          <View className='info-name'>退款原因：<Text className='info-value'>{info.reason}</Text></View>
-          <View className='info-name'>申请时间：<Text className='info-value'>{info.creat_time_str}</Text></View>
-          <View className='info-name'>退款编号：<Text className='info-value'>{info.aftersales_bn}</Text></View>
-          {
-            info.refuse_reason 
+          <View className='refund-detail-info'>
+            <View className='info-name'>退款原因：<Text className='info-value'>{info.reason}</Text></View>
+            <View className='info-name'>申请时间：<Text className='info-value'>{info.creat_time_str}</Text></View>
+            <View className='info-name'>退款编号：<Text className='info-value'>{info.aftersales_bn}</Text></View>
+            {
+              info.refuse_reason
               && <View className='info-name'>驳回原因：<Text className='info-value'>{info.refuse_reason}</Text></View>
-          }
-          
-        </View>
-        <Button openType='contact' className='refund-detail-btn'>联系客服</Button>
-        {/*
+            }
+
+          </View>
+          <Button openType='contact' className='refund-detail-btn'>联系客服</Button>
+          {/*
           <View className='refund-status'>
           {
             (progress == 0 || progress == 1 || progress == 3 || progress == 5)
@@ -205,13 +208,14 @@ export default class TradeRefundDetail extends Component {
             <AtButton type='primary' circle onClick={this.handleBtnClick.bind(this, 'refund_send')}>填写物流信息</AtButton>
           </View>
         )}*/}
-        <FloatMenus>
-          <FloatMenuItem
-            iconPrefixClass='icon'
-            icon='headphones'
-            openType='contact'
-          />
-        </FloatMenus>
+          <FloatMenus>
+            <FloatMenuItem
+              iconPrefixClass='icon'
+              icon='headphones'
+              openType='contact'
+            />
+          </FloatMenus>
+        </View>
       </View>
     )
   }
