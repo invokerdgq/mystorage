@@ -79,7 +79,9 @@ export default class CartCheckout extends Component {
       disabledPayment: null,
       isPaymentOpend: false,
       isDrugInfoOpend: false,
-      invoiceTitle: ''
+      invoiceTitle: '',
+      showInviteCodeInput:false,
+      codeValue:''
     }
   }
   componentDidShow () {
@@ -537,24 +539,24 @@ export default class CartCheckout extends Component {
       'temp_name': 'yykweishop',
       'source_type': receiptType === 'logistics' ? 'logistics_order' : 'ziti_order',
     }
-    api.user.newWxaMsgTmpl(templeparams).then(tmlres => {
-      console.log('templeparams---1', tmlres)
-      if (tmlres.template_id && tmlres.template_id.length > 0) {
-        wx.requestSubscribeMessage({
-          tmplIds: tmlres.template_id,
-          success() {
-            _this.handlePay()
-          },
-          fail(){
-            _this.handlePay()
-          }
-        })
-      } else {
-        _this.handlePay()
-      }
-    },()=>{
-      _this.handlePay()
-    })
+    // api.user.newWxaMsgTmpl(templeparams).then(tmlres => {
+    //   if (tmlres.template_id && tmlres.template_id.length > 0) {
+    //     wx.requestSubscribeMessage({
+    //       tmplIds: tmlres.template_id,
+    //       success() {
+    //         _this.handlePay()
+    //       },
+    //       fail(){
+    //         _this.handlePay()
+    //       }
+    //     })
+    //   } else {
+    //     _this.handlePay()
+    //   }
+    // },()=>{
+    //   _this.handlePay()
+    // })
+    _this.handlePay()
   }
 
 
@@ -562,7 +564,6 @@ export default class CartCheckout extends Component {
     // if (!this.state.address) {
     //   return S.toast('请选择地址')
     // }
-
     const { payType, total } = this.state
     const { type } = this.$router.params
     const isDrug = type === 'drug'
@@ -680,7 +681,29 @@ export default class CartCheckout extends Component {
     if (!payErr) {
       await Taro.showToast({
         title: '支付成功',
-        icon: 'success'
+        icon: 'success',
+        success :() =>{
+          if(!inviterId){
+            if(distributionShopId){
+              api.bind({userInviteId:distributionShopId}).then((res) => {
+                if(res.status === 1){
+                  let userinfo = Taro.getStorageSync('userinfo');
+                  userinfo.inviter_id = distributionShopId
+                   Taro.setStorageSync('userinfo',userinfo)
+                }
+              })
+            }else{
+              api.bind({userInviteId:this.state.codeValue}).then((res) => { // 详情页的 inputValue
+                if(res.status === 1){
+                  let userinfo = Taro.getStorageSync('userinfo');
+                  userinfo.inviter_id = distributionShopId
+                  Taro.setStorageSync('userinfo',userinfo)
+                }
+              })
+            }
+          }
+        }
+
       })
 
       this.props.onClearCart()
@@ -758,7 +781,25 @@ export default class CartCheckout extends Component {
       isDrugInfoOpend: false
     })
   }
+  setCodeValue = (e)=> {
+    this.setState({
+      codeValue:e.detail.value
+    })
+}
+cancelCodeInput =() => {
+    this.setState({
+      showInviteCodeInput:false,
+      codeValue:''
+    })
 
+}
+confirmCodeInput =() => {
+  this.setState({
+    showInviteCodeInput:false,
+  },() => {
+    this.handlePay()
+  })
+}
   render () {
     // 支付方式文字
     const payTypeText = {

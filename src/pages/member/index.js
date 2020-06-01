@@ -120,7 +120,9 @@ export default class MemberIndex extends Component {
       username: res.memberInfo.username,
       avatar: res.memberInfo.avatar,
       userId: res.memberInfo.user_id,
-      isPromoter: res.is_promoter
+      isPromoter: res.is_promoter,
+      userCode:res.memberInfo.user_card_code,
+      inviter_id:res.memberInfo.inviter_id
     }
     if(!resUser || resUser.username !== userObj.username || resUser.avatar !== userObj.avatar) {
       Taro.setStorageSync('userinfo', userObj)
@@ -148,7 +150,9 @@ export default class MemberIndex extends Component {
       },
       orderCount,
       memberDiscount: memberDiscount.length > 0 ? memberDiscount[memberDiscount.length-1].privileges.discount_desc : '',
-      memberAssets: assets
+      memberAssets: assets,
+      is_effective:res.is_effective,
+      commission:res.memberInfo.commission
     })
   }
 
@@ -255,13 +259,13 @@ export default class MemberIndex extends Component {
   }
   handlePresist = (grade_name) => {
     Taro.navigateTo({
-      url:`/pages/vip/vipgrades?grade_name=${grade_name}&presist=true`
+      url:`/pages/vip/vipgrades?grade_name=${grade_name}&presist=true&commission=${(this.state.commission/100).toFixed(2)}`
     })
   }
 
   render () {
     const { colors } = this.props
-    const { vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
+    const { commission, is_effective ,vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
 
     return (
       <View>
@@ -281,11 +285,20 @@ export default class MemberIndex extends Component {
                         <Image className='avatar-img' src={info.avatar} mode='aspectFill' />
                       </View>
                       <View>
-                        <View className='nickname'>Hi, {info.username}</View>
+                        <view className='tip-text'>
+                          <View className='nickname'>Hi, {info.username}</View>
+                          {
+                            is_effective === 0&&
+                            <View className='gradename' >未激活</View>
+                          }
+                        </view>
                         {
                           !vipgrade.is_vip
                             ? <View className='gradename'>{gradeInfo.grade_name}</View>
-                            : <View className='gradename' onClick={this.handlePresist.bind(this,vipgrade.grade_name)}>{vipgrade.grade_name} 续费</View>
+                            :
+                            <View className='gradename' >{vipgrade.grade_name}</View>
+                            // <View className='gradename' onClick={this.handlePresist.bind(this,vipgrade.grade_name)}>{vipgrade.grade_name} 续费</View>
+
                         }
                       </View>
                     </View>
@@ -302,9 +315,9 @@ export default class MemberIndex extends Component {
                       <View className='member-assets__label'>优惠券</View>
                       <View className='member-assets__value'>{memberAssets.discount_total_count}</View>
                     </View>
-                    <View className='view-flex-item'>
-                      <View className='member-assets__label'>积分</View>
-                      <View className='member-assets__value'>{memberAssets.point_total_count}</View>
+                    <View className='view-flex-item' onClick={this.handlePresist.bind(this,vipgrade.is_vip?vipgrade.grade_name:gradeInfo.grade_name,true)}>
+                      <View className='member-assets__label'>佣金</View>
+                      <View className='member-assets__value'>{(commission/100).toFixed(2)}</View>
                     </View>
                     <View
                       className='view-flex-item'
@@ -357,6 +370,10 @@ export default class MemberIndex extends Component {
                     <View className='grade-info'>
                       <View className='member-card-title'>
                         <Text className='vip-sign'>
+                          {
+                            vipgrade.vip_type === 'vip'&&
+                            <Text>VIP</Text>
+                          }
                           {
                             vipgrade.vip_type === 'svip'&&
                               <Text>SVIP</Text>

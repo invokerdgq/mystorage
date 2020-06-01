@@ -1,9 +1,15 @@
 import req from './req'
 
+export function userinfo(params) {
+  return req.post('/getuserinfo',params)
+}
 export function memberInfo () {
   return req.get('/member')
 }
 
+export function commission() {
+    return req.get('/member/commission')
+}
 export function setMemberInfo (params = {}) {
   return req.put('/member', params)
 }
@@ -104,7 +110,12 @@ export function qrcodeData () {
 export function memberCode (params) {
   return req.get('/barcode', params)
 }
-
+export function inviteCode(code) {
+  return req.get(`/member/code/${code}`)
+}
+export function codeActive(code) {
+return req.post('/member/code/activate',{ activate_id:code})
+}
 export function promoter () {
   return req.post('/promoter')
 }
@@ -208,7 +219,9 @@ export function pointOrderConfirm (params = {}) {
 export function pointDrawLuckAll () {
   return req.get(`/promotion/luckydrawmember`)
 }
-
+export function bind(params) {
+return req.post('/userinviteid',params)
+}
 export function pointMyOrder (params = {}) {
   return req.get(`/promotion/luckydrawjoinlist`, params)
 }

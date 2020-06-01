@@ -14,6 +14,7 @@ export default class SharePanel extends Component {
     onClose: () => {},
     onClick: () => {}
   }
+
   render () {
     const { info, isOpen, onClose, onClick } = this.props
 
@@ -27,13 +28,13 @@ export default class SharePanel extends Component {
         >
         <View className="share-panel">
           <View className="share-panel__item" onClick={onClick}>
-            <View className="icon-picture1"></View>
+            <Button className="icon-pengyouquan iconfont"></Button>
             <View>分享到朋友圈</View>
           </View>
-          <View className="share-panel__item">
+          <View className="share-panel__item" >
             <Button
               openType='share'
-              className="icon-weChart">
+              className=" icon-wechat iconfont ">
             </Button>
             <View>分享给微信好友</View>
           </View>

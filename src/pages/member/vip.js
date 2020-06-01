@@ -20,16 +20,16 @@ export default class Vip extends Component{
       res:null,
       showCanvas:false,
       path:null,
-      showImage:false
+      showImage:false,
+      showToolBar:false
     }
-    this.similarList = [
-      '身份特权',
-      '积分特权',
-      '升级礼包',
-      '生日礼包',
-      '售后保障',
-      '闪电退货'
-    ]
+   this.couponList = [
+     {title:'50元优惠券',url:'../../assets/imgs/50元.png'},
+     {title:'30元优惠券',url:'../../assets/imgs/30元.png'},
+     {title:'20元优惠券',url:'../../assets/imgs/20元.png'},
+     {title:'10元优惠券',url:'../../assets/imgs/10元.png'},
+     {title:'5元优惠券',url:'../../assets/imgs/5元.png'}
+   ]
   }
   componentDidMount() {
 
@@ -46,18 +46,20 @@ export default class Vip extends Component{
     let list = await api.member.getGiftList({page:1})
     this.setState({
       giftList:list.list
-    },() => {this.fetch()})
+    })
 
   }
-  async fetch () {
+  async fetch (index,cb) {
     const { memberInfo, vipgrade, cardInfo } = await api.member.memberInfo()
     const params = {
       code_type: (cardInfo && cardInfo.code_type) || {},
       content: memberInfo.user_card_code,
       appid:'wxde87f955d769c707'
     }
-    const res = await api.member.memberCode(params)
+    // const res = await api.member.memberCode(params)
+    const res = await api.member.inviteCode(this.state.giftList[index].code)
     this.setState({res},() => {
+      cb()
     })
   }
   handleClickBuy =(grade_name) =>{
@@ -66,7 +68,11 @@ export default class Vip extends Component{
         title:'您已激活！',
         duration:2000
       })
-    }else{
+    }else if(grade_name === '钻石会员'){
+      Taro.navigateTo({
+        url:'/pages/index',
+      })
+    }else {
       Taro.navigateTo({
         url:`/pages/vip/vipgrades?grade_name=${grade_name}`,
       })
@@ -87,11 +93,12 @@ export default class Vip extends Component{
     })
   }
   handleUse =(index) => {
+    if(this.state.giftList[index].is_use === 1)return
     this.setState({
       showFeature:true,
       giftIndex:index
     },() => {
-      this.drawImg()
+      this.fetch(index,() => { this.drawImg()})
     })
   }
   handleHide =() => {
@@ -182,7 +189,7 @@ drawImg = (cb=() => {}) =>{
         ctx.setFillStyle('white')
         ctx.setFontSize(10);
         let length2 = ctx.measureText('长按小程序码进入苏心淘')
-        ctx.fillText('长按小程序码进入苏心淘',0.5*w -length2.width/2,0.85*h +15)
+        ctx.fillText('长按小程序码进入苏心淘',0.5*w -length2.width/2,0.85*h +13)
         ctx.draw(false,() => {
           Taro.canvasToTempFilePath({
             x: 0,
@@ -215,10 +222,27 @@ handleCancelImg =()=> {
     })
 }
 
+  showToolBar =()=> {
+    this.setState({
+      showToolBar:true
+    })
+  }
+  hideToolBar=()=>{
+    setTimeout(() => {
+      this.setState({
+        showToolBar:false
+      })
+    },2500)
+  }
+  handleRule(){
+    Taro.navigateTo({
+      url:'/pages/member/vip-rule'
+    })
+  }
   render() {
-    const { titleList,curIndex ,grade_name, giftList,showFeature,giftIndex,res,showCanvas} = this.state
+    const { showToolBar,titleList,curIndex ,grade_name, giftList,showFeature,giftIndex,res,showCanvas} = this.state
     return(
-      <View className='vip-view'>
+      <View className='vip-view' onTouchStart={this.showToolBar} onTouchEnd={this.hideToolBar}>
         <View style={`display:${this.state.showImage?'block':'none'}`} className='vip-fixed'/>
         <View style={`display:${this.state.showImage?'block':'none'}`} className='img-container'>
           <Image   style={`width:375rpx;height:480rpx`} showMenuByLongpress={true} src={this.state.path}/>
@@ -249,7 +273,7 @@ handleCancelImg =()=> {
            <View className='vip'>
              <View className='vip-sort-container'>
                <View className='vip-sort-title'>- {titleList[curIndex]} -</View>
-               <View className='vip-sort-look'>规则查看 ></View>
+               <View className='vip-sort-look' onClick={this.handleRule}>规则查看 ></View>
              </View>
              <View className='vip-feature'>
                <View>
@@ -262,105 +286,119 @@ handleCancelImg =()=> {
                    onChange={this.handleChange}
                  >
                    <SwiperItem className='swiper-item'>
-                     <Image className='item-img'/>
+                     <Image className='item-img' src='https://sxt-b-cdn.oioos.com/tupian/zuanshi.png'/>
                    </SwiperItem>
                    <SwiperItem className='swiper-item'>
-                     <Image className='item-img'/>
+                     <Image className='item-img' src='https://sxt-b-cdn.oioos.com/tupian/zhizun.png'/>
                    </SwiperItem>
                    <SwiperItem className='swiper-item'>
-                     <Image className='item-img'/>
+                     <Image className='item-img' src='https://sxt-b-cdn.oioos.com/tupian/wangzhe.png'/>
                    </SwiperItem>
                  </Swiper>
                </View>
              </View>
            </View>
 
-           <View className='vip-similar'>
+           <View className={`vip-similar-${curIndex}`}>
              {
-               this.similarList.map((item,index) => {
-                 return(
-                   <View className='similar-item'>
-                     <View className=''/>
-                     <View>{item}</View>
-                   </View>
-                 )
-               })
+               curIndex === 0&&
+                 <Image src='https://sxt-b-cdn.oioos.com/tupian/zsqy.jpg' mode='widthFix' />
+             }
+             {
+               curIndex === 1&&
+               <Image src='https://sxt-b-cdn.oioos.com/tupian/zzqy.jpg' mode='widthFix'/>
+             }
+             {
+               curIndex === 2&&
+               <Image src='https://sxt-b-cdn.oioos.com/tupian/wzqy.jpg' mode='widthFix'/>
              }
            </View>
 
            <View className='vip-own'>
-             {
-               curIndex === 0&&
-                 <View className='vip-0-container'>
-                   <View className='vip-0'>
-                     <View className='vip-0-title'>- 任意消费 <Text className='dot'>.</Text> 激活会员 -</View>
-                     <View className='vip-0-button' onClick={this.handleClickLook}>去购买 ></View>
-                   </View>
-                 </View>
-             }
-             {
-               curIndex === 1&&
-               <View className='vip-1'>
-                  <View className='vip-1-title'>- 购买礼包 <Text className='dot'>.</Text> 激活会员 -</View>
-                  <View className='vip-1-content'>
-                    <View className='vip-1-content-title'>礼包包含 :</View>
-                    <View className='vip-1-content-subtitle'><Text className='icon'>i</Text>激活会员后可用于苏心购使用</View>
-                    <View>
-                      <ScrollView
-                      scrollX
-                      >
-
-                      </ScrollView>
-                    </View>
-                  </View>
-                 <View className='vip-1-button'>
-                   <View className='vip-1-button-dec'><Text className='vip-1-button-dec-1'>至尊会员</Text><Text className='vip-1-button-dec-2'>低至￥<Text className='vip-1-button-dec-3'>0.8</Text>元/每天</Text></View>
-                   <View className='vip-1-button-click' onClick={this.handleClickBuy.bind(this,'至尊会员')}>{grade_name === '至尊会员'?'已激活':'激活/兑换'}</View>
-                 </View>
-               </View>
-             }
-             {
-               curIndex === 2&&
-               <View className='vip-2'>
-                 <View className='vip-2-title'>- 购买礼包 <Text className='dot'>.</Text> 激活身份 -</View>
+             <View className='vip-0-title'>- 权益专享 -</View>
+             <View>
+               {
+                 curIndex !== 0&&
                  <View className='vip-2-content'>
-                   <View className='vip-2-content-title'>礼包包含 :</View>
-                   <View className='vip-2-content-subtitle'><Text className='icon'>i</Text>激活会员后可用于苏心购使用</View>
+                   <View className='vip-2-content-title'>300 元优惠券 :</View>
+                   <View className='vip-2-content-subtitle'><Text className='icon'>i</Text>激活会员后可用于苏心淘使用</View>
                    <View>
                      <ScrollView
                        scrollX
+                       enableFlex={true}
+                       className='scroll-coupon'
                      >
-
-                     </ScrollView>
-                   </View>
-                 </View>
-                 {
-                   grade_name === '王者身份'&&
-                   <View>
-                     <View className='vip-2-title'>- 礼包码 -</View>
-                     <View>
                        {
-                         giftList.map((item,index) => {
+                         this.couponList.map((item,index) => {
                            return(
-                             <View className={`gift-list gift-list-${index}`}>
-                                <GiftListItem
-                                  info={item}
-                                  index={index}
-                                  onclick={this.handleUse}
-                                />
+                             <View className='coupon-item'>
+                               <Image src={item.url}/>
+                               <View className='coupon-dec'>{item.title}</View>
                              </View>
                            )
                          })
                        }
-                     </View>
+                     </ScrollView>
                    </View>
-                 }
-                 <View className='vip-2-button'>
-                   <View className='vip-2-button-dec'><Text className='vip-1-button-dec-1'>王者身份</Text><Text className='vip-2-button-dec-2'>待定展示数据</Text></View>
-                   <View className='vip-2-button-click' onClick={this.handleClickBuy.bind(this,'王者身份')}>{grade_name === '王者身份'?'已激活':'激活身份'}</View>
                  </View>
-               </View>
+               }
+             </View>
+             <View className='quanyi-1'>
+               {
+                 curIndex === 0&&
+                 <Image src='https://sxt-b-cdn.oioos.com/tupian/zsqy1.jpg' mode='widthFix'/>
+               }
+               {
+                 curIndex === 1&&
+                 <Image src='https://sxt-b-cdn.oioos.com/tupian/zzqy1.jpg' mode='widthFix'/>
+               }
+               {
+                 curIndex === 2&&
+                 <Image src='https://sxt-b-cdn.oioos.com/tupian/wzqy1.jpg' mode='widthFix'/>
+               }
+             </View>
+             <View>
+               {
+                titleList[curIndex] === '王者身份'&&
+                 <View>
+                   <View className='vip-2-title'>- 礼包码 -</View>
+                   <View>
+                     {
+                       giftList.map((item,index) => {
+                         return(
+                           <View className={`gift-list gift-list-${index}`}>
+                             <GiftListItem
+                               info={item}
+                               index={index}
+                               onclick={this.handleUse}
+                             />
+                           </View>
+                         )
+                       })
+                     }
+                   </View>
+                 </View>
              }
+             </View>
+             <View style={{display:`${showToolBar?'block':'none'}`}}>
+               <View className='vip-1-button'>
+                 <View className='vip-1-button-dec'><Text className='vip-1-button-dec-1'>{titleList[curIndex]}</Text>
+                   {
+                     curIndex === 0&&
+                     <Text className='vip-1-button-dec-2'>任意消费即可激活</Text>
+                   }
+                   {
+                     curIndex === 1&&
+                     <Text className='vip-1-button-dec-2'>低至￥<Text className='vip-1-button-dec-3'>0.8</Text>元/每天</Text>
+                   }
+                   {
+                     curIndex === 2&&
+                     <Text className='vip-1-button-dec-2'>彰显王者身份</Text>
+                   }
+                 </View>
+                 <View className='vip-1-button-click' onClick={this.handleClickBuy.bind(this,titleList[curIndex])}>{grade_name === titleList[curIndex]?'已激活':`${curIndex === 1?'激活/兑换':'激活'}`}</View>
+               </View>
+             </View>
            </View>
          </View>
       </View>

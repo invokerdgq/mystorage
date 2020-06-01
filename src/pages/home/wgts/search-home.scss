@@ -1,15 +1,14 @@
 .search{
   &-box-container{
-    position: fixed;
     width: 354px;
     height: 48px;
-    top: 80px;
-    left: 40px;
     line-height: 48px;
     z-index: 700;
     border-radius: 24px;
     background-color: white;
     opacity: 0.7;
+    margin-left: 40px;
+    transform: translate(0,-50%);
   }
   &-nav{
     padding:0 40px;
@@ -19,5 +18,11 @@
     font-size: 26px;
     color:#504D4C;
     margin-left: 30px;
+  }
+  &-box-img{
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    z-index: 800 !important;
   }
 }

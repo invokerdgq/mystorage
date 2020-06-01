@@ -9,7 +9,10 @@
   margin: 20px 0;
   text-align: left;
   box-shadow:  0 0 8px #ededed;
-  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 130px;
   &-title{
     font-size: 28px;
     font-weight: bold;

@@ -66,11 +66,15 @@ export default class Detail extends Component {
       likeList: [],
       evaluationList: [],
       evaluationTotal: 0,
+      showCodeInput:false,
+      cardValue:''
     }
   }
 
   async componentDidMount () {
     const options = this.$router.params
+    console.log('666666666');
+    console.log(options)
     const { store, uid, id, gid = '' } = await entry.entryLaunch(options, true)
     console.log({store,uid,id,gid})
     if (store) {
@@ -97,13 +101,16 @@ export default class Detail extends Component {
 
   async componentDidShow () {
     const userInfo = Taro.getStorageSync('userinfo')
+    console.log('hahahahhahahaha')
+    console.log(userInfo)
     if (S.getAuthToken() && !userInfo) {
       const res = await api.member.memberInfo()
       const userObj = {
         username: res.memberInfo.username,
         avatar: res.memberInfo.avatar,
         userId: res.memberInfo.user_id,
-        isPromoter: res.is_promoter
+        isPromoter: res.is_promoter,
+        userCode:res.user_card_code
       }
       Taro.setStorageSync('userinfo', userObj)
     }
@@ -130,7 +137,7 @@ export default class Detail extends Component {
   onShareAppMessage () {
     const { info } = this.state
     const { distributor_id } = Taro.getStorageSync('curStore')
-    const { userId } = Taro.getStorageSync('userinfo')
+    const { userCode:userId } = Taro.getStorageSync('userinfo')
 
     return {
       title: info.item_name,
@@ -407,8 +414,45 @@ export default class Detail extends Component {
     })
   }
 
-  handleBuyAction = async (type) => {
-    if (type === 'cart') {
+  handleJudge =(type) => {
+    // 发起判断
+    const memberinfo =  Taro.getStorageSync('userinfo')
+    const connect = Taro.getStorageSync('distribution_shop_id')
+    if(!memberinfo.inviter_id && !connect && memberinfo.inviter_id != 0){
+      // shu card-code
+      this.setState({
+        showCodeInput:true,
+        type:type
+      })
+    }else{
+      this.handleBuyBarClick(type)
+    }
+  }
+  handleCancel = () => {
+    this.setState({
+      showCodeInput:false,
+    })
+  }
+  async handleConfirm (){
+    let res = await api.member.userinfo({user_card_code:this.state.cardValue})
+    console.log('jjjjjjjjjjjjjjjjjjjjjjjjjj')
+    console.log(res)
+    if(res.status === 1){
+      this.setState({
+        showCodeInput:false,
+      })
+      this.handleBuyBarClick(this.state.type)
+    }else{
+      Taro.showToast({
+        title: '邀请码错误',
+        icon:'none',
+        duration:1500,
+        success(){}
+      })
+    }
+  }
+  handleBuyAction = async () => {
+    if (this.state.type === 'cart') {
       this.fetchCartCount()
     }
     this.setState({
@@ -652,6 +696,11 @@ export default class Detail extends Component {
   handleBack = () => {
     Taro.navigateBack()
   }
+  setCodeValue =(e) => {
+    this.setState({
+      cardValue:e.detail.value
+    })
+  }
   render () {
     const store = Taro.getStorageSync('curStore')
     const {
@@ -772,7 +821,7 @@ export default class Detail extends Component {
             }
 
             {timer && (
-              <View className='goods-timer' style={colors ? `background: linear-gradient(to left, ${colors.data[0].primary}, ${colors.data[0].primary});` :  `background: linear-gradient(to left, #d42f29, #d42f29);`}>
+              <View className='goods-timer' >
                 <View className='goods-timer__hd'>
                   <View className='goods-prices'>
                     <View className='view-flex view-flex-middle'>
@@ -856,13 +905,13 @@ export default class Detail extends Component {
                 </View>
               </View>
 
-              {
-                info.vipgrade_guide_title
-                  ? <VipGuide
-                    info={info.vipgrade_guide_title}
-                  />
-                  : null
-              }
+              {/*{*/}
+              {/*  info.vipgrade_guide_title*/}
+              {/*    ? <VipGuide*/}
+              {/*      info={info.vipgrade_guide_title}*/}
+              {/*    />*/}
+              {/*    : null*/}
+              {/*}*/}
 
               {
                 marketing === 'normal' && (
@@ -1135,8 +1184,8 @@ export default class Detail extends Component {
               type={marketing}
               cartCount={cartCount}
               onFavItem={this.handleMenuClick.bind(this, 'fav')}
-              onClickAddCart={this.handleBuyBarClick.bind(this, 'cart')}       // the params different !!!
-              onClickFastBuy={this.handleBuyBarClick.bind(this, 'fastbuy')}
+              onClickAddCart={this.handleJudge.bind(this, 'cart')}       // the params different !!!
+              onClickFastBuy={this.handleJudge.bind(this, 'fastbuy')}
             >
               <View>{marketing}</View>
             </GoodsBuyToolbar>)
@@ -1202,6 +1251,15 @@ export default class Detail extends Component {
           <Canvas className='canvas' canvas-id='myCanvas'></Canvas>
 
           <SpToast />
+        </View>
+        <View className='inputCode-container' style={{display:`${this.state.showCodeInput?'block':'none'}`}}/>
+        <View className='code-input' style={{display:`${this.state.showCodeInput?'block':'none'}`}}>
+          <View className='code-input-title'>请输入邀请码</View>
+          <View className='code-input-content'>邀请码:<Input type='text' onInput={this.setCodeValue}/></View>
+          <View className='code-input-confirm'>
+            <View className='code-input-confirm-cancel' onClick={this.handleCancel}>暂不输入</View>
+            <View className='code-input-confirm-confirm' onClick={this.handleConfirm}>确认</View>
+          </View>
         </View>
       </View>
     )

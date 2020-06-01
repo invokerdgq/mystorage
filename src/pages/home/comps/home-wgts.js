@@ -12,10 +12,15 @@ export default class HomeWgts extends PureComponent {
     addGlobalClass: true
   }
 
-  static defaultProps = {
-    wgts: []
+  // static defaultProps = {
+  //   wgts: []
+  // }
+  constructor(props) {
+    super(props);
   }
   componentDidMount () {
+    console.log('kkkkkkkk')
+    console.log(this.props.wgts)
     Taro.getSystemInfo()
       .then(res =>{
         this.setState({
@@ -23,10 +28,14 @@ export default class HomeWgts extends PureComponent {
         })
       })
   }
+  Refresh(){
+    this.props.Refresh()
+  }
 
   render () {
-    const { wgts } = this.props
-    Taro.M(wgts)
+    const  wgts  = this.props.wgts
+    console.log('yyyyyyyyyy')
+    console.log(wgts)
     const { screenWidth } = this.state
     return (
       <View>
@@ -34,7 +43,7 @@ export default class HomeWgts extends PureComponent {
           wgts.map((item, idx) => {
             return (
               <View className='wgt-wrap' key={idx}>
-                {item.name === 'limit-kill'&& <WgtLimitKill info={item}/>}
+                {item.name === 'limit-kill'&& <WgtLimitKill info={item} Refresh={this.Refresh}/>}
                 {item.name === 'search' && <WgtSearchHome info={item} />}
                 {item.name === 'film' && <WgtFilm info={item} />}
                 {item.name === 'marquees' && <WgtMarquees info={item} />}
@@ -54,9 +63,9 @@ export default class HomeWgts extends PureComponent {
             )
           })
         }
-        {
-          <HotArea></HotArea>
-        }
+        {/*{*/}
+        {/*  <HotArea></HotArea>*/}
+        {/*}*/}
       </View>
     )
   }

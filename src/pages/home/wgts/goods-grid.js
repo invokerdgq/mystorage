@@ -97,7 +97,7 @@ export default class WgtGoodsGrid extends Component {
                         )}
                         <View className={`goods-title ${!config.brand || !item.brand ? 'no-brand' : ''}`}>{item.title}</View>
                         {item.brief && <View className={`goods-brief ${!config.brand || !item.brand ? 'no-brand' : ''}`}>{item.brief}</View>}
-                        <View className="guige">规格规格规？？</View>
+                        {/*<View className="guige">规格规格规？？</View>*/}
                         {
                           config.showPrice
                           && <View className="goods-price">
@@ -122,7 +122,6 @@ export default class WgtGoodsGrid extends Component {
             </View>
           </View>
         }
-
       </View>
     )
   }

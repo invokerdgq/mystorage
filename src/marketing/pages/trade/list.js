@@ -166,8 +166,9 @@ export default class TradeList extends Component {
     if (type === 'confirm') {
       await api.trade.confirm(tid)
       const { fullPath } = getCurrentRoute(this.$router)
+      Taro.M(fullPath)
       Taro.redirectTo({
-        url: fullPath
+        url: '/pages/trade/list?status =1'
       })
       return
     }

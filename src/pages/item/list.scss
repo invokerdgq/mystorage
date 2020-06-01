@@ -67,7 +67,7 @@
       }
     }
     &__scroll {
-      @include page-scroll($tabs-height + $searchbar-height + $nav-gap-height, 0);
+      @include page-scroll($searchbar-height + $nav-gap-height, 0);
       &.with-tag-bar {
         @include page-scroll($tabs-height + $searchbar-height + $tags-height + $nav-gap-height, 0);
       }

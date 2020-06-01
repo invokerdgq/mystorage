@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image,Icon ,ScrollView} from '@tarojs/components'
 import { calcTimer } from '@/utils'
 import api from '@/api'
+import {AtCountdown} from "taro-ui";
 
 import './own-limit-kill.scss'
 
@@ -16,55 +17,40 @@ export default class WgtLimitKill extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      Dec:[],
       more:false,
       index:0,
       poi: {pos:0},
       showTriangle:true,
-      iconUp:false
+      iconUp:false,
+      timer:[]
     }
   }
-  async componentDidMount() {
-    //初始化 choiced
-    //选中时 元素index+ 1
+   componentDidMount() {
     const {list} = this.props.info
-    let skId = list.reduce((pre,item,index) => {
-      pre.push(item.config.seckillId)
-      return pre
-    },[])
-    // let query = {
-    //
-    // }
-    // await api.seckill.seckillList(query)
-    // let skId = list.reduce((pre,item,index) => {
-    //   if(item.config.lastSeconds){  pre.push(item.data[0].goodsId)}
-    //   return pre
-    // },[])
-    // console.log('9999')
-    // console.log(skId)
-    // let totalData = await this.completeData(skId)
-    // console.log('pppppppppppppppppppppppppppp')
-    // console.log(totalData)
-    this.setState({
-      Dec:[this.props.info.list[0].data[0]],
-    })
-    this.handleTimerChange(2)
+     let timerIndexList = []
+     list.map((item,index) => {
+       if(item.config.lastSeconds>0){
+         timerIndexList.push(index)
+       }
+     })
+     if(timerIndexList.length !== 0){
+       this.handleTimerChange(timerIndexList[0])
+     }else{
+       this.handleTimerChange(0)
+     }
   }
-  async  completeData (goodsIdList){
-    let activityList = goodsIdList.reduce( (pre,item,index) => {
-      let id = this.props.info.list[index].data[0].goodsId
-      pre.push(api.item.detail(id,{}))
-      return pre
-    },[])
-    return Promise.all(activityList)
-  }
+  // setTimer(indexList){
+  //   indexList.setInterval(() => {
+  //
+  //   },1000)
+  // }
   handleTimerChange = (index) =>{
-    console.log(index)
     let obj = {
-      Dec:[this.props.info.list[index].data[0]],
       index:index,
-      poi:{pos:750/8 +index*750/4},
-      showTriangle: false
+      poi:{pos:index*750/4 + (750/8) -index-1},
+      showTriangle: false,
+      more:false,
+      iconUp: false
     }
       this.setState(obj,() => {setTimeout(() => {
         this.setState({showTriangle:true})
@@ -74,15 +60,13 @@ export default class WgtLimitKill extends Component{
     const {index,more} = this.state
     if(more){
       this.setState({
-        Dec:this.props.info.list[index].data,
         more:!more,
-        iconUp:true
+        iconUp:!this.state.iconUp
       })
     }else{
       this.setState({
-        Dec:[this.props.info.list[index].data[0]],
         more:!more,
-        iconUp:false
+        iconUp:!this.state.iconUp
       })
     }
   }
@@ -91,10 +75,10 @@ export default class WgtLimitKill extends Component{
        showTriangle:false
      })
   }
-  handleBuy =(index)=> {
-    if(this.props.info.list[this.state.index].config.lastSeconds === 0){
+  handleBuy =(index,goodsIndex)=> {
+    if(this.props.info.list[index].config.lastSeconds === 0 ||this.props.info.list[index].config.status === 'notice'){
       Taro.showToast({
-        title:'很抱歉，活动已结束',
+        title:`很抱歉，${this.props.info.list[index].config.status === 'ended'?'已经结束':'还未开始'}`,
         icon:'none',
         duration:1500,
         complete:() => {
@@ -102,17 +86,20 @@ export default class WgtLimitKill extends Component{
         }
       })
     }else{
-      let id = this.state.Dec[index].goodsId
+      let id = this.props.info.list[index].data[goodsIndex].goodsId
       Taro.navigateTo({
         url: `/pages/item/espier-detail?id=${id}`
       })
     }
 }
+refresh() {
+    this.props.Refresh()
+}
   render() {
     const {list} = this.props.info
-    const {Dec,index,showTriangle,iconUp,poi} = this.state
+    const {Dec,index,showTriangle,iconUp,poi,allList} = this.state
     const config = this.props.info.list[index].config
-    const timer = calcTimer(config.lastSeconds)
+    // const timer = calcTimer(config.lastSeconds)
     return(
       <View>
         <View className='wgt__header'>
@@ -128,64 +115,103 @@ export default class WgtLimitKill extends Component{
             scrollWithAnimation= 'true'
             enableFlex='true'
           >
-              <View className='gap'/>
+            <View className='gap'>没有了~</View>
               <View className='gap'/>
               {
                 list.map((item,index) => {
                   return(
                     <View className='timer-content' onClick={this.handleTimerChange.bind(this,index)} style={{backgroundColor:index === this.state.index?'#c0534e':'',color:index !== this.state.index?'black':'white'}}  >
-                      {item.base.title + index}
+                      {item.config.status === 'ended'?'已结束':item.config.status  === 'active'?'进行中':'即将开始'}
                     </View>
                   )
                 })
               }
-              <View className='gap'/>
               <View className="gap"/>
+              <View className='gap'>没有了~ </View>
+
           </ScrollView>
         </View>
         <View className={`${showTriangle?'triangle-container':'triangle-container-none'}`}>
           <View className='triangle'/>
         </View>
         <View className='timer-show'>
-          {config.lastSeconds === 0?'活动已结束':`剩余时间 ${timer.dd}天 ${timer.hh}:${timer.mm}:${timer.ss}`}
+          {
+            list[index].config.status === 'ended'?
+             <Text>已结束</Text>:
+              list[index].config.status === 'active'?
+                <View>
+                  <Text>剩余</Text>
+                  <AtCountdown
+                    isShowDay
+                    day={calcTimer(list[index].config.lastSeconds).dd}
+                    hours={calcTimer(list[index].config.lastSeconds).hh}
+                    minutes={calcTimer(list[index].config.lastSeconds).mm}
+                    seconds={calcTimer(list[index].config.lastSeconds).ss}
+                    onTimeUp={this.refresh}
+                  />   <Text>结束</Text>
+                </View>:
+                <View>
+                  <Text>剩余</Text>
+                  <AtCountdown
+                    isShowDay
+                    day={calcTimer(list[index].config.lastSeconds).dd}
+                    hours={calcTimer(list[index].config.lastSeconds).hh}
+                    minutes={calcTimer(list[index].config.lastSeconds).mm}
+                    seconds={calcTimer(list[index].config.lastSeconds).ss}
+                    onTimeUp={this.refresh}
+                  />   <Text>即将开始</Text>
+                </View>
+          }
         </View>
         <View className='goods-desc'>
           {
-            Dec.map((item,index) => {
-              return(
-                <View className={`limit-goods-detail-${index === 0?'main':'other'}`}>
-                  <View className='detail-img'>
-                     <Image src={item.imgUrl}/>
-                    <View className='other-img'>
-                    <View className='goods-dec'>
-                      <View className='goods-dec-title'>{item.title}</View>
-                      <View className='goods-dec-dec'>暂时需要添加的字段</View>
-                    <View className='goods-tag'>
-                        <Text className='goods-tag-item'>限时秒杀</Text>
-                        <Text className='goods-tag-item'>其他卖点</Text>
-                    </View>
-                    </View>
-                    <View className='goods-sell-dec'>
-                      <View className='goods-sell-dec-num-contain'>
-                        <Text className='goods-sell-dec-num'>售出件数</Text>
-                      </View>
-                      <View className='goods-sell-dec-price-contain'>
-                          <Text className="price">￥<Text className="price-inner">{(item.act_price/100).toFixed(2)}</Text></Text>
-                          <Text className='market-price' >￥{(item.price/100).toFixed(2)}</Text>
-                          <Text className='speed-buy' onClick={this.handleBuy.bind(this,index)}>立即购买</Text>
-                      </View>
-                    </View>
-                   </View>
+            list.map((item1,index1) => {
+              return (
+                <View>
+                  <View style={{display:`${index1 === this.state.index?'block':'none'}`}}>
+                    {
+                      item1.data.map((goodsItem,goodsIndex) => {
+                        return(
+                          <View className={`limit-goods-detail-${goodsIndex === 0?'main':'other'}`} onClick={this.handleBuy.bind(this,index1,goodsIndex)} style={{display:`${(this.state.more||goodsIndex === 0)?'block':'none'}`}}>
+                            <View className='detail-img'>
+                              <Image src={goodsItem.imgUrl}/>
+                              <View className='other-img'>
+                                <View className='goods-dec'>
+                                  <View className='goods-dec-title'>{goodsItem.title}</View>
+                                  {/*<View className='goods-dec-dec'>暂时需要添加的字段</View>*/}
+                                  <View className='goods-tag'>
+                                    <Text className='goods-tag-item'>限时秒杀</Text>
+                                    {/*<Text className='goods-tag-item'>其他卖点</Text>*/}
+                                  </View>
+                                </View>
+                                <View className='goods-sell-dec'>
+                                  <View className='goods-sell-dec-num-contain'>
+                                    {/*<Text className='goods-sell-dec-num'>售出件数</Text>*/}
+                                  </View>
+                                  <View className='goods-sell-dec-price-contain'>
+                                    <Text className="price">￥<Text className="price-inner">{(goodsItem.act_price/100).toFixed(2)}</Text></Text>
+                                    <Text className='market-price' >￥{(goodsItem.price/100).toFixed(2)}</Text>
+                                    <Text className='speed-buy'>立即购买</Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        )
+                      })
+                    }
                   </View>
                 </View>
               )
             })
           }
         </View>
-        <View className='more-toolbar'>
-          <View className='more-toolbar-container' onClick={this.handleMoreChange}>
-            <Text className='dec'>更多秒杀进行中</Text>
-            <Icon className={`iconfont ${iconUp?'icon-arrow-up':'icon-arrow-down'}`}/>
+        <View style={{display:`${list[index].data.length === 0?'none':'block'}`}}>
+          <View className='more-toolbar'>
+            <View className='more-toolbar-container' onClick={this.handleMoreChange}>
+              <Text className='dec'>更多秒杀进行中</Text>
+              <Icon className={`iconfont ${iconUp?'icon-arrow-up':'icon-arrow-down'}`}/>
+            </View>
           </View>
         </View>
       </View>

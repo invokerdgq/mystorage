@@ -2,6 +2,10 @@
 
 .share-panel {
   display: flex;
+  Button{
+    line-height: 80px;
+    height: 80px;
+  }
   &__item {
     display: flex;
     flex-direction: column;
@@ -13,7 +17,7 @@
       margin-bottom: 20px;
       font-size: 80px;
       background: none;
-      color: $color-gray;
+      //color: $color-gray;
       &::after {
         content: none;
       }

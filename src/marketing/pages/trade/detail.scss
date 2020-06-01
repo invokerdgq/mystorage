@@ -5,7 +5,7 @@
   position: relative;
   top:VH($nav-gap-height);
   box-sizing: border-box;
-  min-height: 100vh;
+  min-height: VH-last($nav-gap-height);
   padding-bottom: 84px;
   &-header {
     width: 100%;

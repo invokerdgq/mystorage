@@ -3,7 +3,7 @@
 .coupon-list {
   background: #f6f6f6;
   &__scroll {
-    @include page-scroll($nav-gap-height, $edge-margin);
+    @include page-scroll($nav-gap-height + $tabs-height, $edge-margin);
     box-sizing: border-box;
   }
 }

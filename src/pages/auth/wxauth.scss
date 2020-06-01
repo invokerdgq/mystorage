@@ -3,6 +3,8 @@
 .page-wxauth {
   padding: 60px 0 0;
   text-align: center;
+  position: relative;
+  top:VH($nav-gap-height);
   .auth-title {
     margin-bottom: 50px;
     font-size: 52px;

@@ -163,8 +163,11 @@ export default class HomeIndex extends Component {
     const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=index'
     const info = await req.get(url)
 
+
+     let list = await api.seckill.seckillList({status:'',page:1,pageSize:10})
+
     this.setState({
-      wgts: formate(info.config)
+      wgts: formate(info.config,list.list)
     },()=>{
       if (cb) {
         cb(info)
@@ -266,7 +269,9 @@ export default class HomeIndex extends Component {
       url: '/pages/distribution/shop-home'
     })
   }
-
+refresh(){
+    this.fetchInfo()
+}
   render () {
     const { wgts, page,isShop, likeList, showBackToTop, scrollTop, isShowAddTip, curStore, positionStatus, automatic, showAuto, top } = this.state
     const { showLikeList } = this.props
@@ -287,6 +292,7 @@ export default class HomeIndex extends Component {
           curStore &&
             <HeaderHome
               store={curStore}
+              Refresh={this.refresh}
             />
         }
 				{/*<ScrollView

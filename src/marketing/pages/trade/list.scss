@@ -2,8 +2,7 @@
 
 .page-trade-list {
   position: relative;
-  top:VH($nav-gap-height);
-  height: VH-last($nav-gap-height);
+  height: 100vh;
   .layer {
     background: rgba(#000, 0.01);
     position: fixed;
@@ -45,7 +44,7 @@
   .trade-list {
     &__scroll {
       box-sizing: border-box;
-      @include page-scroll($navigate-height, $edge-margin);
+      @include page-scroll(0, $edge-margin);
       z-index: 2;
       &.with-tabs {
         @include page-scroll($navigate-height + $tabs-height + 10px, $edge-margin);

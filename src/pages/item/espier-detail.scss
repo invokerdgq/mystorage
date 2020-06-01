@@ -164,8 +164,20 @@
   align-items: center;
   justify-content: space-between;
   color: #fff;
+  background: $color-theme;
   padding: 0 $edge-size;
-
+.price{
+  color:white;
+  .price__symbol{
+    color:white
+  }
+  .price__int{
+    color:white
+  }
+  .price__decimal{
+    color:white
+  }
+}
   &__hd {
     flex: 1;
   }
@@ -180,6 +192,7 @@
 
   .goods-prices {
     display: block;
+    color:white;
     .price {
       font-weight: bold;
       font-family: "Helvetica";
@@ -198,6 +211,7 @@
 
     &__ft {
       display: flex;
+      color:white;
       .price {
         font-size: floor(1.3 * $font-size);
         &__symbol {
@@ -234,7 +248,7 @@
     width: 40px;
     height: 40px;
     line-height: 42px;
-    color: $color-brand-primary;
+    color: $color-theme;
     font-size: 26px;
   }
 }
@@ -443,13 +457,13 @@
 
   .coupon_tag {
     display: inline-block;
-    border: 1PX solid #ff5000;
+    border: 1PX solid $color-theme;
     border-radius: 6px;
     position: relative;
     height: 40px;
     line-height: 36px;
     padding: 0 20px;
-    color: #ff5000;
+    color: $color-theme;
     font-size: 20px;
     margin-left: 14px;
     &_circle {
@@ -460,12 +474,12 @@
       border-radius: 50%;
     }
     .circle_left {
-      border-right: 1PX solid #ff5000;
+      border-right: 1PX solid $color-theme;
       left: -12px;
       top: 8px;
     }
     .circle_right {
-      border-left: 1PX solid #ff5000;
+      border-left: 1PX solid $color-theme;
       right: -12px;
       top: 8px;
     }
@@ -489,7 +503,7 @@
       text-align: center;
 
       &.is-active {
-        color: $color-brand-primary;
+        color: $color-theme;
         text-decoration: underline;
       }
     }
@@ -579,7 +593,7 @@
     text-align: center;
     color: #fff;
     border-radius: 70px;
-    background: $color-brand-primary;
+    background: $color-theme;
     font-size: 26px;
     &::before {
       margin-right: 10px;
@@ -692,4 +706,62 @@
     text-align: center;
     margin: 60px auto 0;
   }
+}
+.inputCode-container{
+  position: absolute;
+  background: #000000;
+  opacity: 0.37;
+  width: 100vw;
+  height: 100vh;
+  z-index:700;
+}
+.code-input{
+  position: absolute;
+  border-radius: 30px;
+  background: white;
+  width: 60%;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  z-index:800;
+  padding: 40px 0;
+  &-title{
+    text-align: center;
+    font-size: 40px;
+    line-height: 50px;
+    margin-bottom: 20px;
+  }
+  &-content{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    Input{
+      flex: 1;
+    }
+  }
+  &-confirm{
+    display: flex;
+    flex-direction: row;
+    font-size: 30px;
+    &-confirm{
+      padding: 15px;
+      width: 50%;
+      color:white;
+      background: #0bb20c;
+      text-align: center;
+      border: solid 1px #0bb20c;
+    }
+    &-cancel{
+      padding: 15px;
+      width: 50%;
+      text-align: center;
+      color:white;
+      background: $color-theme;
+      border: solid 1px $color-theme;
+    }
+  }
+
 }

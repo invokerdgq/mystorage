@@ -117,7 +117,9 @@ export default class WxAuth extends Component {
       if (uid) {
         Object.assign(params, {inviter_id: uid})
       }
-      Object.assign(params,{inviter_id:Taro.getStorageSync('scene')})  //与上面冲突 ？？
+      // if(Taro.getStorageSync('scene')){
+      //   Object.assign(params,{inviter_id:Taro.getStorageSync('scene')})
+      // }
       const { token, open_id, union_id, user_id } = await api.wx.prelogin(params)
 
       S.setAuthToken(token)

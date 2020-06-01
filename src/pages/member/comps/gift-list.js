@@ -24,7 +24,7 @@ export default class GiftListItem extends Component{
           info.use_date&&
           <View className='use-limit'>使用日期 ：{info.use_date}</View>
         }
-        <View className={`gift-status ${info.status?'used':'unused'}`} onClick={this.props.onclick.bind(this,index)}>{info.is_use?'已使用':'去使用'}</View>
+        <View className={`gift-status ${info.is_use === 1?'used':'unused'}`} onClick={this.props.onclick.bind(this,index)}>{info.is_use === 1?'已使用':'去使用'}</View>
       </View>
     )
   }

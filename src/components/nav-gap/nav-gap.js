@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import {View, Text, Icon} from '@tarojs/components'
 import './nav-gap.scss'
+import NavBar from 'taro-navigationbar';
 
 
 export default class NavGap extends Component{
@@ -36,20 +37,18 @@ export default class NavGap extends Component{
     Taro.navigateBack()
   }
   render(){
-    const {title } = this.props
+    const {title,home } = this.props
     const { showIcon } = this.state
       return (
         <View className="nav-gap-container">
-          <View className='invisibilty' style={{height:`${this.navBar}px`}}/>
-          {
-            showIcon &&
-            <View className="nav-gap-icon">
-              <Icon className='iconfont icon-arrow-left' onClick={this.handleIconClick.bind(this)}></Icon>
-            </View>
-          }
-          <View className="nav-gap-title">
-            <Text>{title}</Text>
-          </View>
+          <NavBar
+          title={title}
+          back = {showIcon}
+          home={home}
+          background='#fff'
+          >
+
+          </NavBar>
         </View>
       )
   }

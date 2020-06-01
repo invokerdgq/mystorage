@@ -1,8 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
-import {View, Form, Text, Image, Icon} from '@tarojs/components'
+import {View, Form, Text, Image, Icon,Slot} from '@tarojs/components'
 import { AtSearchBar } from 'taro-ui'
 import { classNames } from '@/utils'
 import { toggleTouchMove } from '@/utils/dom'
+import NavBar from 'taro-navigationbar';
 
 import './search-home.scss'
 
@@ -56,14 +57,14 @@ export default class WgtSearchHome extends Component {
       //     </View>
       //   </View>
       // </View>
-      <View className="search-box-container">
-         <View className="search-nav" onClick={this.searchTap.bind(this)}>
-           <Icon className=""/>
-           <View className="search-placeholder">
-             搜索你喜欢的商品
-           </View>
-         </View>
-      </View>
+          <View className="search-box-container" style={{position:'fixed',top:'44px'}}>
+            <View className="search-nav" onClick={this.searchTap.bind(this)}>
+              <Image src='../../assets/imgs/susisang.png'  className='search-box-img'/>
+              <View className="search-placeholder">
+                搜索你喜欢的商品
+              </View>
+            </View>
+          </View>
     )
   }
 }

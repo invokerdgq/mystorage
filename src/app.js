@@ -62,16 +62,16 @@ useHooks()
       if(option){
         if(/&/.test(option)){
           let array = option.split('&')
-          Taro.setStorageSync('scene',array[0])
+          Taro.setStorageSync('distribution_shop_id',array[0])
           Taro.setStorageSync('inviteCode',array[1])
         }else{
-          try{Taro.setStorageSync('scene',this.$router.params.query.scene)}
+          try{Taro.setStorageSync('distribution_shop_id',this.$router.params.query.scene)}
           catch (e) {
             console.log(e)
           }
         }
       }else {
-        try{Taro.setStorageSync('scene','')}
+        try{Taro.setStorageSync('distribution_shop_id','')}
         catch (e) {
           console.log(e)
         }
@@ -150,6 +150,7 @@ useHooks()
         'pages/member/group-list',
         'pages/member/member-code',
         'pages/member/vip',
+        'pages/member/vip-rule',
         'pages/qrcode-buy',
 
         'pages/distribution/shop-home',

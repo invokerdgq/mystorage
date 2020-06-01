@@ -1,0 +1,10 @@
+@import "../../style/imports";
+
+
+.rule-desc{
+  Image{
+    width: 750px;
+    position: absolute;
+    top:VH($nav-gap-height)
+  }
+}

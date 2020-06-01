@@ -5,7 +5,7 @@ $color-theme               : #c0534e;
 $color-bg-gray             : #f5f5f5;
 $color-gray                : #818181;
 $color-price               : #ff5000;
-$color-brand-primary       : #d42f29 !default;
+$color-brand-primary       : $color-theme;
 $color-brand-accent        : #fba629 !default;
 $color-brand-accent-light  : #787878 !default;
 $color-brand-primary-text  : #ffffff !default;

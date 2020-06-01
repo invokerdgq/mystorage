@@ -187,17 +187,14 @@
   }
 
   .sku-item {
-    height: 66px;
     line-height: 66px;
-    width: 135px;
     text-align: center;
     background-color: $specs-back;
     font-size: $font-size-small;
     border: 1PX solid #eeeeee;
     padding: 0 $edge-size;
-    margin: 0 15px 15px 0;
+    margin: 15px;
     display: inline-block;
-    white-space: nowrap;
     &.is-active {
       color: $color-brand-primary;
       border-color: $color-brand-primary;

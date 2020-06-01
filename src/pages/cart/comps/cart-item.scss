@@ -67,7 +67,7 @@ $item-img-height: 200px !default;
   &__desc {
     line-height: 1;
     display: block;
-    @include text-overflow();
+    //@include text-overflow();
     color: $color-gray;
     font-size: $font-size-small;
     margin: 0 0 16px;
