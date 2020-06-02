@@ -22,22 +22,21 @@ export default class WgtLimitKill extends Component{
       poi: {pos:0},
       showTriangle:true,
       iconUp:false,
-      timer:[]
+      timer:[],
     }
   }
    componentDidMount() {
     const {list} = this.props.info
-     let timerIndexList = []
-     list.map((item,index) => {
-       if(item.config.lastSeconds>0){
-         timerIndexList.push(index)
+     let cur = -1
+
+     for (let i = 0;i<list.length;i++) {
+       if (list[i].config.status !== 'ended') {
+         if(cur === -1){
+           cur = i
+         }
        }
-     })
-     if(timerIndexList.length !== 0){
-       this.handleTimerChange(timerIndexList[0])
-     }else{
-       this.handleTimerChange(0)
      }
+     this.handleTimerChange(cur === -1?0:cur)
   }
   // setTimer(indexList){
   //   indexList.setInterval(() => {
@@ -101,7 +100,7 @@ refresh() {
     const config = this.props.info.list[index].config
     // const timer = calcTimer(config.lastSeconds)
     return(
-      <View>
+      <View className='limit-container'>
         <View className='wgt__header'>
           <View>{list[0].base.title }</View>
           <View className='wgt__subtitle'>{list[0].base.subtitle}</View>
@@ -121,7 +120,32 @@ refresh() {
                 list.map((item,index) => {
                   return(
                     <View className='timer-content' onClick={this.handleTimerChange.bind(this,index)} style={{backgroundColor:index === this.state.index?'#c0534e':'',color:index !== this.state.index?'black':'white'}}  >
-                      {item.config.status === 'ended'?'已结束':item.config.status  === 'active'?'进行中':'即将开始'}
+                      {
+                        item.config.status === 'ended'&&
+                          <Text>已结束</Text>
+                      }
+                      {
+                        item.config.status !== 'ended'&&
+                          <View className='activity-dec'>
+                            <ScrollView
+                              className='scroll-activity'
+                              scrollY
+                              // scrollTop={topShow}
+                              scrollWithAnimation= 'true'
+                            >
+                              <View className='activity-dec-start' id='start'>
+                                <View className='activity-dec-start-title'>{item.config.status === 'in_sale'?'进行中':'即将进行'}</View>
+                                <View className='activity-dec-start-s'>{item.config.start_date.split(' ')[0]}</View>
+                                <View className='activity-dec-start-e'>{item.config.start_date.split(' ')[1]}</View>
+                              </View>
+                              <View className='activity-dec-end' id='end'>
+                                <Text className='activity-dec-end-title'>结束</Text>
+                                <Text className='activity-dec-end-s'>{item.config.end_date.split(' ')[0]}</Text>
+                                <Text className='activity-dec-end-e'>{item.config.end_date.split(' ')[1]}</Text>
+                              </View>
+                            </ScrollView>
+                          </View>
+                      }
                     </View>
                   )
                 })
@@ -138,7 +162,7 @@ refresh() {
           {
             list[index].config.status === 'ended'?
              <Text>已结束</Text>:
-              list[index].config.status === 'active'?
+              list[index].config.status === 'in_sale'?
                 <View>
                   <Text>剩余</Text>
                   <AtCountdown
@@ -206,7 +230,7 @@ refresh() {
             })
           }
         </View>
-        <View style={{display:`${list[index].data.length === 0?'none':'block'}`}}>
+        <View style={{display:`${list[index].data.length <= 1?'none':'block'}`}}>
           <View className='more-toolbar'>
             <View className='more-toolbar-container' onClick={this.handleMoreChange}>
               <Text className='dec'>更多秒杀进行中</Text>

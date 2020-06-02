@@ -73,8 +73,6 @@ export default class Detail extends Component {
 
   async componentDidMount () {
     const options = this.$router.params
-    console.log('666666666');
-    console.log(options)
     const { store, uid, id, gid = '' } = await entry.entryLaunch(options, true)
     console.log({store,uid,id,gid})
     if (store) {
@@ -137,7 +135,7 @@ export default class Detail extends Component {
   onShareAppMessage () {
     const { info } = this.state
     const { distributor_id } = Taro.getStorageSync('curStore')
-    const { userCode:userId } = Taro.getStorageSync('userinfo')
+    const { userId } = Taro.getStorageSync('userinfo')
 
     return {
       title: info.item_name,
@@ -418,8 +416,11 @@ export default class Detail extends Component {
     // 发起判断
     const memberinfo =  Taro.getStorageSync('userinfo')
     const connect = Taro.getStorageSync('distribution_shop_id')
-    if(!memberinfo.inviter_id && !connect && memberinfo.inviter_id != 0){
+    if(!Number(memberinfo.inviter_id) && !connect && connect !== memberinfo.userId){
       // shu card-code
+      if(Number(memberinfo.userId) === 1){
+        this.handleBuyBarClick(type)
+      }
       this.setState({
         showCodeInput:true,
         type:type
@@ -434,21 +435,28 @@ export default class Detail extends Component {
     })
   }
   async handleConfirm (){
-    let res = await api.member.userinfo({user_card_code:this.state.cardValue})
-    console.log('jjjjjjjjjjjjjjjjjjjjjjjjjj')
-    console.log(res)
-    if(res.status === 1){
-      this.setState({
-        showCodeInput:false,
-      })
-      this.handleBuyBarClick(this.state.type)
-    }else{
+    if(this.state.cardValue === ''){
       Taro.showToast({
-        title: '邀请码错误',
+        title:'内容不能为空！',
         icon:'none',
-        duration:1500,
-        success(){}
+        duration:1500
       })
+    }else{
+      let res = await api.member.userinfo({user_card_code:this.state.cardValue})
+      if(res.status === 1){
+        this.setState({
+          showCodeInput:false,
+        })
+        Taro.setStorageSync('cardValue',this.state.cardValue)
+        this.handleBuyBarClick(this.state.type)
+      }else{
+        Taro.showToast({
+          title: '邀请码错误',
+          icon:'none',
+          duration:1500,
+          success(){}
+        })
+      }
     }
   }
   handleBuyAction = async () => {
@@ -471,7 +479,8 @@ export default class Detail extends Component {
     const { distributor_id } = Taro.getStorageSync('curStore')
     const pic = pics[0].replace('http:', 'https:')
 
-    const wxappCode = `${host}/wechatAuth/wxapp/qrcode.png?page=${`pages/item/espier-detail`}&appid=${extConfig.appid}&company_id=${company_id}&id=${item_id}&dtid=${distributor_id}&uid=${userId}`
+    const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=${`pages/item/espier-detail`}&appid=${extConfig.appid}&company_id=${company_id}&id=${item_id}&dtid=${distributor_id}&uid=${userId}`
+
     const avatarImg = await Taro.getImageInfo({src: avatar})
     const goodsImg = await Taro.getImageInfo({src: pic})
     const codeImg = await Taro.getImageInfo({src: wxappCode})
@@ -1255,7 +1264,7 @@ export default class Detail extends Component {
         <View className='inputCode-container' style={{display:`${this.state.showCodeInput?'block':'none'}`}}/>
         <View className='code-input' style={{display:`${this.state.showCodeInput?'block':'none'}`}}>
           <View className='code-input-title'>请输入邀请码</View>
-          <View className='code-input-content'>邀请码:<Input type='text' onInput={this.setCodeValue}/></View>
+          <View className='code-input-content'><Input type='text' onInput={this.setCodeValue} placeholder='输入邀请码' focus={true} placeholderStyle={{'text-align':'center'}}/></View>
           <View className='code-input-confirm'>
             <View className='code-input-confirm-cancel' onClick={this.handleCancel}>暂不输入</View>
             <View className='code-input-confirm-confirm' onClick={this.handleConfirm}>确认</View>

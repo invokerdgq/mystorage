@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import {View, ScrollView, Text, Image, Navigator, Button, Icon,Swiper,SwiperItem,Canvas} from '@tarojs/components'
 import NavGap from "../../components/nav-gap/nav-gap";
 
-
+import './vip-rule.scss'
 export default class VipRule extends Component{
   constructor(props) {
     super(props);

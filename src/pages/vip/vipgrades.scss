@@ -3,7 +3,7 @@
 .container{
   position: relative;
   top:VH($nav-gap-height);
-  min-height: VH-last($nav-gap-height);
+  height: VH-last($nav-gap-height + 80px);
   background: white;
 }
 .header {
@@ -52,10 +52,12 @@
 		}}
 .vip-1,.vip-2{
   &-button{
+    position: fixed;
+    bottom: 5px;
     display: flex;
     flex-direction: row;
-    height: 65px;
-    line-height: 65px;
+    height: 75px;
+    line-height: 75px;
     justify-content: center;
     color:white;
     margin-top: 50px;
@@ -211,7 +213,7 @@
 }
 .vip-1-button{
     position: fixed;
-    bottom: 30px;
+    bottom: 5px;
     left:50%;
     transform: translate(-50%,0);
     width: 700px;

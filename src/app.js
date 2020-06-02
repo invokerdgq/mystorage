@@ -59,23 +59,26 @@ useHooks()
     componentWillMount () {
       // entry.entryLaunch({scene:`uid=${this.$router.params.query.scene}`})
       let option = this.$router.params.query.scene
-      if(option){
-        if(/&/.test(option)){
-          let array = option.split('&')
-          Taro.setStorageSync('distribution_shop_id',array[0])
-          Taro.setStorageSync('inviteCode',array[1])
-        }else{
-          try{Taro.setStorageSync('distribution_shop_id',this.$router.params.query.scene)}
-          catch (e) {
-            console.log(e)
-          }
-        }
-      }else {
-        try{Taro.setStorageSync('distribution_shop_id','')}
-        catch (e) {
-          console.log(e)
-        }
-      }
+      console.log('oooooooooooo')
+      console.log(this.$router.params)
+      entry.entryLaunch(this.$router.params.query)
+      // if(option){
+      //   if(/&/.test(option)){
+      //     let array = option.split('&')
+      //     Taro.setStorageSync('distribution_shop_id',array[0])
+      //     Taro.setStorageSync('inviteCode',array[1])
+      //   }else{
+      //     try{Taro.setStorageSync('distribution_shop_id',this.$router.params.query.scene)}
+      //     catch (e) {
+      //       console.log(e)
+      //     }
+      //   }
+      // }else {
+      //   try{Taro.setStorageSync('distribution_shop_id','')}
+      //   catch (e) {
+      //     console.log(e)
+      //   }
+      // }
     }
     componentDidMount () {
       const promoterExp = Taro.getStorageSync('distribution_shop_exp')

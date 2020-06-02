@@ -3,8 +3,9 @@
 .vip-header{
   position: relative;
   top:VH($nav-gap-height);
+  height: VH-last($nav-gap-height + 80px);
   background: white;
-  min-height:  VH-last($nav-gap-height);
+  overflow: auto;
 }
 .vip{
   background: #f6f5f5;
@@ -138,7 +139,7 @@
   .vip-1,.vip-2{
     &-button{
       position: fixed;
-      bottom: 30px;
+      bottom: 5px;
       display: flex;
       width: 700px;
       flex-direction: row;

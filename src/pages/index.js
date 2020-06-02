@@ -330,7 +330,7 @@ refresh(){
         {
           <FloatMenus>
             {
-              // isShop && isShop.isOpenShop === 'true' && isShop.shop_status === 1 &&
+              isShop && isShop.isOpenShop === 'true' && isShop.shop_status === 1 &&
               (isPromoter || !!distributionShopId) &&  //                ----------------shop float show
               <Image
                 className='distribution-shop'

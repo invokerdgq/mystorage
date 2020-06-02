@@ -14,6 +14,8 @@ async function entryLaunch(data, isNeedLocate) {
     options = data
   }
 
+  console.log('验证验证验证验证验证验证验证')
+  console.log(options)
   // 如果没有带店铺id
   if (!options.dtid) {
     let { distributor_id } = Taro.getStorageSync('curStore')
@@ -52,13 +54,21 @@ async function entryLaunch(data, isNeedLocate) {
     Taro.setStorageSync('trackParams', {source_id: options.s, monitor_id: options.m})
     trackViewNum(options.m, options.s)
   }
+
+  if(options.i){
+    Taro.setStorageSync('inviteCode', options.i)
+  }
+  if(options.a){
+    Taro.setStorageSync('distribution_shop_id', options.a)
+  }
   return options
 }
 
 //获取定位配置
 async function getLocalSetting() {
   const filter = {template_name: 'yykweishop', version: 'v1.0.1', name: 'setting'}
-  const res = await api.category.getCategory(filter)
+  // const res = await api.category.getCategory(filter)
+  let res = []
   const data = res.length ? res[0].params : null
   if (res.length > 0) {
     if (!data || !data.config) {

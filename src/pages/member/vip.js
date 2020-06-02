@@ -380,7 +380,7 @@ handleCancelImg =()=> {
                  </View>
              }
              </View>
-             <View style={{display:`${showToolBar?'block':'none'}`}}>
+             <View className='button-bottom'>
                <View className='vip-1-button'>
                  <View className='vip-1-button-dec'><Text className='vip-1-button-dec-1'>{titleList[curIndex]}</Text>
                    {

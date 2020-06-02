@@ -507,7 +507,7 @@ export default class CartIndex extends Component {
                                               onChange={this.handleSelectionChange.bind(this,shopIndex, item.cart_id)}
                                             />
                                             <View
-                                              className='icon-close'
+                                              className='icon-close iconfont'
                                               onClick={this.handleDelect.bind(this, item.cart_id,shopIndex)}
                                             />
                                           </View>

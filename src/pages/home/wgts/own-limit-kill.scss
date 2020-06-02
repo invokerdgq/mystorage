@@ -1,3 +1,6 @@
+.limit-container{
+  margin-top: 30px;
+}
 .wgt__header{
   display: flex;
   flex-direction: column;
@@ -19,6 +22,7 @@
   height: 90px;
   border-bottom: solid 1px #e8e8e8;
   border-top: solid 1px #e8e8e8;
+  box-shadow: 10px 10px 10px 2px rgba(0,0,0,0.3);
     .gap{
       width: 187.5px;
       height: 90px;
@@ -28,8 +32,32 @@
     }
 }
 .timer-show{
-  height: 60px;
+  height: 70px;
   text-align: center;
+  line-height: 70px;
+}
+.scroll-activity{
+  height: 90px;
+}
+.activity-dec{
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  height:90px;
+ &-start,&-end{
+   font-size: 18px;
+   height: 90px;
+   line-height: 30px;
+   &-title{
+     height: 30px;
+   }
+   &-s{
+     height: 30px;
+   }
+   &-e{
+     height: 30px;
+   }
+ }
 }
 .timer-content{
   width:187.5px;
@@ -41,10 +69,11 @@
 .triangle{
   width: 0;
   height: 0;
-  border-left: solid 8px white;
+  border-left: solid 8px rgba(0,0,0,0);
   border-top: solid 8px #c0534e;
-  border-right: solid 8px white;
-  border-bottom: solid 8px white;
+  border-right: solid 8px rgba(0,0,0,0);
+  border-bottom: solid 8px rgba(0,0,0,0);
+  z-index: 300;
 }
 .triangle-container{
   display: flex;

@@ -567,7 +567,9 @@ export default class CartCheckout extends Component {
     const { payType, total } = this.state
     const { type } = this.$router.params
     const isDrug = type === 'drug'
-
+    const distributionShopId = Taro.getStorageSync('distribution_shop_id')
+    const userinfo = Taro.getStorageSync('userinfo')
+    const cardValue = Taro.getStorageSync('cardValue')
     if (payType === 'point') {
       try {
         const { confirm } = await Taro.showModal({
@@ -677,15 +679,14 @@ export default class CartCheckout extends Component {
         icon: 'none'
       })
     }
-
     if (!payErr) {
       await Taro.showToast({
         title: '支付成功',
         icon: 'success',
         success :() =>{
-          if(!inviterId){
+          if(!Number(userinfo.inviter_id)){
             if(distributionShopId){
-              api.bind({userInviteId:distributionShopId}).then((res) => {
+              api.member.bind({userInviteId:distributionShopId}).then((res) => {
                 if(res.status === 1){
                   let userinfo = Taro.getStorageSync('userinfo');
                   userinfo.inviter_id = distributionShopId
@@ -693,7 +694,7 @@ export default class CartCheckout extends Component {
                 }
               })
             }else{
-              api.bind({userInviteId:this.state.codeValue}).then((res) => { // 详情页的 inputValue
+              api.member.bind({userInviteId:cardValue}).then((res) => { // 详情页的 inputValue
                 if(res.status === 1){
                   let userinfo = Taro.getStorageSync('userinfo');
                   userinfo.inviter_id = distributionShopId

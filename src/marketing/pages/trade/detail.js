@@ -607,7 +607,7 @@ export default class TradeDetail extends Component {
           <FloatMenus>
             <FloatMenuItem
               iconPrefixClass='icon'
-              icon='headphones'
+              icon='icon-kefu iconfont'
               openType='contact'
             />
           </FloatMenus>
