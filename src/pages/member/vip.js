@@ -4,6 +4,7 @@ import NavGap from "../../components/nav-gap/nav-gap";
 import GiftListItem from "./comps/gift-list";
 import api from '@/api'
 
+
 import './vip.scss'
 const w = 200;
 const h = 400;
@@ -401,6 +402,7 @@ handleCancelImg =()=> {
              </View>
            </View>
          </View>
+
       </View>
     )
   }

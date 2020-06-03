@@ -11,8 +11,8 @@
     transform: translate(0,-50%);
   }
   &-nav{
-    padding:0 40px;
     display: flex;
+    align-items: center;
   }
   &-placehoder{
     font-size: 26px;
@@ -22,7 +22,6 @@
   &-box-img{
     width: 40px;
     height: 40px;
-    vertical-align: middle;
-    z-index: 800 !important;
+    margin: 0 20px 0 30px;
   }
 }

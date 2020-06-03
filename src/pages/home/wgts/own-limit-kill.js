@@ -11,8 +11,8 @@ export default class WgtLimitKill extends Component{
   static options = {
     addGlobalClass:true
   }
-  static defaultprops={
-    info:null
+  static defaultProps={
+    info: {list:[{name: '',base:{},config:{}}],name:''}
   }
   constructor(props) {
     super(props);
@@ -119,7 +119,7 @@ refresh() {
               {
                 list.map((item,index) => {
                   return(
-                    <View className='timer-content' onClick={this.handleTimerChange.bind(this,index)} style={{backgroundColor:index === this.state.index?'#c0534e':'',color:index !== this.state.index?'black':'white'}}  >
+                    <View className='timer-content' onClick={this.handleTimerChange.bind(this,index)} style={{backgroundColor:index === this.state.index ?item.config.status === 'in_sale'?'#c0534e':'#a0a0a0':'white',color:index !== this.state.index?'black':'white'}}  >
                       {
                         item.config.status === 'ended'&&
                           <Text>已结束</Text>
@@ -133,16 +133,16 @@ refresh() {
                               // scrollTop={topShow}
                               scrollWithAnimation= 'true'
                             >
-                              <View className='activity-dec-start' id='start'>
-                                <View className='activity-dec-start-title'>{item.config.status === 'in_sale'?'进行中':'即将进行'}</View>
-                                <View className='activity-dec-start-s'>{item.config.start_date.split(' ')[0]}</View>
-                                <View className='activity-dec-start-e'>{item.config.start_date.split(' ')[1]}</View>
+                              <View className='activity-dec-start' id='start' >
+                                <View className='activity-dec-start-s'>{item.config.start_date.split(' ')[0].split('-')[1]}月{item.config.start_date.split(' ')[0].split('-')[2]}日 {item.config.start_date.split(' ')[1]}</View>
+                                <View className='activity-dec-start-title'>{item.config.status === 'in_sale'?'开抢中':'即将开抢'}</View>
+                                {/*<View className='activity-dec-start-e'>{item.config.start_date.split(' ')[1]}</View>*/}
                               </View>
-                              <View className='activity-dec-end' id='end'>
-                                <Text className='activity-dec-end-title'>结束</Text>
-                                <Text className='activity-dec-end-s'>{item.config.end_date.split(' ')[0]}</Text>
-                                <Text className='activity-dec-end-e'>{item.config.end_date.split(' ')[1]}</Text>
-                              </View>
+                              {/*<View className='activity-dec-end' id='end'>*/}
+                              {/*  <Text className='activity-dec-end-title'>结束</Text>*/}
+                              {/*  <Text className='activity-dec-end-s'>{item.config.end_date.split(' ')[0]}</Text>*/}
+                              {/*  <Text className='activity-dec-end-e'>{item.config.end_date.split(' ')[1]}</Text>*/}
+                              {/*</View>*/}
                             </ScrollView>
                           </View>
                       }
@@ -155,8 +155,8 @@ refresh() {
 
           </ScrollView>
         </View>
-        <View className={`${showTriangle?'triangle-container':'triangle-container-none'}`}>
-          <View className='triangle'/>
+        <View className={`${showTriangle?'triangle-container':'triangle-container-none'}`} >
+          <View className='triangle' style={{'border-top-color':index === this.state.index ?list[this.state.index].config.status === 'in_sale'?'#c0534e':'#a0a0a0':'white'}}/>
         </View>
         <View className='timer-show'>
           {
@@ -172,10 +172,10 @@ refresh() {
                     minutes={calcTimer(list[index].config.lastSeconds).mm}
                     seconds={calcTimer(list[index].config.lastSeconds).ss}
                     onTimeUp={this.refresh}
-                  />   <Text>结束</Text>
+                  />
                 </View>:
                 <View>
-                  <Text>剩余</Text>
+                  <Text>即将开始</Text>
                   <AtCountdown
                     isShowDay
                     day={calcTimer(list[index].config.lastSeconds).dd}
@@ -183,7 +183,7 @@ refresh() {
                     minutes={calcTimer(list[index].config.lastSeconds).mm}
                     seconds={calcTimer(list[index].config.lastSeconds).ss}
                     onTimeUp={this.refresh}
-                  />   <Text>即将开始</Text>
+                  />
                 </View>
           }
         </View>

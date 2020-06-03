@@ -51,7 +51,7 @@ export default class Coupon extends Component {
       page,
       pageSize
     }
-    const { list, total_count: total } = await api.member.couponList(params)
+    const { list, count: total } = await api.member.couponList(params)
     const nList = pickBy(list, {
       id: 'id',
       status: 'status',
@@ -136,7 +136,7 @@ export default class Coupon extends Component {
           </AtTabs>
 
           <ScrollView
-            scrollY
+            scrollY = {true}
             className='coupon-list__scroll'
             onScrollToLower={this.nextPage}
           >

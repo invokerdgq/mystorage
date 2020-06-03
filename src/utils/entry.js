@@ -56,10 +56,10 @@ async function entryLaunch(data, isNeedLocate) {
   }
 
   if(options.i){
-    Taro.setStorageSync('inviteCode', options.i)
+    Taro.setStorageSync('inviteCode', options.a)
   }
   if(options.a){
-    Taro.setStorageSync('distribution_shop_id', options.a)
+    Taro.setStorageSync('distribution_shop_id', options.i)
   }
   return options
 }

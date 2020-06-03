@@ -129,8 +129,8 @@
   width: 100%;
   top: VH($padding-top);
   bottom: $padding-bottom;
-  //overflow-y: auto;
-  //overflow-x: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   transform: translate3d(0,0,0);
   z-index: 1;
   > div, > view {

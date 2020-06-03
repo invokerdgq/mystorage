@@ -719,55 +719,97 @@
 }
 .code-input{
   position: absolute;
-  border-radius: 30px;
+  //border-radius: 30px;
   background: white;
-  width: 60%;
+  width: 455px;
+  height: 375px;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
   z-index:800;
-  padding: 40px 0 0;
-  &-title{
-    text-align: center;
-    font-size: 40px;
-    line-height: 50px;
-    margin: 40px 0;
+  padding: 20px 20px;
+  .input-title{
+    margin-top: 35px;
+    font-weight: bold;
+    font-size: 25px;
+  }
+  .img-dec{
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    align-items: flex-start;
+    justify-content: space-between;
+    .close{
+      width: 40px;
+      height: 40px;
+      font-size: 28px;
+      line-height: 40px;
+      text-align: center;
+      background: #b2b2b2;
+      color:white;
+      border-radius: 50%;
+    }
+    .title{
+      height: 70px;
+      width: 70px;
+      &-dec{
+        position: relative;
+        text-align: center;
+        line-height: 70px;
+        height: 70px;
+        border-radius: 15px 15px 0 0;
+        background: $color-theme;
+        color:white;
+      }
+    }
+    }
+ .title-dec:after{
+   content: '';
+   display: block;
+   width: 0;
+   height: 0;
+   position: absolute;
+   top:51px;
+   left:1px;
+   z-index:900;
+   border-bottom: solid white 11px;
+   border-top: solid $color-theme 11px;
+   border-left: solid $color-theme 34px;
+   border-right: solid $color-theme 34px;
+ }
+  &-controller{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-size: 19px;
+    box-sizing: border-box;
+    padding-top: 30px;
+    .confirm{
+      font-size: 19px;
+      margin-left: 30px;
+      background: $color-theme;
+      color:white;
+      height: 60px;
+      line-height: 60px;
+      padding: 0 30px;
+    }
+    .cancel{
+      font-size: 19px;
+      border: solid 0.5px #eeeeee;
+      height: 60px;
+      line-height: 60px;
+      padding: 0 30px;
+    }
   }
   &-content{
-    font-size: 30px;
-    width: 80%;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: nowrap;
-    Input{
-      flex: 1;
+    width: 100%;
+    appearance: none;
+    margin-top: 25px;
+    border: solid 0.5px #eeeeee;
+    input{
+      height: 60px;
     }
   }
-  &-confirm{
-    display: flex;
-    flex-direction: row;
-    font-size: 30px;
-    margin-top: 50px;
-    &-confirm{
-      padding: 15px;
-      width: 50%;
-      color:white;
-      background: #0bb20c;
-      text-align: center;
-      border: solid 1px #0bb20c;
-      border-radius: 0 0 30px 0;
-    }
-    &-cancel{
-      padding: 15px;
-      width: 50%;
-      text-align: center;
-      color:white;
-      background: $color-theme;
-      border: solid 1px $color-theme;
-      border-radius: 0 0 0 30px;
-    }
-  }
+
 
 }

@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text,Image,Button ,Input} from '@tarojs/components'
-import { Price } from '@/components'
+import { Price} from '@/components'
 import { connect } from '@tarojs/redux'
 import { AtTabs, AtTabsPane} from 'taro-ui'
 import api from '@/api'
@@ -8,6 +8,7 @@ import S from '@/spx'
 import { classNames, pickBy } from '@/utils'
 import './vipgrades.scss'
 import NavGap from "../../components/nav-gap/nav-gap";
+import CheckInvite from "../../components/check-invite/check-invite";
 
 @connect(({ colors }) => ({
   colors: colors.current
@@ -30,9 +31,11 @@ export default class VipIndex extends Component {
 			list:[],
 			cur:null,
       value:'',
+      inviter_id:'',
       commissionList:[],
       totalMount:0,
-      showToolBar:false
+      showToolBar:false,
+      codeInput:false
     }
     this.cardImgList= ['https://sxt-b-cdn.oioos.com/tupian/zuanshi.png','https://sxt-b-cdn.oioos.com/tupian/zhizun.png','https://sxt-b-cdn.oioos.com/tupian/wangzhe.png']
   }
@@ -115,7 +118,15 @@ export default class VipIndex extends Component {
 
       return
 		}
-
+		const info = Taro.getStorageSync('userinfo')
+    const id = Taro.getStorageSync('distribution_shop_id')
+    if(!Number(info.inviter_id) && !id && this.state.value === ''){
+      this.setState({
+        codeInput:true
+      })
+      return
+    }
+		console.log('第一次提交')
 		const {list,curTabIdx,curCellIdx} = this.state
 		const vip_grade = list[curTabIdx]
 		const params = {
@@ -127,6 +138,7 @@ export default class VipIndex extends Component {
     if(this.state.value !== ''){
       console.log('jihuo--------------------')
         api.member.codeActive(this.state.value).then((res) => {
+          Taro.setStorageSync('inviteCode','')
           Taro.navigateTo({url:'/pages/member/index'})
         }).catch((e) => {
           Taro.showToast({
@@ -154,6 +166,14 @@ export default class VipIndex extends Component {
             content: '支付成功',
             showCancel: false,
             success: function(res) {
+              let id =  Taro.getStorageSync('distribution_shop_id')
+              api.member.bind({userInviteId:id}).then((res) => {
+                let userinfo = Taro.getStorageSync('userinfo');
+                if(res.status === 1){
+                  userinfo.inviter_id = id
+                  Taro.setStorageSync('userinfo',userinfo)
+                }
+              })
               Taro.navigateTo({
                 url:'/pages/member/index'
               })
@@ -193,9 +213,36 @@ hideToolBar=()=>{
       })
     },2500)
 }
+async codeConfirm () {
+	  console.log('fsfasfafs')
+  if(this.state.inviter_id === ''){
+    Taro.showToast({
+      title:'内容不能为空！',
+      icon:'none',
+      duration:1500
+    })
+  }else{
+    let res = await api.member.userinfo({user_card_code:this.state.inviter_id})
+    if(res.status === 1){
+      this.setState({
+        codeInput:false,
+      })
+      Taro.setStorageSync('distribution_shop_id',this.state.inviter_id)
+      this.setState({codeInput:false})
+      this.handleCharge()
+    }else{
+      Taro.showToast({
+        title: '邀请码错误',
+        icon:'none',
+        duration:1500,
+        success(){}
+      })
+    }
+  }
+}
 	render () {
 		const { colors } = this.props
-		const { showToolBar,userInfo, list, cur, curTabIdx, userVipInfo, tabList ,value,commissionList,totalMount} = this.state
+		const { codeInput,showToolBar,userInfo, list, cur, curTabIdx, userVipInfo, tabList ,value,commissionList,totalMount} = this.state
     const {grade_name,commission} = this.$router.params
 		return (
 		  <View onTouchStart={this.showToolBar} onTouchEnd={this.hideToolBar}>
@@ -247,14 +294,14 @@ hideToolBar=()=>{
                     }
                   </View>
                 </View>
-                <View style={{display:`${this.$router.params.grade_name === '普通会员'?'none':'block'}`}}>
-                  <View style={{display:`${showToolBar?'block':'none'}`}}>
-                    <View className='vip-1-button'>
-                      <View className='vip-1-button-dec'>{this.$router.params.grade_name} <Text className='inner'>{userVipInfo.end_time} 到期</Text> </View>
-                      <View className='vip-1-button-click' onClick={this.handleCharge}>立即续费</View>
-                    </View>
-                  </View>
-                </View>
+                {/*<View style={{display:`${this.$router.params.grade_name === '普通会员'?'none':'block'}`}} className='vip-1-button-container'>*/}
+                {/*  <View >*/}
+                {/*    <View className='vip-1-button'>*/}
+                {/*      <View className='vip-1-button-dec'>{this.$router.params.grade_name} <Text className='inner'>{userVipInfo.end_time} 到期</Text> </View>*/}
+                {/*      <View className='vip-1-button-click' onClick={this.handleCharge}>立即续费</View>*/}
+                {/*    </View>*/}
+                {/*  </View>*/}
+                {/*</View>*/}
               </View>
               :
               <View className='section-body-vip'>
@@ -268,14 +315,14 @@ hideToolBar=()=>{
                   <View className='code-inner'><Text>会员发放时间</Text><Text>立即到账</Text></View>
                 </View>
                 {grade_name === '至尊会员'?
-                  <View style={{display:`${showToolBar?'block':'none'}`}}>
+                  <View >
                     <View className='vip-1-button'>
                       <View className='vip-1-button-dec'><Text className='vip-1-button-dec-1'>至尊会员</Text><Text className='vip-1-button-dec-2'>低至￥<Text className='vip-1-button-dec-3'>0.8</Text>元/每天</Text></View>
                       <View className='vip-1-button-click' onClick={this.handleCharge}>{grade_name === '至尊会员'?value === null?'立即激活￥ 299':'立即激活':''}</View>
                     </View>
                   </View>
                   :
-                  <View style={{display:`${showToolBar?'block':'none'}`}}>
+                  <View >
                     <View className='vip-2-button'>
                       <View className='vip-2-button-dec'><Text className='vip-1-button-dec-1'>王者身份</Text><Text className='vip-2-button-dec-2'>待定展示数据</Text></View>
                       <View className='vip-2-button-click' onClick={this.handleCharge}>{grade_name === '王者身份'?'立即激活￥ 299 x 20':''}</View>
@@ -285,6 +332,16 @@ hideToolBar=()=>{
               </View>
           }
         </View>
+        <CheckInvite
+         show={codeInput}
+         onclose={() => {this.setState({codeInput:false})}}
+         onconfirm={this.codeConfirm.bind(this)}
+         onValueChange={(e) => {
+           this.setState({
+             inviter_id:e.detail.value
+           })
+         }}
+        />
       </View>
 		)
 	}

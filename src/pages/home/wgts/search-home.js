@@ -57,9 +57,9 @@ export default class WgtSearchHome extends Component {
       //     </View>
       //   </View>
       // </View>
-          <View className="search-box-container" style={{position:'fixed',top:'44px'}}>
+          <View className="search-box-container" style={{position:'fixed',top:'80rpx'}}>
             <View className="search-nav" onClick={this.searchTap.bind(this)}>
-              <Image src='../../assets/imgs/susisang.png'  className='search-box-img'/>
+              <Image src='../../../assets/imgs/susisang.png'  className='search-box-img'/>
               <View className="search-placeholder">
                 搜索你喜欢的商品
               </View>

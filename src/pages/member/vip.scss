@@ -1,5 +1,7 @@
 @import "../../style/imports";
-
+page{
+  background: white;
+}
 .vip-header{
   position: relative;
   top:VH($nav-gap-height);
@@ -230,7 +232,7 @@
   bottom: 0;
   width: 100vw;
   height: 180px;
-  background: #f6f5f5;
+  background: white;
   z-index:300;
   &-container{
     display: flex;
@@ -329,4 +331,8 @@
 .quanyi-1{
   Image{
     width: 700px;}
+}
+.button-bottom{
+  width: 100%;
+  background: white;
 }

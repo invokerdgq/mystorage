@@ -135,7 +135,7 @@ export default class Detail extends Component {
   onShareAppMessage () {
     const { info } = this.state
     const { distributor_id } = Taro.getStorageSync('curStore')
-    const { userId } = Taro.getStorageSync('userinfo')
+    const { user_card_code :userId } = Taro.getStorageSync('userinfo')
 
     return {
       title: info.item_name,
@@ -1248,7 +1248,7 @@ export default class Detail extends Component {
             <View className='poster-modal'>
               <Image className='poster' src={poster} mode='widthFix' />
               <View className='view-flex view-flex-middle'>
-                <View className='icon-close poster-close-btn' onClick={this.handleHidePoster.bind(this)}></View>
+                <View className='icon-close poster-close-btn iconfont' onClick={this.handleHidePoster.bind(this)}></View>
                 <View
                   className='icon-download poster-save-btn'
                   style={`background: ${colors.data[0].primary}`}
@@ -1263,11 +1263,17 @@ export default class Detail extends Component {
         </View>
         <View className='inputCode-container' style={{display:`${this.state.showCodeInput?'block':'none'}`}}/>
         <View className='code-input' style={{display:`${this.state.showCodeInput?'block':'none'}`}}>
-          <View className='code-input-title'>请输入邀请码</View>
-          <View className='code-input-content'><Input type='text' onInput={this.setCodeValue} placeholder='输入邀请码' focus={true} placeholderStyle={{'text-align':'center'}}/></View>
-          <View className='code-input-confirm'>
-            <View className='code-input-confirm-cancel' onClick={this.handleCancel}>暂不输入</View>
-            <View className='code-input-confirm-confirm' onClick={this.handleConfirm}>确认</View>
+          <View className='img-dec'>
+            <View className='title'>
+              <View className='title-dec'>邀</View>
+            </View>
+            <View className='close' onClick={this.handleCancel}>X</View>
+          </View>
+          <View className='input-title'>请输入邀请码</View>
+          <View className='code-input-content'><Input placeholder='邀请码' type='text' onInput={this.setCodeValue} placeholderStyle='color:#666666;font-size:17rpx;margin-left:20rpx'/></View>
+          <View className='code-input-controller'>
+            <View className='cancel' onClick={this.handleCancel}>暂不输入</View>
+            <View className='confirm' onClick={this.handleConfirm}>提交邀请码</View>
           </View>
         </View>
       </View>

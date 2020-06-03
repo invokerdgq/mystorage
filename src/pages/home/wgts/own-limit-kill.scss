@@ -1,5 +1,5 @@
 .limit-container{
-  margin-top: 30px;
+  margin: 30px 0;
 }
 .wgt__header{
   display: flex;
@@ -20,7 +20,6 @@
   flex-direction: row;
   white-space: nowrap;
   height: 90px;
-  border-bottom: solid 1px #e8e8e8;
   border-top: solid 1px #e8e8e8;
   box-shadow: 10px 10px 10px 2px rgba(0,0,0,0.3);
     .gap{
@@ -47,16 +46,17 @@
  &-start,&-end{
    font-size: 18px;
    height: 90px;
-   line-height: 30px;
+   line-height:45px;
    &-title{
-     height: 30px;
+     height: 45px;
    }
    &-s{
-     height: 30px;
+     font-size: 19px;
+     height: 45px;
    }
-   &-e{
-     height: 30px;
-   }
+   //&-e{
+   //  height: 30px;
+   //}
  }
 }
 .timer-content{
@@ -69,10 +69,10 @@
 .triangle{
   width: 0;
   height: 0;
-  border-left: solid 8px rgba(0,0,0,0);
-  border-top: solid 8px #c0534e;
-  border-right: solid 8px rgba(0,0,0,0);
-  border-bottom: solid 8px rgba(0,0,0,0);
+  border-left: solid 10px rgba(0,0,0,0);
+  border-top: solid 10px #c0534e;
+  border-right: solid 10px rgba(0,0,0,0);
+  border-bottom: solid 10px rgba(0,0,0,0);
   z-index: 300;
 }
 .triangle-container{
@@ -295,6 +295,11 @@
     top:-5px
   }
 }
+.at-countdown__item{
+  .at-countdown__time-box {
+      font-family: "Hiragino Sans GB","微软雅黑","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
 
+  }
+}
 
 

@@ -1,0 +1,108 @@
+@import '../../style/imports';
+
+.inputCode-container{
+  position: absolute;
+  background: #000000;
+  opacity: 0.37;
+  width: 100vw;
+  height: 100vh;
+  z-index:800;
+  top:0;
+  left:0
+}
+.code-input{
+  position: absolute;
+  //border-radius: 30px;
+  background: white;
+  width: 455px;
+  height: 375px;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  z-index:800;
+  padding: 20px 20px;
+  .input-title{
+    margin-top: 35px;
+    font-weight: bold;
+    font-size: 25px;
+  }
+  .img-dec{
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    align-items: flex-start;
+    justify-content: space-between;
+    .close{
+      width: 40px;
+      height: 40px;
+      font-size: 28px;
+      line-height: 40px;
+      text-align: center;
+      background: #b2b2b2;
+      color:white;
+      border-radius: 50%;
+    }
+    .title{
+      height: 70px;
+      width: 70px;
+      &-dec{
+        position: relative;
+        text-align: center;
+        line-height: 70px;
+        height: 70px;
+        border-radius: 15px 15px 0 0;
+        background: $color-theme;
+        color:white;
+      }
+    }
+  }
+  .title-dec:after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top:51px;
+    left:1px;
+    z-index:900;
+    border-bottom: solid white 11px;
+    border-top: solid $color-theme 11px;
+    border-left: solid $color-theme 34px;
+    border-right: solid $color-theme 34px;
+  }
+  &-controller{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-size: 19px;
+    box-sizing: border-box;
+    padding-top: 30px;
+    .confirm{
+      font-size: 19px;
+      margin-left: 30px;
+      background: $color-theme;
+      color:white;
+      height: 60px;
+      line-height: 60px;
+      padding: 0 30px;
+    }
+    .cancel{
+      font-size: 19px;
+      border: solid 0.5px #eeeeee;
+      height: 60px;
+      line-height: 60px;
+      padding: 0 30px;
+    }
+  }
+  &-content{
+    width: 100%;
+    appearance: none;
+    margin-top: 25px;
+    border: solid 0.5px #eeeeee;
+    input{
+      height: 60px;
+    }
+  }
+
+
+}
