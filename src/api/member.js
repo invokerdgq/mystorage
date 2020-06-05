@@ -4,7 +4,8 @@ export function userinfo(params) {
   return req.post('/getuserinfo',params)
 }
 export function memberInfo () {
-  return req.get('/member')
+  let date = new Date().getTime()
+  return req.get(`/member?${date}`)
 }
 
 export function commission() {

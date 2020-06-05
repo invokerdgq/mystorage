@@ -12,9 +12,9 @@ export default class HomeWgts extends PureComponent {
     addGlobalClass: true
   }
 
-  // static defaultProps = {
-  //   wgts: []
-  // }
+  static defaultProps = {
+    wgts: []
+  }
   constructor(props) {
     super(props);
   }

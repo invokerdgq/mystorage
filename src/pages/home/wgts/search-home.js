@@ -18,7 +18,8 @@ export default class WgtSearchHome extends Component {
     this.state = {
       searchValue: '',
       historyList: [],
-      isShowAction: false
+      isShowAction: false,
+      top:0
     }
   }
 
@@ -27,6 +28,26 @@ export default class WgtSearchHome extends Component {
   }
 
   componentDidMount () {
+        let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
+        Taro.getSystemInfo({
+          success: res => {
+            let statusBarHeight = res.statusBarHeight;
+             let navTop = menuButtonObject.top;
+             let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
+            this.navHeight = Height;
+            this.navTop = navTop;
+            this.windowHeight = res.windowHeight;
+            this.setState({
+              top:(this.navHeight - statusBarHeight)/2 + statusBarHeight
+            })
+
+          },
+          fail(err) {
+            console.log(err);
+          }
+        })
+
+
     if (process.env.TARO_ENV === 'h5') {
       toggleTouchMove(this.refs.container)
     }
@@ -57,7 +78,7 @@ export default class WgtSearchHome extends Component {
       //     </View>
       //   </View>
       // </View>
-          <View className="search-box-container" style={{position:'fixed',top:'80rpx'}}>
+          <View className="search-box-container" style={{position:'fixed',top:`${this.state.top}px`}}>
             <View className="search-nav" onClick={this.searchTap.bind(this)}>
               <Image src='../../../assets/imgs/susisang.png'  className='search-box-img'/>
               <View className="search-placeholder">

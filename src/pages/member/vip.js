@@ -173,9 +173,9 @@ drawImg = (cb=() => {}) =>{
         let length1 = ctx.measureText(this.state.giftList[this.state.giftIndex].code)
         ctx.fillText(this.state.giftList[this.state.giftIndex].code,0.5*w -length1.width/2,50);
         ctx.setFontSize(28/2)
-        ctx.moveTo(0,55)
-        ctx.lineTo(w,55)
-        ctx.setLineDash([4,4],4)
+        // ctx.moveTo(0,55)
+        // ctx.lineTo(w,55)
+        // ctx.setLineDash([4,4],4)
         ctx.stroke()
         ctx.drawImage(  Taro.env.USER_DATA_PATH + `/pic${date}.png`,w*0.2,h*0.28,0.6*w,0.6*w)
         ctx.setFillStyle('#c0534e');
@@ -360,23 +360,29 @@ handleCancelImg =()=> {
              </View>
              <View>
                {
-                titleList[curIndex] === '王者身份'&&
+                titleList[curIndex] === '王者身份'&& grade_name === '王者身份'&&
                  <View>
                    <View className='vip-2-title'>- 礼包码 -</View>
                    <View>
-                     {
-                       giftList.map((item,index) => {
-                         return(
-                           <View className={`gift-list gift-list-${index}`}>
-                             <GiftListItem
-                               info={item}
-                               index={index}
-                               onclick={this.handleUse}
-                             />
-                           </View>
-                         )
-                       })
-                     }
+                     <ScrollView
+                        scrollY
+                        onScrollToLower={this.nextPage}
+                        className='gift-list'
+                     >
+                       {
+                         giftList.map((item,index) => {
+                           return(
+                             <View className={`gift-list gift-list-${index}`}>
+                               <GiftListItem
+                                 info={item}
+                                 index={index}
+                                 onclick={this.handleUse}
+                               />
+                             </View>
+                           )
+                         })
+                       }
+                     </ScrollView>
                    </View>
                  </View>
              }
@@ -394,7 +400,7 @@ handleCancelImg =()=> {
                    }
                    {
                      curIndex === 2&&
-                     <Text className='vip-1-button-dec-2'>彰显王者身份</Text>
+                     <Text className='vip-1-button-dec-2'>享受返佣</Text>
                    }
                  </View>
                  <View className='vip-1-button-click' onClick={this.handleClickBuy.bind(this,titleList[curIndex])}>{grade_name === titleList[curIndex]?'已激活':`${curIndex === 1?'激活/兑换':'激活'}`}</View>

@@ -67,7 +67,7 @@
     &__scroll {
 			// @include page-scroll($navigate-height, $toolbar-height + $tabbar-height);
       @include page-scroll($nav-gap-height,$toolbar-height);
-      height:VH-last($nav-gap-height)
+      height:VH-last($nav-gap-height);
     }
     &__actions {
       display: flex;
@@ -94,6 +94,7 @@
     }
     &__disabled {
       margin-top: 40px;
+      margin-bottom: 120px;
     }
     .goods-item {
       position: relative;
@@ -177,9 +178,14 @@
       justify-content: space-between;
       .icon-close {
         font-size: 28px;
-        color: #cdcdcd;
+        border-radius: 50%;
+        color: white;
         padding: 8px;
         margin: -4px -4px 0 0;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #cdcdcd;
       }
     }
     .at-input-number {
@@ -249,7 +255,7 @@
 }
 
 .cart-toolbar {
-	 bottom: 0;
+	 bottom:0;
 	/*position: initial;*/
   position: fixed;
   padding: 0 $edge-margin;

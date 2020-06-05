@@ -134,7 +134,7 @@ export default class Series extends Component {
                 items.map(item =>
                   item.children
                     ? <View className='new'>
-                      <View className='group-title'><View className='line-middle'/><Text className='group-title-inner'>{item.name}</Text><View className='line-middle'/></View>
+                      <View className='group-title'><Text className='group-title-inner'>{item.name}</Text></View>
                       <View className='content-group'>
                         {
                           item.children.map(child =>

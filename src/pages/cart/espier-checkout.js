@@ -568,8 +568,6 @@ export default class CartCheckout extends Component {
     const { type } = this.$router.params
     const isDrug = type === 'drug'
     const distributionShopId = Taro.getStorageSync('distribution_shop_id')
-    const userinfo = Taro.getStorageSync('userinfo')
-    const cardValue = Taro.getStorageSync('cardValue')
     if (payType === 'point') {
       try {
         const { confirm } = await Taro.showModal({
@@ -612,7 +610,7 @@ export default class CartCheckout extends Component {
         delete params.invoice_type
         delete params.invoice_content
       }
-      config = await api.trade.create(params)
+      config = await api.trade.create({...params,come_from:distributionShopId})
       order_id = isDrug ? config.order_id : config.trade_info.order_id
     } catch (e) {
       Taro.showToast({
@@ -683,34 +681,16 @@ export default class CartCheckout extends Component {
       await Taro.showToast({
         title: '支付成功',
         icon: 'success',
-        success :() =>{
-          if(!Number(userinfo.inviter_id)){
-            if(distributionShopId){
-              api.member.bind({userInviteId:distributionShopId}).then((res) => {
-                if(res.status === 1){
-                  let userinfo = Taro.getStorageSync('userinfo');
-                  userinfo.inviter_id = distributionShopId
-                   Taro.setStorageSync('userinfo',userinfo)
-                }
-              })
-            }else{
-              api.member.bind({userInviteId:cardValue}).then((res) => { // 详情页的 inputValue
-                if(res.status === 1){
-                  let userinfo = Taro.getStorageSync('userinfo');
-                  userinfo.inviter_id = distributionShopId
-                  Taro.setStorageSync('userinfo',userinfo)
-                }
-              })
-            }
-          }
-        }
+        success :() =>{}
 
       })
 
       this.props.onClearCart()
-      Taro.redirectTo({
-        url: type === 'group' ? `/pages/item/group-detail?team_id=${config.team_id}` : `/pages/trade/detail?id=${order_id}`
-      })
+      setTimeout(() => {
+        Taro.redirectTo({
+          url: type === 'group' ? `/pages/item/group-detail?team_id=${config.team_id}` : `/pages/trade/detail?id=${order_id}`
+        })
+      },500)
 
       /*this.props.onClearCart()
       Taro.redirectTo({

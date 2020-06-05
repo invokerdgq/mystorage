@@ -13,6 +13,9 @@ import CheckInvite from "../../components/check-invite/check-invite";
 @connect(({ colors }) => ({
   colors: colors.current
 }))
+@connect(({address}) => ({
+  address:address.current
+}))
 
 export default class VipIndex extends Component {
 	static config = {
@@ -35,14 +38,13 @@ export default class VipIndex extends Component {
       commissionList:[],
       totalMount:0,
       showToolBar:false,
-      codeInput:false
+      codeInput:false,
     }
     this.cardImgList= ['https://sxt-b-cdn.oioos.com/tupian/zuanshi.png','https://sxt-b-cdn.oioos.com/tupian/zhizun.png','https://sxt-b-cdn.oioos.com/tupian/wangzhe.png']
   }
 
-	componentDidMount () {
+  componentDidMount () {
 	 if(this.$router.params.presist){
-	   console.log('hahahah')
 	   this.fetchMission()
    }
 		const { colors } = this.props
@@ -58,8 +60,7 @@ export default class VipIndex extends Component {
 			this.fetchUserVipInfo()
 		})
 	}
-
-	async fetchMission  () {
+  async fetchMission  () {
 	  let res = await api.member.commission();
 	  // let mount = res.list.reduce((pre,item,index) => {
 	  //   pre += Number(item.amount)
@@ -103,7 +104,11 @@ export default class VipIndex extends Component {
 			curCellIdx:index
 		})
 	}
-
+ chooseAddress = () =>{
+   Taro.navigateTo({
+     url: `/pages/member/address?isPicker=choose`
+   })
+ }
 	async handleCharge () {
 
 		if (!S.getAuthToken()) {
@@ -126,6 +131,14 @@ export default class VipIndex extends Component {
       })
       return
     }
+		if(!this.props.address){
+		  this.chooseAddress()
+      return
+    }else if(!Taro.getStorageSync('address_choose')){
+      this.chooseAddress()
+		  return
+    }
+    console.log(this.props.store)
 		console.log('第一次提交')
 		const {list,curTabIdx,curCellIdx} = this.state
 		const vip_grade = list[curTabIdx]
@@ -149,8 +162,9 @@ export default class VipIndex extends Component {
         })
     }else{
       Taro.showLoading({ mask: true })
-      const data = await api.vip.charge(params)
 
+      const data = await api.vip.charge({...params,address_id: this.props.address.address_id,come_from:id})
+      Taro.setStorageSync('address_choose',false)
       Taro.hideLoading()
 
       var config = data
@@ -166,17 +180,19 @@ export default class VipIndex extends Component {
             content: '支付成功',
             showCancel: false,
             success: function(res) {
-              let id =  Taro.getStorageSync('distribution_shop_id')
-              api.member.bind({userInviteId:id}).then((res) => {
-                let userinfo = Taro.getStorageSync('userinfo');
-                if(res.status === 1){
-                  userinfo.inviter_id = id
-                  Taro.setStorageSync('userinfo',userinfo)
-                }
-              })
-              Taro.navigateTo({
-                url:'/pages/member/index'
-              })
+              // let id =  Taro.getStorageSync('distribution_shop_id')
+              // api.member.bind({userInviteId:id}).then((res) => {
+              //   let userinfo = Taro.getStorageSync('userinfo');
+              //   if(res.status === 1){
+              //     userinfo.inviter_id = id
+              //     Taro.setStorageSync('userinfo',userinfo)
+              //   }
+              // })
+              setTimeout(() => {
+                Taro.navigateTo({
+                  url:'/pages/member/index'
+                })
+              },500)
             }
           })
         },
@@ -256,7 +272,7 @@ async codeConfirm () {
                 <Image className='header-isauth__avatar' src={userInfo.avatar} mode='aspectFill'/>
                 <View className='header-isauth__info'>
                   <View className='nickname'>{userInfo.username}
-                    <View className='header-grade_name'>{userVipInfo.grade_name}</View>
+                    <View className='header-grade_name'>{userVipInfo.is_vip?userVipInfo.grade_name:'普通会员'}</View>
                     {/*<Image  className='icon-vip' src='/assets/imgs/svip.png' />*/}
                   </View>
                   {userVipInfo.is_vip&&
@@ -324,7 +340,7 @@ async codeConfirm () {
                   :
                   <View >
                     <View className='vip-2-button'>
-                      <View className='vip-2-button-dec'><Text className='vip-1-button-dec-1'>王者身份</Text><Text className='vip-2-button-dec-2'>待定展示数据</Text></View>
+                      <View className='vip-2-button-dec'><Text className='vip-1-button-dec-1'>王者身份</Text><Text className='vip-2-button-dec-2'>享受返佣</Text></View>
                       <View className='vip-2-button-click' onClick={this.handleCharge}>{grade_name === '王者身份'?'立即激活￥ 299 x 20':''}</View>
                     </View>
                   </View>

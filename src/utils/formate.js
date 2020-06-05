@@ -27,7 +27,7 @@ function sort(list) {
           list.push(item)
       }
     })
-    // 找到第一个剩余时间不是0 的项
+
     for (let i = 0; i < list.length; i++) {
       if (list[i].config.lastSeconds === 0) {
         list[i].config.status = 'ended'

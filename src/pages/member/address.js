@@ -29,6 +29,7 @@ export default class AddressIndex extends Component {
   }
 
   componentDidMount () {
+    Taro.setStorageSync('address_choose',true)
     // this.fetch()
   }
 

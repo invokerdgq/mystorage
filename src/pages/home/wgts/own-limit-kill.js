@@ -12,7 +12,7 @@ export default class WgtLimitKill extends Component{
     addGlobalClass:true
   }
   static defaultProps={
-    info: {list:[{name: '',base:{},config:{}}],name:''}
+    info: {list:[{name: '',base:{},config:{start_date:'',end_date:''},data:[]}],name:''}
   }
   constructor(props) {
     super(props);
@@ -28,14 +28,15 @@ export default class WgtLimitKill extends Component{
    componentDidMount() {
     const {list} = this.props.info
      let cur = -1
-
-     for (let i = 0;i<list.length;i++) {
-       if (list[i].config.status !== 'ended') {
-         if(cur === -1){
-           cur = i
-         }
-       }
-     }
+      if(list.length){
+        for (let i = 0;i<list.length;i++) {
+          if (list[i].config.status !== 'ended') {
+            if(cur === -1){
+              cur = i
+            }
+          }
+        }
+      }
      this.handleTimerChange(cur === -1?0:cur)
   }
   // setTimer(indexList){

@@ -121,10 +121,10 @@ export default class MemberIndex extends Component {
       avatar: res.memberInfo.avatar,
       userId: res.memberInfo.user_id,
       isPromoter: res.is_promoter,
-      userCode:res.memberInfo.user_card_code,
+      user_card_code:res.memberInfo.user_card_code,
       inviter_id:res.memberInfo.inviter_id
     }
-    if(!resUser || resUser.username !== userObj.username || resUser.avatar !== userObj.avatar) {
+    if(!resUser || resUser.username !== userObj.username || resUser.avatar !== userObj.avatar||resUser.inviter_id !== userObj.inviter_id) {
       Taro.setStorageSync('userinfo', userObj)
       this.setState({
         info: {
@@ -152,7 +152,8 @@ export default class MemberIndex extends Component {
       memberDiscount: memberDiscount.length > 0 ? memberDiscount[memberDiscount.length-1].privileges.discount_desc : '',
       memberAssets: assets,
       is_effective:res.is_effective,
-      commission:res.memberInfo.commission
+      commission:res.memberInfo.commission,
+      expect_commission:res.memberInfo.expect_commission
     })
   }
 
@@ -265,7 +266,7 @@ export default class MemberIndex extends Component {
 
   render () {
     const { colors } = this.props
-    const { commission, is_effective ,vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
+    const {expect_commission, commission, is_effective ,vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
 
     return (
       <View>
@@ -316,7 +317,11 @@ export default class MemberIndex extends Component {
                       <View className='member-assets__value'>{memberAssets.discount_total_count}</View>
                     </View>
                     <View className='view-flex-item' onClick={this.handlePresist.bind(this,vipgrade.is_vip?vipgrade.grade_name:gradeInfo.grade_name,true)}>
-                      <View className='member-assets__label'>佣金</View>
+                      <View className='member-assets__label'>预计收益</View>
+                      <View className='member-assets__value'>{(Number(expect_commission)/100).toFixed(2)}</View>
+                    </View>
+                    <View className='view-flex-item' onClick={this.handlePresist.bind(this,vipgrade.is_vip?vipgrade.grade_name:gradeInfo.grade_name,true)}>
+                      <View className='member-assets__label'>可提收益</View>
                       <View className='member-assets__value'>{(commission/100).toFixed(2)}</View>
                     </View>
                     <View
@@ -409,13 +414,13 @@ export default class MemberIndex extends Component {
                 <View className='view-flex-item'>订单</View>
                 <View class='section-more' onClick={this.handleTradeClick.bind(this)}>全部订单<Text className='iconfont icon-chakan'></Text></View>
               </View>
-              <View className='member-trade__ziti' onClick={this.handleTradePickClick.bind(this)}>
-                <View className='view-flex-item'>
-                  <View className='member-trade__ziti-title'>自提订单</View>
-                  <View className='member-trade__ziti-desc'>您有<Text className='mark'>{orderCount.normal_payed_daiziti || 0}</Text>个等待自提的订单</View>
-                </View>
-                <View className='iconfont icon-chakan'></View>
-              </View>
+              {/*<View className='member-trade__ziti' onClick={this.handleTradePickClick.bind(this)}>*/}
+              {/*  <View className='view-flex-item'>*/}
+              {/*    <View className='member-trade__ziti-title'>自提订单</View>*/}
+              {/*    <View className='member-trade__ziti-desc'>您有<Text className='mark'>{orderCount.normal_payed_daiziti || 0}</Text>个等待自提的订单</View>*/}
+              {/*  </View>*/}
+              {/*  <View className='iconfont icon-chakan'></View>*/}
+              {/*</View>*/}
               <View className='member-trade'>
                 <View className='member-trade__item' onClick={this.handleTradeClick.bind(this, 5)}>
                   <View className='iconfont icon-daifukuan'>

@@ -3,10 +3,10 @@
 .page-goods-detail {
   .icon-arrow-left-container{
     position: absolute;
-    top:50px;
     left: 50px;
     z-index: 100;
     color:black;
+    transform: translate(0,-50%);
     .icon-arrow-left{
       font-size: 50px;
     }
@@ -166,6 +166,7 @@
   color: #fff;
   background: $color-theme;
   padding: 0 $edge-size;
+  border-radius:25px 25px 0 0 ;
 .price{
   color:white;
   .price__symbol{
@@ -200,13 +201,16 @@
 
     &__rule,
     &__type {
-      font-size: floor($font-size-small * 0.9);
+      //font-size: floor($font-size-small * 0.9);
+      //font-size: 26px;
       display: block;
-      padding: 0 10px;
+      padding: 0 20px;
       box-shadow: 0 0 0 1PX #fff;
       margin-right: 5px;
       border-radius: 10PX;
       overflow: hidden;
+      background: white;
+      color: $color-theme;
     }
 
     &__ft {
@@ -219,15 +223,34 @@
         }
       }
     }
-
+.seckill-price{
+  margin-right: 15px;
+ .price__symbol{
+   font-size: 26px;
+ }
+  .price__decimal{
+   font-size: 26px;
+  }
+  .price__int{
+    font-size: 40px;
+  }
+}
     .goods-prices__market {
       color: #fff;
       opacity: 0.7;
-      font-size: floor(0.8 * $font-size);
+      //font-size: floor(0.8 * $font-size);
+      font-size: 18px;
       font-family: "Helvetica";
       font-weight: lighter;
       .price__symbol {
-        font-size: floor(0.8 * $font-size);
+        //font-size: floor(0.8 * $font-size);
+        font-size: 20px;
+      }
+      .price__decimal{
+        font-size: 20px;
+      }
+      .price__int{
+        font-size: 20px;
       }
     }
   }
@@ -812,4 +835,11 @@
   }
 
 
+}
+.to-back{
+  height: 60px;
+  line-height: 60px;
+  position: fixed;
+  top: 0;
+  background: red;
 }

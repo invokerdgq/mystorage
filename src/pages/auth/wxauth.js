@@ -64,17 +64,17 @@ export default class WxAuth extends Component {
     }
     let _this = this
 
-    api.user.newWxaMsgTmpl(templeparams).then(tmlres => {
-      console.log('templeparams---1', tmlres)
-      if (tmlres.template_id && tmlres.template_id.length > 0) {
-        wx.requestSubscribeMessage({
-          tmplIds: tmlres.template_id,
-          complete() {
-            _this.handleGetUserInfo()
-          }
-        })
-      }
-    })
+    // api.user.newWxaMsgTmpl(templeparams).then(tmlres => {
+    //   console.log('templeparams---1', tmlres)
+    //   if (tmlres.template_id && tmlres.template_id.length > 0) {
+    //     wx.requestSubscribeMessage({
+    //       tmplIds: tmlres.template_id,
+    //       complete() {
+    //         _this.handleGetUserInfo()
+    //       }
+    //     })
+    //   }
+    // })
   }
 
 

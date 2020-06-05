@@ -3,7 +3,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, ScrollView, Swiper, SwiperItem, Image, Video, Navigator, Canvas, GoodsItem } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtCountdown, AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
-import { Loading, Price, BackToTop, FloatMenus, FloatMenuItem, SpHtmlContent, SpToast, NavBar, GoodsBuyPanel, SpCell, GoodsEvaluation } from '@/components'
+import { Loading, Price, BackToTop, FloatMenus, FloatMenuItem, SpHtmlContent, SpToast, GoodsBuyPanel, SpCell, GoodsEvaluation } from '@/components'
 import api from '@/api'
 import req from '@/api/req'
 import { withPager, withBackToTop } from '@/hocs'
@@ -13,6 +13,7 @@ import S from '@/spx'
 import { GoodsBuyToolbar, ItemImg, ImgSpec, Params, StoreInfo, ActivityPanel, SharePanel, VipGuide, ParamsItem, GroupingItem } from './comps'
 import { WgtFilm, WgtSlider, WgtWriting, WgtGoods, WgtHeading, WgtGoodsFaverite } from '../home/wgts'
 import NavGap from "../../components/nav-gap/nav-gap";
+import NavBar from 'taro-navigationbar';
 
 import './espier-detail.scss'
 
@@ -67,11 +68,30 @@ export default class Detail extends Component {
       evaluationList: [],
       evaluationTotal: 0,
       showCodeInput:false,
-      cardValue:''
+      cardValue:'',
+      top:0
     }
   }
 
   async componentDidMount () {
+    let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
+    Taro.getSystemInfo({
+      success: res => {
+        let statusBarHeight = res.statusBarHeight;
+        let navTop = menuButtonObject.top;
+        let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
+        this.navHeight = Height;
+        this.navTop = navTop;
+        this.windowHeight = res.windowHeight;
+        this.setState({
+          top:(this.navHeight - statusBarHeight)/2 + statusBarHeight
+        })
+
+      },
+      fail(err) {
+        console.log(err);
+      }
+    })
     const options = this.$router.params
     const { store, uid, id, gid = '' } = await entry.entryLaunch(options, true)
     console.log({store,uid,id,gid})
@@ -401,7 +421,8 @@ export default class Detail extends Component {
 
     this.setState({
       showBuyPanel: true, // 购买时底部弹窗
-      buyPanelType: type
+      buyPanelType: type,
+      type:type
     })
   }
 
@@ -447,7 +468,7 @@ export default class Detail extends Component {
         this.setState({
           showCodeInput:false,
         })
-        Taro.setStorageSync('cardValue',this.state.cardValue)
+        Taro.setStorageSync('distribution_shop_id',this.state.cardValue)
         this.handleBuyBarClick(this.state.type)
       }else{
         Taro.showToast({
@@ -768,9 +789,8 @@ export default class Detail extends Component {
     console.log('ddd',info)
     return (
       <View>
-        {/*<NavGap title='详细信息'/>*/}
         <View className='page-goods-detail'>
-          <View className='icon-arrow-left-container' onClick={this.handleBack.bind(this)}>
+          <View className='icon-arrow-left-container' onClick={this.handleBack.bind(this)} style={`top:${this.state.top}px`}>
             <Icon className='iconfont icon-arrow-left'/>
           </View>
           <NavBar
@@ -834,11 +854,6 @@ export default class Detail extends Component {
                 <View className='goods-timer__hd'>
                   <View className='goods-prices'>
                     <View className='view-flex view-flex-middle'>
-                      <Price
-                        unit='cent'
-                        symbol={(info.cur && info.cur.symbol) || ''}
-                        value={info.act_price}
-                      />
                       {
                         marketing !== 'normal' &&
                         <View className='goods-prices__ft'>
@@ -852,16 +867,23 @@ export default class Detail extends Component {
                           }
                           {
                             marketing === 'seckill' &&
-                            <Text className='goods-prices__type'>秒杀</Text>
+                            <Text className='goods-prices__type'>限时秒杀</Text>
                           }
                           {
                             marketing === 'limited_time_sale' &&
                             <Text className='goods-prices__type'>限时特惠</Text>
                           }
                         </View>
+
                       }
                     </View>
                     <View style='line-height: 1;'>
+                      <Price
+                        className='seckill-price'
+                        unit='cent'
+                        symbol={(info.cur && info.cur.symbol) || ''}
+                        value={info.act_price}
+                      />
                       <Price
                         unit='cent'
                         className='goods-prices__market'

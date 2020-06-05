@@ -49,6 +49,7 @@ export default class RecommendItem extends Component {
               img-class='recommend-item__img'
               src={img}
               mode='aspectFill'
+              // mode='widthFix'
               width='400'
               lazyLoad
             />

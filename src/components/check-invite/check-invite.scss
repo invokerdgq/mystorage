@@ -62,13 +62,13 @@
     width: 0;
     height: 0;
     position: absolute;
-    top:51px;
-    left:1px;
+    top:50px;
+    left:0;
     z-index:900;
-    border-bottom: solid white 11px;
-    border-top: solid $color-theme 11px;
-    border-left: solid $color-theme 34px;
-    border-right: solid $color-theme 34px;
+    border-bottom: solid white 10px;
+    border-top: solid $color-theme 10px;
+    border-left: solid $color-theme 35px;
+    border-right: solid $color-theme 35px;
   }
   &-controller{
     display: flex;
@@ -101,6 +101,7 @@
     border: solid 0.5px #eeeeee;
     input{
       height: 60px;
+      padding-left: 15px;
     }
   }
 
