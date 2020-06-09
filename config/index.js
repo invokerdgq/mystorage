@@ -84,8 +84,10 @@ const config = {
         url: {
           enable: true,
           config: {
-            limit: 10240 // 设定转换尺寸上限
-          }
+            limit: 10240 ,// 设定转换尺寸上限
+             publicPath: 'https://sxt-b-cdn.oioos.com'
+          },
+
         },
         cssModules: {
           enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true

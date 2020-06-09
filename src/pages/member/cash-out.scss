@@ -1,0 +1,107 @@
+@import "../../style/imports";
+
+.cash-out-container{
+  position: relative;
+  top:VH($nav-gap-height);
+}
+.cash-out{
+  width: 700px;
+  margin: 30px auto 0;
+  background: white;
+  padding:30px 25px 0;
+  text-align: center;
+  &-input{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+    Input{
+      height: 50px;
+      text-align: left;
+      padding-left: 30px;
+      flex: 1;
+    }
+    .cash-out-all{
+      margin-left: auto;
+      color:$color-theme;
+      margin-right: 30px;
+    }
+  }
+  &-from{
+    text-align: left;
+    border-top:solid 1px #eeeeee;
+    padding: 25px 0;
+  }
+  &-count{
+    font-size: 50px;
+    font-weight: bold;
+    margin: 30px 0 20px;
+  }
+  &-dec{
+    font-size: 28px;
+    margin: 20px 0;
+  }
+  &-input-dec{
+    text-align: left;
+    margin: 25px 0;
+    font-weight: bold;
+  }
+}
+.check-button{
+  height: 60px;
+  width: 700px;
+  margin: 30px 0 0 25px;
+  line-height: 60px;
+  background: $color-theme;
+  border-radius: 30px;
+  color:white;
+  display: inline-block;
+  text-align: center;
+}
+.detail-title{
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 35px;
+  margin-top: 30px;
+}
+.detail-item{
+  .source-type{
+    font-size: 40px;
+    margin: 10px 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .status{
+      font-size: 28px;
+      color:$color-theme
+    }
+  }
+  .create-time{
+    font-size: 20px;
+    color:#8b8b8b;
+    margin: 10px 25px;
+  }
+  .remark-mount{
+    display: flex;
+    flex-direction: row;
+    margin: 10px 25px;
+    align-items: flex-end;
+    border-bottom: solid 1px #eeeeee;
+    padding-bottom: 5px;
+    .remark{
+      font-size: 20px;
+      color:#8b8b8b;
+      vertical-align: bottom;
+    }
+    .mount{
+      font-size: 32px;
+      color:$color-theme;
+      margin-left: auto;
+    }
+  }
+}
+.dec-scroll{
+  height: 100vh;
+}
+

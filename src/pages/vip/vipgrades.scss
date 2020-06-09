@@ -53,6 +53,15 @@ page{
 				}
 			}
 		}}
+.choose-gift,.choose-address{
+  padding: 15px 50px;
+  display: flex;
+  flex-direction: row;
+  font-size: 32px;
+}
+.right{
+  margin-left: auto;
+}
 .vip-1,.vip-2{
   &-button{
     position: fixed;
@@ -183,37 +192,7 @@ page{
     margin-top: 40px;
   }
 }
-.commission-body{
-  &-title{
-    text-align: center;
-    font-size: 30px;
-    margin: 25px;
-  }
-  .source-type{
-    font-size: 40px;
-    margin: 10px 25px;
-  }
-  .create-time{
-     font-size: 20px;
-     color:#8b8b8b;
-    margin: 10px 25px;
-  }
-  .remark-mount{
-    display: flex;
-    flex-direction: row;
-    margin: 10px 25px;
-    .remark{
-      font-size: 20px;
-      color:#8b8b8b;
-      vertical-align: bottom;
-    }
-    .mount{
-      font-size: 32px;
-      color:$color-theme;
-      margin-left: auto;
-    }
-  }
-}
+
 .vip-1-button-container{
   width: 100vw;
   background: white;
@@ -261,4 +240,58 @@ page{
 }
 .inner{
   font-size: 22px;
+}
+.scroll-dec{
+  height: 100vh;
+}
+.commission-body-title{
+  padding-left: 35px;
+  font-size: 32px;
+  color:#2f2f2f
+}
+.item-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px 20px 30px;
+  border-bottom: solid 2px #eeeeee;
+  .item-left{
+    &-name{
+      font-size: 32px;
+      color:#2f2f2f;
+      margin: 15px 0;
+    }
+    &-type,&-time,&-remark{
+      font-size: 24px;
+      color:#8b8b8b;
+      margin-top: 8px;
+    }
+  }
+  .item-right{
+    color:$color-theme;
+    text-align: right;
+    .iconfont{
+      font-size: 30px;
+    }
+    &-mount{
+      font-size: 38px;
+    }
+    .detail{
+      font-size: 24px;
+    }
+  }
+}
+.goods-dec-item-content{
+  border-bottom: dashed 2px #eeeeee;
+  padding: 20px 35px;
+ .goods-dec-item{
+   font-size: 24px;
+   color:#2f2f2f;
+   line-height: 1.4;
+ }
+  .goods-status{
+    text-align: right;
+    color:$color-theme
+  }
 }

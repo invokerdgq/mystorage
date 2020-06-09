@@ -82,7 +82,7 @@
     "webpack-dev-server": "^2.9.7"
   },
   "cdn": {
-    "publicPath": "//b-cdn.yuanyuanke.cn/",
+    "publicPath": "https://sxt-b-cdn.oioos.com/",
     "bucket": "espier-shop-vue",
     "path": "h5/"
   }

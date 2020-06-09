@@ -5,21 +5,25 @@ export default function withPager (Component) {
   return class WithPagerComponent extends Component {
     constructor (props) {
       super(props)
-      const { pageSize = 10, pageNo = 0, pageTotal = 0 } = props || {}
+      const { pageSize = 20, pageNo = 0, pageTotal = 0 } = props || {}
 
-      const page = {
-        hasNext: true,
+      let page = {
         isLoading: false,
         total: pageTotal,
         page_no: pageNo,
-        page_size: pageSize
+        page_size: pageSize,
+        hasNext: true
       }
 
-      this.state.page = page
+      this.state.page =  page
+
+
     }
 
     nextPage = async () => {
-			const { page } = this.state
+			const  page  = this.state.page
+      console.log('kkkkkkkkkkkkkkkkkkkkkkkkk')
+      console.log(this.state)
       if (!page.hasNext || page.isLoading) return
 
       page.isLoading = true

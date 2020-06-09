@@ -1,5 +1,5 @@
 import Taro, { PureComponent } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View,Image } from '@tarojs/components'
 import {WgtLimitKill ,FeautreSelect, WgtSearchHome, WgtFilm, WgtMarquees, WgtSlider, WgtImgHotZone, WgtNavigation, WgtCoupon, WgtGoodsScroll, WgtGoodsGrid, WgtShowcase, HotArea } from '../wgts'
 
 

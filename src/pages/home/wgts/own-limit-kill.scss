@@ -34,6 +34,12 @@
   height: 70px;
   text-align: center;
   line-height: 70px;
+  .timer-dec{
+    font-size: 35px;
+    color:#393838;
+    font-weight:bold;
+    margin-right: 25px;
+  }
 }
 .scroll-activity{
   height: 90px;
@@ -87,7 +93,7 @@
   visibility: hidden;
 }
 .limit-goods-detail-main{
-  margin-top: 20px;
+  //margin-top: 20px;
   padding: 0 25px;
   text-align: center;
   .detail-img{
@@ -173,7 +179,7 @@
   }
 }
 .limit-goods-detail-other{
-  margin-top: 20px;
+  //margin-top: 20px;
   padding: 0 25px;
   text-align: center;
   .detail-img{
@@ -295,11 +301,4 @@
     top:-5px
   }
 }
-.at-countdown__item{
-  .at-countdown__time-box {
-      font-family: "Hiragino Sans GB","微软雅黑","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
-
-  }
-}
-
 

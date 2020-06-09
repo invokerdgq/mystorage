@@ -1,0 +1,60 @@
+@import "../../style/imports";
+
+.content-container{
+  position: relative;
+  top: VH($nav-gap-height);
+}
+.fans-scroll{
+  height: VH-last($nav-gap-height + 82px);
+  padding-top: 35px;
+  &-content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 0 35px;
+    background: white;
+    .fans-item{
+      width: 50%;
+      display: flex;
+      padding: 20px 0;
+      flex-direction: row;
+      border-bottom: solid 2px #eeeeee;
+      height: 194px;
+      flex:none;
+      overflow: hidden;
+      .fans-img{
+        width: 153px;
+        height: 153px;
+        border-radius: 50%;
+        margin-right: 5px;
+        Image{
+          width: 153px;
+          height: 153px;
+          border-radius: 50%;
+        }
+      }
+      .fans-info{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        &-name{
+          font-size: 35px;
+          color:$color-theme;
+          white-space: nowrap;
+          width: 200px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+        &-vip{
+          font-size: 28px;
+          color:#717171;
+        }
+        &-city{
+          font-size: 28px;
+          color:#A0A0A0
+        }
+      }
+    }
+  }
+}

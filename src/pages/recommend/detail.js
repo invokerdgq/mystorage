@@ -266,13 +266,13 @@ export default class recommendDetail extends Component {
           <FloatMenus>
             <FloatMenuItem
               iconPrefixClass='icon'
-              icon='share'
+              icon='icon-fenxiang iconfont'
               openType='share'
               onClick={this.handleShare}
             />
             <FloatMenuItem
               iconPrefixClass='icon'
-              icon='arrow-up'
+              icon='icon-dingbu iconfont'
               hide={!showBackToTop}
               onClick={this.scrollBackToTop}
             />

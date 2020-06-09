@@ -107,7 +107,16 @@
     text-align: center;
   }
 }
+.rank-back{
+  background: $color-theme;
+  display: inline-block;
+  color:white;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 15px;
+  border-radius: 25px;
 
+}
 .goods-prices {
   display: flex;
   flex: 1;
@@ -144,7 +153,6 @@
       }
     }
   }
-
   &__market {
     font-size: $font-size-small;
     color: $color-gray;
@@ -167,6 +175,7 @@
   background: $color-theme;
   padding: 0 $edge-size;
   border-radius:25px 25px 0 0 ;
+  height: 135px;
 .price{
   color:white;
   .price__symbol{
@@ -189,16 +198,41 @@
     align-items: flex-end;
     justify-content: space-between;
     padding: 16px 0;
+    .countdown__time{
+      margin-top: 30px;
+      at-countdown-item:first-of-type{
+        .at-countdown__time-box{
+          background: $color-theme;
+          .at-countdown__time{
+            color:white;
+          }
+        }
+      }
+    }
+    .at-countdown__item .at-countdown__time-box .at-countdown__time {
+      color:$color-theme;
+    }
+    .at-countdown__item .at-countdown__separator{
+      color:white;
+    }
   }
 
   .goods-prices {
     display: block;
     color:white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    View:last-child{
+      margin-top: 10px;
+    }
     .price {
       font-weight: bold;
       font-family: "Helvetica";
     }
+   .view-flex-middle{
 
+   }
     &__rule,
     &__type {
       //font-size: floor($font-size-small * 0.9);
@@ -226,38 +260,37 @@
 .seckill-price{
   margin-right: 15px;
  .price__symbol{
-   font-size: 26px;
+   font-size: 34px;
  }
   .price__decimal{
-   font-size: 26px;
+   font-size: 34px;
   }
   .price__int{
-    font-size: 40px;
+    font-size: 64px;
   }
 }
     .goods-prices__market {
       color: #fff;
       opacity: 0.7;
       //font-size: floor(0.8 * $font-size);
-      font-size: 18px;
+      font-size: 34px;
       font-family: "Helvetica";
       font-weight: lighter;
       .price__symbol {
         //font-size: floor(0.8 * $font-size);
-        font-size: 20px;
+        font-size: 34px;
       }
       .price__decimal{
-        font-size: 20px;
+        font-size: 34px;
       }
       .price__int{
-        font-size: 20px;
+        font-size: 34px;
       }
     }
   }
 
   &__label {
-    padding-bottom: 15px;
-    font-size: 24px;
+    font-size: 25px;
   }
 
   .countdown__time {
@@ -843,3 +876,4 @@
   top: 0;
   background: red;
 }
+

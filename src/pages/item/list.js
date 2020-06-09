@@ -356,7 +356,7 @@ export default class List extends Component {
               {
                 !isShowSearch &&
                 <View
-                  className={classNames('goods-list__type', listType === 'grid' ? 'icon-list' : 'icon-grid')}
+                  className={classNames('goods-list__type', listType === 'grid' ? 'icon-list iconfont' : 'icon-grid iconfont')}
                   onClick={this.handleViewChange}
                 >
                 </View>

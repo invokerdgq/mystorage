@@ -31,6 +31,7 @@ export { default as GoodsEvaluation } from './goods-evaluation'
 export { default as GoodsComment } from './goods-comment'
 export { default as NavGap } from './nav-gap/nav-gap'
 export { default as CheckInvite} from './check-invite/check-invite'
+export { default as NavSort } from './nav-sort/nav-sort'
 
 
 export default {}

@@ -5,6 +5,8 @@
     display: inline-block;
     position: relative;
     padding: 6px 0 0 6px;
+    width: 400px;
+    margin-right: 14px;
     &:first-child {
       //margin-left: 20px;
     }
@@ -96,6 +98,7 @@
      display: inline-block;
      width: 348px;
      overflow: hidden;
+     border-radius: 12px;
      image{
        width: 307px;
        height: 200px;
@@ -132,6 +135,8 @@
       display: inline-block;
       vertical-align: middle;
       font-size: 29px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .goods-price{
       position: absolute;
@@ -157,6 +162,11 @@
 .goods-desc{
   .goods-name{
     font-weight: bold;
+    display: inline-block;
+    width: 400px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .goods-price{
     .price{

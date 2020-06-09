@@ -13,7 +13,8 @@ export default class MemberCode extends Component {
     super(props)
 
     this.state = {
-      info: null
+      info: null,
+      tmpPath:''
     }
   }
 
@@ -26,7 +27,7 @@ export default class MemberCode extends Component {
     const params = {
       code_type: (cardInfo && cardInfo.code_type) || {},
       content: memberInfo.user_card_code,
-      appid:'wxde87f955d769c707'
+      appid:Taro.getExtConfigSync().appid
     }
     const res = await api.member.memberCode(params)
 
@@ -36,9 +37,78 @@ export default class MemberCode extends Component {
         userCardCode: memberInfo.user_card_code,
         vipType: vipgrade.is_vip && vipgrade.vip_type
       }
+    },() => {
+      this.handleSaveImage()
     })
   }
+  onShareAppMessage(obj) {
+    const { user_card_code :userId } = Taro.getStorageSync('userinfo')
 
+    return {
+      title: '邀请码',
+      path: `/pages/member/index?uid=${userId}`,
+      imageUrl:this.state.tmpPath
+    }
+  }
+
+  handleCopy =() => {
+    Taro.setClipboardData({
+      data:this.state.info.userCardCode,
+      success(res) {
+        Taro.showToast({
+          title:`复制成功`,
+          icon:'success',
+          duration:1500
+        })
+      },
+      fail(e){
+        Taro.showToast({
+          title:'复制失败，稍后重试',
+          icon:'none',
+          duration:1500
+        })
+      }
+    })
+  }
+ handleSaveImage() {
+     let fileManage = Taro.getFileSystemManager();
+     let date = new Date().getTime();
+     fileManage.writeFile({
+       filePath:Taro.env.USER_DATA_PATH + `/pic${date}.png`,
+       data:this.state.info.qrcode_url.slice(22),
+       encoding:'base64',
+       success:()=>{
+         console.log('hahahah')
+         this.setState({
+           tmpPath:Taro.env.USER_DATA_PATH + `/pic${date}.png`
+         },() => {})
+       }
+     })
+ }
+ handleSave(){
+   Taro.saveImageToPhotosAlbum({
+     filePath:this.state.path,
+     success(){
+       Taro.showToast({
+         title:'保存成功',
+         icon:'success',
+         duration:1500
+       })
+     },
+     fail:() =>{
+       Taro.showToast({
+         title:'保存失败',
+         icon:'none',
+         duration:1500
+       })
+     },
+     complete:() =>{
+       this.setState({
+         showCanvas: !this.state.showCanvas
+       })
+     }
+   })
+ }
   render () {
     const { username, avatar } = Taro.getStorageSync('userinfo')
     const { info } = this.state
@@ -60,6 +130,9 @@ export default class MemberCode extends Component {
             <Image className="member-code-qr" mode="aspectFit" src={info.qrcode_url} />
             <View>{info.userCardCode}</View>
             <View className="muted">使用时，出示此码</View>
+            <Button openType='share' className='code-share'>分享</Button>
+            <Button onClick={this.handleSave} className='code-save'>保存到相册</Button>
+            <Button onClick={this.handleCopy.bind(this)} className='code-copy'>复制邀请码</Button>
           </View>
         </View>
       </View>

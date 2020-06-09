@@ -154,6 +154,8 @@ useHooks()
         'pages/member/member-code',
         'pages/member/vip',
         'pages/member/vip-rule',
+        'pages/member/cash-out',
+        'pages/member/fans',
         'pages/qrcode-buy',
 
         'pages/distribution/shop-home',
@@ -162,6 +164,7 @@ useHooks()
         'pages/store/list',
 
         'pages/vip/vipgrades',
+        'pages/vip/present',
 
         'pages/custom/custom-page',
 

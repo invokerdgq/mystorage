@@ -3,13 +3,19 @@ import req from './req'
 export function userinfo(params) {
   return req.post('/getuserinfo',params)
 }
+export function getFans(params) {
+ return req.get('/member/fans',params)
+}
 export function memberInfo () {
   let date = new Date().getTime()
   return req.get(`/member?${date}`)
 }
 
-export function commission() {
-    return req.get('/member/commission')
+export function commission(params) {
+    return req.get(`/member/commission`,params)
+}
+export function cashOut(params = {}) {
+    return req.post('/member/commission/withdraw',params)
 }
 export function setMemberInfo (params = {}) {
   return req.put('/member', params)

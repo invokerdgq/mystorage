@@ -55,7 +55,7 @@ export default class Vip extends Component{
     const params = {
       code_type: (cardInfo && cardInfo.code_type) || {},
       content: memberInfo.user_card_code,
-      appid:'wxde87f955d769c707'
+      appid:Taro.getExtConfigSync().appid
     }
     // const res = await api.member.memberCode(params)
     const res = await api.member.inviteCode(this.state.giftList[index].code)
@@ -63,6 +63,15 @@ export default class Vip extends Component{
       cb()
     })
   }
+  onShareAppMessage(obj) {
+    const info = Taro.getStorageSync('userinfo')
+    return {
+      title:'免费成为至尊会员',
+      path:`/pages/member/index?inviteCode=${this.state.giftList[this.state.giftIndex].code.toString()}&uid=${info.user_card_code}`,
+      imageUrl:this.state.path
+    }
+  }
+
   handleClickBuy =(grade_name) =>{
     if(grade_name === this.state.grade_name){
       Taro.showToast({
@@ -408,7 +417,6 @@ handleCancelImg =()=> {
              </View>
            </View>
          </View>
-
       </View>
     )
   }

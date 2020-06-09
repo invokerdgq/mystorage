@@ -9,7 +9,13 @@ async function entryLaunch(data, isNeedLocate) {
   if (data.scene) {
     const scene = decodeURIComponent(data.scene)
     //格式化二维码参数
-    options = parseUrlStr(scene)
+    if(/=/.test(data.scene)){
+      options = parseUrlStr(scene)
+    }else{
+      options = {
+        uid:data.scene
+      }
+    }
   } else {
     options = data
   }

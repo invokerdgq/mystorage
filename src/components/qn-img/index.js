@@ -16,11 +16,11 @@ export default class QnImg extends Component {
     const { src, mode, qnMode, width, height, onError, onLoad, lazyLoad } = this.props
     if (!src) return null
     let rSrc = src
-    if (!qnMode) {
-      rSrc += (width || height) ? `?imageView2/2${width ? '/w/' + width : ''}${height ? '/h/' + height : ''}` : ''
-    } else {
-      rSrc += qnMode
-    }
+    // if (!qnMode) {
+    //   rSrc += (width || height) ? `?imageView2/2${width ? '/w/' + width : ''}${height ? '/h/' + height : ''}` : ''
+    // } else {
+    //   rSrc += qnMode
+    // }
 
     return (
       <Image

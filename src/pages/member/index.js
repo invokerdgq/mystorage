@@ -46,18 +46,9 @@ export default class MemberIndex extends Component {
       orderCount: '',
       memberDiscount: '',
       isOpenPopularize: false,
-      salespersonData:null
-
+      salespersonData:null,
+      inviter_name:''
     }
-    this.userFeature = [
-      {title:'收货地址管理',to:''},
-      {title:'我的拼团',to:''},
-      {title:'客服',to:''},
-      {title:'退换货政策',to:''},
-      {title:'商务合作',to:''},
-      {title:'协议规则',to:''},
-      {title:'个人信息',to:''},
-      ]
   }
 
   navigateTo (url) {
@@ -65,6 +56,9 @@ export default class MemberIndex extends Component {
   }
 
   componentDidShow () {
+    const {uid,inviteCode} = this.$router.params
+    Taro.setStorageSync('distribution_shop_id',uid)
+    Taro.setStorageSync('inviteCode',inviteCode)
     const { colors } = this.props
     Taro.setNavigationBarColor({
       backgroundColor: colors.data[0].marketing,
@@ -107,14 +101,15 @@ export default class MemberIndex extends Component {
         info: {
           username: resUser.username,
           avatar: resUser.avatar,
-          isPromoter: resUser.isPromoter
+          isPromoter: resUser.isPromoter,
         }
       })
     }
     const [res, { list: favs }, orderCount, { list: memberDiscount }, assets] = await Promise.all([api.member.memberInfo(), api.member.favsList(), api.trade.getCount(), api.vip.getList(), api.member.memberAssets()])
     this.props.onFetchFavs(favs)
     this.setState({
-      isOpenPopularize: res.is_open_popularize
+      isOpenPopularize: res.is_open_popularize,
+      inviter_name:res.memberInfo.inviter_name
     })
     const userObj = {
       username: res.memberInfo.username,
@@ -122,7 +117,6 @@ export default class MemberIndex extends Component {
       userId: res.memberInfo.user_id,
       isPromoter: res.is_promoter,
       user_card_code:res.memberInfo.user_card_code,
-      inviter_id:res.memberInfo.inviter_id
     }
     if(!resUser || resUser.username !== userObj.username || resUser.avatar !== userObj.avatar||resUser.inviter_id !== userObj.inviter_id) {
       Taro.setStorageSync('userinfo', userObj)
@@ -130,7 +124,8 @@ export default class MemberIndex extends Component {
         info: {
           username: res.memberInfo.username,
           avatar: res.memberInfo.avatar,
-          isPromoter: res.is_promoter
+          isPromoter: res.is_promoter,
+          inviter_name:res.memberInfo.inviter_name
         }
       })
     }
@@ -260,14 +255,20 @@ export default class MemberIndex extends Component {
   }
   handlePresist = (grade_name) => {
     Taro.navigateTo({
-      url:`/pages/vip/vipgrades?grade_name=${grade_name}&presist=true&commission=${(this.state.commission/100).toFixed(2)}`
+      url:`/pages/vip/vipgrades?grade_name=${grade_name}&presist=true&commission=${(this.state.expect_commission/100).toFixed(2)}`
+    })
+  }
+  handleCashOut =(commissiom) => {
+    Taro.navigateTo({
+      url:`/pages/member/cash-out?commission=${commissiom}`
     })
   }
 
   render () {
     const { colors } = this.props
     const {expect_commission, commission, is_effective ,vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
-
+   console.log('kkkkk')
+    console.log(info)
     return (
       <View>
         <NavGap title="个人中心"/>
@@ -291,6 +292,10 @@ export default class MemberIndex extends Component {
                           {
                             is_effective === 0&&
                             <View className='gradename' >未激活</View>
+                          }
+                          {
+                            this.state.inviter_name&&
+                            <View className='gradename'>推荐人:{ this.state.inviter_name}</View>
                           }
                         </view>
                         {
@@ -320,7 +325,7 @@ export default class MemberIndex extends Component {
                       <View className='member-assets__label'>预计收益</View>
                       <View className='member-assets__value'>{(Number(expect_commission)/100).toFixed(2)}</View>
                     </View>
-                    <View className='view-flex-item' onClick={this.handlePresist.bind(this,vipgrade.is_vip?vipgrade.grade_name:gradeInfo.grade_name,true)}>
+                    <View className='view-flex-item' onClick={this.handleCashOut.bind(this,commission)}>
                       <View className='member-assets__label'>可提收益</View>
                       <View className='member-assets__value'>{(commission/100).toFixed(2)}</View>
                     </View>
@@ -481,6 +486,13 @@ export default class MemberIndex extends Component {
                 >
                 </SpCell>
               }
+              <SpCell
+                title='我的粉丝'
+                isLink
+                img='/assets/imgs/fans.jpg'
+                onClick={this.handleClick.bind(this, '/pages/member/fans')}
+              >
+              </SpCell>
               <SpCell
                 title='我的拼团'
                 isLink

@@ -18,7 +18,7 @@ export default class WgtLimitKill extends Component{
     super(props);
     this.state = {
       more:false,
-      index:0,
+      index:null,
       poi: {pos:0},
       showTriangle:true,
       iconUp:false,
@@ -26,6 +26,12 @@ export default class WgtLimitKill extends Component{
     }
   }
    componentDidMount() {
+    setTimeout(() => {
+      console.log('ceshi')
+      this.setState({
+        index:0
+      })
+    },6000)
     const {list} = this.props.info
      let cur = -1
       if(list.length){
@@ -39,19 +45,25 @@ export default class WgtLimitKill extends Component{
       }
      this.handleTimerChange(cur === -1?0:cur)
   }
-  // setTimer(indexList){
-  //   indexList.setInterval(() => {
-  //
-  //   },1000)
-  // }
   handleTimerChange = (index) =>{
-    let obj = {
-      index:index,
-      poi:{pos:index*750/4 + (750/8) -index-1},
-      showTriangle: false,
-      more:false,
-      iconUp: false
-    }
+    let obj;
+   if(index === this.state.index){
+      obj = {
+       index:index,
+       poi:{pos:index*750/4 + (750/8) -index-1 +Math.random()/10},
+       showTriangle: false,
+       more:false,
+       iconUp: false
+     }
+   }else{
+      obj = {
+       index:index,
+       poi:{pos:index*750/4 + (750/8) -index-1},
+       showTriangle: false,
+       more:false,
+       iconUp: false
+     }
+   }
       this.setState(obj,() => {setTimeout(() => {
         this.setState({showTriangle:true})
       },500)})
@@ -70,7 +82,7 @@ export default class WgtLimitKill extends Component{
       })
     }
   }
-  handleScroll = () => {
+  handleScroll = (e) => {
      this.setState({
        showTriangle:false
      })
@@ -165,8 +177,9 @@ refresh() {
              <Text>已结束</Text>:
               list[index].config.status === 'in_sale'?
                 <View>
-                  <Text>剩余</Text>
+                  <Text className='timer-dec'>剩余</Text>
                   <AtCountdown
+                    format={{ day: '天',hours: ':', minutes: ':', seconds: '' }}
                     isShowDay
                     day={calcTimer(list[index].config.lastSeconds).dd}
                     hours={calcTimer(list[index].config.lastSeconds).hh}
@@ -176,8 +189,9 @@ refresh() {
                   />
                 </View>:
                 <View>
-                  <Text>即将开始</Text>
+                  <Text className='timer-dec'>即将开始</Text>
                   <AtCountdown
+                    format={{ day: '天',hours: ':', minutes: ':', seconds: '' }}
                     isShowDay
                     day={calcTimer(list[index].config.lastSeconds).dd}
                     hours={calcTimer(list[index].config.lastSeconds).hh}

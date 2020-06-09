@@ -402,6 +402,8 @@ export default class CartIndex extends Component {
   render () {
     const { groups, invalidList, cartMode, loading, curPromotions, likeList, page, isPathQrcode } = this.state
     const { list, showLikeList, colors } = this.props
+    console.log('hahahahha')
+    console.log(list)
 
     if (loading) {
       return <Loading />
@@ -598,7 +600,7 @@ export default class CartIndex extends Component {
                                   // style={`background: ${colors.data[0].primary}`}
                                   disabled={shopCart.shopInfo.cart_total_count <= 0}
                                   onClick={this.handleCheckout.bind(this, shopCart)}>
-                                  {isDrug ? '立即预约' : `结算(${list.length})`}
+                                  {isDrug ? '立即预约' : `结算(${list[0].list.length})`}
                                 </Button>
                               </View>
                               : <View className='cart-toolbar__bd'>
@@ -647,7 +649,7 @@ export default class CartIndex extends Component {
                         <View className='cart-item__act'>
                           <View/>
                           <View
-                            className='icon-close'
+                            className='icon-close iconfont'
                             onClick={this.handleDelect.bind(this, item.cart_id)}
                           />
                         </View>

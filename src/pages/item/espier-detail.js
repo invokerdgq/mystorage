@@ -16,6 +16,7 @@ import NavGap from "../../components/nav-gap/nav-gap";
 import NavBar from 'taro-navigationbar';
 
 import './espier-detail.scss'
+import {userinfo} from "../../api/member";
 
 @connect(({ cart, member, colors }) => ({
   cart,
@@ -119,8 +120,6 @@ export default class Detail extends Component {
 
   async componentDidShow () {
     const userInfo = Taro.getStorageSync('userinfo')
-    console.log('hahahahhahahaha')
-    console.log(userInfo)
     if (S.getAuthToken() && !userInfo) {
       const res = await api.member.memberInfo()
       const userObj = {
@@ -732,6 +731,7 @@ export default class Detail extends Component {
     })
   }
   render () {
+    const userinfo = Taro.getStorageSync('userinfo')
     const store = Taro.getStorageSync('curStore')
     const {
       info,
@@ -996,6 +996,10 @@ export default class Detail extends Component {
                     }
                   </View>
                 )
+              }
+              {
+                userinfo.is_vip&&
+                <View className='rank-back'>赚/{(Number(info.rebate_commission)/100).toFixed(2)}元</View>
               }
             </View>
 

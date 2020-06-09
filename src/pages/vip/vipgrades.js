@@ -9,6 +9,7 @@ import { classNames, pickBy } from '@/utils'
 import './vipgrades.scss'
 import NavGap from "../../components/nav-gap/nav-gap";
 import CheckInvite from "../../components/check-invite/check-invite";
+import { withPager } from '@/hocs'
 
 @connect(({ colors }) => ({
   colors: colors.current
@@ -16,7 +17,10 @@ import CheckInvite from "../../components/check-invite/check-invite";
 @connect(({address}) => ({
   address:address.current
 }))
-
+@connect(({giftId}) => ({
+  id:giftId.id
+}))
+@withPager
 export default class VipIndex extends Component {
 	static config = {
 		navigationBarTitleText: '会员购买',
@@ -27,6 +31,7 @@ export default class VipIndex extends Component {
     super(props)
 
     this.state = {
+      ...this.state,
 			userInfo:null,
 			curTabIdx: 0,
 			curCellIdx: 0,
@@ -39,14 +44,39 @@ export default class VipIndex extends Component {
       totalMount:0,
       showToolBar:false,
       codeInput:false,
+      present_id:null,
+      currentAddress:null,
+      iconUp:false,
+      curIndex:null
     }
-    this.cardImgList= ['https://sxt-b-cdn.oioos.com/tupian/zuanshi.png','https://sxt-b-cdn.oioos.com/tupian/zhizun.png','https://sxt-b-cdn.oioos.com/tupian/wangzhe.png']
+    this.cardImgList= [
+      'https://sxt-b-cdn.oioos.com/tupian/zuanshi.png',
+      'https://sxt-b-cdn.oioos.com/tupian/zhizun.png',
+      'https://sxt-b-cdn.oioos.com/tupian/wzjg.jpg']
+    this.giftNameList = [
+      'PH护肤双重奏礼盒',
+      'PH明星产品套盒',
+      '苏尚儿微米系列组合',
+      '苏尚儿精品袜套装']
+  }
+
+  componentDidShow() {
+	  this.setState({
+      currentAddress:this.props.address,
+      present_id:this.props.id,
+    },() => {
+    })
   }
 
   componentDidMount () {
 	 if(this.$router.params.presist){
-	   this.fetchMission()
+	   // this.fetchMission()
+     this.nextPage()
    }
+	 const { present_id } = this.$router.params
+    this.setState({
+      present_id
+    })
 		const { colors } = this.props
 		Taro.setNavigationBarColor({
       frontColor: '#ffffff',
@@ -60,16 +90,28 @@ export default class VipIndex extends Component {
 			this.fetchUserVipInfo()
 		})
 	}
-  async fetchMission  () {
-	  let res = await api.member.commission();
-	  // let mount = res.list.reduce((pre,item,index) => {
-	  //   pre += Number(item.amount)
-    //   return pre
-    // },0)
-	  this.setState({
-      commissionList:res.list,
+  async fetch (params) {
+    const { page_no: page, page_size: pageSize } = params
+    params = {
+      // ...params,
+      type:0,
+      page,
+      pageSize
+    }
+    const { list, total_count: total } = await api.member.commission(params)
+    this.setState({
+      // list: [...this.state.list, ...nList],
+      commissionList:[...this.state.commissionList, ...list]
     })
+
+    return { total }
   }
+  // async fetchMission  () {
+	//   let res = await api.member.commission({page:1,pageSize:10,type:0});
+	//   this.setState({
+  //     commissionList:res.list,
+  //   })
+  // }
 	async fetchInfo () {
 		const { cur, list } = await api.vip.getList()
 		const { grade_name,commission } = this.$router.params //  跳转之前 会员等级名称
@@ -131,15 +173,17 @@ export default class VipIndex extends Component {
       })
       return
     }
-		if(!this.props.address){
-		  this.chooseAddress()
-      return
-    }else if(!Taro.getStorageSync('address_choose')){
-      this.chooseAddress()
-		  return
-    }
     console.log(this.props.store)
 		console.log('第一次提交')
+    if(!this.props.address||!this.props.id) {
+      Taro.hideToast()
+      Taro.showToast({
+        title:'请选择地址和礼包',
+        icon:'none',
+        duration:1500
+      })
+      return
+    }
 		const {list,curTabIdx,curCellIdx} = this.state
 		const vip_grade = list[curTabIdx]
 		const params = {
@@ -147,9 +191,8 @@ export default class VipIndex extends Component {
       card_type: vip_grade.price_list[curCellIdx].name,
 			distributor_id: Taro.getStorageSync('trackIdentity').distributor_id || ''
 		}
-
+console.log(list)
     if(this.state.value !== ''){
-      console.log('jihuo--------------------')
         api.member.codeActive(this.state.value).then((res) => {
           Taro.setStorageSync('inviteCode','')
           Taro.navigateTo({url:'/pages/member/index'})
@@ -163,7 +206,7 @@ export default class VipIndex extends Component {
     }else{
       Taro.showLoading({ mask: true })
 
-      const data = await api.vip.charge({...params,address_id: this.props.address.address_id,come_from:id})
+      const data = await api.vip.charge({...params,address_id: 'address='+this.props.address.address_id+'|'+'gift='+this.state.present_id,come_from:id})
       Taro.setStorageSync('address_choose',false)
       Taro.hideLoading()
 
@@ -222,14 +265,14 @@ export default class VipIndex extends Component {
       showToolBar:true
     })
 }
-hideToolBar=()=>{
+  hideToolBar=()=>{
 	  setTimeout(() => {
 	    this.setState({
         showToolBar:false
       })
     },2500)
 }
-async codeConfirm () {
+  async codeConfirm () {
 	  console.log('fsfasfafs')
   if(this.state.inviter_id === ''){
     Taro.showToast({
@@ -256,13 +299,25 @@ async codeConfirm () {
     }
   }
 }
+chooseGift =() => {
+  Taro.navigateTo({
+    url:'/pages/vip/present'
+  })
+}
+handleClick(index) {
+	  console.log('hhh')
+	  this.setState({
+      iconUp:!this.state.iconUp,
+      curIndex:index
+    })
+}
 	render () {
 		const { colors } = this.props
-		const { codeInput,showToolBar,userInfo, list, cur, curTabIdx, userVipInfo, tabList ,value,commissionList,totalMount} = this.state
-    const {grade_name,commission} = this.$router.params
+		const { present_id,codeInput,showToolBar,userInfo, list, cur, curTabIdx, userVipInfo, tabList ,value,commissionList,totalMount} = this.state
+    const {grade_name,commission,presist} = this.$router.params
 		return (
 		  <View onTouchStart={this.showToolBar} onTouchEnd={this.hideToolBar}>
-        <NavGap title='支付中心'/>
+        <NavGap title={`${presist?'收益中心':'支付中心'}`}/>
         <View className='container'>
           {
             this.$router.params.presist !== 'true'&&
@@ -286,38 +341,57 @@ async codeConfirm () {
             this.$router.params.presist?
               <View>
                 <View className='commission-header'>
-                  <View className='commission-header-title'>我的佣金</View>
+                  <View className='commission-header-title'>我的收益</View>
                   <View className='commission-header-mount'>￥<Text className='inner'>{commission}</Text></View>
                   <View className='commission-header-dec'>累计结算收益</View>
                 </View>
                 <View className='commission-body'>
-                  <View className='commission-body-title'>{commissionList.length === 0?'暂无返佣':'全部'}</View>
+                  <View className='commission-body-title'>{commissionList.length === 0?'暂无收益':'全部'}</View>
                   <View className='list-container'>
-                    {
-                      commissionList.length !== 0&&
-                      commissionList.map((item,index) => {
-                        return (
-                          <View>
-                            <View className='source-type'>{item.type?item.type:'暂时未知'}</View>
-                            <View className='create-time'>创建时间 :{item.created}</View>
-                            <View className='remark-mount'>
-                              <View className='remark'>备注:{item.remark}</View>
-                              <View className='mount'>+<Text className='mount-inner'>￥{(Number(item.amount)/100).toFixed(2)}</Text></View>
+                    <ScrollView
+                    scrollY
+                    className='scroll-dec'
+                    onScrollToLower={this.nextPage.bind(this)}
+                    >
+                      {
+                        commissionList.length !== 0&&
+                        commissionList.map((item,index) => {
+                          return (
+                            <View>
+                              <View className='item-content'>
+                                <View className='item-left'>
+                                  <View className='item-left-name'>用户名 : {item.nickname}</View>
+                                  <View className='item-left-time'>创建时间 : {item.created}</View>
+                                  <View className='item-left-type'>类型 : {item.type}</View>
+                                  <View className='item-left-remark'>备注 : {item.remark}</View>
+                                </View>
+                                <View className='item-right'>
+                                  <View className='item-right-mount'>+￥{(Number(item.amount)/100).toFixed(2)}</View>
+                                  <View className='detail' onClick={this.handleClick.bind(this,index)}>查看详情<Icon className={`${this.state.curIndex === index &&this.state.iconUp?'icon-arrow-up':'icon-arrow-down'} iconfont`}/></View>
+                                </View>
+                              </View>
+                              {
+                                this.state.iconUp&&index === this.state.curIndex&&item.payload&&
+                                  <View className='goods-dec-item-content'>
+                                    {
+                                      JSON.parse(item.payload).map((goods,index) => {
+                                        return(
+                                          <View className='goods-dec-item'>
+                                            {goods.item_name}*{goods.item_count}
+                                          </View>
+                                        )
+                                      })
+                                    }
+                                    <View className='goods-status'>{item.status}</View>
+                                  </View>
+                              }
                             </View>
-                          </View>
-                        )
-                      })
-                    }
+                          )
+                        })
+                      }
+                    </ScrollView>
                   </View>
                 </View>
-                {/*<View style={{display:`${this.$router.params.grade_name === '普通会员'?'none':'block'}`}} className='vip-1-button-container'>*/}
-                {/*  <View >*/}
-                {/*    <View className='vip-1-button'>*/}
-                {/*      <View className='vip-1-button-dec'>{this.$router.params.grade_name} <Text className='inner'>{userVipInfo.end_time} 到期</Text> </View>*/}
-                {/*      <View className='vip-1-button-click' onClick={this.handleCharge}>立即续费</View>*/}
-                {/*    </View>*/}
-                {/*  </View>*/}
-                {/*</View>*/}
               </View>
               :
               <View className='section-body-vip'>
@@ -328,20 +402,22 @@ async codeConfirm () {
                   {grade_name === '至尊会员'&&
                   <View className='code-inner'><Text>待激活(选填)</Text><Input type='text' placeholder='请输入激活码' placeholderStyle='text-align:right' value={this.state.value} onInput={this.handleValue}/></View>
                   }
+                  <View className='choose-gift' onClick={this.chooseGift}>选择礼包: <Text className='right'>{this.giftNameList[present_id -8195]}></Text></View>
+                  <View className='choose-address' onClick={this.chooseAddress}>选择地址:<Text className='right'>{this.state.currentAddress?this.state.currentAddress.province+this.state.currentAddress.city+this.state.currentAddress.adrdetail:''}></Text></View>
                   <View className='code-inner'><Text>会员发放时间</Text><Text>立即到账</Text></View>
                 </View>
                 {grade_name === '至尊会员'?
                   <View >
                     <View className='vip-1-button'>
                       <View className='vip-1-button-dec'><Text className='vip-1-button-dec-1'>至尊会员</Text><Text className='vip-1-button-dec-2'>低至￥<Text className='vip-1-button-dec-3'>0.8</Text>元/每天</Text></View>
-                      <View className='vip-1-button-click' onClick={this.handleCharge}>{grade_name === '至尊会员'?value === null?'立即激活￥ 299':'立即激活':''}</View>
+                      <View className='vip-1-button-click' onClick={this.handleCharge}>{grade_name === '至尊会员'?value === ''?'立即激活￥ 299':'立即激活':''}</View>
                     </View>
                   </View>
                   :
                   <View >
                     <View className='vip-2-button'>
                       <View className='vip-2-button-dec'><Text className='vip-1-button-dec-1'>王者身份</Text><Text className='vip-2-button-dec-2'>享受返佣</Text></View>
-                      <View className='vip-2-button-click' onClick={this.handleCharge}>{grade_name === '王者身份'?'立即激活￥ 299 x 20':''}</View>
+                      <View className='vip-2-button-click' onClick={this.handleCharge}>立即激活</View>
                     </View>
                   </View>
                 }

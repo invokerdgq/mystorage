@@ -1,0 +1,59 @@
+@import "../../style/imports";
+
+.gift-content-container{
+  width: 750px;
+  min-height: 100vh;
+  padding-top: 576px;
+  background-image:url("https://sxt-b-cdn.oioos.com/tupian/299.jpg") ;
+  background-size:100%;
+  box-sizing: border-box;
+  .gift-content{
+    width: 700px;
+    margin: 0 auto ;
+    text-align: center;
+  }
+  .gift-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 37px;
+    Image{
+      margin-left: 20px;
+    }
+    .checked{
+      background-color:$color-theme;
+      position: relative;
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      &:after{
+        content: '\2713';
+        font-size: 24px;
+        width: 30px;
+        height: 30px;
+        color:white;
+        position: absolute;
+        left:0;
+        top:0
+      }
+    }
+    .unchecked{
+        background-color: white;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
+  }
+}
+.confirm{
+  background: $color-theme;
+  color:white;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 30px;
+  //margin: 20px 0 0;
+  width: 700px;
+  text-align: center;
+}
+

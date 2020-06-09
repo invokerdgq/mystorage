@@ -308,20 +308,20 @@ refresh(){
             <HomeWgts
               wgts={wgts}
             />
-            {/*{likeList.length > 0 && showLikeList && (*/}
-            {/*  <View className='faverite-list'>*/}
-            {/*    <WgtGoodsFaverite info={likeList} />*/}
-            {/*    {*/}
-            {/*      page.isLoading*/}
-            {/*        ? <Loading>正在加载...</Loading>*/}
-            {/*        : null*/}
-            {/*    }*/}
-            {/*    {*/}
-            {/*      !page.isLoading && !page.hasNext && !likeList.length*/}
-            {/*      && (<SpNote img='trades_empty.png'>暂无数据~</SpNote>)*/}
-            {/*    }*/}
-            {/*  </View>*/}
-            {/*)}*/}
+            {likeList.length > 0 && showLikeList && (
+              <View className='faverite-list'>
+                <WgtGoodsFaverite info={likeList} />
+                {
+                  page.isLoading
+                    ? <Loading>正在加载...</Loading>
+                    : null
+                }
+                {
+                  !page.isLoading && !page.hasNext && !likeList.length
+                  && (<SpNote img='trades_empty.png'>暂无数据~</SpNote>)
+                }
+              </View>
+            )}
 
           </View>
         </View>
