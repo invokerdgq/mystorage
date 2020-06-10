@@ -343,7 +343,7 @@ handleClick(index) {
                 <View className='commission-header'>
                   <View className='commission-header-title'>我的收益</View>
                   <View className='commission-header-mount'>￥<Text className='inner'>{commission}</Text></View>
-                  <View className='commission-header-dec'>累计结算收益</View>
+                  <View className='commission-header-dec'>累计收益</View>
                 </View>
                 <View className='commission-body'>
                   <View className='commission-body-title'>{commissionList.length === 0?'暂无收益':'全部'}</View>

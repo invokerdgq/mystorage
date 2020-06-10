@@ -117,6 +117,7 @@ export default class MemberIndex extends Component {
       userId: res.memberInfo.user_id,
       isPromoter: res.is_promoter,
       user_card_code:res.memberInfo.user_card_code,
+      inviter_id:res.memberInfo.inviter_id
     }
     if(!resUser || resUser.username !== userObj.username || resUser.avatar !== userObj.avatar||resUser.inviter_id !== userObj.inviter_id) {
       Taro.setStorageSync('userinfo', userObj)

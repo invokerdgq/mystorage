@@ -79,3 +79,11 @@
     }
   }
 }
+.feature{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  Button{
+    font-size: 28px;
+  }
+}

@@ -130,9 +130,11 @@ export default class MemberCode extends Component {
             <Image className="member-code-qr" mode="aspectFit" src={info.qrcode_url} />
             <View>{info.userCardCode}</View>
             <View className="muted">使用时，出示此码</View>
-            <Button openType='share' className='code-share'>分享</Button>
-            <Button onClick={this.handleSave} className='code-save'>保存到相册</Button>
-            <Button onClick={this.handleCopy.bind(this)} className='code-copy'>复制邀请码</Button>
+            <View className='feature'>
+              <Button onClick={this.handleSave} className='code-save'>保存到相册</Button>
+              <Button openType='share' className='code-share'>分享</Button>
+              <Button onClick={this.handleCopy.bind(this)} className='code-copy'>复制邀请码</Button>
+            </View>
           </View>
         </View>
       </View>
