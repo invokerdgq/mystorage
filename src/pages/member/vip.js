@@ -51,14 +51,18 @@ export default class Vip extends Component{
 
   }
   async fetch (index,cb) {
-    const { memberInfo, vipgrade, cardInfo } = await api.member.memberInfo()
-    const params = {
-      code_type: (cardInfo && cardInfo.code_type) || {},
-      content: memberInfo.user_card_code,
-      appid:Taro.getExtConfigSync().appid
-    }
+    // const { memberInfo, vipgrade, cardInfo } = await api.member.memberInfo()
+    // const params = {
+    //   code_type: (cardInfo && cardInfo.code_type) || {},
+    //   content: memberInfo.user_card_code,
+    //   appid:Taro.getExtConfigSync().appid
+    // }
     // const res = await api.member.memberCode(params)
+    Taro.showLoading({
+      title:'获取礼包二维码中'
+    })
     const res = await api.member.inviteCode(this.state.giftList[index].code)
+    Taro.hideLoading()
     this.setState({res},() => {
       cb()
     })
@@ -115,6 +119,13 @@ export default class Vip extends Component{
     this.setState({
       showFeature:false
     })
+  }
+  handleShowDec() {
+    this.drawImg(() => {
+      this.setState({
+        showImage:true,
+        showFeature:!this.state.showFeature
+      })})
   }
   handleSaveImg = () => {
       Taro.saveImageToPhotosAlbum({
@@ -219,13 +230,13 @@ drawImg = (cb=() => {}) =>{
       }
     })
 }
-handleShare =() => {
-    this.drawImg(() => {
-      this.setState({
-        showImage:true,
-        showFeature:!this.state.showFeature
-    })})
-}
+// handleShare =() => {
+//     this.drawImg(() => {
+//       this.setState({
+//         showImage:true,
+//         showFeature:!this.state.showFeature
+//     })})
+// }
 handleCancelImg =()=> {
     this.setState({
       showImage:false
@@ -256,24 +267,24 @@ handleCancelImg =()=> {
         <View style={`display:${this.state.showImage?'block':'none'}`} className='vip-fixed'/>
         <View style={`display:${this.state.showImage?'block':'none'}`} className='img-container'>
           <Image   style={`width:375rpx;height:480rpx`} showMenuByLongpress={true} src={this.state.path}/>
-          <View className='img-controll'>长按图片发给好友</View>
+          <View className='img-controll' onClick={this.handleSaveImg}>保存到相册</View>
           <View className='close' onClick={this.handleCancelImg}>X</View>
         </View>
         <View className='vip-fixed' style={{display:`${showFeature?'block':'none'}`}}/>
           <Canvas canvasId='own-canvas' className='own-canvas' style={`width:375rpx;height:480rpx;display:${showFeature?'block':'none'}`}/>
         <View style={{display:`${showFeature?'flex':'none'}`}} className='vip-fixed-bottom'>
            <View className='vip-fixed-bottom-container'>
-             <View className='message-item' onClick={this.handleShare}>
+             <View className='message-item'>
                <Icon className='iconfont icon-fenxiang'/>
-               <View className='message-item'>分享给好友</View>
+               <Button openType='share'>分享给好友</Button>
              </View>
              <View className='message-item' onClick={this.handleCopyCode}>
                <Icon className='iconfont icon-fuzhi'/>
-               <View>复制激活码</View>
+               <Button>复制激活码</Button>
              </View>
-             <View className='message-item' onClick={this.handleSaveImg}>
+             <View className='message-item' onClick={this.handleShowDec}>
                <Icon className='iconfont icon-copy'/>
-               <View>保存图片</View>
+               <Button>保存图片</Button>
              </View>
            </View>
           <View className='vip-fixed-bottom-controll' onClick={this.handleHide}>取消</View>

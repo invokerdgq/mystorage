@@ -99,7 +99,6 @@
     line-height: 40px;
     border-radius: 40px;
     padding: 0 20px;
-    position: absolute;
     z-index: 5;
     bottom: 28px;
     right: 24px;
@@ -111,10 +110,11 @@
   background: $color-theme;
   display: inline-block;
   color:white;
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
   padding: 0 15px;
-  border-radius: 25px;
+  font-size: 24px;
+  border-radius: 20px;
 
 }
 .goods-prices {

@@ -43,7 +43,7 @@ export default class DetailItem extends Component {
   }
   handleLookDelivery = (value) => {
     Taro.navigateTo({
-      url: `/pages/trade/delivery-info?order_type=${this.props.info.order_type}&order_id=${this.props.info.tid}&delivery_code=${value.delivery_code}&delivery_corp=${value.delivery_corp}&delivery_name=${value.delivery_name}`
+      url: `/pages/trade/delivery-info?order_type=${this.props.info.order_type}&order_id=${this.props.info.tid}&delivery_code=${value.delivery_code}&delivery_corp=${value.delivery_corp}&delivery_name=${value.delivery_name}&item_id=${value.item_id}`
     })
   }
   handleCodeCopy = (val) => {
@@ -70,28 +70,28 @@ export default class DetailItem extends Component {
                         <Text className='btn' onClick={this.handleCodeCopy.bind(this, item.delivery_code)}>复制</Text>
                       </View>
                     : null
-                }               
-              </View>            
+                }
+              </View>
               <OrderItem
                 key={idx}
                 info={item}
               />
               {
-                !customFooter && info.pay_type !== 'dhpoint' && (info.status === 'TRADE_SUCCESS' || info.status === 'WAIT_BUYER_CONFIRM_GOODS' || info.status === 'WAIT_SELLER_SEND_GOODS') 
+                !customFooter && info.pay_type !== 'dhpoint' && (info.status === 'TRADE_SUCCESS' || info.status === 'WAIT_BUYER_CONFIRM_GOODS' || info.status === 'WAIT_SELLER_SEND_GOODS')
                 && <View className='order-item__ft'>
                   {
                     info.delivery_code
                     ? null
-                    : item.delivery_code && 
+                    : item.delivery_code &&
                     <AtButton
                         circle
                         type='text'
                         size='small'
-                        className='delivery-btn'                        
+                        className='delivery-btn'
                         onClick={this.handleLookDelivery.bind(this, item)}
                       >
                        查看物流
-                      </AtButton>                   
+                      </AtButton>
                   }
                   {
                     (info.status !== 'WAIT_SELLER_SEND_GOODS' && info.latest_aftersale_time >= 0)  &&

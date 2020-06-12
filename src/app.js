@@ -62,23 +62,21 @@ useHooks()
       console.log('oooooooooooo')
       console.log(this.$router.params)
       entry.entryLaunch(this.$router.params.query)
-      // if(option){
-      //   if(/&/.test(option)){
-      //     let array = option.split('&')
-      //     Taro.setStorageSync('distribution_shop_id',array[0])
-      //     Taro.setStorageSync('inviteCode',array[1])
-      //   }else{
-      //     try{Taro.setStorageSync('distribution_shop_id',this.$router.params.query.scene)}
-      //     catch (e) {
-      //       console.log(e)
-      //     }
-      //   }
-      // }else {
-      //   try{Taro.setStorageSync('distribution_shop_id','')}
-      //   catch (e) {
-      //     console.log(e)
-      //   }
-      // }
+      let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
+      Taro.getSystemInfo({
+        success: res => {
+          let statusBarHeight = res.statusBarHeight;
+          let navTop = menuButtonObject.top;
+          let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
+          this.navHeight = Height;
+          this.navTop = navTop;
+          this.windowHeight = res.windowHeight;
+          Taro.setStorageSync('top',(this.navHeight - statusBarHeight)/2 + statusBarHeight)
+        },
+        fail(err) {
+          console.log(err);
+        }
+      })
     }
     componentDidMount () {
       const promoterExp = Taro.getStorageSync('distribution_shop_exp')
@@ -156,6 +154,7 @@ useHooks()
         'pages/member/vip-rule',
         'pages/member/cash-out',
         'pages/member/fans',
+        'pages/member/live',
         'pages/qrcode-buy',
 
         'pages/distribution/shop-home',

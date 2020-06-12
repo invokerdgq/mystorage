@@ -1,0 +1,12 @@
+@import "../../style/imports";
+
+page{
+  background: white;
+}
+.live-container{
+  position: relative;
+  top:VH($nav-gap-height);
+  Image{
+    width: 750px;
+  }
+}

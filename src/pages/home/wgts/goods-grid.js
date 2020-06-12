@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
+import {View, Text, Image, Icon} from '@tarojs/components'
 import { QnImg } from '@/components'
 import { classNames } from '@/utils'
 
@@ -9,12 +9,21 @@ export default class WgtGoodsGrid extends Component {
   static options = {
     addGlobalClass: true
   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      showShort:true
+    }
+  }
 
   navigateTo (url) {
     Taro.navigateTo({ url })
   }
   moreGoods (){
-    Taro.navigateTo({ url:'/pages/item/list' })
+    // Taro.navigateTo({ url:'/pages/item/list' })
+    this.setState({
+      showShort:!this.state.showShort
+    })
   }
   handleClickItem = (item) => {
     const url = `/pages/item/espier-detail?id=${item.item_id}`
@@ -28,8 +37,10 @@ export default class WgtGoodsGrid extends Component {
     if (!info) {
       return null
     }
-
-		const { base, data, config } = info
+    let { base, data, config } = info
+  if(this.state.showShort){
+    data = data.slice(0,9)
+  }
     /*let listData = []
     data.map(item => {
       listData.push({
@@ -114,11 +125,11 @@ export default class WgtGoodsGrid extends Component {
           </View>
         </View>
         {
-          base.title === '苏尚儿新品'&&
+         this.props.info.data.length > 9 &&
           <View className="goods-more-container">
             <View className={"goods-more-content"} onClick={this.moreGoods.bind(this)}>
-              <View className="goods-more-des1">更多商品</View>
-              <View className="goods-more-des2">点击购买</View>
+              <Text className="goods-more-des1">{this.state.showShort?'更多商品':'收起'}</Text>
+              <Icon className={`iconfont ${!this.state.showShort?'icon-arrow-up':'icon-arrow-down'}`}/>
             </View>
           </View>
         }

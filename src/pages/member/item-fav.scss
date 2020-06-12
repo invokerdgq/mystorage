@@ -2,6 +2,12 @@
 @import "../item/list";
 
 .page-goods-fav {
+  .at-tabs__item-underline{
+    background: $color-theme;
+  }
+  .at-tabs__item--active{
+    color:$color-theme
+  }
   .goods-list {
     &__scroll {
       @include page-scroll($navigate-height + $tabs-height + 10px, 0);

@@ -42,10 +42,11 @@ export default class MemberCode extends Component {
     })
   }
   onShareAppMessage(obj) {
+    const userinfo = Taro.getStorageSync('userinfo')
     const { user_card_code :userId } = Taro.getStorageSync('userinfo')
-
+       console.log(this.state.tmpPath)
     return {
-      title: '邀请码',
+      title: `${userinfo.username}邀请你进入苏心淘`,
       path: `/pages/member/index?uid=${userId}`,
       imageUrl:this.state.tmpPath
     }
@@ -74,20 +75,21 @@ export default class MemberCode extends Component {
      let fileManage = Taro.getFileSystemManager();
      let date = new Date().getTime();
      fileManage.writeFile({
-       filePath:Taro.env.USER_DATA_PATH + `/pic${date}.png`,
+       filePath:Taro.env.USER_DATA_PATH + `/pict${date}.png`,
        data:this.state.info.qrcode_url.slice(22),
        encoding:'base64',
        success:()=>{
          console.log('hahahah')
          this.setState({
-           tmpPath:Taro.env.USER_DATA_PATH + `/pic${date}.png`
+           tmpPath:Taro.env.USER_DATA_PATH + `/pict${date}.png`
          },() => {})
        }
      })
  }
  handleSave(){
+    console.log('klllll')
    Taro.saveImageToPhotosAlbum({
-     filePath:this.state.path,
+     filePath:this.state.tmpPath,
      success(){
        Taro.showToast({
          title:'保存成功',
@@ -130,11 +132,11 @@ export default class MemberCode extends Component {
             <Image className="member-code-qr" mode="aspectFit" src={info.qrcode_url} />
             <View>{info.userCardCode}</View>
             <View className="muted">使用时，出示此码</View>
-            <View className='feature'>
-              <Button onClick={this.handleSave} className='code-save'>保存到相册</Button>
-              <Button openType='share' className='code-share'>分享</Button>
-              <Button onClick={this.handleCopy.bind(this)} className='code-copy'>复制邀请码</Button>
-            </View>
+          </View>
+          <View className='feature'>
+            <Button onClick={this.handleSave} className='code-save'><Image src='../../assets/imgs/friend.jpg'/></Button>
+            <Button openType='share' className='code-share'><Image src='../../assets/imgs/share.jpg'/></Button>
+            <Button onClick={this.handleCopy.bind(this)} className='code-copy'><Image src='../../assets/imgs/copy.jpg'/></Button>
           </View>
         </View>
       </View>

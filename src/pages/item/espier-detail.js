@@ -434,12 +434,24 @@ export default class Detail extends Component {
 
   handleJudge =(type) => {
     // 发起判断
+    if(!S.getAuthToken()){
+      Taro.showToast({
+        title:'请先登录',
+        icon:'none',
+        duration:1500
+      })
+      setTimeout(() => {
+        Taro.navigateTo({url:'/pages/member/index'})
+      },1500)
+      return
+    }
     const memberinfo =  Taro.getStorageSync('userinfo')
     const connect = Taro.getStorageSync('distribution_shop_id')
     if(!Number(memberinfo.inviter_id) && !connect && connect !== memberinfo.userId){
       // shu card-code
       if(Number(memberinfo.userId) === 1){
         this.handleBuyBarClick(type)
+        return
       }
       this.setState({
         showCodeInput:true,
@@ -504,6 +516,7 @@ export default class Detail extends Component {
     const avatarImg = await Taro.getImageInfo({src: avatar})
     const goodsImg = await Taro.getImageInfo({src: pic})
     const codeImg = await Taro.getImageInfo({src: wxappCode})
+    console.log('jjj')
     if (avatarImg && goodsImg && codeImg) {
       const posterImgs = {
         avatar: avatarImg.path,
@@ -992,14 +1005,14 @@ export default class Detail extends Component {
                     </View>
 
                     {
-                      info.sales && (<Text className='goods-sold'>{info.sales || 0}人已购</Text>)
+                      info.fictitious_sales && (<Text className='goods-sold'>{info.fictitious_sales || 0}人已购</Text>)
                     }
                   </View>
                 )
               }
               {
-                userinfo.is_vip&&
-                <View className='rank-back'>赚/{(Number(info.rebate_commission)/100).toFixed(2)}元</View>
+                userinfo.is_vip &&info.rebate_commission &&
+                <View className='rank-back'>分享赚/{(Number(info.rebate_commission)/100).toFixed(2)}元</View>
               }
             </View>
 

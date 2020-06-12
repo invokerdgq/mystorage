@@ -242,6 +242,14 @@ page{
       top:10px;
       width: 250px;
       text-align: center;
+      Button{
+        font-size: 28px;
+        line-height: 1.5;
+        background: white;
+      }
+      Button:after{
+        border: none;
+      }
     }
     .iconfont{
       font-size: 50px;
@@ -293,7 +301,12 @@ page{
   border-radius: 40px;
   .img-controll{
     text-align: center;
-    margin-top: 30px;
+    margin: 30px 30px 0;
+    height: 50px;
+    border-radius: 25px;
+    background: $color-theme;
+    color:white;
+    line-height: 50px;
   }
   .close{
     background: grey;

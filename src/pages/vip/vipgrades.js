@@ -58,8 +58,12 @@ export default class VipIndex extends Component {
       'PH明星产品套盒',
       '苏尚儿微米系列组合',
       '苏尚儿精品袜套装']
+    this.rankList = [
+      'https://sxt-b-cdn.oioos.com/tupian/first.png',
+      'https://sxt-b-cdn.oioos.com/tupian/second.png',
+      'https://sxt-b-cdn.oioos.com/tupian/third.png'
+    ]
   }
-
   componentDidShow() {
 	  this.setState({
       currentAddress:this.props.address,
@@ -106,12 +110,6 @@ export default class VipIndex extends Component {
 
     return { total }
   }
-  // async fetchMission  () {
-	//   let res = await api.member.commission({page:1,pageSize:10,type:0});
-	//   this.setState({
-  //     commissionList:res.list,
-  //   })
-  // }
 	async fetchInfo () {
 		const { cur, list } = await api.vip.getList()
 		const { grade_name,commission } = this.$router.params //  跳转之前 会员等级名称
@@ -356,11 +354,19 @@ handleClick(index) {
                       {
                         commissionList.length !== 0&&
                         commissionList.map((item,index) => {
+                          let url;
+                          if(item.type === '王者分红'){
+                            url=this.rankList[2]
+                          }else {
+                            if(item.payload){
+                              JSON.parse(item.payload).level === 1?url = this.rankList[0]:url=this.rankList[1]
+                            }
+                          }
                           return (
                             <View>
                               <View className='item-content'>
                                 <View className='item-left'>
-                                  <View className='item-left-name'>用户名 : {item.nickname}</View>
+                                  <View className='item-left-name'>{item.nickname}<Image src={url}/> </View>
                                   <View className='item-left-time'>创建时间 : {item.created}</View>
                                   <View className='item-left-type'>类型 : {item.type}</View>
                                   <View className='item-left-remark'>备注 : {item.remark}</View>
@@ -374,7 +380,7 @@ handleClick(index) {
                                 this.state.iconUp&&index === this.state.curIndex&&item.payload&&
                                   <View className='goods-dec-item-content'>
                                     {
-                                      JSON.parse(item.payload).map((goods,index) => {
+                                      JSON.parse(item.payload).items.map((goods,index) => {
                                         return(
                                           <View className='goods-dec-item'>
                                             {goods.item_name}*{goods.item_count}

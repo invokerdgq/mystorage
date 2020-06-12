@@ -12,8 +12,9 @@ import NavGap from "../../../components/nav-gap/nav-gap";
 
 import './list.scss'
 
-@connect(({ colors }) => ({
-  colors: colors.current
+@connect(({ colors ,address}) => ({
+  colors: colors.current,
+  address:address.current
 }))
 
 @withPager
@@ -33,11 +34,39 @@ export default class TradeList extends Component {
       ],
       list: [],
       rateStatus: false,
-      curItemActionsId: null
+      curItemActionsId: null,
+      changeAddress:false,
+      currentId:null,
+      currentOrder:null
     }
   }
 
-  componentDidShow () {
+   componentDidShow () {
+    if(this.state.changeAddress){
+      if(this.props.address){
+        const address = this.props.address
+        const order = this.state.currentOrder
+        let params = {
+           order_id:order.tid,
+           address_id:address.address_id
+        }
+        let changeError
+        try{
+            api.trade.editAddress(params)
+        }catch (e) {
+          changeError = e
+        }
+       if(changeError){
+         console.log(e)
+       }else{
+         Taro.showToast({
+           title:'修改成功',
+           icon:'none',
+           duration:1500
+         })
+       }
+      }
+    }
     const { status } = this.$router.params
     const tabIdx = this.state.tabList.findIndex(tab => tab.status === status)
 
@@ -184,6 +213,14 @@ export default class TradeList extends Component {
           url: `/marketing/pages/item/rate?id=${tid}`
         })
         break
+      case 'change':
+        this.setState({
+          changeAddress:true,
+          currentOrder:trade
+        })
+        Taro.navigateTo({
+          url:'/pages/member/address?isPicker=choose'
+        })
       default:
         Taro.navigateTo({
           url: `/pages/trade/detail?id=${tid}`

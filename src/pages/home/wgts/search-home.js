@@ -14,12 +14,12 @@ export default class WgtSearchHome extends Component {
 
   constructor (props) {
     super(props)
-
+    const top = Taro.getStorageSync('top')
     this.state = {
       searchValue: '',
       historyList: [],
       isShowAction: false,
-      top:0
+      top:top
     }
   }
 
@@ -28,26 +28,6 @@ export default class WgtSearchHome extends Component {
   }
 
   componentDidMount () {
-        let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
-        Taro.getSystemInfo({
-          success: res => {
-            let statusBarHeight = res.statusBarHeight;
-             let navTop = menuButtonObject.top;
-             let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
-            this.navHeight = Height;
-            this.navTop = navTop;
-            this.windowHeight = res.windowHeight;
-            this.setState({
-              top:(this.navHeight - statusBarHeight)/2 + statusBarHeight
-            })
-
-          },
-          fail(err) {
-            console.log(err);
-          }
-        })
-
-
     if (process.env.TARO_ENV === 'h5') {
       toggleTouchMove(this.refs.container)
     }

@@ -8,7 +8,7 @@ import './fans.scss'
 import {withPager} from "@/hocs";
 import {Loading} from "../../components";
 
-// @withPager 双分页 不能这么写
+// @withPager 多分页 不能这么写
 export default class Fans extends Component{
   constructor(props) {
     super(props);
@@ -38,10 +38,14 @@ export default class Fans extends Component{
       fansList:{
         grade1:[],
         grade2:[],
-        grade3:[]
+        grade3:[],
       },
-      sortList:['钻石会员','至尊会员','王者身份']
+      numList1:0,
+      numList2:'查看',
+      numList3:'查看'
     }
+    this.sortList = ['钻石会员','至尊会员','王者身份']
+    this.initStatus = [false,false,false]
   }
   componentDidMount() {
     this.fetch()
@@ -55,9 +59,18 @@ export default class Fans extends Component{
       const {page_no:page,page_size:pageSize} = grade1
       const {list,total_count} = await api.member.getFans({page,pageSize,type:1})
       Math.ceil(total_count/grade1.page_size) > grade1.page_no?grade1.hasNext = true:grade1.hasNext = false
+      if([...this.state.fansList.grade1,...list].length === 0){
+        Taro.showToast({
+          title:`暂时没有${this.sortList[0]}粉丝`,
+          icon:'none',
+          duration:1500
+
+        })
+      }
       this.setState({
         fansList:{grade1:[...this.state.fansList.grade1,...list],grade2:this.state.fansList.grade2,grade3:this.state.fansList.grade3},
-        grade1Page:{...this.state.grade1Page,isLoading:false}
+        grade1Page:{...this.state.grade1Page,isLoading:false},
+        numList1:total_count
       })
     }else if(this.state.curIndex === 1){
       let grade2 = this.state.grade2Page
@@ -73,9 +86,18 @@ export default class Fans extends Component{
       }else{
          newList = [...this.state.fansList.grade2,...list]
       }
+      if(newList.length === 0){
+        Taro.showToast({
+          title:`暂时没有${this.sortList[1]}粉丝`,
+          icon:'none',
+          duration:1500
+
+        })
+      }
       this.setState({
         fansList:{grade2:newList,grade1:this.state.fansList.grade1,grade3:this.state.fansList.grade3},
-        grade2Page:{...this.state.grade2Page,isLoading:false}
+        grade2Page:{...this.state.grade2Page,isLoading:false},
+        numList2:total_count
       },() => {console.log(this.state.fansList)})
     }else {
       let grade3 = this.state.grade3Page
@@ -91,9 +113,18 @@ export default class Fans extends Component{
       }else{
         newList = [...this.state.fansList.grade3,...list]
       }
+      if(newList.length === 0){
+        Taro.showToast({
+          title:`暂时没有${this.sortList[2]}粉丝`,
+          icon:'none',
+          duration:1500
+
+        })
+      }
       this.setState({
         fansList:{grade3:newList,grade1:this.state.fansList.grade1,grade2:this.state.fansList.grade2},
-        grade3Page:{...this.state.grade3Page,isLoading:false}
+        grade3Page:{...this.state.grade3Page,isLoading:false},
+        numList3:total_count
       },() => {console.log(this.state.fansList)})
     }
   }
@@ -101,23 +132,26 @@ export default class Fans extends Component{
      this.setState({
        curIndex:index,
      },() => {
-       this.fetch()
+       if(!this.initStatus[index]){
+         this.fetch()
+       }
      })
   }
   nextPage = () => {
-    console.log('到达底部')
     this.fetch()
   }
   render() {
-    const {fansList,sortList} = this.state
+    const {fansList} = this.state
     return(
       <View>
         <NavGap title='我的粉丝'/>
         <View className='content-container'>
           <View>
             <NavSort
-              sortList={sortList}
+              sortList={this.sortList}
               onsortChange={this.handleSortChange}
+              showNumber={true}
+              num={{zs:this.state.numList1,zz:this.state.numList2,wz:this.state.numList3}}
             />
           </View>
             <ScrollView
@@ -137,17 +171,13 @@ export default class Fans extends Component{
                         </View>
                         <View className='fans-info'>
                           <Text className='fans-info-name'>{item.nickname}</Text>
-                          <View className='fans-info-vip'>钻石会员</View>
+                          <View className='fans-info-vip'>{this.sortList[0]}</View>
                           <View className='fans-info-city'>{item.city}</View>
                         </View>
                       </View>
                     )
                   })
                 }
-                {/*{*/}
-                {/*  this.state.grade1Page.isLoading&&this.state.curIndex === 0&&*/}
-                {/*  <Loading>加载中。。。</Loading>*/}
-                {/*}*/}
                 {
                   this.state.curIndex === 1&&
                   fansList.grade2.map((item,index) => {
@@ -158,7 +188,7 @@ export default class Fans extends Component{
                         </View>
                         <View className='fans-info'>
                           <Text className='fans-info-name'>{item.nickname}</Text>
-                          <View className='fans-info-vip'>至尊会员</View>
+                          <View className='fans-info-vip'>{this.sortList[1]}</View>
                           <View className='fans-info-city'>{item.city}</View>
                         </View>
                       </View>
@@ -175,17 +205,13 @@ export default class Fans extends Component{
                         </View>
                         <View className='fans-info'>
                           <Text className='fans-info-name'>{item.nickname}</Text>
-                          <View className='fans-info-vip'>王者身份</View>
+                          <View className='fans-info-vip'>{this.sortList[2]}</View>
                           <View className='fans-info-city'>{item.city}</View>
                         </View>
                       </View>
                     )
                   })
                 }
-                {/*{*/}
-                {/*  this.state.grade2Page.isLoading&& this.state.curIndex === 1&&*/}
-                {/*  <Loading>加载中。。。</Loading>*/}
-                {/*}*/}
               </View>
             </ScrollView>
           </View>

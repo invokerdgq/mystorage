@@ -261,6 +261,10 @@ page{
       font-size: 32px;
       color:#2f2f2f;
       margin: 15px 0;
+      Image{
+        width: 24px;
+        height: 24px;
+      }
     }
     &-type,&-time,&-remark{
       font-size: 24px;

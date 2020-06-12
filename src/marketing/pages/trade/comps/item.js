@@ -95,6 +95,11 @@ export default class TradeItem extends Component {
               style={`background: ${colors.data[0].primary}`}
               onClick={this.handleClickBtn.bind(this, 'pay')}
             >立即支付</Button>
+            <Button
+              className='btn-action'
+              style={`background: ${colors.data[0].primary}`}
+              onClick={this.handleClickBtn.bind(this, 'change')}
+            >修改收货地址</Button>
           </View>
         </View>}
         {!customFooter && info.status === 'WAIT_SELLER_SEND_GOODS' && (<View className='trade-item__ft'>
@@ -115,6 +120,11 @@ export default class TradeItem extends Component {
               style={`background: ${colors.data[0].primary}`}
               onClick={this.handleClickBtn.bind(this, 'detail')}
             >订单详情</Button>
+            <Button
+              className='btn-action'
+              style={`background: ${colors.data[0].primary}`}
+              onClick={this.handleClickBtn.bind(this, 'change')}
+            >修改收货地址</Button>
           </View>
         </View>)}
         {!customFooter && info.status === 'TRADE_CLOSED' && (<View className='trade-item__ft'>

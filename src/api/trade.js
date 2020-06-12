@@ -9,6 +9,9 @@ export function detail (tid) {
   // return req.get('/trade.get', { tid })
   return req.get(`/order/${tid}`)
 }
+export function editAddress (params={}) {
+  return req.post(`/order/address/edit`,params)
+}
 
 export function create (data) {
   // return req.post('/trade.create', data)
@@ -27,8 +30,8 @@ export function getCount (params = { order_type: 'normal' }) {
   return req.get('/orderscount', params)
 }
 
-export function deliveryInfo (order_type, order_id) {
-  return req.get(`/trackerpull?order_type=${order_type}&order_id=${order_id}`)
+export function deliveryInfo (order_type, order_id,item_id) {
+  return req.get(`/trackerpull?order_type=${order_type}&order_id=${order_id}&item_id=${item_id}`)
 }
 
 export function tradeQuery (trade_id) {

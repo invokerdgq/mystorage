@@ -217,10 +217,10 @@
     z-index: 20;
     text-align: center;
     .icon-chakan{
-    font-size: 34px;
+    font-size: 28px;
   }
     &__title {
-      font-size: 34px;
+      font-size: 28px;
     }
     &__desc {
       font-size: 24px;
@@ -409,7 +409,7 @@
       box-sizing: content-box;
       min-width: 16px;
       border-radius: 24px;
-      background-color:#e64340;
+      background-color:$color-theme;
       color:#fff;
       line-height: 1.2;
       text-align:center;

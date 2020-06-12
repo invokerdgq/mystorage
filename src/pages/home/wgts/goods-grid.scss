@@ -138,6 +138,7 @@
   justify-content: center;
   .goods-more-content{
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     padding: 0 30px;
@@ -145,6 +146,10 @@
     border-radius: 25px;
     background-color: #393838;
     color:white;
+    .iconfont{
+      font-size: 30px;
+      line-height: 51px;
+    }
   }
   .goods-more-des2{
     margin-left: 8px;

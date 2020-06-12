@@ -61,12 +61,12 @@ $item-img-size: 240px !default;
     line-height: 1;
     font-size: 20px;
     border-radius: 4px;
-    box-shadow: 0 0 0 1PX #FF5000;
-    color: #FF5000;
+    box-shadow: 0 0 0 1PX $color-theme;
+    color: $color-theme;
   }
   &__group {
     border-radius: 4px;
-    background: #FF5000;
+    background: $color-theme;
     color: #fff;
   }
   &__title {

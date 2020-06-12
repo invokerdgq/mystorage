@@ -36,7 +36,8 @@ export default class MemberIndex extends Component {
         is_vip: '',
         vip_type: '',
         is_open: '',
-        background_pic_url: ''
+        background_pic_url: '',
+        is_effective:null
       },
       gradeInfo: {
         user_card_code: '',
@@ -47,7 +48,9 @@ export default class MemberIndex extends Component {
       memberDiscount: '',
       isOpenPopularize: false,
       salespersonData:null,
-      inviter_name:''
+      inviter_name:'',
+      is_effective:null,
+      fansCount:{count:0}
     }
   }
 
@@ -105,11 +108,13 @@ export default class MemberIndex extends Component {
         }
       })
     }
-    const [res, { list: favs }, orderCount, { list: memberDiscount }, assets] = await Promise.all([api.member.memberInfo(), api.member.favsList(), api.trade.getCount(), api.vip.getList(), api.member.memberAssets()])
+    const [res, { list: favs }, orderCount, { list: memberDiscount }, assets,fansCount] = await Promise.all([api.member.memberInfo(), api.member.favsList(), api.trade.getCount(), api.vip.getList(), api.member.memberAssets(),api.member.getFansCount()])
     this.props.onFetchFavs(favs)
     this.setState({
       isOpenPopularize: res.is_open_popularize,
-      inviter_name:res.memberInfo.inviter_name
+      inviter_name:res.memberInfo.inviter_name,
+      is_effective:res.vipgrade.is_effective,
+      fansCount
     })
     const userObj = {
       username: res.memberInfo.username,
@@ -117,7 +122,8 @@ export default class MemberIndex extends Component {
       userId: res.memberInfo.user_id,
       isPromoter: res.is_promoter,
       user_card_code:res.memberInfo.user_card_code,
-      inviter_id:res.memberInfo.inviter_id
+      inviter_id:res.memberInfo.inviter_id,
+      is_vip:res.vipgrade.is_vip,
     }
     if(!resUser || resUser.username !== userObj.username || resUser.avatar !== userObj.avatar||resUser.inviter_id !== userObj.inviter_id) {
       Taro.setStorageSync('userinfo', userObj)
@@ -137,7 +143,8 @@ export default class MemberIndex extends Component {
         is_vip: res.vipgrade.is_vip,
         vip_type: res.vipgrade.vip_type,
         is_open: res.vipgrade.is_open,
-        background_pic_url: res.vipgrade.background_pic_url
+        background_pic_url: res.vipgrade.background_pic_url,
+        is_effective:res.vipgrade.is_effective
       },
       gradeInfo: {
         user_card_code: res.memberInfo.user_card_code,
@@ -237,7 +244,13 @@ export default class MemberIndex extends Component {
   }
 
   handleLoginClick = () => {
-    S.login(this, true)
+    Taro.requestSubscribeMessage({
+      tmplIds: ['QPbbFNtXsu-abY_LMxI1y8psXeRXcHtJ1fdlc6vhjQ4', '6WPv0IqYv_Vj9zkymjx_oNguxkIFLDpogNq6nTG47fQ'],
+      success (res) {
+        Taro.M(res,'pppppppppppppppppp')
+        S.login(this, true)
+      }
+    })
   }
 
   viewAftersales = () => {
@@ -267,9 +280,7 @@ export default class MemberIndex extends Component {
 
   render () {
     const { colors } = this.props
-    const {expect_commission, commission, is_effective ,vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
-   console.log('kkkkk')
-    console.log(info)
+    const {expect_commission, commission,vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
     return (
       <View>
         <NavGap title="个人中心"/>
@@ -291,10 +302,6 @@ export default class MemberIndex extends Component {
                         <view className='tip-text'>
                           <View className='nickname'>Hi, {info.username}</View>
                           {
-                            is_effective === 0&&
-                            <View className='gradename' >未激活</View>
-                          }
-                          {
                             this.state.inviter_name&&
                             <View className='gradename'>推荐人:{ this.state.inviter_name}</View>
                           }
@@ -306,6 +313,10 @@ export default class MemberIndex extends Component {
                             <View className='gradename' >{vipgrade.grade_name}</View>
                             // <View className='gradename' onClick={this.handlePresist.bind(this,vipgrade.grade_name)}>{vipgrade.grade_name} 续费</View>
 
+                        }
+                        {
+                          vipgrade.is_effective == 0&&
+                          <View className='gradename' >未激活</View>
                         }
                       </View>
                     </View>
@@ -368,7 +379,7 @@ export default class MemberIndex extends Component {
                         {gradeInfo.grade_name}
                       </View>
                       <View className='vip-btn'>
-                        <View className='vip-btn__title'   onClick={this.handleClick.bind(this, '/pages/member/vip')}>开通VIP会员 <Text className='iconfont icon-chakan'/></View>
+                        <View className='vip-btn__title'   onClick={this.handleClick.bind(this, '/pages/member/vip')}>开通VIP会员(分享即赚钱) <Text className='iconfont icon-chakan'/></View>
                         {
                           memberDiscount &&
                           <View className='vip-btn__desc'>即可享受最高{memberDiscount}折会员优惠</View>
@@ -487,8 +498,18 @@ export default class MemberIndex extends Component {
                 >
                 </SpCell>
               }
+              {
+                (this.state.vipgrade.grade_name === '至尊会员'|| this.state.vipgrade.grade_name === '王者身份')&&
+                <SpCell
+                  title='我的直播间'
+                  isLink
+                  img='/assets/imgs/live.png'
+                  onClick={this.handleClick.bind(this, '/pages/member/live')}
+                >
+                </SpCell>
+              }
               <SpCell
-                title='我的粉丝'
+                title={`我的粉丝(共有${this.state.fansCount.count}位)`}
                 isLink
                 img='/assets/imgs/fans.jpg'
                 onClick={this.handleClick.bind(this, '/pages/member/fans')}
@@ -521,6 +542,12 @@ export default class MemberIndex extends Component {
                 isLink
                 onClick={this.handleClick.bind(this, '/pages/member/address')}
               >
+              </SpCell>
+              <SpCell
+                title='我的客服'
+                isLink
+              >
+                <Button className='btn-share' openType='contact'></Button>
               </SpCell>
             </View>
           </ScrollView>

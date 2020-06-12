@@ -28,7 +28,7 @@ export default class TradeDetail extends Component {
 
   async fetch () {
     Taro.showLoading()
-    const list = await api.trade.deliveryInfo(this.$router.params.order_type, this.$router.params.order_id)
+    const list = await api.trade.deliveryInfo(this.$router.params.order_type, this.$router.params.order_id,this.$router.params.item_id)
     const nList = pickBy(list,{
       title:'AcceptStation',
       content:({AcceptTime})=>[AcceptTime]

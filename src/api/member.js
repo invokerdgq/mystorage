@@ -6,6 +6,9 @@ export function userinfo(params) {
 export function getFans(params) {
  return req.get('/member/fans',params)
 }
+export function getFansCount() {
+  return req.get('/member/fans/count')
+}
 export function memberInfo () {
   let date = new Date().getTime()
   return req.get(`/member?${date}`)

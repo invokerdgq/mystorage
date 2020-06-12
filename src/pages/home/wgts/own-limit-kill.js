@@ -26,12 +26,6 @@ export default class WgtLimitKill extends Component{
     }
   }
    componentDidMount() {
-    setTimeout(() => {
-      console.log('ceshi')
-      this.setState({
-        index:0
-      })
-    },6000)
     const {list} = this.props.info
      let cur = -1
       if(list.length){
@@ -50,7 +44,7 @@ export default class WgtLimitKill extends Component{
    if(index === this.state.index){
       obj = {
        index:index,
-       poi:{pos:index*750/4 + (750/8) -index-1 +Math.random()/10},
+       poi:{pos:index>=2?750/8+(index-2)*750/4:0},
        showTriangle: false,
        more:false,
        iconUp: false
@@ -58,7 +52,7 @@ export default class WgtLimitKill extends Component{
    }else{
       obj = {
        index:index,
-       poi:{pos:index*750/4 + (750/8) -index-1},
+        poi:{pos:index>=2?750/8+(index-2)*750/4:0},
        showTriangle: false,
        more:false,
        iconUp: false
@@ -127,8 +121,8 @@ refresh() {
             scrollWithAnimation= 'true'
             enableFlex='true'
           >
-            <View className='gap'>没有了~</View>
-              <View className='gap'/>
+            {/*<View className='gap'>没有了~</View>*/}
+            {/*  <View className='gap'/>*/}
               {
                 list.map((item,index) => {
                   return(
@@ -140,36 +134,20 @@ refresh() {
                       {
                         item.config.status !== 'ended'&&
                           <View className='activity-dec'>
-                            <ScrollView
-                              className='scroll-activity'
-                              scrollY
-                              // scrollTop={topShow}
-                              scrollWithAnimation= 'true'
-                            >
                               <View className='activity-dec-start' id='start' >
                                 <View className='activity-dec-start-s'>{item.config.start_date.split(' ')[0].split('-')[1]}月{item.config.start_date.split(' ')[0].split('-')[2]}日 {item.config.start_date.split(' ')[1]}</View>
                                 <View className='activity-dec-start-title'>{item.config.status === 'in_sale'?'开抢中':'即将开抢'}</View>
-                                {/*<View className='activity-dec-start-e'>{item.config.start_date.split(' ')[1]}</View>*/}
                               </View>
-                              {/*<View className='activity-dec-end' id='end'>*/}
-                              {/*  <Text className='activity-dec-end-title'>结束</Text>*/}
-                              {/*  <Text className='activity-dec-end-s'>{item.config.end_date.split(' ')[0]}</Text>*/}
-                              {/*  <Text className='activity-dec-end-e'>{item.config.end_date.split(' ')[1]}</Text>*/}
-                              {/*</View>*/}
-                            </ScrollView>
                           </View>
                       }
                     </View>
                   )
                 })
               }
-              <View className="gap"/>
-              <View className='gap'>没有了~ </View>
-
           </ScrollView>
         </View>
-        <View className={`${showTriangle?'triangle-container':'triangle-container-none'}`} >
-          <View className='triangle' style={{'border-top-color':index === this.state.index ?list[this.state.index].config.status === 'in_sale'?'#c0534e':'#a0a0a0':'white'}}/>
+        <View className={`${showTriangle?'triangle-container':'triangle-container-none'}`} style={`left:${this.state.index <2?(2*this.state.index+1)*750/8 - 10:list.length-3<this.state.index?750-(list.length-1-this.state.index)*750/4-750/8-10:750/2-10}rpx`}>
+          <View className='triangle' style={`border-top:solid 10rpx${list[this.state.index].config.status === 'in_sale'?'#c0534e':'#a0a0a0'}`}/>
         </View>
         <View className='timer-show'>
           {
