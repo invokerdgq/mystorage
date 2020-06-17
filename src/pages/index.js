@@ -164,7 +164,7 @@ export default class HomeIndex extends Component {
     const info = await req.get(url)
 
 
-     let list = await api.seckill.seckillList({status:'',page:1,pageSize:10})
+     let list = await api.seckill.seckillList({status:'',page:1,pageSize:20})
 
     this.setState({
       wgts: formate(info.config,list.list)
@@ -292,7 +292,7 @@ refresh(){
           curStore &&
             <HeaderHome
               store={curStore}
-              Refresh={this.refresh}
+              refresh={this.refresh.bind(this)}
             />
         }
 				{/*<ScrollView

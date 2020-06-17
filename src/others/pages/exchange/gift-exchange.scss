@@ -1,0 +1,55 @@
+@import "../../../style/imports";
+
+page{
+  background: white;
+}
+.scroll-container{
+  position: relative;
+  top:VH($nav-gap-height)
+}
+.scroll{
+  height: VH-last($nav-gap-height);
+  .gift-goods-item{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 35px;
+    &-img{
+    Image{
+      width: 282px;
+      height: 282px;
+    }
+    }
+    &-info{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .feature{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        .price{
+           Text:first-child{
+             color:$color-theme;
+             font-size: 24px;
+           }
+          &-inner{
+            font-size: 45px;
+            color:$color-theme
+          }
+        }
+        .exchange{
+          height: 34px;
+          font-size: 20px;
+          border-radius: 17px;
+          line-height: 34px;
+          padding: 0 20px;
+          background: $color-theme;
+          color:white;
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+}

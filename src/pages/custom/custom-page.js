@@ -54,6 +54,7 @@ export default class HomeIndex extends Component {
 
   render () {
     const { wgts, authStatus, scrollTop, showBackToTop, positionStatus } = this.state
+    const top = Taro.getStorageSync('top')
 
     if (!wgts) {
       return <Loading />
@@ -61,7 +62,7 @@ export default class HomeIndex extends Component {
 
     return (
       <View>
-        <NavGap title='custom'/>
+        <View className='iconfont icon-arrow-left' style={`position:fixed;top:${top}px;left:35rpx;font-size:50rpx;color:black;z-index:1000`} onClick={() =>{Taro.navigateBack()}}/>
         <View className='page-index'>
           <ScrollView
             className={`wgts-wrap ${positionStatus ? 'wgts-wrap__fixed' : ''}`}

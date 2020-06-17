@@ -27,6 +27,7 @@ export default class GoodsBuyPanel extends Component {
     orderType: 'normal',
     fastBuyText: '立即购买',
     busy: false,
+    isexchange:false,
     onClose: () => {},
     onChange: () => {},
     onClickAddCart: () => {},
@@ -327,12 +328,23 @@ export default class GoodsBuyPanel extends Component {
           num
         })
       } catch (e) {
-        console.log(e)
+       Taro.showToast({
+         title:`${e.message}`,
+         icon:"none",
+         duration:1500
+       })
+        this.setState({
+          busy: false
+        })
+        return
       }
       this.setState({
         busy: false
       })
       this.props.onFastbuy(item_id, num)
+      if(this.props.isexchange){
+        url += '&source=exchange'
+      }
       Taro.navigateTo({
         url
       })
@@ -352,12 +364,11 @@ export default class GoodsBuyPanel extends Component {
   }
 
   render () {
-    const { info, type, fastBuyText, colors } = this.props
+    const { info, type, fastBuyText, colors,isexchange } = this.props
 		const { curImg, quantity, selection, isActive, busy, curSku, marketing, promotions, activity, curLimit } = this.state
     if (!info) {
       return null
     }
-
     const { special_type } = info
     const isDrug = special_type === 'drug'
     const curSkus = this.noSpecs ? info : curSku
@@ -497,7 +508,7 @@ export default class GoodsBuyPanel extends Component {
                   <View className='goods-quantity__bd'>
                     <InputNumber
                       min={1}
-                      max={maxStore}
+                      max={isexchange?1:maxStore}
                       value={quantity}
                       onChange={this.handleQuantityChange.bind(this)}
                     />

@@ -1,7 +1,13 @@
 import req from './req'
 
+export function getRecord(params) {
+  return req.get('/member/vip/record',params)
+}
 export function userinfo(params) {
   return req.post('/getuserinfo',params)
+}
+export function remind(params) {
+  return req.post('/member/seckill/remind',params)
 }
 export function getFans(params) {
  return req.get('/member/fans',params)

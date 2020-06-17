@@ -15,6 +15,8 @@ import './list.scss'
 @connect(({ colors ,address}) => ({
   colors: colors.current,
   address:address.current
+}), (dispatch) => ({
+  clearAddress: () => dispatch({ type: 'address/choose', payload: null }),
 }))
 
 @withPager
@@ -30,7 +32,8 @@ export default class TradeList extends Component {
         {title: '全部订单', status: '0'},
         {title: '待付款', status: '5'},
         {title: '待收货', status: '1'},
-        {title: '已完成', status: '3'}
+        {title: '已完成', status: '3'},
+        {title:'会员购买',status:'7'}
       ],
       list: [],
       rateStatus: false,
@@ -42,6 +45,7 @@ export default class TradeList extends Component {
   }
 
    componentDidShow () {
+    console.log(this.props.address)
     if(this.state.changeAddress){
       if(this.props.address){
         const address = this.props.address
@@ -59,11 +63,15 @@ export default class TradeList extends Component {
        if(changeError){
          console.log(e)
        }else{
+         this.setState({
+           changeAddress:false
+         })
          Taro.showToast({
            title:'修改成功',
            icon:'none',
            duration:1500
          })
+         this.props.clearAddress()
        }
       }
     }
@@ -114,6 +122,13 @@ export default class TradeList extends Component {
 
   async fetch (params) {
     const { tabList, curTabIdx } = this.state
+    if(tabList[curTabIdx].status === '7'){
+      const {list,total_count:total} = await api.member.getRecord(params)
+      this.setState({
+        list:[...this.state.list,...list]
+      })
+      return {total}
+    }
 
     params = _mapKeys({
       ...params,
@@ -218,9 +233,11 @@ export default class TradeList extends Component {
           changeAddress:true,
           currentOrder:trade
         })
+        this.props.clearAddress()
         Taro.navigateTo({
           url:'/pages/member/address?isPicker=choose'
         })
+        break
       default:
         Taro.navigateTo({
           url: `/pages/trade/detail?id=${tid}`
@@ -282,21 +299,44 @@ export default class TradeList extends Component {
             onScrollToLower={this.nextPage}
           >
             {
+              tabList[curTabIdx].status !== '7'&&
               list.map((item) => {
                 return (
-                  <TradeItem
-                    payType={item.pay_type}
-                    key={item.tid}
-                    rateStatus={rateStatus}
-                    info={item}
-                    showActions={curItemActionsId === item.tid}
-                    onClick={this.handleClickItem.bind(this, item)}
-                    onClickBtn={this.handleClickItemBtn.bind(this, item)}
-                    onActionBtnClick={this.handleActionBtnClick.bind(this, item)}
-                    onActionClick={this.handleActionClick.bind(this, item)}
-                  />
-                )
+                      <TradeItem
+                        payType={item.pay_type}
+                        key={item.tid}
+                        rateStatus={rateStatus}
+                        info={item}
+                        showActions={curItemActionsId === item.tid}
+                        onClick={this.handleClickItem.bind(this, item)}
+                        onClickBtn={this.handleClickItemBtn.bind(this, item)}
+                        onActionBtnClick={this.handleActionBtnClick.bind(this, item)}
+                        onActionClick={this.handleActionClick.bind(this, item)}
+                      />
+                  )
               })
+            }
+            {
+              tabList[curTabIdx].status === '7'&&
+                list.map((item) => {
+                  return (
+                    <View className='vip-order-container'>
+                      <View className='vip-order-header'>
+                        <View className='vip-order-header-time'>{item.created}</View>
+                        <View className= 'vip-order-header-id'>订单号:{item.order_id}</View>
+                      </View>
+                      <View className='vip-order-body'>
+                        <View className='vip-order-body-type'>会员卡:{item.title}</View>
+                        <View className='vip-order-body-gift'>礼包:{item.gift}</View>
+                      </View>
+                      <View className='vip-order-bottom'>
+                        <View className='vip-order-bottom-user'>用户:{item.username}</View>
+                        <View className='vip-order-bottom-phone'>电话:{item.telephone}</View>
+                        <View className='vip-order-bottom-address'>地址:{item.address}</View>
+                      </View>
+                    </View>
+                    )
+                })
             }
             {
               page.isLoading && <Loading>正在加载...</Loading>

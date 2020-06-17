@@ -1,5 +1,11 @@
 import req from './req'
 
+export function getCardList(params) {
+  return req.get('/goods/cardlists',params)
+}
+export function checkCode(params) {
+  return req.get('/goods/getcard',params)
+}
 export function search (params = {}) {
   // return req.get('/item.search', params)
   return req.get('/goods/items', params)

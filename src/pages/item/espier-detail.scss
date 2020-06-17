@@ -168,6 +168,9 @@
 }
 
 .goods-timer {
+  position: absolute;
+  top:616px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -175,7 +178,7 @@
   background: $color-theme;
   padding: 0 $edge-size;
   border-radius:25px 25px 0 0 ;
-  height: 135px;
+  height: 134px;
 .price{
   color:white;
   .price__symbol{
@@ -352,7 +355,7 @@
   }
   .goods-share {
     &__wrap {
-      background-color: #f7f9fb;
+      background-color: $color-theme;
       position: relative;
       right: -30px;
       padding-left: 30px;
@@ -364,11 +367,11 @@
       line-height: 48px;
       .icon-zhuanfa {
         font-size: 23px;
-        color: #5a5c5c;
+        color: white;
       }
       .share-label {
         font-size: 23px;
-        color: #5a5c5c;
+        color:white;
         margin-left: 10px;
         margin-right: 10px;
       }

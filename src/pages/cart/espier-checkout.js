@@ -53,6 +53,8 @@ export default class CartCheckout extends Component {
     super(props)
 
     this.state = {
+      is_exchange:false,
+      scanCode:null,
       info: null,
       submitLoading: false,
       address_list: [],
@@ -94,7 +96,10 @@ export default class CartCheckout extends Component {
 
   componentDidMount () {
     // this.fetchAddress()
-    const { cart_type, pay_type: payType, shop_id } = this.$router.params
+    const { cart_type, pay_type: payType, shop_id,source } = this.$router.params
+    if(source === 'exchange'){
+      this.setState({is_exchange:true})
+    }
     let curStore = null, info = null
 
     if (cart_type === 'fastbuy') {
@@ -528,6 +533,9 @@ export default class CartCheckout extends Component {
         return S.toast('请选择地址')
       }
     }
+    if(this.state.is_exchange && !this.state.scanCode){
+      return S.toast('请扫码')
+    }
     if (submitLoading) {
       return false
     }
@@ -556,10 +564,40 @@ export default class CartCheckout extends Component {
     // },()=>{
     //   _this.handlePay()
     // })
-    _this.handlePay()
+    if(this.state.is_exchange){
+      _this.handleExchange()
+    }else{
+      _this.handlePay()
+    }
   }
 
-
+handleExchange = async () => {
+   const res = await api.item.checkCode({code:this.state.scanCode})
+   if(res.status != 0){
+     if(res.status == 2){
+       Taro.showToast({
+         title:'兑换码不存在',
+         icon:'none',
+         duration:1500
+       })
+       this.setState({
+         submitLoading:false
+       })
+     }
+     if(res.status == 1){
+       Taro.showToast({
+         title:'兑换码已使用',
+         icon:'none',
+         duration:1500
+       })
+       this.setState({
+         submitLoading:false
+       })
+     }
+   }else{
+     this.handlePay()
+   }
+}
   handlePay = async () => {
     // if (!this.state.address) {
     //   return S.toast('请选择地址')
@@ -610,6 +648,9 @@ export default class CartCheckout extends Component {
         delete params.invoice_type
         delete params.invoice_content
       }
+      if(this.state.is_exchange){
+        params = {...params,pay_type:'card',card_exchange_pwd299:this.state.scanCode}
+      }
       config = await api.trade.create({...params,come_from:distributionShopId})
       order_id = isDrug ? config.order_id : config.trade_info.order_id
     } catch (e) {
@@ -627,8 +668,13 @@ export default class CartCheckout extends Component {
         })
       }
     }
-
     Taro.hideLoading()
+   if(this.state.is_exchange){
+     Taro.redirectTo({
+       url: `/pages/trade/detail?id=${order_id}`
+     })
+     return
+   }
     if (!order_id) return
 
     if (isDrug) {
@@ -673,7 +719,8 @@ export default class CartCheckout extends Component {
     } catch (e) {
       payErr = e
       Taro.showToast({
-        title: e.err_desc || e.errMsg || '支付失败',
+        // title: e.err_desc || e.errMsg || '支付失败',
+        title: '支付失败',
         icon: 'none'
       })
     }
@@ -718,6 +765,10 @@ export default class CartCheckout extends Component {
   }
 
   handleCouponsClick = () => {
+    if(this.state.is_exchange){
+      this.handleToast();
+      return
+    }
     console.log(this.params.order_type, 630)
     if (this.state.payType === 'point'){
       return
@@ -781,6 +832,31 @@ confirmCodeInput =() => {
     this.handlePay()
   })
 }
+
+handleScanCode(){
+  Taro.scanCode({
+    success:(res)=>{
+      console.log('扫码成功')
+     Taro.showToast({
+       title:'扫码成功',
+       icon:"success",
+       duration:1500
+     })
+      setTimeout(() => {
+        this.setState({
+          scanCode:res.result
+        })
+      },1500)
+    }
+  })
+}
+handleToast=()=>{
+    Taro.showToast({
+      title:'兑换礼品卡暂不可用',
+      icon:'none',
+      duration:1500
+    })
+}
   render () {
     // 支付方式文字
     const payTypeText = {
@@ -789,7 +865,7 @@ confirmCodeInput =() => {
       balance: '余额支付'
     }
     const { coupon, colors } = this.props
-    const { info, express, address, total, showAddressPicker, showCheckoutItems, curCheckoutItems, payType, invoiceTitle, submitLoading, disabledPayment, isPaymentOpend, isDrugInfoOpend, drug } = this.state
+    const { info, express, address, total, showAddressPicker, showCheckoutItems, curCheckoutItems, payType, invoiceTitle, submitLoading, disabledPayment, isPaymentOpend, isDrugInfoOpend, drug,is_exchange } = this.state
     const curStore = Taro.getStorageSync('curStore')
     const { type } = this.$router.params
     const isDrug = type === 'drug'
@@ -978,14 +1054,25 @@ confirmCodeInput =() => {
           >
           </SpCell>*/}
             <View className='trade-payment'>
-              <SpCell
-                isLink
-                border={false}
-                title='支付方式'
-                onClick={this.handlePaymentShow}
-              >
-                <Text>{payTypeText[payType]}</Text>
-              </SpCell>
+              {
+                this.state.is_exchange?
+                  <SpCell
+                    isLink
+                    border={false}
+                    title='支付方式'
+                    onClick={this.handleScanCode.bind(this)}
+                  >
+                    <Text>点击扫码</Text>
+                  </SpCell>:
+                  <SpCell
+                    isLink
+                    border={false}
+                    title='支付方式'
+                    onClick={this.handlePaymentShow}
+                  >
+                    <Text>{payTypeText[payType]}</Text>
+                  </SpCell>
+              }
               {total.deduction && (
                 <View className='trade-payment__hint'>
                   可用{total.remainpt}积分，抵扣 <Price unit='cent' value={total.deduction} /> (包含运费 <Price unit='cent' value={total.freight_fee}></Price>)
@@ -1063,11 +1150,11 @@ confirmCodeInput =() => {
                 </SpCell>
                 <SpCell
                   className='trade-sub-total__item'
-                  title='运费'
+                  title={`运费${is_exchange?'差价':''}`}
                 >
                   <Price
                     unit='cent'
-                    value={total.freight_fee}
+                    value={is_exchange?total.item_fee-29900:total.freight_fee}
                     choiceColor={false}
                   />
                 </SpCell>
@@ -1117,12 +1204,19 @@ confirmCodeInput =() => {
 
           <View className='toolbar checkout-toolbar'>
             <View className='checkout__total'>
-              {/*共<Text className='total-items'>{total.items_count}</Text>件商品　总计:*/}
-              需支付 :
               {
-                payType !== 'point'
-                  ? <Price primary unit='cent' value={total.total_fee} choiceColor={true} />
-                  : (total.point && <Price primary value={total.point} noSymbol noDecimal appendText='积分' />)
+                is_exchange?
+                  <View>
+                    只能兑换299超出的需补运费差价
+                  </View>:
+                  <View>
+                    需支付 :
+                    {
+                      payType !== 'point'
+                        ? <Price primary unit='cent' value={total.total_fee} choiceColor={true} />
+                        : (total.point && <Price primary value={total.point} noSymbol noDecimal appendText='积分' />)
+                    }
+                  </View>
               }
             </View>
             <AtButton
@@ -1132,7 +1226,7 @@ confirmCodeInput =() => {
               loading={submitLoading}
               disabled={isBtnDisabled}
               onClick={this.submitPay}
-            >{isDrug ? '提交预约' : '去支付'}</AtButton>
+            >{isDrug ? '提交预约' :is_exchange?'去兑换': '去支付'}</AtButton>
           </View>
 
           {

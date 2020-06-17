@@ -70,30 +70,22 @@ export default class Detail extends Component {
       evaluationTotal: 0,
       showCodeInput:false,
       cardValue:'',
-      top:0
+      top:0,
+      is_exchange:false
     }
   }
 
   async componentDidMount () {
-    let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
-    Taro.getSystemInfo({
-      success: res => {
-        let statusBarHeight = res.statusBarHeight;
-        let navTop = menuButtonObject.top;
-        let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
-        this.navHeight = Height;
-        this.navTop = navTop;
-        this.windowHeight = res.windowHeight;
-        this.setState({
-          top:(this.navHeight - statusBarHeight)/2 + statusBarHeight
-        })
-
-      },
-      fail(err) {
-        console.log(err);
-      }
+    const top = Taro.getStorageSync('top')
+    this.setState({
+      top:top
     })
     const options = this.$router.params
+    if(options.source === 'exchange'){ // 来源于兑换
+      this.setState({
+        is_exchange:true
+      })
+    }
     const { store, uid, id, gid = '' } = await entry.entryLaunch(options, true)
     console.log({store,uid,id,gid})
     if (store) {
@@ -775,9 +767,9 @@ export default class Detail extends Component {
       likeList,
       page,
       evaluationTotal,
-      evaluationList
+      evaluationList,
+      type
     } = this.state
-
     const { showLikeList, colors } = this.props
 
     const uid = this.uid
@@ -1226,8 +1218,16 @@ export default class Detail extends Component {
           </FloatMenus>
 
           {(info.distributor_sale_status && hasStock && startActivity)
-            ?
-            (<GoodsBuyToolbar
+            ?this.state.is_exchange?
+                (<GoodsBuyToolbar
+                  info={info}
+                  type='exchange'
+                  cartCount={cartCount}
+                  onFavItem={this.handleMenuClick.bind(this, 'fav')}
+                  onClickFastBuy={this.handleJudge.bind(this, 'fastbuy')}
+                >
+                </GoodsBuyToolbar>)
+            :(<GoodsBuyToolbar
               info={info}
               type={marketing}
               cartCount={cartCount}
@@ -1261,10 +1261,11 @@ export default class Detail extends Component {
           {
             info && <GoodsBuyPanel
               info={info}
+              isexchange={this.state.is_exchange}
               type={buyPanelType}
               isOpened={showBuyPanel}
               onClose={() => this.setState({ showBuyPanel: false })}
-              fastBuyText={marketing === 'group' ? '我要开团' : '立即购买'}
+              fastBuyText={marketing === 'group' ? '我要开团':this.state.is_exchange?'立即兑换' : '立即购买'}
               onChange={this.handleSkuChange}
               onAddCart={this.handleBuyAction.bind(this, 'cart')}
               onFastbuy={this.handleBuyAction.bind(this, 'fastbuy')}

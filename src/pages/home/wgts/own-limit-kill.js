@@ -12,7 +12,7 @@ export default class WgtLimitKill extends Component{
     addGlobalClass:true
   }
   static defaultProps={
-    info: {list:[{name: '',base:{},config:{start_date:'',end_date:''},data:[]}],name:''}
+    info: {list:[{name: '',base:{},config:{start_date:'---',end_date:'---'},data:[]}],name:''}
   }
   constructor(props) {
     super(props);
@@ -23,6 +23,7 @@ export default class WgtLimitKill extends Component{
       showTriangle:true,
       iconUp:false,
       timer:[],
+      remind:false
     }
   }
    componentDidMount() {
@@ -81,16 +82,44 @@ export default class WgtLimitKill extends Component{
        showTriangle:false
      })
   }
-  handleBuy =(index,goodsIndex)=> {
-    if(this.props.info.list[index].config.lastSeconds === 0 ||this.props.info.list[index].config.status === 'notice'){
-      Taro.showToast({
-        title:`很抱歉，${this.props.info.list[index].config.status === 'ended'?'已经结束':'还未开始'}`,
-        icon:'none',
-        duration:1500,
-        complete:() => {
-          setTimeout(() => {Taro.hideToast()},3000)
-        }
-      })
+  handleBuy =async (index,goodsIndex)=> {
+    if(this.props.info.list[index].config.lastSeconds === 0 ||this.props.info.list[index].config.status === 'in_the_notice'){
+      if(this.props.info.list[index].config.status === 'in_the_notice'){
+        if(this.props.info.list[index].data[goodsIndex].is_remind == '1')return
+          let option = {
+            productId:this.props.info.list[index].data[goodsIndex].goodsId,
+            seckillTime:this.props.info.list[index].config.lastSeconds,
+            seckillId:this.props.info.list[index].config.seckillId
+          }
+          let err;
+          try {
+            await api.member.remind(option)
+          }catch (e) {
+            err = e
+          }
+          if(err){
+            Taro.showToast({
+              title:`${err.message}`,
+              icon:'none',
+              duration:1500
+            })
+          }else{
+            Taro.showToast({
+              title:'提醒成功',
+              icon:'success',
+              duration:1500
+            })
+            this.setState({
+              remind:true
+            })
+          }
+      }else{
+        Taro.showToast({
+          title:'抱歉，活动已经结束',
+          icon:'none',
+          duration:1500
+        })
+      }
     }else{
       let id = this.props.info.list[index].data[goodsIndex].goodsId
       Taro.navigateTo({
@@ -99,13 +128,12 @@ export default class WgtLimitKill extends Component{
     }
 }
 refresh() {
-    this.props.Refresh()
+    this.props.refresh()
 }
   render() {
     const {list} = this.props.info
     const {Dec,index,showTriangle,iconUp,poi,allList} = this.state
     const config = this.props.info.list[index].config
-    // const timer = calcTimer(config.lastSeconds)
     return(
       <View className='limit-container'>
         <View className='wgt__header'>
@@ -163,7 +191,7 @@ refresh() {
                     hours={calcTimer(list[index].config.lastSeconds).hh}
                     minutes={calcTimer(list[index].config.lastSeconds).mm}
                     seconds={calcTimer(list[index].config.lastSeconds).ss}
-                    onTimeUp={this.refresh}
+                    onTimeUp={this.refresh.bind(this)}
                   />
                 </View>:
                 <View>
@@ -175,7 +203,7 @@ refresh() {
                     hours={calcTimer(list[index].config.lastSeconds).hh}
                     minutes={calcTimer(list[index].config.lastSeconds).mm}
                     seconds={calcTimer(list[index].config.lastSeconds).ss}
-                    onTimeUp={this.refresh}
+                    onTimeUp={this.refresh.bind(this)}
                   />
                 </View>
           }
@@ -189,8 +217,8 @@ refresh() {
                     {
                       item1.data.map((goodsItem,goodsIndex) => {
                         return(
-                          <View className={`limit-goods-detail-${goodsIndex === 0?'main':'other'}`} onClick={this.handleBuy.bind(this,index1,goodsIndex)} style={{display:`${(this.state.more||goodsIndex === 0)?'block':'none'}`}}>
-                            <View className='detail-img'>
+                          <View className={`limit-goods-detail-${goodsIndex === 0?'main':'other'}`}  style={{display:`${(this.state.more||goodsIndex === 0)?'block':'none'}`}}>
+                            <View className='detail-img' onClick={item1.config.status === 'in_sale'?this.handleBuy.bind(this,index1,goodsIndex,item1.config.status):() =>{}}>
                               <Image src={goodsItem.imgUrl}/>
                               <View className='other-img'>
                                 <View className='goods-dec'>
@@ -208,7 +236,7 @@ refresh() {
                                   <View className='goods-sell-dec-price-contain'>
                                     <Text className="price">￥<Text className="price-inner">{(goodsItem.act_price/100).toFixed(2)}</Text></Text>
                                     <Text className='market-price' >￥{(goodsItem.price/100).toFixed(2)}</Text>
-                                    <Text className='speed-buy'>立即购买</Text>
+                                    <Text className='speed-buy' onClick={this.handleBuy.bind(this,index1,goodsIndex,item1.config.status)}>{item1.config.status === 'ended'?'已结束':item1.config.status === 'in_sale'?'立即购买':goodsItem.is_remind == '1'?'已提醒':this.state.remind?'已提醒':'开抢提醒'}</Text>
                                   </View>
                                 </View>
                               </View>

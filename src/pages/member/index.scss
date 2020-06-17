@@ -1,516 +1,279 @@
 @import "../../style/imports";
 
+page{
+  background: white;
+}
 .member__scroll{
   @include page-scroll($nav-gap-height)
 }
-.page-member-header-false{
-  width: 100%;
-  height: 340px;
-  padding-top: 70px;
-  background: $color-theme;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .icon-container{
-    width: 104px;
-    height: 104px;
-    border-radius: 52px;
-    background: white;
-    text-align: center;
-    line-height: 104px;
-    margin-bottom: 15px;
-    .icon-weidenglu{
-      font-size: 70px;
-      color:grey;
-    }
-  }
-  .login{
-    height: 40px;
-    border-radius: 20px;
-    padding:  0 20px;
-    line-height: 40px;
-    background: white;
+.member-body{
+  padding: 0 40px;
+}
+.member-feature{
+  &-dec{
     font-size: 24px;
-    color: $color-theme;
-  }
-}
-
-.page-member-index {
-  .icon-daipingjia:before {
-    content: "\e607";
-  }
-  .page-member-header {
-    height: 340px;
-    padding: 40px 60px 40px 60px;
-    margin-bottom: 30px;
-    color: #fff;
-    &.no-card {
-      padding-bottom: 30px;
-    }
-  }
-  .page-member-section {
-    width: 92vw;
-    margin: 25px auto 25px auto;
-    background: #fff;
-    overflow: hidden;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  }
-}
-.user-info {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding-bottom: 30px;
-  .avatar {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin-right: 30px;
-    z-index: 1;
-    .icon-planet {
-      width: 100%;
-      height: 100%;
-      line-height: 120px;
-      text-align: center;
-      font-size: 80px;
-    }
-    .icon-vip {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      bottom: -10px;
-      right: -10px;
-    }
-    .avatar-img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-    }
-  }
-  .nickname {
-    position: relative;
-    z-index: 1;
-    font-size: 30px;
-    margin-bottom: 6px;
-  }
-  .gradename {
-    display: inline-block;
-    position: relative;
-    padding: 0 20px;
-    z-index: 1;
-    font-size: 22px;
-    text-align: center;
-    color: #fff;
-    background: linear-gradient(to right bottom, #fca280, #e75fa9);
-    border-radius: 50px;
-  }
-  .icon-erweima {
-    margin-right: 20px;
-    font-size: 45px;
-  }
-  .icon-setting-copy {
-    margin-left: 10px;
-    font-size: 40px;
-    color: #fff;
-  }
-}
-
-.avatar-placeholder {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  font-size: 50px;
-  color: #999;
-  background: #fff;
-  overflow: hidden;
-  &::before, &::after {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    background: $color-brand-accent-light;
-    content: "";
-  }
-  &::before {
-    top: 24px;
-    width: 40px;
-    height: 40px;
-  }
-  &::after {
-    top: 68px;
-    width: 100px;
-    height: 100px;
-  }
-}
-
-.unlogin {
-  padding: 0 20px;
-  height: 48px;
-  line-height: 48px;
-  margin-left: 10px;
-  border-radius: 48px;
-  color: #FFFFFF;
-  font-size: 24px;
-}
-
-.member-assets {
-  text-align: center;
-  .member-assets__label {
-    margin-bottom: 10px;
-    font-size: 24px;
-    opacity: 0.7;
-  }
-  .member-assets__value {
-    font-size: 36px;
-  }
-}
-
-.member-card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto 20px auto;
-  width: 92vw;
-  height: 24vw;
-  z-index: 1;
-  overflow: hidden;
-  border-radius: 16px 16px 0 0;
-  .normal-vip{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    color: #f4d09e;
-    font-size: 34px;
-    z-index: 30;
-  }
-  .member-info-bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    &::after {
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.6);
-      content: "";
-      z-index: 10;
-    }
-  }
-  .vip-btn {
-    position: relative;
-    color: #f4d09e;
-    z-index: 20;
-    text-align: center;
-    .icon-chakan{
-    font-size: 28px;
-  }
-    &__title {
-      font-size: 28px;
-    }
-    &__desc {
-      font-size: 24px;
-    }
-  }
-  .grade-info {
-    position: relative;
-    padding: 0 40px;
-    width: 100%;
-    color: #e8bd7f;
-    z-index: 30;
-    text-align: left;
-    .VIP-detail{
-      position: absolute;
-      height: 40px;
-      line-height: 40px;
-      background: white;
-      border-radius: 20px;
-      padding: 0 25px;
-      right:80px;
-      bottom: 0;
-    }
-    .member-card-no {
-      padding-top: 20px;
-      font-size: 22px;
-      letter-spacing: 1px;
-    }
-    .member-card-period {
-      font-size: 20px;
-      color: #ccc;
-    }
-    .renewals-btn {
-      margin-left: 20px;
-      padding: 0 30px;
-      border: 1px solid #e8bd7f;
-      border-radius: 60px;
-      font-size: 24px;
-      line-height: 50px;
-    }
-    .member-card-title {
-      font-size: 30px;
-      color: #fcdda5;
-    }
-    .vip-sign {
-      display: inline-block;
-      padding: 0 10px;
-      margin-right: 10px;
-      font-size: 22px;
-      border: 1px solid #e8bd7f;
-    }
-  }
-}
-
-.member-qrcode {
-  padding-left: 20px;
-  font-size: 28px;
-  color: #555;
-  [class^="icon-"] {
-    font-size: 32px;
-  }
-}
-
-.member {
-  &-box {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    padding: 30px 0;
-    &.identity {
-      padding: 0 60px;
-      .member-info {
-        width: 115px;
-        height: 115px;
-        margin-bottom: 0;
-        margin-right: 30px;
-      }
-      .name {
-        font-size: 36px;
-        margin-bottom: 10px;
-      }
-      .amount {
-        font-size: 26px;
-      }
-    }
-  }
-  &-info {
-    display: flex;
-    align-items: center;
-    width: 85vw;
-    height: 45vw;
-    position: relative;
-    padding: 0 40px;
-    z-index: 1;
-    background: #a2564c;
-    color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    &::after {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: rgba(0,0,0,0.4);
-      border-radius: 20px;
-      content: ""
-    }
-    .member-info-bg {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      border-radius: 20px;
-    }
-  }
-}
-.member {
-  &__scroll {
-    @include page-scroll($nav-gap-height, $tabbar-height);
-  }
-}
-.important-box {
-  position: relative;
-  padding: 30px;
-  margin: 0 30px;
-  .view-flex-item {
-    color: #666;
-  }
-  .icon-img {
-    width: 80px;
-    height: 80px;
-  }
-}
-.order-box {
-  .iconfont{
-    font-size: 60px;
-  }
-  .icon-ziti {
-    margin-right: 10px;
-    font-size: 60px;
-    color: #999;
-  }
-  .member-trade__ziti {
-    display: flex;
-    align-items: center;
-    padding: 20px 30px;
-    margin: 10px;
-    background: #f8f8f8;
-    border: 1px solid #efefef;
-    .member-trade__ziti-title {
-      font-size: 28px;
-    }
-    .member-trade__ziti-desc {
-      font-size: 24px;
-      color: #666;
-    }
-  }
-  .member-trade {
-    display: flex;
-    padding:0 20px 30px 20px;
-    font-size: 26px;
-    .member-trade__item {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      font-size: 24px;
-      color: #333;
-    }
-    [class^="icon-"] {
-      position: relative;
-      font-size: 56px;
-      margin-bottom: 10px;
-      color: #666;
-    }
-    .trade-num {
-      position: absolute;
-      top: -10px;
-      right: -15px;
-      display:inline-block;
-      padding: 4px 10px;
-      box-sizing: content-box;
-      min-width: 16px;
-      border-radius: 24px;
-      background-color:$color-theme;
-      color:#fff;
-      line-height: 1.2;
-      text-align:center;
-      font-size: 24px;
-      vertical-align:middle;
-      font-family: Arial;
-    }
-  }
-}
-.address-box {
-  padding: 30px 20px;
-  image {
-    width: 28px;
-    height: 28px;
-    vertical-align: middle;
-    margin-left: 5px;
-  }
-}
-.gray {
-  color: #999;
-}
-.btn-share {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0;
-  margin: 0;
-  text-align: inherit;
-  background: transparent;
-  line-height: inherit;
-  &::after {
-    content: none;
-  }
-}
-
-.card-img{
-	width:45px;
-	height:45px;
-}
-
-.contact-ta{
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  text,image{
-    display: none;
-  }
-  view{
-    width: 100%;
-  }
-  button{
-    background: transparent;
-    color: #000;
-    width: 100%;
+    color:#2f2f2f;
+    font-weight: bold;
     height: 60px;
     line-height: 60px;
-    font-size: 28px;
-    padding: 0px;
-    opacity: 0;
-    z-index: 100;
+    border-bottom:solid 2px #eeeeee;
+    Text{
+      margin-left: 20px;
+    }
+  }
+  &-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    &-item{
+      width: 25%;
+      flex: none;
+      Button{
+        background: white;
+        width: 100%;
+        height: 100%;
+        line-height: 1.4;
+        color:#2f2f2f
+      }
+      Button:after{
+        border: none;
+      }
+      &-button,&-click{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 25px;
+        padding: 30px 0;
+        line-height: 1.4;
+        Text{
+          margin-top: 36px;
+        }
+      }
+      Image{
+        width: 48px;
+        height: 48px;
+      }
+    }
   }
 }
-.icon-chakan{
-  font-size: 24px;
-}
-.section-more{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.vip-show{
-  display: flex;
-  width: 84vw;
-  margin: 20px auto 0;
-  height: 75px;
-  flex-direction: row;
-  align-items: center;
-  border-radius: 15px 15px 0 0 ;
-  background: $button-back-black;
-  opacity: 0.9;
-  &-feature{
-    margin-left: auto;
+
+.member-order{
+  margin-top: 20px;
+  &-dec{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     font-size: 24px;
-    color:$button-back-black;
-    margin-right: 15px;
-    padding: 0 30px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 20px;
-    background: white;
+    color:#2f2f2f;
+    font-weight: bold;
+    height: 60px;
+    line-height: 60px;
+    border-bottom:solid 2px #eeeeee;
+    Text{
+      margin-left: 20px;
+    }
+    Icon{
+      font-size: 28px;
+      color:#5f5e5e;
+      margin-right: 20px;
+    }
   }
-  &-title{
-    font-size: 24px;
-    color:white;
-    margin-left: 15px;
+  &-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    padding: 30px 0;
+    &-item{
+      width: 25%;
+      flex: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      .trade-num{
+        position: absolute;
+        top:0;
+        font-size: 18px;
+        text-align: center;
+        line-height: 24px;
+        right: 18px;
+        width: 24px;
+        height: 24px;
+        border-radius: 12px;
+        background: $color-theme;
+        color:white
+      }
+      Icon{
+        font-size: 70px;
+      }
+      Text{
+        font-size: 26px;
+        margin-top: 10px;
+      }
+    }
   }
 }
-.tip-text{
+.member-header{
+  background: $color-theme;
+  padding: 25px 25px 0;
+  color:white;
+  &-vip{
+    background: #413c36;
+    border-radius:12px 12px 0 0;
+    padding: 0 15px;
+    .gold{
+      color:#FEDEA0;
+    }
+    &-dec,&-dec-small{
+      display:flex;
+      flex-direction: row;
+      align-items: center;
+      .feature{
+        margin-left: auto;
+      }
+    }
+    &-dec{
+      position: relative;
+      top:8px
+    }
+    &-dec-small{
+      font-size: 20px;
+    }
+    .icon-huiyuan{
+      font-size: 25px;
+      height: 30px;
+      width: 30px;
+      line-height: 30px;
+      color:#FEDEA0;
+      margin-right: 5px;
+    }
+    .icon-chakan{
+      font-size: 30px;
+      color:white;
+      margin-left: 5px;
+    }
+  }
+  &-user{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-end;
+    position: relative;
+    :after{
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      clear: both;
+    }
+    &-logo{
+      margin-right: auto;
+     Image{
+       width: 81px;
+     }
+    }
+    &-info{
+      align-self: center;
+      text-align: center;
+      &-login{
+        position: absolute;
+        top:40px;
+        left:50%;
+        transform: translate(-50%,0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .user-name{
+          margin-top: 15px;
+        }
+        .user-inviter{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          font-size: 24px;
+          margin-top: 15px;
+          Text{
+            height: 38px;
+            line-height: 38px;
+            border-radius: 19px;
+            padding: 0 10px;
+            background:#413c36 ;
+            color:#FEDEA0;
+            margin-right: 10px;
+          }
+        }
+        .avatar-img{
+          width: 120px;
+          height: 120px;
+          border-radius: 60px;
+        }
+      }
+      &-unlogin{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+       .login{
+         height: 40px;
+         font-size: 24px;
+         line-height: 40px;
+         background: white;
+         border-radius: 15px;
+         padding: 0 15px;
+         color:$color-theme;
+         margin-top: 15px;
+       }
+      }
+    }
+    &-setting,&-code{
+      height: 45px;
+      line-height: 45px;
+      font-size: 24px;
+      border-radius: 22.5px;
+      padding: 0 20px;
+      margin-left: 20px;
+      background: #c17D7a;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .iconfont{
+        font-size: 26px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+      }
+    }
+    &-info{
+      &-login{
+
+      }
+      &-unlogin{
+        .icon-container{
+          width: 120px;
+          height: 120px;
+          border-radius: 60px;
+          background: white;
+          text-align: center;
+          line-height: 120px;
+          .iconfont{
+            font-size: 70px;
+            color:grey;
+          }
+        }
+      }
+    }
+  }
+}
+.view-flex{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  margin: 30px 0;
+  &-item{
+    width: 25%;
+    text-align: center;
+    .member-assets__value{
+      margin-bottom: 15px;
+      font-size: 35px;
+      font-weight: bold;
+    }
+  }
 }

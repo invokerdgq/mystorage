@@ -1,5 +1,8 @@
 @import "../../style/imports";
 
+.icon-arrow-left{
+  transform: translate(0,-50%);
+}
 .page-index {
   background: #fff;
   height: 100%;
@@ -195,5 +198,5 @@
 
 .at-noticebar {
   background: inherit !important;
-  color: inherit !important; 
+  color: inherit !important;
 }

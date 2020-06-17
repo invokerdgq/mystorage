@@ -17,7 +17,18 @@ Taro.M = function (option,identifier='') {
   console.log(option)
   console.log(identifier)
 }
+let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
+Taro.getSystemInfo({
+  success: res => {
+    let statusBarHeight = res.statusBarHeight;
+    let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
+    Taro.setStorageSync('top',(Height - statusBarHeight)/2 + statusBarHeight)
 
+  },
+  fail(err) {
+    console.log(err);
+  }
+})
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
@@ -224,7 +235,8 @@ useHooks()
           root: 'others',
           pages: [
             'pages/home/license',
-            'pages/protocol/privacy'
+            'pages/protocol/privacy',
+            'pages/exchange/exchange'
           ]
         }
       ],

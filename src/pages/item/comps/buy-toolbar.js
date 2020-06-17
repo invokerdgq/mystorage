@@ -48,7 +48,7 @@ export default class GoodsBuyToolbar extends Component {
     const fastBuyText = (type === 'normal' || type === 'limited_time_sale')
       ? '立即购买'
       : (type === 'seckill')
-        ? '立即抢购' : '我要开团'
+        ? '立即抢购' : (type === 'exchange')?'立即兑换':'我要开团'
 
     return (
       <View className='goods-buy-toolbar'>

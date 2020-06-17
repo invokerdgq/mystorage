@@ -129,7 +129,7 @@ export default class WgtGoodsGrid extends Component {
           <View className="goods-more-container">
             <View className={"goods-more-content"} onClick={this.moreGoods.bind(this)}>
               <Text className="goods-more-des1">{this.state.showShort?'更多商品':'收起'}</Text>
-              <Icon className={`iconfont ${!this.state.showShort?'icon-arrow-up':'icon-arrow-down'}`}/>
+              <View className={`iconfont ${!this.state.showShort?'icon-arrow-up':'icon-arrow-down'}`}/>
             </View>
           </View>
         }

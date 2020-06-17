@@ -1,7 +1,7 @@
 import Taro, { PureComponent } from '@tarojs/taro'
 import { View,Image } from '@tarojs/components'
 import {WgtLimitKill ,FeautreSelect, WgtSearchHome, WgtFilm, WgtMarquees, WgtSlider, WgtImgHotZone, WgtNavigation, WgtCoupon, WgtGoodsScroll, WgtGoodsGrid, WgtShowcase, HotArea } from '../wgts'
-
+import S from '@/spx'
 
 export default class HomeWgts extends PureComponent {
   state = {
@@ -19,8 +19,6 @@ export default class HomeWgts extends PureComponent {
     super(props);
   }
   componentDidMount () {
-    console.log('kkkkkkkk')
-    console.log(this.props.wgts)
     Taro.getSystemInfo()
       .then(res =>{
         this.setState({
@@ -28,14 +26,27 @@ export default class HomeWgts extends PureComponent {
         })
       })
   }
-  Refresh(){
-    this.props.Refresh()
+  refresh(){
+    this.props.refresh()
+  }
+
+  handleEntry =() => {
+    if(S.getAuthToken()){
+       Taro.navigateTo({
+         url:'/others/pages/exchange/exchange'
+       })
+    }else{
+      S.toast('请先登录')
+      setTimeout(() => {
+        Taro.navigateTo({
+          url:'/pages/member/index'
+        })
+      },2000)
+    }
   }
 
   render () {
     const  wgts  = this.props.wgts
-    console.log('yyyyyyyyyy')
-    console.log(wgts)
     const { screenWidth } = this.state
     return (
       <View>
@@ -43,14 +54,17 @@ export default class HomeWgts extends PureComponent {
           wgts.map((item, idx) => {
             return (
               <View className='wgt-wrap' key={idx}>
-                {item.name === 'limit-kill'&& <WgtLimitKill info={item} Refresh={this.Refresh}/>}
+                {item.name === 'limit-kill'&& <WgtLimitKill info={item} refresh={this.refresh.bind(this)}/>}
                 {item.name === 'search' && <WgtSearchHome info={item} />}
                 {item.name === 'film' && <WgtFilm info={item} />}
                 {item.name === 'marquees' && <WgtMarquees info={item} />}
                 {item.name === 'slider' &&
                   <View>
                     <WgtSlider isHomeSearch info={item} width={screenWidth} />
+                    {
+                      idx === 1 &&
                       <FeautreSelect/>
+                    }
                   </View>
                 }
                 {item.name === 'navigation' && <WgtNavigation info={item} />}

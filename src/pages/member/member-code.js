@@ -135,7 +135,7 @@ export default class MemberCode extends Component {
           </View>
           <View className='feature'>
             <Button onClick={this.handleSave} className='code-save'><Image src='../../assets/imgs/friend.jpg'/></Button>
-            <Button openType='share' className='code-share'><Image src='../../assets/imgs/share.jpg'/></Button>
+            <Button openType='share' className='code-share'><Image src='../../assets/imgs/share.png'/></Button>
             <Button onClick={this.handleCopy.bind(this)} className='code-copy'><Image src='../../assets/imgs/copy.jpg'/></Button>
           </View>
         </View>
