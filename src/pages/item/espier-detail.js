@@ -103,7 +103,7 @@ export default class Detail extends Component {
         } else {
           itemId = this.$router.params.id
         }
-        api.member.itemHistorySave(id)
+        api.member.itemHistorySave(itemId)
       } catch (e) {
         console.log(e)
       }
@@ -209,9 +209,9 @@ export default class Detail extends Component {
       }
     }
 
-    Taro.setNavigationBarTitle({
-      title: info.item_name             // 设置 导航标题
-    })
+    // Taro.setNavigationBarTitle({
+    //   title: info.item_name             // 设置 导航标题
+    // })
 
     if (marketing === 'group' || marketing === 'seckill' || marketing === 'limited_time_sale') {
       const { colors } = this.props
@@ -230,7 +230,8 @@ export default class Detail extends Component {
       label: 'attribute_name',
       value: 'attribute_value_name'
     })
-    itemParams = itemParams.slice(0,5)
+    itemParams=Array.isArray(itemParams)?itemParams.slice(0,5):itemParams
+    // itemParams = itemParams.slice(0,5)
 
     info.is_fav = Boolean(this.props.favs[info.item_id])
     const specImgsDict = this.resolveSpecImgs(info.item_spec_desc)  // 处理图片形式的 规格
@@ -501,14 +502,13 @@ export default class Detail extends Component {
     const host = req.baseURL.replace('/api/h5app/wxapp/','')
     const extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {}
     const { distributor_id } = Taro.getStorageSync('curStore')
-    const pic = pics[0].replace('http:', 'https:')
+    const pic = pics[2].replace('http:', 'https:')
 
-    const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=${`pages/item/espier-detail`}&appid=${extConfig.appid}&company_id=${company_id}&id=${item_id}&dtid=${distributor_id}&uid=${userId}`
+    const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=pages/item/espier-detail&appid=${extConfig.appid}&company_id=${company_id}&id=${item_id}&dtid=${distributor_id}&uid=${userId}`
 
     const avatarImg = await Taro.getImageInfo({src: avatar})
     const goodsImg = await Taro.getImageInfo({src: pic})
     const codeImg = await Taro.getImageInfo({src: wxappCode})
-    console.log('jjj')
     if (avatarImg && goodsImg && codeImg) {
       const posterImgs = {
         avatar: avatarImg.path,
@@ -571,14 +571,15 @@ export default class Detail extends Component {
     const ctx = Taro.createCanvasContext('myCanvas')
 
     canvasExp.roundRect(ctx, '#fff', 0, 0, 375, 640, 5)
-    canvasExp.textFill(ctx, username, 90, 45, 18, '#333')
+    canvasExp.textFill(ctx, username?username:'-', 90, 45, 18, '#333')
     canvasExp.textFill(ctx, '给你推荐好货好物', 90, 65, 14, '#999')
-    canvasExp.drawImageFill(ctx, goods, 15, 95, 345, 345)
+    // canvasExp.drawImageFill(ctx, goods, 15, 95, 345, 345)
+    canvasExp.drawImageFill(ctx, goods, 15, 95,345,345)
     canvasExp.imgCircleClip(ctx, avatar, 15, 15, 65, 65)
     canvasExp.textMultipleOverflowFill(ctx, item_name, 22, 2, 15, 470, 345, 18, '#333')
     canvasExp.textSpliceFill(ctx, prices, 'left', 15, 600)
     canvasExp.drawImageFill(ctx, code, 250, 500, 100, 100)
-    canvasExp.textFill(ctx, '长按识别小程序码', 245, 620, 12, '#999')
+    canvasExp.textFill(ctx, '长按识别小程序码购买', 245, 620, 12, '#999')
     if (act_price) {
       canvasExp.roundRect(ctx, '#ff5000', 15, 540, 70, 25, 5)
       canvasExp.textFill(ctx, '限时活动', 22, 559, 14, '#fff')
@@ -672,6 +673,8 @@ export default class Detail extends Component {
 
   handleShowPoster = async () => {
     const { posterImgs } = this.state
+    console.log('执行到了这一步')
+    console.log(posterImgs)
     if (!posterImgs || !posterImgs.avatar || !posterImgs.code || !posterImgs.goods) {
       const imgs = await this.downloadPosterImg()
       if (imgs && imgs.avatar && imgs.code && imgs.goods) {

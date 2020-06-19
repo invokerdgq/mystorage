@@ -423,7 +423,7 @@ handleCancelImg =()=> {
                      <Text className='vip-1-button-dec-2'>享受返佣</Text>
                    }
                  </View>
-                 <View className='vip-1-button-click' onClick={this.handleClickBuy.bind(this,titleList[curIndex])}>{grade_name === titleList[curIndex]?'已激活':`${curIndex === 1?'激活/兑换':'激活'}`}</View>
+                 <View className='vip-1-button-click' onClick={this.handleClickBuy.bind(this,titleList[curIndex])}>{grade_name === titleList[curIndex]?'已付款':`${curIndex === 1?'支付/兑换':curIndex === 0?'去下单':'支付'}`}</View>
                </View>
              </View>
            </View>

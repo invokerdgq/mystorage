@@ -152,8 +152,8 @@ $item-img-size: 240px !default;
   border-radius: 50%;
   text-align: center;
   line-height: 40px;
-  position: relative;
-  top: 5px;
+  //position: relative;
+  //top: 5px;
   .icon-gouwuche{
     font-size: 30px;
     color:white;
@@ -165,11 +165,20 @@ $item-img-size: 240px !default;
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   .goods-item__cur{
     font-size: 21px;
     color: #c0534e;
     line-height: 1;
+  }
+  &-share{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    .share-get{
+      margin-left: 10px;
+      color: #767676;
+    }
   }
   .price{
     font-size: 35px;

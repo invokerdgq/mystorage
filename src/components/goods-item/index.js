@@ -37,7 +37,8 @@ export default class GoodsItem extends Component {
     if (!info) {
       return null
     }
-
+    console.log('lllllllllllllllllllllllll')
+    console.log(info)
     const img = info.img || info.image_default_id
 
     let promotion_activity = null, act_price = null
@@ -109,13 +110,17 @@ export default class GoodsItem extends Component {
             <View className='goods-item__extra'>
               <View className='goods-item__price'>
                 <View className='package-price'>
-                  <View>
-                    <Text className='goods-item__cur'>¥</Text>
-                    <Text className='price'>{price}</Text>
+                  <View className='package-price-share'>
+                    <View className='goods-item__cur'>¥</View>
+                    <View className='price'>{price}</View>
                     {
-                      Boolean(+marketPrice) &&
-                      <Text className='goods-item__price-market'>¥{marketPrice}</Text>
+                      info.rebate_commission&&
+                      <View className='share-get'>赚{(Number(info.rebate_commission)/100).toFixed(2)}</View>
                     }
+                    {/*{*/}
+                    {/*  Boolean(+marketPrice) &&*/}
+                    {/*  <Text className='goods-item__price-market'>¥{marketPrice}</Text>*/}
+                    {/*}*/}
                   </View>
                   <View className='che-container' onClick={this.handleCart.bind(this,info)}>
                     <View className='iconfont icon-gouwuche' />

@@ -107,7 +107,7 @@ export function addressCreateOrUpdate (data) {
   return fn(data)
 }
 
-export function itemHistorySave (item_id) {
+export function itemHistorySave (item_id=0) {
   return req.post('/member/browse/history/save', { item_id })
 }
 

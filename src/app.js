@@ -245,6 +245,12 @@ useHooks()
           "desc": "您的位置信息将用于定位附近门店"
         }
       },
+      plugins: {
+        "live-player-plugin": {
+          "version": "1.0.16",
+          "provider": "wx2b03c6e691cd7370"
+        }
+      },
       navigateToMiniProgramAppIdList: [
         'wx4721629519a8f25b',
         'wx2fb97cb696f68d22',

@@ -306,14 +306,14 @@ export default class MemberIndex extends Component {
             scrollY
           >
             <View className='member-header'>
-                    <View className='member-header-user' style={`min-height:${vipgrade.is_vip?'300rpx':'220rpx'}`}>
+                    <View className='member-header-user' style={`min-height:${vipgrade.is_vip?'300rpx':this.state.inviter_name?'300rpx':'220rpx'}`}>
                       <View className='member-header-user-logo'><Image src='../../assets/imgs/logo.png' mode='widthFix'/></View>
                       <View className='member-header-user-info'>
                         {
                           S.getAuthToken()?
                               <View className='member-header-user-info-login'>
                                 <Image className='avatar-img' src={info.avatar} mode='aspectFill' />
-                                <View className='user-name'>{info.username}</View>
+                                <View className='user-name'>{info.username?info.username:'-'}</View>
                                 <View className='user-inviter'>
                                   {
                                     this.state.inviter_name&&

@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image, ScrollView, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { SpToast, TabBar, Loading, SpNote, BackToTop, FloatMenus, FloatMenuItem } from '@/components'
+import { SpToast, TabBar, Loading, SpNote, BackToTop, FloatMenus, FloatMenuItem ,PostNavigation} from '@/components'
 import req from '@/api/req'
 import api from '@/api'
 import { pickBy, classNames, isArray } from '@/utils'
@@ -49,7 +49,7 @@ export default class HomeIndex extends Component {
       automatic: null,
       showAuto: true,
       top: 0,
-      isShop:null
+      isShop:null,
     }
   }
 
@@ -57,7 +57,8 @@ export default class HomeIndex extends Component {
     this.resetPage()
     this.setState({
       likeList: [],
-      wgts: null
+      wgts: null,
+      showPost:true
     }, () => {
       this.fetchInfo()
     })
@@ -94,11 +95,14 @@ export default class HomeIndex extends Component {
   }
 
   componentDidMount () {
-
+    this.setState({
+      url:`plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=39&custom_params=''`
+    })
     this.fetchInfo(async (info) => {
       const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=index&name=search'
       const [fixSetting, { is_open, ad_pic, ad_title }] = await Promise.all([req.get(url), api.promotion.automatic({register_type: 'general'})])//----------request about fix position setting
       this.setState({
+        showPost:Object.keys(fixSetting[0].params.config).indexOf('showPost') === -1?true:fixSetting[0].params.config.showPost,
         automatic: {           //   null  meaning  not  clear
           title: ad_title,
           isOpen: is_open === 'true',
@@ -167,7 +171,7 @@ export default class HomeIndex extends Component {
      let list = await api.seckill.seckillList({status:'',page:1,pageSize:20})
 
     this.setState({
-      wgts: formate(info.config,list.list)
+      wgts: formate(info.config,list.list),
     },()=>{
       if (cb) {
         cb(info)
@@ -273,7 +277,7 @@ refresh(){
     this.fetchInfo()
 }
   render () {
-    const { wgts, page,isShop, likeList, showBackToTop, scrollTop, isShowAddTip, curStore, positionStatus, automatic, showAuto, top } = this.state
+    const { url,showPost,wgts, page,isShop, likeList, showBackToTop, scrollTop, isShowAddTip, curStore, positionStatus, automatic, showAuto, top } = this.state
     const { showLikeList } = this.props
     const user = Taro.getStorageSync('userinfo')
     const isPromoter = user && user.isPromoter
@@ -285,9 +289,6 @@ refresh(){
     const show_location = wgts.find(item=>item.name=='setting'&&item.config.location)
     return (
       <View className={`page-index ${top < 1 ? 'onTop' : '' }`}>
-        {
-
-        }
         {
           curStore &&
             <HeaderHome

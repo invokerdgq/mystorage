@@ -74,7 +74,6 @@ export default class VipIndex extends Component {
 
   componentDidMount () {
 	 if(this.$router.params.presist){
-	   // this.fetchMission()
      this.nextPage()
    }
 	 const { present_id } = this.$router.params
@@ -166,13 +165,13 @@ export default class VipIndex extends Component {
 		const info = Taro.getStorageSync('userinfo')
     const id = Taro.getStorageSync('distribution_shop_id')
     if(!Number(info.inviter_id) && !id && this.state.value === ''){
-      this.setState({
-        codeInput:true
-      })
-      return
+      if(Number(info.userId) !== 1){
+        this.setState({
+          codeInput:true
+        })
+        return
+      }
     }
-    console.log(this.props.store)
-		console.log('第一次提交')
     if(!this.props.address||!this.props.id) {
       Taro.hideToast()
       Taro.showToast({
@@ -204,7 +203,7 @@ console.log(list)
     }else{
       Taro.showLoading({ mask: true })
 
-      const data = await api.vip.charge({...params,address_id: 'address='+this.props.address.address_id+'|'+'gift='+this.state.present_id,come_from:id})
+      const data = await api.vip.charge({...params,address_id: 'address='+this.props.address.address_id+'|'+'gift='+this.state.present_id?this.state.present_id:8195,come_from:id})
       Taro.setStorageSync('address_choose',false)
       Taro.hideLoading()
 
@@ -416,14 +415,14 @@ handleClick(index) {
                   <View >
                     <View className='vip-1-button'>
                       <View className='vip-1-button-dec'><Text className='vip-1-button-dec-1'>至尊会员</Text><Text className='vip-1-button-dec-2'>低至￥<Text className='vip-1-button-dec-3'>0.8</Text>元/每天</Text></View>
-                      <View className='vip-1-button-click' onClick={this.handleCharge}>{grade_name === '至尊会员'?value === ''?'立即激活￥ 299':'立即激活':''}</View>
+                      <View className='vip-1-button-click' onClick={this.handleCharge}>{grade_name === '至尊会员'?value === ''?'立即支付￥ 299':'立即激活':''}</View>
                     </View>
                   </View>
                   :
                   <View >
                     <View className='vip-2-button'>
                       <View className='vip-2-button-dec'><Text className='vip-1-button-dec-1'>王者身份</Text><Text className='vip-2-button-dec-2'>享受返佣</Text></View>
-                      <View className='vip-2-button-click' onClick={this.handleCharge}>立即激活</View>
+                      <View className='vip-2-button-click' onClick={this.handleCharge}>立即支付</View>
                     </View>
                   </View>
                 }

@@ -159,6 +159,7 @@ page{
     align-items: flex-start;
     justify-content: flex-end;
     position: relative;
+    overflow:auto;
     :after{
       content: '';
       display: block;
@@ -175,6 +176,7 @@ page{
     &-info{
       align-self: center;
       text-align: center;
+      overflow: auto;
       &-login{
         position: absolute;
         top:40px;
@@ -200,6 +202,7 @@ page{
             background:#413c36 ;
             color:#FEDEA0;
             margin-right: 10px;
+            white-space: nowrap;
           }
         }
         .avatar-img{
