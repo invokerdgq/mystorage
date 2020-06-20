@@ -146,7 +146,8 @@ export default class Detail extends Component {
   onShareAppMessage () {
     const { info } = this.state
     const { distributor_id } = Taro.getStorageSync('curStore')
-    const { user_card_code :userId } = Taro.getStorageSync('userinfo')
+    const { user_card_code :userId} = Taro.getStorageSync('userinfo')
+
 
     return {
       title: info.item_name,
@@ -496,7 +497,7 @@ export default class Detail extends Component {
   downloadPosterImg = async () => {
     const userinfo = Taro.getStorageSync('userinfo')
     if (!userinfo) return
-    const { avatar, userId } = userinfo
+    const { avatar, user_card_code:userId } = userinfo
     const { info } = this.state
     const { pics, company_id, item_id } = info
     const host = req.baseURL.replace('/api/h5app/wxapp/','')

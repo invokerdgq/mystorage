@@ -74,9 +74,6 @@ export default class MemberIndex extends Component {
   }
 
   componentDidShow () {
-    const {uid,inviteCode} = this.$router.params
-    Taro.setStorageSync('distribution_shop_id',uid)
-    Taro.setStorageSync('inviteCode',inviteCode)
     const { colors } = this.props
     Taro.setNavigationBarColor({
       backgroundColor: colors.data[0].marketing,

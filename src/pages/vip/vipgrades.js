@@ -202,8 +202,8 @@ console.log(list)
         })
     }else{
       Taro.showLoading({ mask: true })
-
-      const data = await api.vip.charge({...params,address_id: 'address='+this.props.address.address_id+'|'+'gift='+this.state.present_id?this.state.present_id:8195,come_from:id})
+       let address = `address=${this.props.address.address_id}|gift=${this.state.present_id?this.state.present_id:8195}`
+      const data = await api.vip.charge({...params,address_id: address,come_from:id})
       Taro.setStorageSync('address_choose',false)
       Taro.hideLoading()
 
