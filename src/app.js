@@ -236,7 +236,8 @@ useHooks()
           pages: [
             'pages/home/license',
             'pages/protocol/privacy',
-            'pages/exchange/exchange'
+            'pages/exchange/exchange',
+            'pages/transform/transform'
           ]
         }
       ],

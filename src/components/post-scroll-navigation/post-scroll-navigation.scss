@@ -1,0 +1,43 @@
+@import "../../style/imports";
+
+.navigation-container{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+.post-navigation{
+  &-bg{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.37);
+    z-index:1000
+  }
+  &-ct{
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    z-index:1001;
+    text-align: center;
+    .close-container{
+      text-align: center;
+      margin-top: 25px;
+      Text{
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        background: white;
+        color:black
+      }
+    }
+  }
+}
+.post-navigation-img{
+  Image{
+  }
+}

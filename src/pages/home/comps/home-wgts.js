@@ -3,6 +3,7 @@ import { View,Image } from '@tarojs/components'
 import {WgtLimitKill ,FeautreSelect, WgtSearchHome, WgtFilm, WgtMarquees, WgtSlider, WgtImgHotZone, WgtNavigation, WgtCoupon, WgtGoodsScroll, WgtGoodsGrid, WgtShowcase, HotArea } from '../wgts'
 import S from '@/spx'
 import PostNavigation from "../../../components/post-navigation/post-navigation";
+import PostScrollNavigation from "../../../components/post-scroll-navigation/post-scroll-navigation"
 
 export default class HomeWgts extends PureComponent {
   state = {
@@ -56,6 +57,7 @@ export default class HomeWgts extends PureComponent {
             return (
               <View className='wgt-wrap' key={idx}>
                 {item.name === 'post'&&<PostNavigation info={item}/>}
+                {item.name === 'post_scroll'&&<PostScrollNavigation info={item}/>}
                 {item.name === 'limit-kill'&& <WgtLimitKill info={item} refresh={this.refresh.bind(this)}/>}
                 {item.name === 'search' && <WgtSearchHome info={item} />}
                 {item.name === 'film' && <WgtFilm info={item} />}
