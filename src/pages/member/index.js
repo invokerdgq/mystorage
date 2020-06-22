@@ -199,8 +199,12 @@ export default class MemberIndex extends Component {
     if (!S.getAuthToken()) {
       return S.toast('请先登录')
     }
-    url = url + `?grade_name=${this.state.vipgrade.is_vip?this.state.vipgrade.grade_name:this.state.gradeInfo.grade_name}`
-    Taro.navigateTo({url})
+    if((this.state.vipgrade.grade_name ==='至尊会员' || this.state.vipgrade.grade_name === '王者身份')&&this.state.vipgrade.is_effective == 0){
+      Taro.navigateTo({url:'/others/pages/tramsform/transform'})
+    }else{
+      url = url + `?grade_name=${this.state.vipgrade.is_vip?this.state.vipgrade.grade_name:this.state.gradeInfo.grade_name}`
+      Taro.navigateTo({url})
+    }
   }
 
   beDistributor = async () => {
@@ -317,8 +321,8 @@ export default class MemberIndex extends Component {
                                       <Text>推荐人:{this.state.inviter_name}</Text>
                                   }
                                   {
-                                    vipgrade.is_vip&&
-                                      <Text className='effective'>{vipgrade.is_effective == 0?'未激活':'已激活'}</Text>
+                                    vipgrade.is_vip&&vipgrade.grade_name !== '钻石会员'&&vipgrade.is_effective == 0&&
+                                      <Text className='effective'>未激活</Text>
                                   }
                                 </View>
                               </View>:
@@ -398,9 +402,9 @@ export default class MemberIndex extends Component {
                           {
                             index === 1&&orderCount.normal_payed_notdelivery > 0 && (<View className='trade-num'>{orderCount.normal_payed_notdelivery}</View>)
                           }
-                            {
+                          {
                               index === 2&&orderCount.normal_payed_delivered > 0 && <View className='trade-num'>{orderCount.normal_payed_delivered}</View>
-                            }
+                          }
                           {
                             index === 3 &&orderCount.aftersales > 0 && (<View className='trade-num'>{orderCount.aftersales}</View>)
                           }

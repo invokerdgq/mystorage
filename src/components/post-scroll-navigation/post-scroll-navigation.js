@@ -1,8 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Image,Navigator,Swiper,SwiperItem } from '@tarojs/components'
+import { View, Text, Image,Navigator,Swiper,SwiperItem ,Icon} from '@tarojs/components'
 import {linkPage} from "../../pages/home/wgts/helper";
 
+import './post-scroll-navigation.scss'
 export default class PostScrollNavigation extends Component{
+  static options = {
+    addGlobalClass:true
+  }
   static defaultprops  = {
     info:{
       base:{},
@@ -28,6 +32,7 @@ export default class PostScrollNavigation extends Component{
 
   render() {
     const {data} = this.props.info
+    const {show} = this.state
     return(
       <View className='navigation-container' style={`display:${show?'block':'none'}`}>
         <View className='post-navigation-bg'></View>
@@ -48,7 +53,7 @@ export default class PostScrollNavigation extends Component{
               })
             }
           </Swiper>
-          <View className='close-container' onClick={() => {this.setState({show:false})}}><Text className='post-navigation-close'>X</Text></View>
+          <View className='close-container' onClick={() => {this.setState({show:false})}}><View className='iconfont icon-close'/></View>
         </View>
       </View>
         )

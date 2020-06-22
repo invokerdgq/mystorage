@@ -402,7 +402,6 @@ export default class Detail extends Component {
   }
 
   handleBuyBarClick = (type) => {
-    Taro.M('防止 冒泡---------------')
     if (!S.getAuthToken()) {
       S.toast('请先登录再购买')
       setTimeout(() =>{
@@ -428,15 +427,12 @@ export default class Detail extends Component {
 
   handleJudge =(type) => {
     // 发起判断
-    if(!S.getAuthToken()){
-      Taro.showToast({
-        title:'请先登录',
-        icon:'none',
-        duration:1500
-      })
-      setTimeout(() => {
-        Taro.navigateTo({url:'/pages/member/index'})
-      },1500)
+    if (!S.getAuthToken()) {
+      S.toast('请先登录再购买')
+      setTimeout(() =>{
+        S.login(this)
+      }, 2000)
+
       return
     }
     const memberinfo =  Taro.getStorageSync('userinfo')
