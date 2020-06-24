@@ -106,7 +106,7 @@ export default class GoodsBuyToolbar extends Component {
                   </FormIdCollector>
                 )
               }
-            {(type === 'normal' || type === 'limited_time_sale'|| type === 'seckill') && (
+            {(type === 'normal' || type === 'limited_time_sale') && (
               <FormIdCollector
                 sync
                 onClick={onClickAddCart}

@@ -6,7 +6,7 @@
     margin: 0 -10px;
     &__toolbar {
       position: fixed;
-      top: $nav-gap-height;
+      top: VH($nav-gap-height);
       left: 0;
       width: 100%;
       z-index: $z-index-toolbar;
@@ -23,13 +23,13 @@
         }
       }
       .at-search-bar__input {
-        height: $searchbar-height !important;
+        height: VH($searchbar-height) !important;
       }
       .at-search-bar__input-cnt {
-        border-radius: $searchbar-height;
+        border-radius: VH($searchbar-height);
       }
       .at-search-bar__clear {
-        height: $searchbar-height;
+        height: VH($searchbar-height);
       }
       &-title {
         width: 60%;
@@ -56,7 +56,7 @@
 				}
 				&.region-picker{
 					display: flex;
-					line-height: 75rpx;
+					line-height: 75px;
 				}
 				.icon-close{
 					line-height: 75px;
@@ -67,9 +67,9 @@
       }
     }
     &__scroll {
-      @include page-scroll($searchbar-height + $nav-gap-height, 0);
+      @include page-scroll($searchbar-height + $nav-gap-height +$tabs-height, 0);
       &.with-tag-bar {
-        @include page-scroll($tabs-height + $searchbar-height + $tags-height + $nav-gap-height, 0);
+        @include page-scroll($tabs-height + $searchbar-height + $tags-height + $nav-gap-height , 0);
       }
     }
     &__type-grid {

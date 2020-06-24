@@ -8,8 +8,8 @@
   .tag-item {
     display: inline-block;
     padding: 0 20px;
-    height: $tags-height;
-    line-height: $tags-height;
+    height: VH($tags-height);
+    line-height: VH($tags-height);
     font-size: 26px;
     color: #666;
     &.active {

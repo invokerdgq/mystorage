@@ -24,6 +24,7 @@ const canvasExp = {
 
     arr.map(item => {
       const { text, size, color, bold, lineThrough, valign } = item
+      ctx.beginPath()
       ctx.setFontSize(size)
       ctx.setFillStyle(color)
       if (align) ctx.setTextAlign(align)

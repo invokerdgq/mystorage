@@ -3,7 +3,7 @@
 .filter-bar {
   $self: &;
   background: #fff;
-  height: $tabs-height;
+  height: VH($tabs-height);
   display: flex;
   align-items: center;
   justify-content: center;

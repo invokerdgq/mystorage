@@ -33,11 +33,12 @@
       justify-content: space-around;
       &-head{
         Image{
-          vertical-align:bottom;
+          vertical-align:middle;
         }
         Text:first-child{
           margin-right: 15px;
           font-size: 35px;
+          vertical-align: middle;
         }
       }
       &-foot{

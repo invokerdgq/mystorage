@@ -5,6 +5,7 @@ import S from '@/spx'
 import api from '@/api'
 import {AtCountdown} from "taro-ui";
 import { calcTimer } from '@/utils'
+import Sv from '@/utils/const'
 
 
 import './transform.scss'
@@ -14,10 +15,13 @@ export default class Transform extends Component{
   }
   constructor(props) {
     super(props);
+    const timeNow = Date.now();
+    const timeEnd = new Date('july 1,2020').getTime()
+    this.time = timeEnd- timeNow
     this.state = {
-      info:{vipgrade:{},memberInfo:{}}
+      info:{},
     }
-    this.bgList = ['/assets/imgs/zz.png','/assets/imgs/wz.png','/assets/imgs/hk.png','/assets/imgs/jl.png','/assets/imgs/btzz.png','/assets/imgs/btwz.png','/assets/imgs/wzlive.jpg']
+    this.bgList = [`${Sv.cdn}/zz.png`,`${Sv.cdn}/wz.png`,`${Sv.cdn}/hk.png`,`${Sv.cdn}/jl.png`,`${Sv.cdn}/btzz.png`,`${Sv.cdn}/btwz.png`,`${Sv.cdn}/wzlive.jpg`]
   }
  componentDidMount() {
     if(!S.getAuthToken()){
@@ -34,21 +38,37 @@ export default class Transform extends Component{
   }
 
   fetchInfo = async () => {
+    Taro.showLoading({
+      title:'登录中',
+      mask:true
+    })
     const res = await api.member.memberInfo()
-    if(/*!*/((res.vipgrade.grade_name !=='至尊会员'|| res.vipgrade.grade_name !=='王者身份')&&res.vipgrade.is_effective ==0)){
+    if(!Taro.getStorageSync('userinfo')){
+      Taro.setStorageSync('userinfo',{
+        username:res.memberInfo.username,
+        avatar:res.memberInfo.avatar,
+        userId:res.memberInfo.userId,
+        user_card_code:res.memberInfo.user_card_code,
+        inviter_id:res.memberInfo.inviter_id,
+        is_vip:res.vipgrade.is_vip
+      })
+    }
+    if(!((res.vipgrade.grade_name !=='至尊会员'|| res.vipgrade.grade_name !=='王者身份')&&res.vipgrade.is_effective ==0)){
       Taro.showToast({
         title:'您不符合条件',
         icon:'none',
         duration: 2000,
         success:() => {
           setTimeout(() => {
-            Taro.navigateTo({
-              url:'/pages/member/index'
+            Taro.hideLoading()
+            Taro.redirectTo({
+              url:'/pages/member/vip'
             })
           },2000)
         }
       })
     }else{
+      Taro.hideLoading()
       this.setState({
         info:res
       })
@@ -56,8 +76,15 @@ export default class Transform extends Component{
   }
   handleClickItem = (type) => {
     if(type === '至尊'){
-      Taro.navigateTo({
-        url:'/pages/index'
+      Taro.showModal({
+        title:'去商城下一单?',
+        success(res){
+          if(res.confirm){
+            Taro.navigateTo({
+              url:'/pages/index'
+            })
+          }
+        }
       })
     }else{
       Taro.navigateTo({
@@ -66,7 +93,7 @@ export default class Transform extends Component{
     }
 }
   render() {
-    const {vipgrade={},memberInfo} = this.state.info
+    const {vipgrade={},memberInfo={}} = this.state.info
     return(
       <View>
         <NavGap title='限时好礼活动'/>
@@ -84,12 +111,12 @@ export default class Transform extends Component{
          </View>
           <View className='timer'>
             <AtCountdown
-              isCard
-              isShowDay
-              day={1}
-              hours={2}
-              minutes={3}
-              seconds={4}
+              isCard = {true}
+              isShowDay = {true}
+              day={calcTimer(this.time,'ms').dd}
+              hours={calcTimer(this.time,'ms').hh}
+              minutes={calcTimer(this.time,'ms').mm}
+              seconds={calcTimer(this.time,'ms').ss}
             />
           </View>
           <View className='buy-btn-f' onClick={this.handleClickItem.bind(this,'至尊')}><Image src={this.bgList[4]} mode='widthFix' style='width:670rpx'/></View>

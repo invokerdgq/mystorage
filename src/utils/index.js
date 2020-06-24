@@ -143,15 +143,15 @@ export function copyText (text, msg = '内容已复制') {
   })
 }
 
-export function calcTimer (totalSec) {
+export function calcTimer (totalSec,type='s') {
   let remainingSec = totalSec
-  const dd = Math.floor(totalSec / 24 / 3600)
-  remainingSec -= dd * 3600 * 24
-  const hh = Math.floor(remainingSec / 3600)
-  remainingSec -= hh * 3600
-  const mm = Math.floor(remainingSec / 60)
-  remainingSec -= mm * 60
-  const ss = Math.floor(remainingSec)
+  const dd = Math.floor(type === 's'?totalSec / 24 / 3600:totalSec / 24 / 3600/1000)
+  remainingSec -= type === 's'? dd * 3600 * 24:dd * 3600 * 24 * 1000
+  const hh = Math.floor(type === 's'?remainingSec / 3600:remainingSec / 3600/1000)
+  remainingSec -= type === 's'? hh * 3600:hh * 3600 * 1000
+  const mm = Math.floor(type === 's'?remainingSec / 60:remainingSec / 60/1000)
+  remainingSec -= type === 's'?mm * 60:mm * 60 * 1000
+  const ss = Math.floor(type === 's'?remainingSec:remainingSec/1000)
 
   return {
     dd,

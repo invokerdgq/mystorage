@@ -324,7 +324,7 @@ handleClick(index) {
                 <Image className='header-isauth__avatar' src={userInfo.avatar} mode='aspectFill'/>
                 <View className='header-isauth__info'>
                   <View className='nickname'>{userInfo.username}
-                    <View className='header-grade_name'>{userVipInfo.is_vip?userVipInfo.grade_name:'普通会员'}</View>
+                    <View className='header-grade_name'>{userVipInfo.is_vip?userVipInfo.is_effective !=0?userVipInfo.grade_name:userInfo.totalConsumption !=0?'至尊会员':'钻石会员':'普通会员'}</View>
                     {/*<Image  className='icon-vip' src='/assets/imgs/svip.png' />*/}
                   </View>
                   {userVipInfo.is_vip&&

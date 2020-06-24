@@ -53,6 +53,7 @@ export default class CartCheckout extends Component {
     super(props)
 
     this.state = {
+      codeValid:true,
       is_exchange:false,
       scanCode:null,
       info: null,
@@ -564,11 +565,7 @@ export default class CartCheckout extends Component {
     // },()=>{
     //   _this.handlePay()
     // })
-    if(this.state.is_exchange){
-      _this.handleExchange()
-    }else{
       _this.handlePay()
-    }
   }
 
 handleExchange = async () => {
@@ -581,7 +578,8 @@ handleExchange = async () => {
          duration:1500
        })
        this.setState({
-         submitLoading:false
+         submitLoading:false,
+         codeValid:true
        })
      }
      if(res.status == 1){
@@ -591,11 +589,20 @@ handleExchange = async () => {
          duration:1500
        })
        this.setState({
-         submitLoading:false
+         submitLoading:false,
+         codeValid:true
        })
      }
    }else{
-     this.handlePay()
+     Taro.showToast({
+       title:'去点击兑换吧！',
+       icon:'success',
+       duration:1500
+     })
+     this.setState({
+       submitLoading:false,
+       codeValid:false
+     })
    }
 }
   handlePay = async () => {
@@ -845,7 +852,7 @@ handleScanCode(){
       setTimeout(() => {
         this.setState({
           scanCode:res.result
-        })
+        },() => {this.handleExchange()})
       },1500)
     }
   })
@@ -1224,7 +1231,7 @@ handleToast=()=>{
               className='btn-confirm-order'
               customStyle={{background: '#c0534e'}}
               loading={submitLoading}
-              disabled={isBtnDisabled}
+              disabled={is_exchange?this.state.codeValid:isBtnDisabled}
               onClick={this.submitPay}
             >{isDrug ? '提交预约' :is_exchange?'去兑换': '去支付'}</AtButton>
           </View>

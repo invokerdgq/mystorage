@@ -15,6 +15,7 @@ import { resolveFavsList } from './item/helper'
 import formate from "../utils/formate";
 
 import './home/index.scss'
+import {Sv} from "../utils/const";
 
 @connect(({ cart }) => ({
   list: cart.list,

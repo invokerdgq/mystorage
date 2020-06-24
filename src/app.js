@@ -8,6 +8,7 @@ import api from '@/api'
 import { FormIds, WxAuth } from '@/service'
 import Index from './pages/index'
 import entry from "./utils/entry";
+import {Sv} from "./utils/const"
 
 import './app.scss'
 import qs from 'qs'
@@ -90,6 +91,7 @@ useHooks()
       })
     }
     componentDidMount () {
+      console.log(Date.now()-Sv.time)
       const promoterExp = Taro.getStorageSync('distribution_shop_exp')
       if (Date.parse(new Date()) - promoterExp > 86400000 * 3) {
         Taro.setStorageSync('distribution_shop_id', '')
