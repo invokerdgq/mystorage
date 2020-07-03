@@ -29,4 +29,5 @@ export const WGTS_NAV_MAP = {
   'luckdraw': '/pages/member/point-draw'
 }
 
+export const cdn = process.env.NODE_ENV === 'production' ? 'https://sxt-b-cdn.oioos.com/tupian':'/assets/imgs/cdn'
 export default {}

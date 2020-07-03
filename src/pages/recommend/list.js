@@ -48,11 +48,16 @@ export default class RecommendList extends Component {
     }
     Taro.showLoading()
     this.resetPage()
-    this.setState({
-      list: [],
-    })
-    setTimeout(()=>{
-      this.nextPage()
+    const length = this.state.list.length
+    setTimeout( ()=>{
+       this.nextPage().then(() => {
+         setTimeout(() => {
+           this.state.list.splice(0,length)
+             this.setState({
+               list:this.state.list
+             })
+         },0)
+       })
       Taro.hideLoading()
     }, 200)
 

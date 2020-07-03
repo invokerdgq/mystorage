@@ -131,4 +131,21 @@ switch, .weui-switch {
     }
   }
 }
+.at-countdown--card .at-countdown__time-box{
+ background-color:#ff7b01 ;
+  width: 33px;
+  height: 33px;
+  font-size:20px ;
+  border-radius: 8px;
+  border: none;
+  .at-countdown__time{
+    color:white
+  }
+  .at-countdown__separator{
+    color:black;
+  }
+}
+.at-countdown--card .at-countdown__time-box::after{
+  display: none !important;
+}
 

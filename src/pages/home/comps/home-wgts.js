@@ -56,7 +56,6 @@ export default class HomeWgts extends PureComponent {
           wgts.map((item, idx) => {
             return (
               <View className='wgt-wrap' key={idx}>
-                {item.name === 'post'&&<PostNavigation info={item}/>}
                 {item.name === 'post_scroll'&&<PostScrollNavigation info={item}/>}
                 {item.name === 'limit-kill'&& <WgtLimitKill info={item} refresh={this.refresh.bind(this)}/>}
                 {item.name === 'search' && <WgtSearchHome info={item} />}

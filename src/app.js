@@ -8,10 +8,8 @@ import api from '@/api'
 import { FormIds, WxAuth } from '@/service'
 import Index from './pages/index'
 import entry from "./utils/entry";
-import {Sv} from "./utils/const"
 
 import './app.scss'
-import qs from 'qs'
 
 Taro.M = function (option,identifier='') {
   console.log(identifier)
@@ -69,10 +67,7 @@ useHooks()
   class App extends Component {
     // eslint-disable-next-line react/sort-comp
     componentWillMount () {
-      // entry.entryLaunch({scene:`uid=${this.$router.params.query.scene}`})
       let option = this.$router.params.query.scene
-      console.log('oooooooooooo')
-      console.log(this.$router.params)
       entry.entryLaunch(this.$router.params.query)
       let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
       Taro.getSystemInfo({
@@ -91,7 +86,6 @@ useHooks()
       })
     }
     componentDidMount () {
-      console.log(Date.now()-Sv.time)
       const promoterExp = Taro.getStorageSync('distribution_shop_exp')
       if (Date.parse(new Date()) - promoterExp > 86400000 * 3) {
         Taro.setStorageSync('distribution_shop_id', '')
@@ -239,7 +233,9 @@ useHooks()
             'pages/home/license',
             'pages/protocol/privacy',
             'pages/exchange/exchange',
-            'pages/transform/transform'
+            'pages/transform/transform',
+            'pages/invite-activity/invite-activity',
+            'pages/help/help'
           ]
         }
       ],

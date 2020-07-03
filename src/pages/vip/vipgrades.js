@@ -10,6 +10,7 @@ import './vipgrades.scss'
 import NavGap from "../../components/nav-gap/nav-gap";
 import CheckInvite from "../../components/check-invite/check-invite";
 import { withPager } from '@/hocs'
+import {cdn} from '@/consts/index'
 
 @connect(({ colors }) => ({
   colors: colors.current
@@ -46,22 +47,22 @@ export default class VipIndex extends Component {
       codeInput:false,
       present_id:null,
       currentAddress:null,
-      iconUp:false,
+      iconUp:[],
       curIndex:null
     }
     this.cardImgList= [
-      'https://sxt-b-cdn.oioos.com/tupian/zuanshi.png',
-      'https://sxt-b-cdn.oioos.com/tupian/zhizun.png',
-      'https://sxt-b-cdn.oioos.com/tupian/wzjg.jpg']
+      `${cdn}/zuanshi.png`,
+      `${cdn}/zhizun.png`,
+      `${cdn}/wzjg.jpg`]
     this.giftNameList = [
       'PH护肤双重奏礼盒',
       'PH明星产品套盒',
       '苏尚儿微米系列组合',
       '苏尚儿精品袜套装']
     this.rankList = [
-      'https://sxt-b-cdn.oioos.com/tupian/first.png',
-      'https://sxt-b-cdn.oioos.com/tupian/second.png',
-      'https://sxt-b-cdn.oioos.com/tupian/third.png'
+      `${cdn}/first.png`,
+      `${cdn}/second.png`,
+      `${cdn}/third.png`
     ]
   }
   componentDidShow() {
@@ -105,8 +106,14 @@ export default class VipIndex extends Component {
     this.setState({
       // list: [...this.state.list, ...nList],
       commissionList:[...this.state.commissionList, ...list]
+    },() => {
+      this.state.commissionList.forEach(() => {
+        this.state.iconUp.push(false)
+      })
+      this.setState({
+        iconUp:this.state.iconUp
+      })
     })
-
     return { total }
   }
 	async fetchInfo () {
@@ -303,8 +310,9 @@ chooseGift =() => {
 }
 handleClick(index) {
 	  console.log('hhh')
+  this.state.iconUp[index] = !this.state.iconUp[index]
 	  this.setState({
-      iconUp:!this.state.iconUp,
+      iconUp:this.state.iconUp,
       curIndex:index
     })
 }
@@ -372,15 +380,17 @@ handleClick(index) {
                                 </View>
                                 <View className='item-right'>
                                   <View className='item-right-mount'>+￥{(Number(item.amount)/100).toFixed(2)}</View>
-                                  <View className='detail' onClick={this.handleClick.bind(this,index)}>查看详情<Icon className={`${this.state.curIndex === index &&this.state.iconUp?'icon-arrow-up':'icon-arrow-down'} iconfont`}/></View>
+                                  <View>{item.status === '等待收货'?'待到账':'已到账'}</View>
+                                  <View className='detail' onClick={this.handleClick.bind(this,index)}>查看详情<Icon className={`${this.state.iconUp[index]?'icon-arrow-up':'icon-arrow-down'} iconfont`}/></View>
                                 </View>
                               </View>
                               {
-                                this.state.iconUp&&index === this.state.curIndex&&item.payload&&
+                                this.state.iconUp[index]&&item.payload&&
                                   <View className='goods-dec-item-content'>
                                     {
-                                      JSON.parse(item.payload).items.map((goods,index) => {
-                                        return(
+                                      JSON.parse(item.payload).items.map(goods => {
+                                        console.log('bug')
+                                        return (
                                           <View className='goods-dec-item'>
                                             {goods.item_name}*{goods.item_count}
                                           </View>
@@ -392,8 +402,7 @@ handleClick(index) {
                               }
                             </View>
                           )
-                        })
-                      }
+                        })}
                     </ScrollView>
                   </View>
                 </View>
@@ -408,7 +417,7 @@ handleClick(index) {
                   <View className='code-inner'><Text>待激活(选填)</Text><Input type='text' placeholder='请输入激活码' placeholderStyle='text-align:right' value={this.state.value} onInput={this.handleValue}/></View>
                   }
                   <View className='choose-gift' onClick={this.chooseGift}>选择礼包: <Text className='right'>{this.giftNameList[present_id -8195]}></Text></View>
-                  <View className='choose-address' onClick={this.chooseAddress}>选择地址:<Text className='right'>{this.state.currentAddress?this.state.currentAddress.province+this.state.currentAddress.city+this.state.currentAddress.adrdetail:''}></Text></View>
+                  <View className='choose-address' onClick={this.chooseAddress}>选择地址:<Text className='right'>{this.state.currentAddress?this.state.currentAddress.province+this.state.currentAddress.city+this.state.currentAddress.county +this.state.currentAddress.adrdetail:''}></Text></View>
                   <View className='code-inner'><Text>会员发放时间</Text><Text>立即到账</Text></View>
                 </View>
                 {grade_name === '至尊会员'?

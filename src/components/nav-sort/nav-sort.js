@@ -28,8 +28,6 @@ export default class NavSort extends Component{
   render() {
     const {onsortChange,sortList} = this.props
     const {curIndex} = this.state
-    console.log('hahahah')
-    console.log(this.props.zs,this.props.zz,this.props.wz)
     return(
       <View className='nav-sort'>
         {

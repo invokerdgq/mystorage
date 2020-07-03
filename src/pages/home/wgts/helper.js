@@ -28,7 +28,19 @@ export function linkPage (type, id) {
       url = '/pages/item/seckill-goods-list?seckill_id=' + id
       break;
     case 'link':
-      url = id === 'vipgrades' ? '/pages/vip/vipgrades' : id === 'transform'?'/others/pages/transform/transform':''
+      switch (id) {
+        case 'vipgrades':
+          url = '/pages/vip/vipgrades'
+          break
+        case 'transform':
+          url = '/others/pages/transform/transform'
+          break
+        case 'invite-activity':
+          url = '/others/pages/invite-activity/invite-activity'
+          break
+        default :
+          url = ''
+      }
       break;
     case 'tag':
       url = '/pages/item/list?tag_id=' + id

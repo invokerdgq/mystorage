@@ -343,6 +343,19 @@
     margin-bottom: 20px;
     &__wrap {
       flex: 1;
+      position: relative;
+      .copy{
+        position: absolute;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 15px;
+        border-radius:10px;
+        left:50%;
+        top:-50px;
+        color:$color-theme;
+        background: white;
+        box-shadow: 0 0 8px 4px rgba(0,0,0,0.1);
+      }
     }
     &__desc {
       display: block;
@@ -879,4 +892,3 @@
   top: 0;
   background: red;
 }
-

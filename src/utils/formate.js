@@ -86,22 +86,6 @@ function sort(list) {
          return pre
        },[])
      })
-    // const Ls = finnalList.reduce((pre,item,index) => {
-    //    if(pre.length === 0){
-    //      pre.push(item)
-    //    }else{
-    //      let has = false
-    //      pre.map((item1) => {
-    //        if(item1.title === item.title){
-    //          has = true
-    //        }
-    //      })
-    //      if(!has){
-    //        pre.push(item)
-    //      }
-    //    }
-    //   return pre
-    //  },[])
     option.splice(curIndex, 0, {list: finnalList, name: 'limit-kill'})
     console.log(option)
     console.log('格式化后  数据--------------------------')

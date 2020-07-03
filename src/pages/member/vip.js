@@ -3,6 +3,7 @@ import {View, ScrollView, Text, Image, Navigator, Button, Icon,Swiper,SwiperItem
 import NavGap from "../../components/nav-gap/nav-gap";
 import GiftListItem from "./comps/gift-list";
 import api from '@/api'
+import {cdn} from '@/consts/index'
 
 
 import './vip.scss'
@@ -307,13 +308,13 @@ handleCancelImg =()=> {
                    onChange={this.handleChange}
                  >
                    <SwiperItem className='swiper-item'>
-                     <Image className='item-img' src='https://sxt-b-cdn.oioos.com/tupian/zuanshi.png'/>
+                     <Image className='item-img' src={`${cdn}/zuanshi.png`}/>
                    </SwiperItem>
                    <SwiperItem className='swiper-item'>
-                     <Image className='item-img' src='https://sxt-b-cdn.oioos.com/tupian/zhizun.png'/>
+                     <Image className='item-img' src={`${cdn}/zhizun.png`}/>
                    </SwiperItem>
                    <SwiperItem className='swiper-item'>
-                     <Image className='item-img' src='https://sxt-b-cdn.oioos.com/tupian/wangzhe.png'/>
+                     <Image className='item-img' src={`${cdn}/wangzhe.png`}/>
                    </SwiperItem>
                  </Swiper>
                </View>
@@ -323,15 +324,15 @@ handleCancelImg =()=> {
            <View className={`vip-similar-${curIndex}`}>
              {
                curIndex === 0&&
-                 <Image src='https://sxt-b-cdn.oioos.com/tupian/zsqy.jpg' mode='widthFix' />
+                 <Image src={`${cdn}/zsqy.jpg`} mode='widthFix' />
              }
              {
                curIndex === 1&&
-               <Image src='https://sxt-b-cdn.oioos.com/tupian/zzqy.jpg' mode='widthFix'/>
+               <Image src={`${cdn}/zzqy.jpg`} mode='widthFix'/>
              }
              {
                curIndex === 2&&
-               <Image src='https://sxt-b-cdn.oioos.com/tupian/wzqy.jpg' mode='widthFix'/>
+               <Image src={`${cdn}/wzqy.jpg`} mode='widthFix'/>
              }
            </View>
 
@@ -367,15 +368,15 @@ handleCancelImg =()=> {
              <View className='quanyi-1'>
                {
                  curIndex === 0&&
-                 <Image src='https://sxt-b-cdn.oioos.com/tupian/zsqy1.jpg' mode='widthFix'/>
+                 <Image src={`${cdn}/zsqy1.jpg`} mode='widthFix'/>
                }
                {
                  curIndex === 1&&
-                 <Image src='https://sxt-b-cdn.oioos.com/tupian/zzqy1.jpg' mode='widthFix'/>
+                 <Image src={`${cdn}/zzqy1.jpg`} mode='widthFix'/>
                }
                {
                  curIndex === 2&&
-                 <Image src='https://sxt-b-cdn.oioos.com/tupian/wzqy1.jpg' mode='widthFix'/>
+                 <Image src={`${cdn}/wzqy1.jpg`} mode='widthFix'/>
                }
              </View>
              <View>

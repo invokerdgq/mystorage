@@ -41,6 +41,7 @@ export default class Detail extends Component {
 
     this.state = {
       ...this.state,
+      showCopy:false,
       marketing: 'normal',
       info: null,
       desc: null,
@@ -735,6 +736,37 @@ export default class Detail extends Component {
       cardValue:e.detail.value
     })
   }
+  copyName (name) {
+    Taro.setClipboardData({
+      data:name,
+      success(res){
+        Taro.showToast({
+          title:'复制成功',
+          icon:'success',
+          duration:1500
+        })
+      },
+      fail(e){
+        Taro.showToast({
+          title:'复制失败，稍后重试',
+          icon:'none',
+          duration:1500
+        })
+      }
+    })
+  }
+  showCopy () {
+    this.setState({
+      showCopy:true
+    })
+  }
+  hideCopy(){
+    setTimeout(() => {
+      this.setState({
+        showCopy:false
+      })
+    },800)
+  }
   render () {
     const userinfo = Taro.getStorageSync('userinfo')
     const store = Taro.getStorageSync('curStore')
@@ -929,8 +961,9 @@ export default class Detail extends Component {
             <View className='goods-hd'>
               <View className='goods-info__wrap'>
                 <View className='goods-title__wrap'>
-                  <Text className='goods-title'>{info.item_name}</Text>
+                  <Text className='goods-title' onLongPress={this.showCopy.bind(this)} onTouchEnd={this.hideCopy.bind(this)}>{info.item_name}</Text>
                   <Text className='goods-title__desc'>{info.brief}</Text>
+                  <View onClick={this.copyName.bind(this,info.item_name)} className='copy' style={`display:${this.state.showCopy?'block':'none'}`}>复制</View>
                 </View>
                 <View
                   className='goods-share__wrap'

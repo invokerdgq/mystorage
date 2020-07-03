@@ -1,0 +1,45 @@
+@import "../../../../style/imports";
+
+.activity-item{
+  width: 340px;
+  margin-top: 40px;
+  position: relative;
+  .goods-name{
+   position: absolute;
+    top:-4px;
+    left:50%;
+    transform: translate(-50%,0);
+    width:240px ;
+  }
+  .goods-name-text{
+    display: inline-block;
+    max-width: 210px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: absolute;
+    top: 0;
+    font-size: 23px;
+    color:white;
+    left: 50%;
+    transform: translate(-50%,0);
+  }
+  .goods-img{
+    width: 340px;
+    height: 340px;
+    overflow: hidden;
+    Image{
+      width: 340px;
+      height: 340px;
+    }
+  }
+  .help-btn{
+    margin-top: 24px;
+    text-align: center;
+    background: #ffd4b2;
+    Image{
+      width: 230px;
+      display: block;
+      margin:0 auto;
+    }
+  }
+}

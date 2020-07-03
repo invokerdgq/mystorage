@@ -48,16 +48,6 @@ export default class WgtSearchHome extends Component {
     const { base, config } = info
 
     return (
-      // <View className={`wgt ${base.padded ? 'wgt__padded' : null}`}>
-      //   <View className={`search ${config.fixTop ? 'fixed' : null}`}>
-      //     <View className="content-padded">
-      //       <View className="search-box view-flex view-flex-middle view-flex-center" onClick={this.searchTap.bind(this)}>
-      //         <Icon className="search-icon" type="search" size="14" color="#999999"></Icon>
-      //         <View>输入商品名称</View>
-      //       </View>
-      //     </View>
-      //   </View>
-      // </View>
           <View className="search-box-container" style={{position:'fixed',top:`${this.state.top}px`}}>
             <View className="search-nav" onClick={this.searchTap.bind(this)}>
               <Image src='../../../assets/imgs/susisang.png'  className='search-box-img'/>

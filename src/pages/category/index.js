@@ -27,7 +27,7 @@ export default class Category extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidShow () {
     this.fetch()
   }
 

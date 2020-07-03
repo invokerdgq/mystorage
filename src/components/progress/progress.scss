@@ -1,0 +1,41 @@
+@import '../../style/imports';
+
+.progress-container{
+  position: relative;
+  width: 100%;
+  .progress-content{
+    width: 100%;
+    background: #ffe5b8;
+  }
+  .progress-content-up{
+    position: absolute;
+    top:0;
+    left:0;
+    background: #ff7b01;
+  }
+  .dot-item{
+    position: absolute;
+    top:2px;
+    border-radius: 50%;
+    background: #ff7b01;
+    transform: translate(-80%,0);
+  }
+  .progress-dec{
+    position: relative;
+    width: 80px;
+    top:0;
+    Image{
+      width:100%;
+    }
+    transform: translate(-50%,0);
+    &-text{
+      position: absolute;
+      font-size: 18px;
+      color:white;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%) ;
+      white-space: nowrap;
+    }
+  }
+}

@@ -5,7 +5,7 @@ import S from '@/spx'
 import api from '@/api'
 import {AtCountdown} from "taro-ui";
 import { calcTimer } from '@/utils'
-import Sv from '@/utils/const'
+import {cdn} from '@/consts/index'
 
 
 import './transform.scss'
@@ -21,7 +21,7 @@ export default class Transform extends Component{
     this.state = {
       info:{},
     }
-    this.bgList = [`${Sv.cdn}/zz.png`,`${Sv.cdn}/wz.png`,`${Sv.cdn}/hk.png`,`${Sv.cdn}/jl.png`,`${Sv.cdn}/btzz.png`,`${Sv.cdn}/btwz.png`,`${Sv.cdn}/wzlive.jpg`]
+    this.bgList = [`${cdn}/zz.png`,`${cdn}/wz.png`,`${cdn}/hk.png`,`${cdn}/jl.png`,`${cdn}/btzz.png`,`${cdn}/btwz.png`,`${cdn}/wzlive.jpg`]
   }
  componentDidMount() {
     if(!S.getAuthToken()){
@@ -53,9 +53,14 @@ export default class Transform extends Component{
         is_vip:res.vipgrade.is_vip
       })
     }
-    if(!((res.vipgrade.grade_name !=='至尊会员'|| res.vipgrade.grade_name !=='王者身份')&&res.vipgrade.is_effective ==0)){
+    if(((res.vipgrade.grade_name ==='至尊会员'|| res.vipgrade.grade_name ==='王者身份')&&res.vipgrade.is_effective ==0)){
+      Taro.hideLoading()
+      this.setState({
+        info:res
+      })
+    }else{
       Taro.showToast({
-        title:'您不符合条件',
+        title:'您已激活',
         icon:'none',
         duration: 2000,
         success:() => {
@@ -66,11 +71,6 @@ export default class Transform extends Component{
             })
           },2000)
         }
-      })
-    }else{
-      Taro.hideLoading()
-      this.setState({
-        info:res
       })
     }
   }

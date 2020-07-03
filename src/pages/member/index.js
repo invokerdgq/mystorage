@@ -135,6 +135,7 @@ export default class MemberIndex extends Component {
     this.setState({
       isOpenPopularize: res.is_open_popularize,
       inviter_name:res.memberInfo.inviter_name,
+      inviter_id:res.memberInfo.inviter_id,
       is_effective:res.vipgrade.is_effective,
       fansCount,
       totalConsumption:res.memberInfo.totalConsumption
@@ -305,7 +306,18 @@ export default class MemberIndex extends Component {
       url:`/pages/member/cash-out?commission=${commissiom}`
     })
   }
-
+  handleCopy(data) {
+    Taro.setClipboardData({
+      data:data,
+      success(){
+        Taro.showToast({
+          title:'复制成功',
+          icon:'success',
+          duration:1500
+        })
+      }
+    })
+  }
   render () {
     const { colors } = this.props
     const {expect_commission, commission,vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
@@ -328,8 +340,8 @@ export default class MemberIndex extends Component {
                                 <View className='user-name'>{info.username?info.username:'-'}</View>
                                 <View className='user-inviter'>
                                   {
-                                    this.state.inviter_name&&
-                                      <Text>推荐人:{this.state.inviter_name}</Text>
+                                    this.state.inviter_id != 0&&
+                                      <Text>推荐人:{this.state.inviter_name?this.state.inviter_name:'-'}</Text>
                                   }
                                   {
                                     vipgrade.is_vip&&vipgrade.grade_name !== '钻石会员'&&vipgrade.is_effective == 0&&this.state.totalConsumption ==0&&
@@ -364,7 +376,7 @@ export default class MemberIndex extends Component {
                       {
                         vipgrade.is_vip&&
                         <View className='member-header-vip-dec-small' style={`height:${vipgrade.is_vip?'50%':'100%'}`}>
-                          <Text className='gold'>NO. {gradeInfo.user_card_code}</Text>
+                          <Text className='gold' onLongPress={this.handleCopy.bind(this,gradeInfo.user_card_code)}>NO. {gradeInfo.user_card_code}</Text>
                           <Text  className='feature'>到期时间:{vipgrade.end_date}</Text>
                         </View>
                       }

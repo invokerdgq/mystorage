@@ -7,7 +7,7 @@ export default class PostScrollNavigation extends Component{
   static options = {
     addGlobalClass:true
   }
-  static defaultprops  = {
+  static defaultProps  = {
     info:{
       base:{},
       data:[]
@@ -31,7 +31,7 @@ export default class PostScrollNavigation extends Component{
 }
 
   render() {
-    const {data} = this.props.info
+    const {data=[]} = this.props.info
     const {show} = this.state
     return(
       <View className='navigation-container' style={`display:${show?'block':'none'}`}>

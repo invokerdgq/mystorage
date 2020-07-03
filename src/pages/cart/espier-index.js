@@ -48,6 +48,29 @@ export default class CartIndex extends Component {
   }
 
   componentDidMount () {
+    // console.log(this.$router.params, 48)
+    // if(this.$router.params && this.$router.params.path === 'qrcode') {
+    //   this.setState({
+    //     isPathQrcode: true
+    //   })
+    // }
+    // this.nextPage()
+    //
+    // if (!S.getAuthToken()) return
+    //
+    // this.fetchCart((list) => {
+    //   const groups = this.resolveActivityGroup(list)
+    //   // this.props.list 此时为空数组
+    //   setTimeout(() => {
+    //     this.setState({
+    //       groups,
+    //       loading: false
+    //     })
+    //   }, 40)
+    // })
+  }
+
+  componentDidShow () {
     console.log(this.$router.params, 48)
     if(this.$router.params && this.$router.params.path === 'qrcode') {
       this.setState({
@@ -68,9 +91,6 @@ export default class CartIndex extends Component {
         })
       }, 40)
     })
-  }
-
-  componentDidShow () {
     if (!S.getAuthToken() || this.state.loading) return
     this.updateCart()
   }
@@ -402,8 +422,6 @@ export default class CartIndex extends Component {
   render () {
     const { groups, invalidList, cartMode, loading, curPromotions, likeList, page, isPathQrcode } = this.state
     const { list, showLikeList, colors } = this.props
-    console.log('hahahahha')
-    console.log(list)
 
     if (loading) {
       return <Loading />

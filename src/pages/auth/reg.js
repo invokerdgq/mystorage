@@ -140,7 +140,7 @@ export default class Reg extends Component {
           open_id
         }
         if (uid) {
-          Object.assign(params, {uid})
+          Object.assign(params, {uid,inviter_id:uid})
         }
         if (trackParams) {
           Object.assign(params, {source_id: trackParams.source_id, monitor_id: trackParams.monitor_id})

@@ -15,7 +15,6 @@ import { resolveFavsList } from './item/helper'
 import formate from "../utils/formate";
 
 import './home/index.scss'
-import {Sv} from "../utils/const";
 
 @connect(({ cart }) => ({
   list: cart.list,
@@ -79,6 +78,44 @@ export default class HomeIndex extends Component {
   }
 
   componentDidShow = () => {
+
+    setTimeout(() => {
+      Taro.navigateTo({
+        url:'/others/pages/invite-activity/invite-activity'
+      })
+    },3000)
+
+    this.setState({
+      url:`plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=39&custom_params=''`
+    })
+    this.fetchInfo(async (info) => {
+      const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=index&name=search'
+      const [fixSetting, { is_open, ad_pic, ad_title }] = await Promise.all([req.get(url), api.promotion.automatic({register_type: 'general'})])//----------request about fix position setting
+      this.setState({
+        showPost:Object.keys(fixSetting[0].params.config).indexOf('showPost') === -1?true:fixSetting[0].params.config.showPost,
+        automatic: {           //   null  meaning  not  clear
+          title: ad_title,
+          isOpen: is_open === 'true',
+          adPic: ad_pic
+        },
+        positionStatus: (fixSetting.length && fixSetting[0].params.config.fixTop) || false
+      })
+      const options = this.$router.params
+      const res = await entry.entryLaunch(options, true)    //initial source of enter the program  and get the Curstore(shop info)
+      // if(S.getAuthToken()){
+      //     const promoterInfo = await api.distribution.info()
+      //     this.setState({
+      //       isShop:promoterInfo
+      //     })
+      //   }
+
+      const { store } = res
+      if (!isArray(store)) {
+        this.setState({
+          curStore: store
+        })
+      }
+    })
     const curStore = Taro.getStorageSync('curStore')
     if (!isArray(curStore)) {
       this.setState({
@@ -96,51 +133,51 @@ export default class HomeIndex extends Component {
   }
 
   componentDidMount () {
-    this.setState({
-      url:`plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=39&custom_params=''`
-    })
-    this.fetchInfo(async (info) => {
-      const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=index&name=search'
-      const [fixSetting, { is_open, ad_pic, ad_title }] = await Promise.all([req.get(url), api.promotion.automatic({register_type: 'general'})])//----------request about fix position setting
-      this.setState({
-        showPost:Object.keys(fixSetting[0].params.config).indexOf('showPost') === -1?true:fixSetting[0].params.config.showPost,
-        automatic: {           //   null  meaning  not  clear
-          title: ad_title,
-          isOpen: is_open === 'true',
-          adPic: ad_pic
-        },
-        positionStatus: (fixSetting.length && fixSetting[0].params.config.fixTop) || false
-      })
-
-      // const userinfo = Taro.getStorageSync('userinfo')
-      // if (automatic.is_open === 'true' && automatic.register_type === 'membercard' && userinfo) {
-      //   const { is_open, is_vip, is_had_vip, vip_type } = await api.vip.getUserVipInfo()
-      //   this.setState({
-      //     vip: {
-      //       isSetVip: is_open,
-      //       isVip: is_vip,
-      //       isHadVip: is_had_vip,
-      //       vipType: vip_type
-      //     }
-      //   })
-      // }
-
-      const options = this.$router.params
-      const res = await entry.entryLaunch(options, true)    //initial source of enter the program  and get the Curstore(shop info)
-          // if(S.getAuthToken()){
-          //     const promoterInfo = await api.distribution.info()
-          //     this.setState({
-          //       isShop:promoterInfo
-          //     })
-          //   }
-
-      const { store } = res
-      if (!isArray(store)) {
-        this.setState({
-          curStore: store
-        })
-  		}
-    })
+    // this.setState({
+    //   url:`plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=39&custom_params=''`
+    // })
+    // this.fetchInfo(async (info) => {
+    //   const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=index&name=search'
+    //   const [fixSetting, { is_open, ad_pic, ad_title }] = await Promise.all([req.get(url), api.promotion.automatic({register_type: 'general'})])//----------request about fix position setting
+    //   this.setState({
+    //     showPost:Object.keys(fixSetting[0].params.config).indexOf('showPost') === -1?true:fixSetting[0].params.config.showPost,
+    //     automatic: {           //   null  meaning  not  clear
+    //       title: ad_title,
+    //       isOpen: is_open === 'true',
+    //       adPic: ad_pic
+    //     },
+    //     positionStatus: (fixSetting.length && fixSetting[0].params.config.fixTop) || false
+    //   })
+    //
+    //   // const userinfo = Taro.getStorageSync('userinfo')
+    //   // if (automatic.is_open === 'true' && automatic.register_type === 'membercard' && userinfo) {
+    //   //   const { is_open, is_vip, is_had_vip, vip_type } = await api.vip.getUserVipInfo()
+    //   //   this.setState({
+    //   //     vip: {
+    //   //       isSetVip: is_open,
+    //   //       isVip: is_vip,
+    //   //       isHadVip: is_had_vip,
+    //   //       vipType: vip_type
+    //   //     }
+    //   //   })
+    //   // }
+    //
+    //   const options = this.$router.params
+    //   const res = await entry.entryLaunch(options, true)    //initial source of enter the program  and get the Curstore(shop info)
+    //       // if(S.getAuthToken()){
+    //       //     const promoterInfo = await api.distribution.info()
+    //       //     this.setState({
+    //       //       isShop:promoterInfo
+    //       //     })
+    //       //   }
+    //
+    //   const { store } = res
+    //   if (!isArray(store)) {
+    //     this.setState({
+    //       curStore: store
+    //     })
+  	// 	}
+    // })
   }
 
   onShareAppMessage (res) {

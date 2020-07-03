@@ -300,9 +300,8 @@ export default class TradeDetail extends Component {
     })
   }
 
-  handleClickCopy = (val) => {
+  handleClickCopy(val)  {
     copyText(val)
-    S.toast('复制成功')
   }
 
   countDownEnd = () => {
@@ -510,7 +509,7 @@ export default class TradeDetail extends Component {
             </View>
           }
           <View className='trade-detail-info'>
-            <Text className='info-text'>订单号：{info.tid}</Text>
+            <Text className='info-text' onClick={this.handleClickCopy.bind(this,info.tid)}>订单号：{info.tid}<Text className='copy'>复制</Text></Text>
             <Text className='info-text'>下单时间：{info.created_time_str}</Text>
             {
               info.invoice_content

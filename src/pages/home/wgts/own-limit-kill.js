@@ -18,7 +18,7 @@ export default class WgtLimitKill extends Component{
     super(props);
     this.state = {
       more:false,
-      index:null,
+      index:0,
       poi: {pos:0},
       showTriangle:true,
       iconUp:false,
@@ -27,7 +27,7 @@ export default class WgtLimitKill extends Component{
     }
   }
    componentDidMount() {
-    const {list} = this.props.info
+    const {list=[]} = this.props.info
      let cur = -1
       if(list.length){
         for (let i = 0;i<list.length;i++) {

@@ -10,6 +10,13 @@ module.exports = {
     NODE_ENV: '"production"',
     INTEGRATION_APP: isIntegration
   },
+  mini: {
+    compile: {
+      exclude: [
+        path.resolve(__dirname, '..', 'src/assets/imgs/cdn')
+      ]
+    }
+  },
   plugins: {
     sass: {
       resource,

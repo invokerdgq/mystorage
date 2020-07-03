@@ -135,6 +135,10 @@
     border-top: 14px solid #f6f6f6;
     padding: 42px 30px;
     background: #fff;
+    .copy{
+      margin-left: 15px;
+      color:$color-theme
+    }
     .info-text {
       display: block;
     }
