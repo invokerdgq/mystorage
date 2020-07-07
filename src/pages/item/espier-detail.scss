@@ -313,6 +313,9 @@
 }
 
 .goods-sold {
+  position: absolute;
+  right: 0;
+  top:-25px;
   padding-left: 20px;
   font-size: $font-size-small;
   color: $color-gray;

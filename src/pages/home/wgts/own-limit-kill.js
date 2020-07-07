@@ -231,7 +231,7 @@ refresh() {
                                 </View>
                                 <View className='goods-sell-dec'>
                                   <View className='goods-sell-dec-num-contain'>
-                                    {/*<Text className='goods-sell-dec-num'>售出件数</Text>*/}
+                                    <Text className='goods-sell-dec-num'>已售{goodsItem.fictitious_sales}件</Text>
                                   </View>
                                   <View className='goods-sell-dec-price-contain'>
                                     <Text className="price">￥<Text className="price-inner">{(goodsItem.act_price/100).toFixed(2)}</Text></Text>

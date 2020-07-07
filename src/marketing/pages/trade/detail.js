@@ -74,6 +74,8 @@ export default class TradeDetail extends Component {
   async fetch () {
     const { id } = this.$router.params
     const data = await api.trade.detail(id)
+    console.log('detail- -------------')
+    console.log(data)
     let sessionFrom = ''
 
     const info = pickBy(data.orderInfo, {
@@ -100,6 +102,7 @@ export default class TradeDetail extends Component {
       order_class: 'order_class',
       latest_aftersale_time: 'latest_aftersale_time',
       remark: 'remark',
+      price: ({ item_fee }) => (+item_fee / 100).toFixed(2),
       item_fee: ({ item_fee }) => (+item_fee / 100).toFixed(2),
       coupon_discount: ({ coupon_discount }) => (+coupon_discount / 100).toFixed(2),
       freight_fee: ({ freight_fee }) => (+freight_fee / 100).toFixed(2),
@@ -108,7 +111,7 @@ export default class TradeDetail extends Component {
       invoice_content: 'invoice.content',
       point: 'point',
       status: ({ order_status }) => resolveOrderStatus(order_status),
-      orders: ({ items }) => pickBy(items, {
+      orders: ({ items={} }) => pickBy(items, {
         order_id: 'order_id',
         item_id: 'item_id',
         // aftersales_status: ({ aftersales_status }) => AFTER_SALE_STATUS[aftersales_status],
@@ -120,7 +123,6 @@ export default class TradeDetail extends Component {
         delivery_time: 'delivery_time',
         pic_path: 'pic',
         title: 'item_name',
-        price: ({ item_fee }) => (+item_fee / 100).toFixed(2),
         point: 'item_point',
         num: 'num',
         item_spec_desc:'item_spec_desc',

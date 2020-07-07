@@ -79,11 +79,11 @@ export default class HomeIndex extends Component {
 
   componentDidShow = () => {
 
-    setTimeout(() => {
-      Taro.navigateTo({
-        url:'/others/pages/invite-activity/invite-activity'
-      })
-    },3000)
+    // setTimeout(() => {
+    //   Taro.navigateTo({
+    //     url:'/others/pages/invite-activity/invite-activity'
+    //   })
+    // },3000)
 
     this.setState({
       url:`plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=39&custom_params=''`

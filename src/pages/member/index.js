@@ -205,7 +205,6 @@ export default class MemberIndex extends Component {
       return S.toast('请先登录')
     }
     if(type){
-      console.log('hahahahha')
       if((this.state.vipgrade.grade_name ==='至尊会员' || this.state.vipgrade.grade_name === '王者身份')&&this.state.vipgrade.is_effective == 0  ){
         Taro.navigateTo({url:'/others/pages/transform/transform'})
       }else{
@@ -213,10 +212,22 @@ export default class MemberIndex extends Component {
         Taro.navigateTo({url})
       }
     }else{
-      console.log('---------')
       url = url + `?grade_name=${this.state.vipgrade.is_vip?this.state.vipgrade.grade_name:this.state.gradeInfo.grade_name}`
       Taro.navigateTo({url})
     }
+  }
+  handleUpdate() {
+    if(!S.getAuthToken()){
+      Taro.showToast({
+        title:'请先登录',
+        icon:'none',
+        duration:1500
+      })
+      return
+    }
+    Taro.navigateTo({
+      url:'/pages/auth/wxauth?update=1'
+    })
   }
 
   beDistributor = async () => {
@@ -292,6 +303,9 @@ export default class MemberIndex extends Component {
   }
 
   handleCodeClick = () => {
+    if (!S.getAuthToken()) {
+      return S.toast('请先登录')
+    }
     Taro.navigateTo({
       url: `/pages/member/member-code`
     })
@@ -330,7 +344,7 @@ export default class MemberIndex extends Component {
             scrollY
           >
             <View className='member-header'>
-                    <View className='member-header-user' style={`min-height:${vipgrade.is_vip?'300rpx':this.state.inviter_name?'300rpx':'220rpx'}`}>
+                    <View className='member-header-user' style={`min-height:${vipgrade.is_vip?'300rpx':this.state.inviter_name?'300rpx':'240rpx'}`}>
                       <View className='member-header-user-logo'><Image src='../../assets/imgs/logo.png' mode='widthFix'/></View>
                       <View className='member-header-user-info'>
                         {
@@ -357,9 +371,9 @@ export default class MemberIndex extends Component {
                               </View>
                         }
                       </View>
-                      <View className='member-header-user-setting' onClick={this.handleClick.bind(this, '/marketing/pages/member/user-info')}>
+                      <View className='member-header-user-setting' onClick={this.handleUpdate.bind(this)}>
                         <View className='iconfont icon-setting-copy'/>
-                        <Text>设置</Text>
+                        <Text>更新信息</Text>
                       </View>
                       <View className='member-header-user-code' onClick={this.handleCodeClick.bind(this)}>
                         <View className='iconfont icon-erweima'/>

@@ -128,9 +128,10 @@ const config = {
     },
     devServer: {
       host: '0.0.0.0',
+      port:4000,
       proxy:{
         '/cross':{
-          target:'https://sxt-b.oioos.com',
+          target:'https://sxt-s.oioos.com',
           changeOrigin:true,
           pathRewrite:{
             '^/cross':''

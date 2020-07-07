@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, ScrollView, Swiper, SwiperItem, Image, Video, Navigator, Canvas, GoodsItem } from '@tarojs/components'
+import { View, Text, ScrollView, Swiper, SwiperItem, Image, Video, Navigator, Canvas } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtCountdown, AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
 import { Loading, Price, BackToTop, FloatMenus, FloatMenuItem, SpHtmlContent, SpToast, GoodsBuyPanel, SpCell, GoodsEvaluation } from '@/components'
@@ -14,6 +14,7 @@ import { GoodsBuyToolbar, ItemImg, ImgSpec, Params, StoreInfo, ActivityPanel, Sh
 import { WgtFilm, WgtSlider, WgtWriting, WgtGoods, WgtHeading, WgtGoodsFaverite } from '../home/wgts'
 import NavGap from "../../components/nav-gap/nav-gap";
 import NavBar from 'taro-navigationbar';
+import {GoodsItem} from "../../components";
 
 import './espier-detail.scss'
 import {userinfo} from "../../api/member";
@@ -1029,16 +1030,18 @@ export default class Detail extends Component {
                       }
                     </View>
 
-                    {
-                      info.fictitious_sales && (<Text className='goods-sold'>{info.fictitious_sales || 0}人已购</Text>)
-                    }
                   </View>
                 )
               }
-              {
-                userinfo.is_vip &&info.rebate_commission &&
-                <View className='rank-back'>分享赚/{(Number(info.rebate_commission)/100).toFixed(2)}元</View>
-              }
+              <View style={{position:'relative'}}>
+                {
+                  info.fictitious_sales && (<Text className='goods-sold'>{info.fictitious_sales || 0}人已购</Text>)
+                }
+                {
+                  userinfo.is_vip &&info.rebate_commission &&
+                  <View className='rank-back'>分享赚/{(Number(info.rebate_commission)/100).toFixed(2)}元</View>
+                }
+              </View>
             </View>
 
             {isPromoter && (

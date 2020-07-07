@@ -5,5 +5,20 @@ module.exports = {
   defineConstants: {
   },
   weapp: {},
-  h5: {}
+  h5: {
+    devServer: {
+      host: '0.0.0.0',
+      port:4000,
+      proxy:{
+        '/cross':{
+          target:'https://sxt-s.oioos.com',
+          changeOrigin:true,
+          pathRewrite:{
+            '^/cross':''
+          }
+        }
+      }
+
+    }
+    }
 }

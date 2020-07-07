@@ -4,6 +4,7 @@ import { AtSearchBar } from 'taro-ui'
 import { classNames } from '@/utils'
 import { toggleTouchMove } from '@/utils/dom'
 import NavBar from 'taro-navigationbar';
+import {cdn} from '../../../consts/index'
 
 import './search-home.scss'
 
@@ -50,7 +51,7 @@ export default class WgtSearchHome extends Component {
     return (
           <View className="search-box-container" style={{position:'fixed',top:`${this.state.top}px`}}>
             <View className="search-nav" onClick={this.searchTap.bind(this)}>
-              <Image src='../../../assets/imgs/susisang.png'  className='search-box-img'/>
+              <Image src={`${cdn}/susisang.png`}  className='search-box-img'/>
               <View className="search-placeholder">
                 搜索你喜欢的商品
               </View>

@@ -23,12 +23,18 @@ export default class WxAuth extends Component {
   }
 
   async autoLogin () {
+    const { update } = this.$router.params
     const { code } = await Taro.login()
     try {
       const { token } = await api.wx.login({ code })
       if (!token) throw new Error(`token is not defined: ${token}`)
-
       S.setAuthToken(token)
+      if(update == 1){
+        this.setState({
+          isAuthShow: true
+        })
+        return
+      }
       return this.redirect()
     } catch (e) {
       console.log(e)
@@ -63,6 +69,7 @@ export default class WxAuth extends Component {
       'source_type': 'member',
     }
     let _this = this
+    _this.handleGetUserInfo()
 
     // api.user.newWxaMsgTmpl(templeparams).then(tmlres => {
     //   console.log('templeparams---1', tmlres)
@@ -121,9 +128,20 @@ export default class WxAuth extends Component {
       //   Object.assign(params,{inviter_id:Taro.getStorageSync('scene')})
       // }
       const { token, open_id, union_id, user_id } = await api.wx.prelogin(params)
-
+      if(this.$router.params.update == 1){
+        Taro.showToast({
+          title:'微信信息同步会有几个小时的时间差,请稍后再试',
+          icon:'none',
+          duration:1500
+        })
+        setTimeout(() => {
+          Taro.navigateTo({
+            url:'/pages/member/index'
+          })
+        },2500)
+        return
+      }
       S.setAuthToken(token)
-
       // 绑定过，跳转会员中心
       if (user_id) {
         await this.autoLogin()

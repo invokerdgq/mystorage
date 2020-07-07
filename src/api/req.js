@@ -85,7 +85,8 @@ class API {
       url: reqUrl,
       data: query,
       method: method.toUpperCase(),
-      header: header
+      header: header,
+      cors_mode:'no-cors'
     }
 
     if (showLoading) {
@@ -110,9 +111,14 @@ class API {
       options.data = qs.stringify(options.data)
     }
 
+    console.log(options)
+    if(!/^https/.test(options.url)){
+      options.url = 'https:'+options.url
+    }
     return Taro.request(options)
-      .then(res => {
+        .then(res => {
         // eslint-disable-next-line
+
         const { data, statusCode, header } = res
         if (showLoading) {
           Taro.hideLoading()
@@ -164,15 +170,22 @@ class API {
   }
 }
 
-export default new API({
-  baseURL: APP_BASE_URL,
 
-  // interceptor (chain) {
-  //   const { requestParams } = chain
-  //   requestParams.company_id = '1'
+// export default new API({
+//   baseURL: APP_BASE_URL
+//
+//   // interceptor (chain) {
+//   //   const { requestParams } = chain
+//   //   requestParams.company_id = '1'
+//
+//   //   return chain.proceed(requestParams)
+//   // }
+// })
 
-  //   return chain.proceed(requestParams)
-  // }
+// export { API }
+console.log('yyyyyyyyyyyyyyyyyyyy')
+console.log(APP_BASE_URL)
+let instance = new API({
+  baseURL:APP_BASE_URL
 })
-
-export { API }
+export default instance

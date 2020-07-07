@@ -3,9 +3,9 @@ module.exports = {
     // prod: 'ecshopx.shopex123.com/index.php',
     // preissue: 'ecshopx.shopex123.com/index.php',
     // test: 'ecshopx.shopex123.com/index.php'
-    prod: 'sxt-b.oioos.com/cross',
-    preissue: 'sxt-b.oioos.com/cross',
-    test: 'sxt-b.oioos.com/cross'
+    prod: 'sxt-s.oioos.com',
+    preissue: 'sxt-s.oioos.com',
+    test: 'sxt-s.oioos.com'
   },
   weapp: {
     // prod: 'ecshopx.shopex123.com/index.php',

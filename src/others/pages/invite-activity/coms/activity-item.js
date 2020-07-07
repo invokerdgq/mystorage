@@ -32,7 +32,7 @@ export default class ActivityItem extends Component{
     })
    }
    render() {
-,llll    const {showMore} = this.state
+   const {showMore} = this.state
      const {userList,current,step} = this.props.activityInfo
      let newList = []
      if(showMore){
@@ -72,7 +72,7 @@ export default class ActivityItem extends Component{
          </View>
          <View className='item-user'>
            <View className='item-user-dec'>助力记录</View>
-           <View className='user-list'>ghjhgjyyjgygj
+           <View className='user-list'>
              {
                newList.map((item,index) => {
                  return (

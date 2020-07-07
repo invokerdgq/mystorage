@@ -16,18 +16,22 @@ Taro.M = function (option,identifier='') {
   console.log(option)
   console.log(identifier)
 }
-let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
-Taro.getSystemInfo({
-  success: res => {
-    let statusBarHeight = res.statusBarHeight;
-    let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
-    Taro.setStorageSync('top',(Height - statusBarHeight)/2 + statusBarHeight)
+if(process.env.TARO_ENV === 'weapp'){
+  let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
+  Taro.getSystemInfo({
+    success: res => {
+      let statusBarHeight = res.statusBarHeight;
+      let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
+      Taro.setStorageSync('top',(Height - statusBarHeight)/2 + statusBarHeight)
 
-  },
-  fail(err) {
-    console.log(err);
-  }
-})
+    },
+    fail(err) {
+      console.log(err);
+    }
+  })
+}else{
+  Taro.setStorageSync('top',40)
+}
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
@@ -67,23 +71,23 @@ useHooks()
   class App extends Component {
     // eslint-disable-next-line react/sort-comp
     componentWillMount () {
-      let option = this.$router.params.query.scene
+      console.log('app    --------------------------------')
       entry.entryLaunch(this.$router.params.query)
-      let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
-      Taro.getSystemInfo({
-        success: res => {
-          let statusBarHeight = res.statusBarHeight;
-          let navTop = menuButtonObject.top;
-          let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
-          this.navHeight = Height;
-          this.navTop = navTop;
-          this.windowHeight = res.windowHeight;
-          Taro.setStorageSync('top',(this.navHeight - statusBarHeight)/2 + statusBarHeight)
-        },
-        fail(err) {
-          console.log(err);
-        }
-      })
+      // let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
+      // Taro.getSystemInfo({
+      //   success: res => {
+      //     let statusBarHeight = res.statusBarHeight;
+      //     let navTop = menuButtonObject.top;
+      //     let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
+      //     this.navHeight = Height;
+      //     this.navTop = navTop;
+      //     this.windowHeight = res.windowHeight;
+      //     Taro.setStorageSync('top',(this.navHeight - statusBarHeight)/2 + statusBarHeight)
+      //   },
+      //   fail(err) {
+      //     console.log(err);
+      //   }
+      // })
     }
     componentDidMount () {
       const promoterExp = Taro.getStorageSync('distribution_shop_exp')
@@ -91,17 +95,17 @@ useHooks()
         Taro.setStorageSync('distribution_shop_id', '')
         Taro.setStorageSync('distribution_shop_exp', '')
       }
-    if(process.env.TARO_ENV === 'weapp') this.fetchTabs()
+    if(process.env.TARO_ENV !== 'weapp') this.fetchTabs()
       this.fetchColors()
     }
     config = {
       tabBar:process.env.TARO_ENV === 'weapp'? {
         list:[
-          {pagePath: "pages/index", text: "首页", name: "home", iconPath: "assets/imgs/home.jpg", selectedIconPath: "assets/imgs/home_selected.jpg"},
-          {pagePath: "pages/category/index", text: "分类", name: "category", iconPath: "assets/imgs/catagory.jpg", selectedIconPath: "assets/imgs/catagory_selected.jpg"},
-          {pagePath: "pages/recommend/list", text: "种草", name: "article", iconPath: "assets/imgs/grass.jpg", selectedIconPath: "assets/imgs/grass_selected.jpg"},
-          {pagePath: "pages/cart/espier-index", text: "购物车", name: "cart", iconPath: "assets/imgs/cart.jpg", selectedIconPath: "assets/imgs/cart_selected.jpg"},
-          {pagePath: "pages/member/index", text: "我的", name: "member", iconPath: "assets/imgs/mine.jpg", selectedIconPath: "assets/imgs/mine_selected.jpg"}
+          {pagePath: "pages/index", text: "首页", name: "home", iconPath: "/assets/imgs/home.jpg", selectedIconPath: "assets/imgs/home_selected.jpg"},
+          {pagePath: "pages/category/index", text: "分类", name: "category", iconPath: "/assets/imgs/catagory.jpg", selectedIconPath: "assets/imgs/catagory_selected.jpg"},
+          {pagePath: "pages/recommend/list", text: "种草", name: "article", iconPath: "/assets/imgs/grass.jpg", selectedIconPath: "assets/imgs/grass_selected.jpg"},
+          {pagePath: "pages/cart/espier-index", text: "购物车", name: "cart", iconPath: "/assets/imgs/cart.jpg", selectedIconPath: "assets/imgs/cart_selected.jpg"},
+          {pagePath: "pages/member/index", text: "我的", name: "member", iconPath: "/assets/imgs/mine.jpg", selectedIconPath: "assets/imgs/mine_selected.jpg"}
              ],
         selectedColor:'#c1534e',
         borderStyle:'black'

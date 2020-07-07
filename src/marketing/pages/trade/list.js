@@ -35,7 +35,7 @@ export default class TradeList extends Component {
         {title: '已完成', status: '3'},
         {title:'会员购买',status:'7'}
       ],
-      list: [],
+      list:[],
       rateStatus: false,
       curItemActionsId: null,
       changeAddress:false,
@@ -126,6 +126,9 @@ export default class TradeList extends Component {
       const {list,total_count:total} = await api.member.getRecord(params)
       this.setState({
         list:[...this.state.list,...list]
+      },() => {
+        console.log('kkkkkkkkkkkk')
+        console.log(this.state.list)
       })
       return {total}
     }
@@ -206,11 +209,12 @@ export default class TradeList extends Component {
   }
 
   handleClickItemBtn = async (trade, type) => {
-    const { tid } = trade
+    let { tid } = trade
+    if(!tid){
+      tid = trade.order_id
+    }
     if (type === 'confirm') {
       await api.trade.confirm(tid)
-      const { fullPath } = getCurrentRoute(this.$router)
-      Taro.M(fullPath)
       Taro.redirectTo({
         url: '/pages/trade/list?status =1'
       })
@@ -261,7 +265,11 @@ export default class TradeList extends Component {
       curItemActionsId: null
     })
   }
-
+  deliveryDec (item) {
+      Taro.navigateTo({
+        url: `/pages/trade/delivery-info?order_type=normal&order_id=${item.order_id}&delivery_code=${item.delivery_code}&delivery_corp=${item.delivery_corp}&delivery_name=`
+      })
+  }
   render () {
     const { colors } = this.props
     const { curTabIdx, curItemActionsId, tabList, list, page, rateStatus } = this.state
@@ -298,9 +306,8 @@ export default class TradeList extends Component {
             onScrollToUpper={this.onPullDownRefresh.bind(this)}
             onScrollToLower={this.nextPage}
           >
-            {
-              tabList[curTabIdx].status !== '7'&&
-              list.map((item) => {
+            { tabList[curTabIdx].status !== '7'&&
+              list.map((item,index) => {
                 return (
                       <TradeItem
                         payType={item.pay_type}
@@ -333,6 +340,16 @@ export default class TradeList extends Component {
                         <View className='vip-order-bottom-user'>用户:{item.username}</View>
                         <View className='vip-order-bottom-phone'>电话:{item.telephone}</View>
                         <View className='vip-order-bottom-address'>地址:{item.address}</View>
+                      </View>
+                      <View className='order-feature'>
+                        <View className='total'><Text>共1件商品 合计：￥299.00</Text></View>
+                        <View className='more-info'><Text className='delivery-status'>{item.delivery_status === 'DONE'?'已发货':'待发货'}</Text>
+                          {
+                            item.delivery_status === 'DONE'&&
+                          <View  className='order-dec' onClick={this.deliveryDec.bind(this,item)}>
+                            物流详情
+                          </View>
+                        }</View>
                       </View>
                     </View>
                     )

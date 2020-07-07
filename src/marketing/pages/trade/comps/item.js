@@ -48,7 +48,7 @@ export default class TradeItem extends Component {
             customHeader
               ? <View className='trade-item__hd'>{this.props.renderHeader}</View>
               : <View className='trade-item__hd'>
-                  <Text className='time'>{info.create_date}</Text>
+                  <Text className='time'>{info.create_date||info.created}</Text>
                   <Text className='trade-item__shop'>订单号：{info.tid}</Text>
                 </View>
           )
@@ -58,13 +58,24 @@ export default class TradeItem extends Component {
           onClick={onClick}
         >
           {
-            info.order.map((item, idx) =>
-              <OrderItem
-                key={idx}
-                info={item}
-                payType={payType}
-              />
-            )
+            info.order?
+              <View>
+                {
+                  info.order.map((item, idx) =>
+                    <OrderItem
+                      key={idx}
+                      info={item}
+                      payType={payType}
+                    />
+                  )
+                }
+              </View> :
+              <View>
+                <OrderItem
+                  info={info}
+                  payType={payType}
+                />
+              </View>
           }
           {
             this.props.customRender
