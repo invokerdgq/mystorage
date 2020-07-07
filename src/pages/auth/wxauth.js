@@ -57,9 +57,18 @@ export default class WxAuth extends Component {
         ? decodeURIComponent(redirect)
         : '/pages/member/index'
     }
-
-    Taro.redirectTo({
-      url: redirect_url
+    api.member.memberInfo().then(res => {
+      Taro.setStorageSync('userinfo',{
+        username:res.memberInfo.username,
+        avatar:res.memberInfo.avatar,
+        userId:res.memberInfo.user_id,
+        user_card_code:res.memberInfo.user_card_code,
+        inviter_id:res.memberInfo.inviter_id,
+        is_vip:res.vipgrade.is_vip
+      })
+      Taro.redirectTo({
+        url: redirect_url
+      })
     })
   }
 

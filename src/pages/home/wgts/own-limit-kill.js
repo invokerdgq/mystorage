@@ -149,29 +149,31 @@ refresh() {
             scrollWithAnimation= 'true'
             enableFlex='true'
           >
-            {/*<View className='gap'>没有了~</View>*/}
-            {/*  <View className='gap'/>*/}
+            <View style={{display:'flex',flexDirection:'row',width:'100%'}}>
+              {/*<View className='gap'>没有了~</View>*/}
+              {/*  <View className='gap'/>*/}
               {
                 list.map((item,index) => {
                   return(
                     <View className='timer-content' onClick={this.handleTimerChange.bind(this,index)} style={{backgroundColor:index === this.state.index ?item.config.status === 'in_sale'?'#c0534e':'#a0a0a0':'white',color:index !== this.state.index?'black':'white'}}  >
                       {
                         item.config.status === 'ended'&&
-                          <Text>已结束</Text>
+                        <Text>已结束</Text>
                       }
                       {
                         item.config.status !== 'ended'&&
-                          <View className='activity-dec'>
-                              <View className='activity-dec-start' id='start' >
-                                <View className='activity-dec-start-s'>{item.config.start_date.split(' ')[0].split('-')[1]}月{item.config.start_date.split(' ')[0].split('-')[2]}日 {item.config.start_date.split(' ')[1]}</View>
-                                <View className='activity-dec-start-title'>{item.config.status === 'in_sale'?'开抢中':'即将开抢'}</View>
-                              </View>
+                        <View className='activity-dec'>
+                          <View className='activity-dec-start' id='start' >
+                            <View className='activity-dec-start-s'>{item.config.start_date.split(' ')[0].split('-')[1]}月{item.config.start_date.split(' ')[0].split('-')[2]}日 {item.config.start_date.split(' ')[1]}</View>
+                            <View className='activity-dec-start-title'>{item.config.status === 'in_sale'?'开抢中':'即将开抢'}</View>
                           </View>
+                        </View>
                       }
                     </View>
                   )
                 })
               }
+            </View>
           </ScrollView>
         </View>
         <View className={`${showTriangle?'triangle-container':'triangle-container-none'}`} style={`left:${this.state.index <2?(2*this.state.index+1)*750/8 - 10:list.length-3<this.state.index?750-(list.length-1-this.state.index)*750/4-750/8-10:750/2-10}rpx`}>

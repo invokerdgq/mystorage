@@ -101,11 +101,11 @@ useHooks()
     config = {
       tabBar:process.env.TARO_ENV === 'weapp'? {
         list:[
-          {pagePath: "pages/index", text: "首页", name: "home", iconPath: "/assets/imgs/home.jpg", selectedIconPath: "assets/imgs/home_selected.jpg"},
-          {pagePath: "pages/category/index", text: "分类", name: "category", iconPath: "/assets/imgs/catagory.jpg", selectedIconPath: "assets/imgs/catagory_selected.jpg"},
-          {pagePath: "pages/recommend/list", text: "种草", name: "article", iconPath: "/assets/imgs/grass.jpg", selectedIconPath: "assets/imgs/grass_selected.jpg"},
-          {pagePath: "pages/cart/espier-index", text: "购物车", name: "cart", iconPath: "/assets/imgs/cart.jpg", selectedIconPath: "assets/imgs/cart_selected.jpg"},
-          {pagePath: "pages/member/index", text: "我的", name: "member", iconPath: "/assets/imgs/mine.jpg", selectedIconPath: "assets/imgs/mine_selected.jpg"}
+          {pagePath: "pages/index", text: "首页", name: "home", iconPath: "assets/imgs/home.jpg", selectedIconPath: "assets/imgs/home_selected.jpg"},
+          {pagePath: "pages/category/index", text: "分类", name: "category", iconPath: "assets/imgs/catagory.jpg", selectedIconPath: "assets/imgs/catagory_selected.jpg"},
+          {pagePath: "pages/recommend/list", text: "种草", name: "article", iconPath: "assets/imgs/grass.jpg", selectedIconPath: "assets/imgs/grass_selected.jpg"},
+          {pagePath: "pages/cart/espier-index", text: "购物车", name: "cart", iconPath: "assets/imgs/cart.jpg", selectedIconPath: "assets/imgs/cart_selected.jpg"},
+          {pagePath: "pages/member/index", text: "我的", name: "member", iconPath: "assets/imgs/mine.jpg", selectedIconPath: "assets/imgs/mine_selected.jpg"}
              ],
         selectedColor:'#c1534e',
         borderStyle:'black'
