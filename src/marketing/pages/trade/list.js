@@ -268,7 +268,7 @@ export default class TradeList extends Component {
   deliveryDec (item) {
     console.log(item)
       Taro.navigateTo({
-        url: `/pages/trade/delivery-info?order_type=${item.gift?'memberCard':'normal'}&order_id=${item.order_id}&delivery_code=${item.delivery_code}&delivery_corp=${item.delivery_corp}&delivery_name=`
+        url: `/pages/trade/delivery-info?order_type=${item.gift?'memberCard':'normal'}&order_id=${item.order_id}&delivery_code=${item.delivery_code}&delivery_corp=${item.delivery_corp}&delivery_name=${item.delivery_corp}`
       })
   }
   render () {
