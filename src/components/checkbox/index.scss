@@ -23,7 +23,7 @@ $checkbox-size: 32px;
     vertical-align: middle;
   }
   .at-icon {
-    // opacity: 1;
+    // own-opacity: 1;
     transform: scale(0.96);
     transition: all .1s ease-in;
     font-size: 20px;
@@ -36,7 +36,7 @@ $checkbox-size: 32px;
     // border-color: $color-brand-primary;
   }
   .at-icon {
-    // opacity: 1;
+    // own-opacity: 1;
     // transform: scale(1);
   }
 }

@@ -53,6 +53,8 @@ export default class CartCheckout extends Component {
     super(props)
 
     this.state = {
+      total_balance:0,
+      commission_balance:0,
       codeValid:true,
       is_exchange:false,
       scanCode:null,
@@ -93,6 +95,7 @@ export default class CartCheckout extends Component {
       isDrugInfoOpend: false
     })
     this.fetchAddress()
+    this.updateTotal()
   }
 
   componentDidMount () {
@@ -101,7 +104,7 @@ export default class CartCheckout extends Component {
     if(source === 'exchange'){
       this.setState({is_exchange:true})
     }
-    let curStore = null, info = null
+    let curStore = null, info = null;
 
     if (cart_type === 'fastbuy') {
       curStore = Taro.getStorageSync('curStore')
@@ -179,6 +182,12 @@ export default class CartCheckout extends Component {
     }
   }
 
+  updateTotal = async ()=> {
+    const res = await api.member.memberInfo()
+    this.setState({
+      total_balance:res.memberInfo.commission/100
+    })
+  }
   async fetchAddress (cb) {
     const { type } = this.$router.params
     const isDrug = type === 'drug'
@@ -337,6 +346,9 @@ export default class CartCheckout extends Component {
     })
     const params = this.getParams()
     console.log(params)
+    if(this.state.payType === 'wxpaysurplus'){
+      params.commission_balance = this.state.commission_balance
+    }
     let data
     try {
       data = await api.cart.total(params)  //
@@ -610,6 +622,8 @@ handleExchange = async () => {
     //   return S.toast('请选择地址')
     // }
     const { payType, total } = this.state
+    console.log('jghggjggjgjgjgjjg')
+    console.log(payType)
     const { type } = this.$router.params
     const isDrug = type === 'drug'
     const distributionShopId = Taro.getStorageSync('distribution_shop_id')
@@ -658,8 +672,27 @@ handleExchange = async () => {
       if(this.state.is_exchange){
         params = {...params,pay_type:'card',card_exchange_pwd299:this.state.scanCode}
       }
+      if(payType === 'wxpaysurplus'||payType === 'surplus'){
+        params.commission_balance = payType === 'wxpaysurplus'?this.state.commission_balance:this.state.total.total_fee
+      }
       config = await api.trade.create({...params,come_from:distributionShopId})
       order_id = isDrug ? config.order_id : config.trade_info.order_id
+      if(payType === 'surplus'){
+        if(config.pay_status){
+          setTimeout(() => {
+            Taro.redirectTo({
+              url: `/pages/trade/detail?id=${order_id}`
+            })
+          },700)
+        }else{
+          Taro.showToast({
+            title:'余额支付失败',
+            icon:"none",
+            duration:1500
+          })
+        }
+        return
+      }
     } catch (e) {
       Taro.showToast({
         title: e.message,
@@ -802,12 +835,13 @@ handleExchange = async () => {
     })
   }
 
-  handlePaymentChange = async (payType) => {
+  handlePaymentChange = async (payType,commission) => {
     if (payType === 'point') {
       this.props.onClearCoupon()
     }
     this.setState({
       payType,
+      commission_balance:commission,
       isPaymentOpend: false
     }, () => {
       this.calcOrder()
@@ -869,14 +903,15 @@ handleToast=()=>{
     const payTypeText = {
       point: '积分支付',
       wxpay: process.env.TARO_ENV === 'weapp' ? '微信支付' : '现金支付',
-      balance: '余额支付'
+      balance: '余额支付',
+      surplus:'余额支付',
+      wxpaysurplus:'混合支付'
     }
     const { coupon, colors } = this.props
-    const { info, express, address, total, showAddressPicker, showCheckoutItems, curCheckoutItems, payType, invoiceTitle, submitLoading, disabledPayment, isPaymentOpend, isDrugInfoOpend, drug,is_exchange } = this.state
+    const { commission_balance,total_balance,info, express, address, total, showAddressPicker, showCheckoutItems, curCheckoutItems, payType, invoiceTitle, submitLoading, disabledPayment, isPaymentOpend, isDrugInfoOpend, drug,is_exchange } = this.state
     const curStore = Taro.getStorageSync('curStore')
     const { type } = this.$router.params
     const isDrug = type === 'drug'
-
     if (!info) {
       return <Loading />
     }
@@ -1155,6 +1190,19 @@ handleToast=()=>{
                     choiceColor={true}
                   />
                 </SpCell>
+                {
+                  payType === 'wxpaysurplus'&&
+                  <SpCell
+                    className='trade-sub-total__item'
+                    title='余额抵扣'
+                  >
+                    <Price
+                      unit='cent'
+                      value={(commission_balance*100).toFixed(2)}
+                      choiceColor={true}
+                    />
+                  </SpCell>
+                }
                 <SpCell
                   className='trade-sub-total__item'
                   title={`运费${is_exchange?'差价':''}`}
@@ -1220,7 +1268,7 @@ handleToast=()=>{
                     需支付 :
                     {
                       payType !== 'point'
-                        ? <Price primary unit='cent' value={total.total_fee} choiceColor={true} />
+                        ? <Price primary unit='cent' value={payType === 'wxpaysurplus'?total.total_fee -Number(commission_balance):payType === 'surplus'?0:total.total_fee} choiceColor={true} />
                         : (total.point && <Price primary value={total.point} noSymbol noDecimal appendText='积分' />)
                     }
                   </View>
@@ -1246,6 +1294,10 @@ handleToast=()=>{
           }
 
           <PaymentPicker
+            orderTotal={total.total_fee}
+            total={total_balance}
+            disabledSurplus={total_balance<(total.total_fee/100)}
+            disabledWxpaySurplus={total_balance<=0}
             isOpened={isPaymentOpend}
             type={payType}
             isShowPoint

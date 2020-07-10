@@ -39,7 +39,7 @@ export function linkPage (type, id) {
           url = '/others/pages/invite-activity/invite-activity'
           break
         default :
-          url = ''
+          url = `/others/pages/${id}/${id}`
       }
       break;
     case 'tag':

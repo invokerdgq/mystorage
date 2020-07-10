@@ -20,8 +20,25 @@
     }
   }
   &__bd {
-    height: 350px;
+    //height: 350px;
     padding: 30px 0;
+  }
+  .part-balance-payment{
+    margin: 10px 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    .input{
+      width: 300px;
+    }
+    .dec{
+      font-size: 24px;
+      .total{
+        font-size: 24px;
+        color:$color-theme;
+      }
+    }
   }
   .payment-item {
     display: flex;

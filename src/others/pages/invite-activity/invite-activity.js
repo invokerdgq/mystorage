@@ -6,14 +6,20 @@ import {AtCountdown} from "taro-ui";
 import { calcTimer } from '@/utils'
 import {cdn} from '@/consts/index'
 import Taro, { Component } from '@tarojs/taro'
-import GoodsItem  from './coms/goods-item'
+import OwnGoodsItem  from './coms/goods-item'
+import OwnTitle from "../../../components/own-title/own-title";
+import OwnShade from "../../../components/own-shade/own-shade";
+import OwnProgress from "../../../components";
+import OwnPoster from "../../../components/own-poster/own-poster";
 
 import './invite-activity.scss'
 import ActivityItem from "./coms/activity-item";
+
 export default class InviteActivity extends Component{
   static options = {
     addGlobalClass:true
   }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +31,7 @@ export default class InviteActivity extends Component{
         {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:1},
         {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:0}
         ],
-      activityList:[
+      userActivity:
         {
           userList:[
             {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0},
@@ -34,14 +40,52 @@ export default class InviteActivity extends Component{
             {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0},
             {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0},
             {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0}
-          ]
-        }
-      ]
+          ],
+          inviteNumber:30,
+          lastSeconds:7200,
+          step:[2,5,10,18,28,40]
+        },
+      showShade:false,
+      showCanvas:false,
+      savePath:''
     }
     this.top = Taro.getStorageSync('top')
   }
-  componentDidMount() {
-
+  componentDidShow() {
+    if(!S.getAuthToken()){
+      Taro.showToast({
+        title:'请先登录',
+        icon:'none',
+        duration:1500
+      })
+      setTimeout(() => {
+        S.login(this)
+      },2500)
+      return;
+    }
+  }
+  sendPath(path){
+    this.setState({
+      savePath:path
+    })
+  }
+  onShareAppMessage(obj) {
+    return {
+      title:'速来助我一臂之力',
+      path:'/others/pages/help/help',
+      imageUrl:this.state.savePath
+    }
+  }
+  handleClickBtn(type){
+    if(type === 'buy'){
+      Taro.navigateTo({
+        url:'/others/pages/select/select'
+      })
+    }else{
+      this.setState({
+        showShade:true
+      })
+    }
   }
   back(){
     Taro.navigateBack()
@@ -49,45 +93,103 @@ export default class InviteActivity extends Component{
   handleClickItem() {
 
   }
+  handleShowCanvas(){
+   this.setState({
+     showCanvas:true,
+     showShade:false
+   })
+  }
+  handleCloseShade =(type)=>{
+    if(type === 'share'){
+      this.setState({
+        showShade:false
+      })
+    }else{
+      this.setState({
+        showCanvas:false,
+        showShade:true
+      })
+    }
+  }
   render() {
-    const {goodsList,activityList}= this.state
+    const {goodsList,userActivity,showShade,showCanvas}= this.state
     return(
       <View>
+        <OwnShade
+        show={showCanvas}
+        onclickClose={this.handleCloseShade.bind(this,'canvas')}
+        >
+         <OwnPoster
+         Url2X={`${cdn}/init-post.png`}
+         Url3X={`${cdn}/post.png`}
+         sendPath={this.sendPath.bind(this)}
+         />
+        </OwnShade>
+        <OwnShade
+        show={showShade}
+        onclickClose={this.handleCloseShade.bind(this,'share')}
+        >
+          <View className='shade-slot'>
+            <View className='img-container'>
+              <Image src={`${cdn}/invite-share.png`} style={{width:'580rpx'}} mode='widthFix'/>
+            </View>
+            <View className='shade-slot-head'>
+              <View className='shade-slot-head-title'>仅剩<Text className='number'>{}9</Text><Text className='danwei'>人</Text>即达xx档</View>
+              <View>
+                <OwnProgress
+                  height={28}
+                  step={userActivity.step}
+                  inviteNumber={userActivity.inviteNumber}
+                  lastSeconds={userActivity.lastSeconds}
+                />
+              </View>
+            </View>
+            <View className='shade-slot-foot'>
+              <View className='shade-slot-foot-title'>继续分享<Text className='invite'>助力</Text>选择更多<Text className='goods'>商品</Text></View>
+              <View className='btn'>
+                <Button className='btn-apperance' openType='share'>
+                  <Image src={`${cdn}/share-friend.png`} mode='widthFix' className='shade-btn'/>
+                </Button>
+                <Image src={`${cdn}/save-img.png`} mode='widthFix' className='shade-btn' onClick={this.handleShowCanvas.bind(this)}/>
+              </View>
+            </View>
+          </View>
+        </OwnShade>
         <View className='iconfont icon-arrow-left' style={`top:${this.top}px`} onClick={this.back}/>
         <Image src={`${cdn}/invite-head.png`} mode='widthFix' className='bg-img'/>
         <View className='invite-act-content'>
         <View className='activity-list'>
             <ActivityItem
-            activityInfo={activityList[0]}
+            activityInfo={userActivity}
+            onclickBtn={this.handleClickBtn.bind(this)}
             />
         </View>
+          <OwnTitle
+           title={'超值产品一元购'}
+           innerClass={'inner'}
+           containerClass='title-container'
+          />
           <ScrollView
           scrollY
           enableFlex={true}
           className='goods-scroll'
           >
-            {
-              goodsList.map((item,index) => {
-                return(
-                  <GoodsItem
-                  info={item}
-                  onclick={this.handleClickItem.bind(this,item)}
-                  />
-                )
-              })
-            }
+            <View className='goods-scroll-list'>
+              {
+                goodsList.map((item,index) => {
+                  return(
+                    <OwnGoodsItem
+                      info={item}
+                      onclick={this.handleClickItem.bind(this,item)}
+                    />
+                  )
+                })
+              }
+            </View>
           </ScrollView>
         </View>
         <View className='rule'>
-          <View className='rule-title'><Text className='line'/> 活动规则 <Text className='line'/></View>
-          <View className='rule-content'>
-            <View className='rule-item'>1、如未完成拉新但商品已无,助力人数可平移至其他商品;</View>
-            <View className='rule-item'>2、被邀请人仅可助力一次,成功领取过优惠券即算老用户;</View>
-            <View className='rule-item'>3、完成任务后助力人数清零;</View>
-            <View className='rule-item'>4、拉新人限时48小时</View>
-            <View className='rule-item'>5、活动时间：新系统上线一周后开始。</View>
-          </View>
-          <View className='rule-footer'>本活动最终解释权归杭州茵莱芙有限公司所有</View>
+          <Image src={`${cdn}/invite-foot.png`} mode='widthFix' className='bg-img'/>
         </View>
       </View>
     )

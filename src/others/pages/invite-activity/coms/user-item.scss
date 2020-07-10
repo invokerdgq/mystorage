@@ -1,20 +1,48 @@
 @import "../../../../style/imports";
+@import "../../../../style/myiconfont.scss";
 
 .user-item{
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 15px;
   &-count{
+    .mount{
+      font-size: 27px;
+      color:#ed6005
+    }
+  }
+  .zan{
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
     margin-left: auto;
+    margin-right: 15px;
+    .iconfont{
+      font-size: 25px;
+      color:#ed6005;
+      z-index:10000
+    }
   }
   &-avatar{
-    width: 150px;
-    height: 150px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     overflow: hidden;
     Image{
       width: 100%;
       height: 100%;
+    }
+  }
+  &-dec{
+    margin-left: 18px;
+    .username{
+      font-size: 27px;
+      color:#2f2f2f
+    }
+    .message{
+      font-size: 27px;
+      color:#8d8d8d
     }
   }
 }

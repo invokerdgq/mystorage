@@ -46,6 +46,7 @@
     "nervjs": "^1.5.6",
     "qiniu-js": "^2.5.4",
     "qs": "^6.6.0",
+    "react": "^16.13.1",
     "redux": "^4.0.1",
     "redux-create-reducer": "^1.2.0",
     "redux-logger": "^3.0.6",

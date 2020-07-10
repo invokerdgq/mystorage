@@ -40,7 +40,7 @@ export default class NavGap extends Component{
     const {title,home } = this.props
     const { showIcon } = this.state
       return (
-        <View className="nav-gap-container">
+        <View className="nav-gap-container" style={{background:this.props.bg?this.props.bg:''}}>
           <NavBar
           title={title}
           back = {showIcon}

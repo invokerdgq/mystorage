@@ -239,7 +239,9 @@ useHooks()
             'pages/exchange/exchange',
             'pages/transform/transform',
             'pages/invite-activity/invite-activity',
-            'pages/help/help'
+            'pages/help/help',
+            'pages/live/live',
+            'pages/select/select'
           ]
         }
       ],

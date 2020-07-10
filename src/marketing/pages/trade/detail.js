@@ -74,8 +74,6 @@ export default class TradeDetail extends Component {
   async fetch () {
     const { id } = this.$router.params
     const data = await api.trade.detail(id)
-    console.log('detail- -------------')
-    console.log(data)
     let sessionFrom = ''
 
     const info = pickBy(data.orderInfo, {
@@ -205,11 +203,14 @@ export default class TradeDetail extends Component {
       payLoading: true
     })
 
-    const { tid: order_id, order_type } = info
+    const { tid: order_id, order_type,pay_type,commission_balance } = info
     const paymentParams = {
-      pay_type: 'wxpay',
+      pay_type: pay_type,
       order_id,
       order_type
+    }
+    if(pay_type === 'wxpaysurplus'){
+      paymentParams.commission_balance = commission_balance
     }
     const config = await api.cashier.getPayment(paymentParams)
 

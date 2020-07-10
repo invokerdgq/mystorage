@@ -1,13 +1,13 @@
 import Taro, { Component } from '@tarojs/taro'
-import {View,Image} from "@tarojs/components";
+import {View,Image,Icon} from "@tarojs/components";
 import {cdn} from '@/consts/index'
 
 import './user-item.scss'
 export default class UserItem extends Component{
-  static config = {
+  static options = {
     addGlobalClass:true
   }
-  static defauleProps = {
+  static defaultProps = {
     info:{
       imgUrl:'',
       username:'',
@@ -22,12 +22,12 @@ export default class UserItem extends Component{
     return(
       <View className='user-item'>
         <View className='user-item-avatar'><Image src={imgUrl}/></View>
-        <View>
-          <View>{username}</View>
-          <View>成功助力</View>
+        <View className='user-item-dec'>
+          <View className='username'>{username}</View>
+          <View className='message'>成功助力</View>
         </View>
-        <View className='iconfont icon-dianzan'/>
-        <View className='user-item-count'>助力<Text>{count}</Text></View>
+        <View className='zan'><Icon className='iconfont icon-zan'></Icon></View>
+        <View className='user-item-count'>助力<Text className='mount'>{count}</Text>元</View>
       </View>
     )
   }

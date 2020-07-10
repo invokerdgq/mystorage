@@ -1,0 +1,152 @@
+@import "../../../style/imports";
+
+.icon-arrow-left{
+  position: absolute;
+  left:0;
+  width: 87px;
+  height: 64px;
+  line-height: 64px;
+  margin-left: 10px;
+  font-size: 52px;
+  transform: translate(0,-50%);
+  z-index:100
+}
+.live{
+  width: 100vw;
+  height: 100vh;
+  background: white;
+}
+.data-view {
+  padding: 70px 23px 0;
+  position: absolute;
+  top:0;
+  left:0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .live-header{
+    .true{
+      color:white;
+      font-size: 24px;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+  .live-footer{
+    padding-bottom: 70px;
+    &-user{
+      display: inline-block;
+      line-height: 44px;
+      height: 44px;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      .container{
+        padding: 0 15px;
+        background: #ec5942;
+        border-radius: 22px;
+        opacity: 0.38;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        .iconfont{
+          font-size: 30px;
+        }
+        .iconfont,.buy-dec{
+          visibility: hidden;
+        }
+      }
+      .content{
+        padding: 0 15px;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        left:0;
+        top:0;
+        font-size: 27px;
+        color:white;
+        .iconfont{
+          font-size: 30px;
+          margin-right: 10px;
+        }
+      }
+    }
+    &-feature{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .more{
+        display: flex;
+        flex:1;
+        flex-direction: row;
+        justify-content: space-between;
+        &-item{
+          width: 72px;
+          height: 72px;
+          border-radius: 36px;
+          position: relative;
+          .container{
+            width: 72px;
+            height: 72px;
+            border-radius: 36px;
+            background: rgba(0,0,0,0.3);
+          }
+          .iconfont{
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform: translate(-50%,-50%);
+            font-size:45px ;
+            color:white
+          }
+          .icon-gouwucheman{
+            color: #a3780a;
+          }
+          .icon-xinaixin{
+            color: #e75252;
+          }
+        }
+      }
+      .opc{
+        position: relative;
+        .send-message{
+          width: 360px;
+          padding: 0 35px;
+          border-radius: 35px;
+          height: 70px;
+          background: #000000;
+          opacity: 0.3;
+          overflow: hidden;
+          margin-right: 8px;
+        }
+        .holder{
+          color: white;
+        }
+        .input{
+          opacity: 1;
+          font-size: 30px;
+          border: none;
+          background-color: transparent;
+          position: absolute;
+          left:0;
+          top:0;
+          color: white;
+        }
+      }
+    }
+  }
+}
+.test{
+  height: 40px;
+  border-radius: 20px;
+  background: rgba(0,0,0,0.3);
+  display: inline-block;
+  padding: 0 15px;
+  line-height: 40px;
+}
+.inner{
+  color:red
+}

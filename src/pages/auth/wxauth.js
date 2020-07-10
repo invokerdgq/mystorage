@@ -23,6 +23,7 @@ export default class WxAuth extends Component {
   }
 
   async autoLogin () {
+    console.log('shouquan-0------')
     const { update } = this.$router.params
     const { code } = await Taro.login()
     try {
@@ -30,6 +31,7 @@ export default class WxAuth extends Component {
       if (!token) throw new Error(`token is not defined: ${token}`)
       S.setAuthToken(token)
       if(update == 1){
+        console.log('zhi xing  gengxin xinxi')
         this.setState({
           isAuthShow: true
         })

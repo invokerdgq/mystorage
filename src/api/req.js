@@ -112,9 +112,6 @@ class API {
     }
 
     console.log(options)
-    if(!/^https/.test(options.url)){
-      options.url = 'https:'+options.url
-    }
     return Taro.request(options)
         .then(res => {
         // eslint-disable-next-line

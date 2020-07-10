@@ -34,5 +34,8 @@ export { default as CheckInvite} from './check-invite/check-invite'
 export { default as NavSort } from './nav-sort/nav-sort'
 export { default as PostScrollNavigation } from './post-scroll-navigation/post-scroll-navigation'
 export { default as OwnProgress } from './progress/progress'
+export { default as OwnOpacity } from './own-opacity/own-opacity'
+export { default as OwnTitle } from './own-title/own-title'
+export { default as OwnPoster } from './own-poster/own-poster'
 
 export default {}

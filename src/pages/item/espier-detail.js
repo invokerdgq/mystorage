@@ -121,7 +121,10 @@ export default class Detail extends Component {
         avatar: res.memberInfo.avatar,
         userId: res.memberInfo.user_id,
         isPromoter: res.is_promoter,
-        userCode:res.user_card_code
+        userCode:res.user_card_code,
+        is_vip:res.vipgrade.is_vip,
+        user_card_code:res.user_card_code,
+        inviter_id:res.memberInfo.inviter_id
       }
       Taro.setStorageSync('userinfo', userObj)
     }

@@ -10,8 +10,8 @@ export default class OwnProgress extends Component{
   static defaultProps = {
     info:{
       step:[2,5,10,18,28],
-      current:20,
-      text:'助力'
+      inviteNumber:20,
+      text:'助力',
     },
     height:28
   }
@@ -19,11 +19,11 @@ export default class OwnProgress extends Component{
      super(props);
    }
    render() {
-    const {step,text,current} = this.props.info
+    const {step,text,inviteNumber} = this.props.info
      return(
        <View className='progress-container' style={{borderRadius:this.props.height/2+'rpx'}}>
          <View className='progress-content' style={{borderRadius:this.props.height/2+'rpx',height:this.props.height+'rpx'}}/>
-         <View className='progress-content-up' style={{borderRadius:this.props.height/2+'rpx',width:(current/(step[step.length-1]))*100+'%',height:this.props.height+'rpx'}}/>
+         <View className='progress-content-up' style={{borderRadius:this.props.height/2+'rpx',width:(inviteNumber/(step[step.length-1]))*100+'%',height:this.props.height+'rpx'}}/>
          {
            step.map((item,index) => {
              return (
@@ -31,10 +31,12 @@ export default class OwnProgress extends Component{
              )
            })
          }
-         <View className='progress-dec' style={{left:(current/step[step.length-1]*100)+'%'}}>
-           <Image src={`${cdn}/dialog.jpg`} className='progress-dec-img' mode='widthFix'/>
-           <Text className='progress-dec-text'>{text}{current}人</Text>
-         </View>
+         {inviteNumber !=0&&
+           <View className='progress-dec' style={{left:(inviteNumber/step[step.length-1]*100)+'%'}}>
+             <Image src={`${cdn}/dialog.png`} className='progress-dec-img' mode='widthFix'/>
+             <Text className='progress-dec-text'>{text}{inviteNumber}人</Text>
+           </View>
+         }
        </View>
      )
    }

@@ -3,13 +3,14 @@ import {View,Image} from "@tarojs/components";
 import {cdn} from '@/consts/index'
 
 import './goods-item.scss'
-export default class GoodsItem extends Component{
+export default class OwnGoodsItem extends Component{
   static options = {
     addGlobalClass:true
   }
   defaultProps = {
     info:{},
-    onclick:()=>{}
+    onclick:()=>{},
+    type:'show'
   }
   constructor(props) {
     super(props);
@@ -26,13 +27,15 @@ export default class GoodsItem extends Component{
     }
   }
   render() {
-    const {imgUrl,goods_name,status} = this.props.info
+    const {imgUrl,goods_name,status,type} = this.props.info
     return(
       <View className='activity-item'>
         <Image className='goods-name' src={`${cdn}/goods-bg.png`} mode='widthFix'/>
         <Text className='goods-name-text'>{goods_name}</Text>
         <View className='goods-img'><Image src={imgUrl} mode='widthFix'/></View>
-        <View className='help-btn'><Image src={`${status == 1?cdn+'/help-btn.png':cdn+'/help-btn-disable.png'}`} mode='widthFix' onClick={this.state.handleClick.bind(this)}/></View>
+        {type === 'buy'&&
+          <View className='help-btn'><Image src={`${status == 1?cdn+'/help-btn.png':cdn+'/help-btn-disable.png'}`} mode='widthFix' onClick={this.state.handleClick.bind(this)}/></View>
+        }
       </View>
     )
   }

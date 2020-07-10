@@ -1,0 +1,16 @@
+@import '../../style/imports';
+
+
+.title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0 0;
+  .line{
+    width: 60px;
+    height: 2px;
+    background: black;
+    margin: 0 10px;
+  }
+}

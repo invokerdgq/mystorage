@@ -12,6 +12,19 @@
   }
   &-user{
     border-top: 2px solid #eeeeee;
+    padding: 30px 30px;
+    &-dec{
+      font-size: 30px;
+      color:#ed6005
+    }
+    .user-list{
+      margin-top: 32px;
+      .see-more{
+        text-align: center;
+        color: #ed6005;
+        font-size: 27px;
+      }
+    }
   }
   &-content{
     display: flex;
@@ -39,6 +52,13 @@
           height: 67px;
           Image{
             width: 177px;
+          }
+        }
+        .invite-begin{
+          font-size: 0;
+          &-img{
+            width: 100%;
+            height: 100%;
           }
         }
         .feature-btn{

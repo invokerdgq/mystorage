@@ -3,6 +3,65 @@
 page{
   background: #ffd4b2;
 }
+.img-container{
+  font-size: 0;
+}
+.shade-slot{
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  &-foot{
+    background: white;
+    padding: 15px 0 30px;
+    position: relative;
+    top:-1px;
+    &-title{
+      font-size: 33px;
+      font-weight: bold;
+      margin-bottom: 25px;
+      text-align: center;
+      .invite,.goods{
+        color:#df241b
+      }
+    }
+  }
+  &-head{
+    width: 480px;
+    position: absolute;
+    top:80px;
+    left:50%;
+    transform: translate(-50%,0);
+    &-title{
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 33px;
+      .number{
+        font-size: 75px;
+        color:#df241b
+      }
+      .danwei{
+        color:#df241b
+      }
+    }
+  }
+  .btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    &-apperance{
+      margin: 0;
+      padding: 0;
+      line-height: 1.2;
+      background-color: white;
+    }
+    &-apperance:after{
+      border: none;
+    }
+    .shade-btn{
+      width:240px ;
+    }
+  }
+}
 .iconfont{
   position: fixed;
   left:30px;
@@ -15,39 +74,18 @@ page{
 .bg-img{
   width: 750px;
 }
+.inner{
+  font-size: 24px;
+}
 .goods-scroll{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 0 26px;
-  justify-content: space-between;
+  &-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 26px;
+    justify-content: space-between;
+  }
 }
 .rule{
   margin-top: 100px;
-  padding: 0 40px;
-  &-title{
-    font-size: 35px;
-    font-weight: bold;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    .line{
-      width: 70px;
-      height: 2px;
-      background: black;
-      margin: 0 10px;
-    }
-  }
-  &-content{
-    .rule-item{
-      font-size: 24px;
-      line-height: 2;
-    }
-    margin-top: 50px;
-  }
-  &-footer{
-    text-align: center;
-    margin-top: 50px;
-  }
 }
