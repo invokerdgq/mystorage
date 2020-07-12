@@ -1,1 +1,24 @@
 @import "../../../style/imports";
+
+page{
+  background: #ffd4b2;
+}
+.icon-arrow-left{
+  font-size: 50px;
+  position: fixed;
+  left:35px;
+  transform: translate(0,-50%);
+}
+.select{
+  &-header{
+    font-size: 0;
+    .img{
+      width: 100%;
+    }
+  }
+  &-footer{
+    .img{
+      width: 100%;
+    }
+  }
+}

@@ -4,12 +4,13 @@ page{
   background: #ffd4b2;
 }
 .help{
-  padding: 50px 26px 0;
+  padding: 50px 0 0;
   position: absolute;
   top:80px;
   width: 100vw;
   &-header{
     background: white;
+    margin: 0 26px;
     padding: 30px 20px 20px;
     &-userinfo{
       display: flex;
@@ -31,8 +32,21 @@ page{
        }
       }
     }
+    &-btn{
+      .help-btn{
+        width: 100%;
+      }
+    }
   }
 
+  &-body{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 0 26px;
+        justify-content: space-between;
+        margin-bottom: 30px;
+      }
   &-header-activity{
     display: flex;
     flex-direction: row;
@@ -101,5 +115,46 @@ page{
     margin-right: auto;
   }
 
+}
+.show-gift{
+  width: 600px;
+  .gift-img{
+    .img{
+      width: 100%;
+    }
+  }
+  &-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .avatar{
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      &-img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .thanks{
+      height: 80px;
+      font-size: 32px;
+      line-height: 80px;
+      background: white;
+      flex: 1;
+      padding-left: 20px;
+    }
+    .triangle{
+      width: 0;
+      height: 0;
+      border-width: 14px;
+      border-style: solid;
+      border-bottom-color: rgba(0,0,0,0);
+      border-top-color: rgba(0,0,0,0);
+      border-left-color: rgba(0,0,0,0);
+      border-right-color: rgba(255,255,255,1);
+    }
+  }
 }
 

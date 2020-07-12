@@ -241,7 +241,8 @@ useHooks()
             'pages/invite-activity/invite-activity',
             'pages/help/help',
             'pages/live/live',
-            'pages/select/select'
+            'pages/select/select',
+            'pages/receive-gift/receive-gift'
           ]
         }
       ],

@@ -7,8 +7,10 @@ import { calcTimer } from '@/utils'
 import {cdn} from '@/consts/index'
 import Taro, { Component } from '@tarojs/taro'
 import OwnProgress from "../../../components";
+import OwnShade from "../../../components/own-shade/own-shade";
 
 import './help.scss'
+import OwnGoodsItem from "../invite-activity/coms/goods-item";
 export default class Help extends Component{
   static options = {
     addGlobalClass:true
@@ -40,17 +42,51 @@ export default class Help extends Component{
           inviteNumber:30,
           lastSeconds:7200,
           step:[2,5,10,18,28,40]
-        }
+        },
+      showGift:false
     }
     this.top = Taro.getStorageSync('top')
   }
   back(){
     Taro.navigateBack()
   }
+  handleClickItem(){
+
+  }
+  handleCloseShade(){
+    this.setState({
+      showGift: false
+    })
+  }
+  handleShowGift(){
+    this.setState({
+      showGift:true
+    })
+  }
+  handleReceiveGift(){
+    Taro.showToast({
+      title:'领取成功',
+      icon:'success',
+      duration:1500
+    })
+    setTimeout(() => {
+      Taro.navigateTo({url:'/others/pages/receive-gift/receive-gift'})
+    },1500)
+  }
   render() {
-    const {info,userActivity} = this.state
+    const {info,userActivity,goodsList,showGift} = this.state
     return(
       <View>
+        <OwnShade
+        show={showGift}
+        onclickClose={this.handleCloseShade.bind(this)}
+        close={false}
+        >
+          <View className='show-gift'>
+            <View className='show-gift-title'><View className='avatar'><Image mode='widthFix' className='avatar-img' src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132'/></View><View className='triangle'/><View className='thanks'>感谢你帮我助力</View></View>
+            <View className='gift-img' onClick={this.handleReceiveGift.bind(this)}><Image mode='widthFix' src={`${cdn}/post.png`} className='img'/></View>
+          </View>
+        </OwnShade>
       <View className='help-title' style={{top:this.top+'px'}}><View className='iconfont icon-arrow-left' onClick={this.back.bind(this)}/><View className='help-title-inner'>一元助力</View></View>
        <View className='help'>
          <View className='help-header'>
@@ -76,9 +112,20 @@ export default class Help extends Component{
                </View>
              </View>
            </View>
-           <View className='help-header-btn'><Image/></View>
+           <View className='help-header-btn' onClick={this.handleShowGift.bind(this)}><Image src={`${cdn}/poster-save.png`} className='help-btn' mode='widthFix'/></View>
          </View>
-         <View className='help-body'></View>
+         <View className='help-body'>
+           {
+             goodsList.map(item =>{
+               return(
+                 <OwnGoodsItem
+                   info={item}
+                   onclick={this.handleClickItem.bind(this,item)}
+                 />
+               )
+             })
+           }
+         </View>
        </View>
       </View>
     )

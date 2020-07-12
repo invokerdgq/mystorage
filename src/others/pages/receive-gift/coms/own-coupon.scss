@@ -1,0 +1,51 @@
+@import "../../../../style/imports";
+
+.coupon{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  &-left{
+    flex:8;
+    border-radius: 0 10px 10px 0;
+    background: white;
+    padding: 15px 0 15px 10px;
+    .top{
+     margin-bottom: 20px;
+      color: #cd4718;
+      .cur{
+        font-size: 32px;
+      }
+      .total{
+       font-size: 47px;
+      }
+      .discount{
+        font-size: 27px;
+        margin-left: 8px;
+      }
+    }
+    .middle{
+    margin-bottom: 8px;
+      font-size: 19px;
+      color: #cd4718;
+    }
+    .bottom{
+     font-size: 18px;
+      color: #d5d7dc;
+    }
+  }
+  &-right{
+    flex: 3;
+    margin-left: 8px;
+    border-radius: 10px 0 0 10px;
+    background: white;
+    position: relative;
+    .see{
+      width:122px;
+      height: 38px;
+      position: absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+}

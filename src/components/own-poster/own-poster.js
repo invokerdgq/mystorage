@@ -12,7 +12,7 @@ export default class OwnPoster extends Component{
   static defaultProps = {
     Url2X:'',
     Url3X:'',
-    sendPath:() =>{}
+    sendPath:() =>{},
   }
   constructor(props) {
     super(props);
@@ -111,7 +111,7 @@ export default class OwnPoster extends Component{
     let ctx = Taro.createCanvasContext('owncanvas',this)
     let that =this
     ctx.drawImage('/' +this.state.path,0,0,this.state.imgWidth,this.state.imgHeight,0,0,this.state.width,this.state.height)
-    ctx.drawImage(this.state.codePath,0,0,this.state.codeWidth,this.state.codeHeight,60/2,(495+55)/2,70/2,70/2)
+    ctx.drawImage(this.state.codePath,0,0,this.state.codeWidth,this.state.codeHeight,50*(screenWidth/375)/2,(500)*(screenWidth/375)/2,80/2,80/2)
     ctx.draw(true,() =>{
       Taro.canvasToTempFilePath({
         x:0,
@@ -148,7 +148,7 @@ export default class OwnPoster extends Component{
           duration:1500
         })
       })
-  }
+}
   render() {
     let {width,height} = this.state
     return(

@@ -11,6 +11,7 @@ import OwnTitle from "../../../components/own-title/own-title";
 import OwnShade from "../../../components/own-shade/own-shade";
 import OwnProgress from "../../../components";
 import OwnPoster from "../../../components/own-poster/own-poster";
+import req from '@/api/req'
 
 import './invite-activity.scss'
 import ActivityItem from "./coms/activity-item";
@@ -23,6 +24,8 @@ export default class InviteActivity extends Component{
   constructor(props) {
     super(props);
     this.state = {
+      preSave:false,
+     savePath:'',
       goodsList:[
         {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:0},
         {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:1},
@@ -47,7 +50,6 @@ export default class InviteActivity extends Component{
         },
       showShade:false,
       showCanvas:false,
-      savePath:''
     }
     this.top = Taro.getStorageSync('top')
   }
@@ -64,11 +66,7 @@ export default class InviteActivity extends Component{
       return;
     }
   }
-  sendPath(path){
-    this.setState({
-      savePath:path
-    })
-  }
+
   onShareAppMessage(obj) {
     return {
       title:'速来助我一臂之力',
@@ -82,9 +80,23 @@ export default class InviteActivity extends Component{
         url:'/others/pages/select/select'
       })
     }else{
-      this.setState({
-        showShade:true
-      })
+      if(this.state.savePath){
+        this.setState({
+          showShade:true
+        })
+      }else {
+        Taro.showLoading('海报生成中...')
+        this.setState({
+          showShade:false,
+          showCanvas:true
+        },() => {
+          Taro.hideLoading()
+          this.setState({
+            showShade:true,
+            showCanvas:false
+          })
+        })
+      }
     }
   }
   back(){
@@ -111,6 +123,12 @@ export default class InviteActivity extends Component{
       })
     }
   }
+  sendPath(path) {
+    this.setState({
+      savePath: path
+    })
+  }
+
   render() {
     const {goodsList,userActivity,showShade,showCanvas}= this.state
     return(
@@ -118,12 +136,10 @@ export default class InviteActivity extends Component{
         <OwnShade
         show={showCanvas}
         onclickClose={this.handleCloseShade.bind(this,'canvas')}
+        canvas={true}
+        sendPath={this.sendPath.bind(this)}
+        presave={this.state.preSave}
         >
-         <OwnPoster
-         Url2X={`${cdn}/init-post.png`}
-         Url3X={`${cdn}/post.png`}
-         sendPath={this.sendPath.bind(this)}
-         />
         </OwnShade>
         <OwnShade
         show={showShade}
