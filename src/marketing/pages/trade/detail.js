@@ -77,6 +77,7 @@ export default class TradeDetail extends Component {
     let sessionFrom = ''
 
     const info = pickBy(data.orderInfo, {
+      commission_balance: 'commission_balance',
       tid: 'order_id',
       created_time_str: ({ create_time }) => formatTime(create_time*1000),
       auto_cancel_seconds: 'auto_cancel_seconds',
@@ -94,6 +95,7 @@ export default class TradeDetail extends Component {
       ziti_status: 'ziti_status',
       qrcode_url: 'qrcode_url',
       delivery_corp: 'delivery_corp',
+      order_billreturn:'order_billreturn',
       order_type: 'order_type',
       order_status_msg: 'order_status_msg',
       order_status_des: 'order_status_des',
@@ -207,10 +209,8 @@ export default class TradeDetail extends Component {
     const paymentParams = {
       pay_type: pay_type,
       order_id,
-      order_type
-    }
-    if(pay_type === 'wxpaysurplus'){
-      paymentParams.commission_balance = commission_balance
+      order_type,
+      commission_balance:pay_type === 'wxpaysurplus'?Number(commission_balance)/100:''
     }
     const config = await api.cashier.getPayment(paymentParams)
 
@@ -238,10 +238,17 @@ export default class TradeDetail extends Component {
         icon: 'success'
       })
 
-      const { fullPath } = getCurrentRoute(this.$router)
-      Taro.redirectTo({
-        url: fullPath
-      })
+      const {fullPath} = getCurrentRoute(this.$router)
+      if (/marketing/.test(fullPath)) {
+        let newPath = fullPath.split('marketing')[1]
+        Taro.redirectTo({
+          url: newPath
+        })
+      } else {
+        Taro.redirectTo({
+          url: fullPath
+        })
+      }
     }
   }
 
@@ -262,7 +269,7 @@ export default class TradeDetail extends Component {
 
     if (type === 'cancel') {
       Taro.navigateTo({
-        url: `/pages/trade/cancel?order_id=${info.tid}`
+        url: `/pages/trade/cancel?order_id=${info.tid}&pay_type=${this.state.info.pay_type}&commission_balance=${this.state.info.commission_balance}&order_billreturn=${this.state.info.order_billreturn}`
       })
       return
     }
@@ -402,7 +409,7 @@ export default class TradeDetail extends Component {
       return <Loading></Loading>
     }
 
-    const isDhPoint = info.pay_type === 'point'
+    const isDhPoint = info.pay_type
 
     // TODO: orders 多商铺
     // const tradeOrders = resolveTradeOrders(info)
@@ -524,10 +531,12 @@ export default class TradeDetail extends Component {
             {/*<Text className='info-text'>积分抵扣：-￥XX</Text>*/}
             <Text className='info-text'>运费：￥{info.freight_fee}</Text>
             <Text className='info-text'>优惠：-￥{info.discount_fee}</Text>
-            {isDhPoint
+            {isDhPoint === 'point'
               ? (<Text className='info-text' space>支付：{info.payment}积分 {' 积分支付'}</Text>)
-              : (<Text className='info-text' space>支付：￥{info.payment} {' 微信支付'}</Text>)}
+              :isDhPoint === 'surplus'?(<Text className='info-text' space>支付：￥{info.payment} {'余额抵扣'}</Text>)
+                :(<Text className='info-text' space>支付：￥{info.payment} {'混合支付'}</Text>)
 
+            }
             {
               info.delivery_code
                 ? <View className='delivery_code_copy'>
@@ -542,7 +551,7 @@ export default class TradeDetail extends Component {
             info.order_class !== 'drug'
             && <View>
               {
-                !isDhPoint && info.status === 'WAIT_BUYER_PAY' && <View className='trade-detail__footer'>
+                isDhPoint !=='point' && info.status === 'WAIT_BUYER_PAY' && <View className='trade-detail__footer'>
                   <Text className='trade-detail__footer__btn' onClick={this.handleClickBtn.bind(this, 'cancel')}>取消订单</Text>
                   <Button
                     className='trade-detail__footer__btn trade-detail__footer_active'
@@ -553,17 +562,7 @@ export default class TradeDetail extends Component {
                 </View>
               }
               {
-                isDhPoint && info.status === 'WAIT_BUYER_PAY' && <View className='trade-detail__footer'>
-                  <Button
-                    className='trade-detail__footer__btn trade-detail__footer__btn-inline trade-detail__footer_active'
-                    type='primary'
-                    loading={payLoading}
-                    style={`background: ${colors.data[0].primary}; border-color: ${colors.data[0].primary}`}
-                    onClick={this.handleClickBtn.bind(this, 'pay')}>立即支付</Button>
-                </View>
-              }
-              {
-                !isDhPoint && info.status === 'WAIT_SELLER_SEND_GOODS' && <View className='trade-detail__footer'>
+                isDhPoint !=='point' && info.status === 'WAIT_SELLER_SEND_GOODS' && <View className='trade-detail__footer'>
                   {
                     info.order_status_des !== 'PAYED_WAIT_PROCESS' && <Text className='trade-detail__footer__btn' onClick={this.handleClickBtn.bind(this, 'cancel')}>取消订单</Text>
                   }
@@ -575,7 +574,7 @@ export default class TradeDetail extends Component {
                 </View>
               }
               {
-                isDhPoint && info.status === 'WAIT_SELLER_SEND_GOODS' && <View className='trade-detail__footer'>
+                isDhPoint ==='point' && info.status === 'WAIT_SELLER_SEND_GOODS' && <View className='trade-detail__footer'>
                   <Text
                     className='trade-detail__footer__btn trade-detail__footer__btn-inline trade-detail__footer_active'
                     style={`background: ${colors.data[0].primary}; border-color: ${colors.data[0].primary}`}

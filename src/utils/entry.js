@@ -27,6 +27,9 @@ async function entryLaunch(data, isNeedLocate) {
       options.dtid = distributor_id
     }
   }
+  if(options.assist_id){
+    Taro.setStorageSync('assist_id',options.assist_id)
+  }
   let dtidValid = false
   let store = {}
 

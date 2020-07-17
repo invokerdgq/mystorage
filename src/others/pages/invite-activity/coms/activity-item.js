@@ -14,84 +14,120 @@ export default class ActivityItem extends Component{
 
   static defaultProps = {
     activityInfo:{
+      status:false,
+      poster:'',
       userList:[],
-      inviteNumber:10,
-      step:[2,5,10,18,28],
-      lastSeconds:0
+      inviteNumber:0,
+      step:[
+        {number:2,price:59.9,level:'level1'},
+        {number:5,price:19.9,level:'level2'},
+        {number:10,price:9.9,level:'level3'},
+        {number:28,price:1,level:'level4'}
+      ],
+      last_seconds:0
     },
+    initList: {step:''},
     onclickBtn(){},
     height:23
   }
    constructor(props) {
      super(props);
      this.state = {
+       timeEnd:false,
        showMore:false,
        showShare:false
      }
-     this.timer = calcTimer(this.props.activityInfo.lastSeconds,'s')
+     this.timer = calcTimer(this.props.activityInfo.last_seconds,'s')
    }
    componentDidMount() {
    }
-   handleMore(){
+
+  handleMore(){
     this.setState({
       showMore:!this.state.showMore
     })
    }
+  timeEnd(){
+    this.setState({
+      timeEnd:true
+    })
+  }
+  clickBtn(type){
+    if((this.props.last_seconds ==0 ||this.state.timeEnd)&&this.state.status){
+      Taro.showToast({
+        title:'很抱歉，超过时间期限',
+        icon:'none',
+        duration:1500
+      })
+    }else{
+      this.props.onclickBtn(type)
+    }
+  }
    render() {
    const {showMore} = this.state
-     const {userList,inviteNumber,step} = this.props.activityInfo
+     const {userList,inviteNumber,step,poster,status} = this.props.activityInfo
+     const {initList} = this.props
      let newList = []
-     if(userList.length>0){
-       if(showMore){
-         newList = [...userList]
-       }else{
-         newList =  [...userList].slice(0,4)
+     if(status){
+       if(userList.length>0){
+         if(showMore){
+           newList = [...userList]
+         }else{
+           newList =  [...userList].slice(0,4)
+         }
        }
      }
      return(
        <View className='item'>
          <View className='item-header'><Image src={`${cdn}/progressing.jpg`} mode='widthFix'/></View>
          <View className='item-content'>
-           <View className='item-content-left'><Image/></View>
+           <View className='item-content-left'><Image src={poster} className='img'/></View>
            <View className='item-content-right'>
              <View className='item-content-right-dec'>
                {
-                 this.props.inviteNumber == 0?
+                 !status ?
                    <Text>分享给好友，一元助力</Text>:
-                   <Text> 已有{inviteNumber}人助力，仅差{step[step.length-1]-inviteNumber}人</Text>
+                   <Text> 已有{inviteNumber}人助力，仅差{step[step.length-1].number-inviteNumber}人</Text>
                }
              </View>
              <View className='progress-container'>
-               <OwnProgress height={this.props.height} info={this.props.activityInfo}/>
+               <OwnProgress
+                 zeroShow={status}
+                 height={this.props.height}
+                 step={initList.step_conf}
+                 inviteNumber={status?initList.user_assist_info.assist_amount:0}
+                 lastSeconds={status?initList.user_assist_info.last_seconds:0}
+               />
              </View>
                <View className='count-down-container'>
                  <AtCountdown
                    isCard
                    format={{ hours: ':', minutes: ':', seconds: '' }}
-                   hours={inviteNumber === 0?0:this.timer.hh}
-                   minutes={inviteNumber === 0?0:this.timer.mm}
-                   seconds={inviteNumber === 0?0:this.timer.ss}
-                 /><Text className='end'>{inviteNumber ===0?'参与活动开始计时':'后结束'}</Text>
+                   hours={!status?0:this.timer.hh}
+                   minutes={!status?0:this.timer.mm}
+                   seconds={!status?0:this.timer.ss}
+                   onTimeUp={this.timeEnd.bind(this)}
+                 /><Text className='end'>{!status?'参与活动开始计时':this.state.timeEnd?'已结束':'后结束'}</Text>
                </View>
              <View className='item-content-right-btn'>
                {
-                 inviteNumber >= step[step.length -1]?
-                   <View className='fast-buy' onClick={this.props.onclickBtn.bind(this,'buy')}>
+                 status&&inviteNumber >= step[step.length -1]?
+                   <View className='fast-buy' onClick={this.clickBtn.bind(this,'buy')}>
                       <Image src={`${cdn}/fast-buy.jpg`}/>
                    </View>:
-                   inviteNumber != 0?
+                   status?
                    <View className='feature-btn'>
-                     <View className='feature-btn-left' onClick={this.props.onclickBtn.bind(this,'share')}><Image src={`${cdn}/presist.jpg`} mode='widthFix'/></View>
-                     <View onClick={this.props.onclickBtn.bind(this,'buy')}><Image src={`${cdn}/blank-btn.jpg`} mode='widthFix'/></View>
+                     <View className='feature-btn-left' onClick={this.clickBtn.bind(this,'share')}><Image src={`${cdn}/presist.jpg`} mode='widthFix'/></View>
+                     <View onClick={this.clickBtn.bind(this,'buy')}><Image src={`${cdn}/select.png`} mode='widthFix'/></View>
                    </View>:
-                     <View className='invite-begin' onClick={this.props.onclickBtn.bind(this,'share')}>
-                       <Image src={`${cdn}/fast-buy.jpg`} className='invite-begin-img' mode='widthFix'/>
+                     <View className='invite-begin' onClick={this.clickBtn.bind(this,'share')}>
+                       <Image src={`${cdn}/begin.png`} className='invite-begin-img' mode='widthFix'/>
                      </View>
                }
              </View>
            </View>
          </View>
-         {inviteNumber !=0&&
+         {inviteNumber !=0&& status &&
            <View className='item-user'>
              <View className='item-user-dec'>助力记录</View>
              <View className='user-list'>
@@ -106,7 +142,7 @@ export default class ActivityItem extends Component{
                }
                {
                  userList.length>4&&
-                 <View onClick={this.handleMore.bind(this)} className='see-more'>{!showMore?'查看全部':'收起'}<View className={`iconfont ${showMore?'icon-more':'icon-shouqi'}`}></View></View>
+                 <View onClick={this.handleMore.bind(this)} className='see-more'><Text>{!showMore?'查看全部':'收起'}</Text><View className={`iconfont icon-more ${showMore?'rotate':''}`}/></View>
                }
              </View>
            </View>

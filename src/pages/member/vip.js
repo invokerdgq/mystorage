@@ -26,11 +26,11 @@ export default class Vip extends Component{
       showToolBar:false
     }
    this.couponList = [
-     {title:'50元优惠券',url:'../../assets/imgs/50元.png'},
-     {title:'30元优惠券',url:'../../assets/imgs/30元.png'},
-     {title:'20元优惠券',url:'../../assets/imgs/20元.png'},
-     {title:'10元优惠券',url:'../../assets/imgs/10元.png'},
-     {title:'5元优惠券',url:'../../assets/imgs/5元.png'}
+     {title:'50元优惠券',url:`${cdn}/50元.png`},
+     {title:'30元优惠券',url:`${cdn}/30元.png`},
+     {title:'20元优惠券',url:`${cdn}/20元.png`},
+     {title:'10元优惠券',url:`${cdn}/10元.png`},
+     {title:'5元优惠券',url:`${cdn}/5元.png`}
    ]
   }
   componentDidMount() {

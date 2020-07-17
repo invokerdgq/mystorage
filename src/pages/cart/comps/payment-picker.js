@@ -28,7 +28,7 @@ export default class PaymentPicker extends Component {
     this.state = {
       localType: props.type,
       total_balance:0,
-      commission_balance:0
+      commission_balance:''
     }
   }
 
@@ -85,7 +85,7 @@ export default class PaymentPicker extends Component {
 
   handleChange = (type,commission_balance) => {
     if(type === 'wxpaysurplus'){
-      if(!/^[0-9][0-9]*(\.){0,1}[0-9]*$/.test(commission_balance)){
+      if(!/^[0-9][0-9]*(\.){0,1}[0-9]{0,2}$/.test(commission_balance)){
        Taro.showToast({
          title:'请输入正确的金额',
          icon:'none',
@@ -184,7 +184,7 @@ export default class PaymentPicker extends Component {
                   {
                     localType === 'wxpaysurplus'&&
                     <View className='part-balance-payment'>
-                      <Text className='dec'>输入余额抵扣金额:</Text><AtInput className='input' type='text' placeholder='请输入' value={this.state.commission_balance} onChange={this.handleInputChange.bind(this)}/><Text className='dec'>余额<Text className='total'>{total}</Text></Text>
+                      <Text className='dec'>输入余额抵扣金额:</Text><AtInput placeholderStyle='margin-left:20rpx' className='input' border={false} type='text' placeholder='请输入(最多两位小数)' value={this.state.commission_balance} onChange={this.handleInputChange.bind(this)}/><Text className='dec'>余额<Text className='total'>{total}</Text></Text>
                     </View>
                   }
                 </View>

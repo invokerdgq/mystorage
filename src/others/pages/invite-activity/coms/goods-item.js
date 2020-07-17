@@ -7,16 +7,21 @@ export default class OwnGoodsItem extends Component{
   static options = {
     addGlobalClass:true
   }
-  defaultProps = {
-    info:{},
+  static defaultProps = {
+    info:{
+      item_pic:'',
+      item_title:''
+    },
     onclick:()=>{},
-    type:'show'
+    type:'show',
+    disabled:false,
+    price:''
   }
   constructor(props) {
     super(props);
   }
   handleClick(){
-    if(this.props.info.status != 1){
+    if(this.props.disabled){
       Taro.showToast({
         title:'已售完',
         icon:'none',
@@ -27,14 +32,24 @@ export default class OwnGoodsItem extends Component{
     }
   }
   render() {
-    const {imgUrl,goods_name,status,type} = this.props.info
+    const {item_pic,item_title} = this.props.info
+    const {type,disabled,price} = this.props
     return(
       <View className='activity-item'>
         <Image className='goods-name' src={`${cdn}/goods-bg.png`} mode='widthFix'/>
-        <Text className='goods-name-text'>{goods_name}</Text>
-        <View className='goods-img'><Image src={imgUrl} mode='widthFix'/></View>
+        <Text className='goods-name-text'>{item_title}</Text>
+        <View className='goods-img'><Image src={item_pic} mode='widthFix' className='img'/></View>
+        {type === 'buy' && disabled &&
+          <View className='empty'>
+            <View className='opacity-bg'/>
+            <Image src={`${cdn}/test.png`} mode='widthFix' className='img'/>
+          </View>
+        }
         {type === 'buy'&&
-          <View className='help-btn'><Image src={`${status == 1?cdn+'/help-btn.png':cdn+'/help-btn-disable.png'}`} mode='widthFix' onClick={this.state.handleClick.bind(this)}/></View>
+          <View className='help-btn' onClick={this.state.handleClick.bind(this)} >
+            <Image src={`${!disabled?cdn+'/blank-btn.png':cdn+'/disable-blank-btn.png'}`} mode='widthFix' className='img'/>
+            <Text className='price'>{price}元抢购</Text>
+          </View>
         }
       </View>
     )

@@ -10,10 +10,11 @@ import './own-coupon.scss'
 export default class OwnCoupon extends Component{
   static defaultProps = {
     info:{
-      mission:55,
-      number:2,
-      total:398,
-      endDate:'2020-6-17 -2020-6-30'
+      reduce_cost:'',
+      card_num:2,
+      least_cost:398,
+      user_start_time:'',
+      user_end_time:''
     }
   }
   constructor(props) {
@@ -30,15 +31,16 @@ handleHome(){
       <View className='coupon'>
         <View className='coupon-left'>
           <View className='top'>
-            <Text className='cur'>￥</Text><Text className='total'>{info.mission}</Text> <Text className='discount'>满减优惠券x{info.number}张</Text>
+            <Text className='cur'>￥</Text><Text className='total'>{Number(info.reduce_cost)/100}</Text> <Text className='discount'>满减优惠券x{info.card_num}张</Text>
           </View>
-          <View className='middle'>满{info.total}可用</View>
+          <View className='middle'>满{Number(info.least_cost)/100}可用</View>
           <View className='bottom'>
-            有效期:{info.endDate}
+            有效期:{info.user_start_time}-{info.user_end_time}
           </View>
         </View>
         <View className='coupon-right' >
-          <Image mode='widthFix' className='see' onClick={this.handleHome.bind(this)}/>
+          <View className='dash'/>
+          <Image mode='widthFix' className='see' onClick={this.handleHome.bind(this)} src={`${cdn}/see.png`}/>
         </View>
       </View>
     )

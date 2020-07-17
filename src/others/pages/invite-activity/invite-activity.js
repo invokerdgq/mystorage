@@ -13,47 +13,44 @@ import OwnProgress from "../../../components";
 import OwnPoster from "../../../components/own-poster/own-poster";
 import req from '@/api/req'
 
+
 import './invite-activity.scss'
 import ActivityItem from "./coms/activity-item";
+import {connect} from "@tarojs/redux";
 
+@connect(({step}) => ({
+  storeStep:step
+}),(dispatch) =>({
+  setStep:(load) => dispatch({type:'step',payload:load})
+}))
 export default class InviteActivity extends Component{
   static options = {
-    addGlobalClass:true
+    addGlobalClass:true,
   }
-
+  config = {
+    enablePullDownRefresh: true,
+  }
+  static defaultProps ={
+    yy:''
+  }
   constructor(props) {
     super(props);
     this.state = {
+      list:{},
+      step:3,
+      items:null,
       preSave:false,
-     savePath:'',
-      goodsList:[
-        {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:0},
-        {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:1},
-        {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:1},
-        {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:0},
-        {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:1},
-        {imgUrl:'/assets/imgs/404.png',goods_name:'----',status:0}
-        ],
-      userActivity:
-        {
-          userList:[
-            {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0},
-            {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0},
-            {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0},
-            {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0},
-            {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0},
-            {imgUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKMibfJiaefDHTRwCbjpQKRDvzhNu9INUEiaCcDicic5mmpnF1NIFwWQbpZGh3xdcK7xAjuBEnhibB1kvwQ/132',username:'--',count:0}
-          ],
-          inviteNumber:30,
-          lastSeconds:7200,
-          step:[2,5,10,18,28,40]
-        },
+      savePath:'',
       showShade:false,
       showCanvas:false,
     }
     this.top = Taro.getStorageSync('top')
   }
+  componentDidMount() {
+  }
+
   componentDidShow() {
+    this.props.setStep(this.state.list.step_conf)
     if(!S.getAuthToken()){
       Taro.showToast({
         title:'请先登录',
@@ -63,40 +60,67 @@ export default class InviteActivity extends Component{
       setTimeout(() => {
         S.login(this)
       },2500)
-      return;
+      return
     }
+    this.fetch()
   }
+  onPullDownRefresh() {
+    this.fetch()
+  }
+  async fetch(){
+       const {list,step} = await api.assist.getAssistList()
+       this.props.setStep(list.step_conf)
+       this.setState({
+         list:list,
+         step:step
+       })
+   }
 
   onShareAppMessage(obj) {
+    const userinfo = Taro.getStorageSync('userinfo')
     return {
       title:'速来助我一臂之力',
-      path:'/others/pages/help/help',
+      path:`/others/pages/help/help?uid=${userinfo.user_card_code}&assist_id=${this.state.list.assist_id}`,
       imageUrl:this.state.savePath
     }
   }
-  handleClickBtn(type){
+ async handleClickBtn(type){
     if(type === 'buy'){
+      if(this.state.list.user_assist_info.assist_amount < this.state.list.step_conf[0].number){
+        Taro.showToast({
+          title:'未达到最低等级，无法挑选',
+          icon:'none'
+        })
+        return
+      }
       Taro.navigateTo({
-        url:'/others/pages/select/select'
+        url:`/others/pages/select/select?level=${this.state.step}&id=${this.state.list.assist_id}`
       })
     }else{
       if(this.state.savePath){
         this.setState({
           showShade:true
         })
-      }else {
-        Taro.showLoading('海报生成中...')
-        this.setState({
-          showShade:false,
-          showCanvas:true
-        },() => {
+      }
+        if(this.state.step ==0){
+          try {
+            console.log('hahahahah')
+            const res = await api.assist.attendassist(this.state.list.assist_id)
+            this.fetch()
+          }catch(e){
+           Taro.showToast({
+             title:e.errMsg||'参加失败,稍后重试',
+             icon:'none',
+             duration:1500
+           })
+          }
+        }else{
           Taro.hideLoading()
           this.setState({
             showShade:true,
             showCanvas:false
           })
-        })
-      }
+        }
     }
   }
   back(){
@@ -130,13 +154,23 @@ export default class InviteActivity extends Component{
   }
 
   render() {
-    const {goodsList,userActivity,showShade,showCanvas}= this.state
+    const {userActivity,showShade,showCanvas,list,step}= this.state
+    let newList = {
+      userList:step !=0?list.user_assist_info.assist_help_log:[],
+      inviteNumber: list.user_assist_info.assist_amount,
+      step:list.step_conf,
+      last_seconds:list.user_assist_info.last_seconds,
+      poster:list.poster,
+      status: step== 0?false:true
+    }
     return(
       <View>
         <OwnShade
         show={showCanvas}
         onclickClose={this.handleCloseShade.bind(this,'canvas')}
         canvas={true}
+        assist_id={list.assist_id}
+        goodsImg={list.poster}
         sendPath={this.sendPath.bind(this)}
         presave={this.state.preSave}
         >
@@ -150,13 +184,13 @@ export default class InviteActivity extends Component{
               <Image src={`${cdn}/invite-share.png`} style={{width:'580rpx'}} mode='widthFix'/>
             </View>
             <View className='shade-slot-head'>
-              <View className='shade-slot-head-title'>仅剩<Text className='number'>{}9</Text><Text className='danwei'>人</Text>即达xx档</View>
-              <View>
+                <View className='shade-slot-head-title'>仅剩<Text className='number'>{this.state.status?list.step_conf[list.step_conf.length-1].number-list.user_assist_info.assist_amount:list.step_conf[list.step_conf.length-1].number}</Text><Text className='danwei'>人</Text>即可一元购</View>
+             <View>
                 <OwnProgress
                   height={28}
-                  step={userActivity.step}
-                  inviteNumber={userActivity.inviteNumber}
-                  lastSeconds={userActivity.lastSeconds}
+                  step={list.step_conf}
+                  inviteNumber={step !=0?list.user_assist_info.assist_amount:0}
+                  lastSeconds={list.user_assist_info.last_seconds}
                 />
               </View>
             </View>
@@ -171,12 +205,14 @@ export default class InviteActivity extends Component{
             </View>
           </View>
         </OwnShade>
-        <View className='iconfont icon-arrow-left' style={`top:${this.top}px`} onClick={this.back}/>
+        <View className='iconfont icon-arrow-left nav' style={`top:${this.top}px`} onClick={this.back}/>
         <Image src={`${cdn}/invite-head.png`} mode='widthFix' className='bg-img'/>
         <View className='invite-act-content'>
         <View className='activity-list'>
             <ActivityItem
-            activityInfo={userActivity}
+            // activityInfo={userActivity}
+              activityInfo={newList}
+              initList={list}
             onclickBtn={this.handleClickBtn.bind(this)}
             />
         </View>
@@ -192,7 +228,7 @@ export default class InviteActivity extends Component{
           >
             <View className='goods-scroll-list'>
               {
-                goodsList.map((item,index) => {
+                list.items.map((item,index) => {
                   return(
                     <OwnGoodsItem
                       info={item}

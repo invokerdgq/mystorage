@@ -180,8 +180,7 @@ class API {
 // })
 
 // export { API }
-console.log('yyyyyyyyyyyyyyyyyyyy')
-console.log(APP_BASE_URL)
+
 let instance = new API({
   baseURL:APP_BASE_URL
 })

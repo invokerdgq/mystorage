@@ -50,11 +50,14 @@ export default class TradeCancel extends Component {
       return S.toast('请输入其他理由')
     }
 
-    const { order_id } = this.$router.params
+    const { order_id ,pay_type,commission_balance,order_billreturn} = this.$router.params
     const data = {
       order_id,
+      // order_billreturn,
+      // commission_balance:commission_balance*100,
       cancel_reason: reason[curReasonIdx],
-      other_reason: otherReason
+      other_reason: otherReason,
+      pay_type:pay_type
     }
 
     const res = await api.trade.cancel(data)

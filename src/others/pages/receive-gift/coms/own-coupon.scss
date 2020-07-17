@@ -3,14 +3,14 @@
 .coupon{
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   &-left{
     flex:8;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 20px 20px 0;
     background: white;
-    padding: 15px 0 15px 10px;
+    padding: 10px 0 10px 10px;
     .top{
-     margin-bottom: 20px;
+     margin-bottom: 10px;
       color: #cd4718;
       .cur{
         font-size: 32px;
@@ -34,9 +34,10 @@
     }
   }
   &-right{
+    display: flex;
+    flex-direction: row;
     flex: 3;
-    margin-left: 8px;
-    border-radius: 10px 0 0 10px;
+    border-radius: 20px 0 0 20px;
     background: white;
     position: relative;
     .see{
@@ -46,6 +47,11 @@
       left:50%;
       top:50%;
       transform: translate(-50%,-50%);
+    }
+    .dash{
+      width: 2px;
+      margin: 20px 0;
+      border-left: dashed 2px #e3e3e3;
     }
   }
 }

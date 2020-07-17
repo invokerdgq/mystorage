@@ -72,6 +72,7 @@ useHooks()
     // eslint-disable-next-line react/sort-comp
     componentWillMount () {
       console.log('app    --------------------------------')
+      console.log(this.$router)
       entry.entryLaunch(this.$router.params.query)
       // let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
       // Taro.getSystemInfo({
@@ -242,7 +243,8 @@ useHooks()
             'pages/help/help',
             'pages/live/live',
             'pages/select/select',
-            'pages/receive-gift/receive-gift'
+            'pages/receive-gift/receive-gift',
+            'pages/select-more/select-more'
           ]
         }
       ],

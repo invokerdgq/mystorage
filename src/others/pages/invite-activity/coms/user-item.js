@@ -10,24 +10,23 @@ export default class UserItem extends Component{
   static defaultProps = {
     info:{
       imgUrl:'',
-      username:'',
-      count:0
+      help_user_name:'',
     }
   }
   constructor(props) {
     super(props);
   }
   render() {
-    const {imgUrl,username,count} = this.props.info
+    const {help_user_headimgurl,help_user_name} = this.props.info
     return(
       <View className='user-item'>
-        <View className='user-item-avatar'><Image src={imgUrl}/></View>
+        <View className='user-item-avatar'><Image src={help_user_headimgurl}/></View>
         <View className='user-item-dec'>
-          <View className='username'>{username}</View>
+          <View className='username'>{help_user_name}</View>
           <View className='message'>成功助力</View>
         </View>
-        <View className='zan'><Icon className='iconfont icon-zan'></Icon></View>
-        <View className='user-item-count'>助力<Text className='mount'>{count}</Text>元</View>
+        <View className='zan'><View className='iconfont icon-zan'></View></View>
+        <View className='user-item-count'>助力成功</View>
       </View>
     )
   }

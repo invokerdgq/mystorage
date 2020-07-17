@@ -31,7 +31,6 @@ export default class WxAuth extends Component {
       if (!token) throw new Error(`token is not defined: ${token}`)
       S.setAuthToken(token)
       if(update == 1){
-        console.log('zhi xing  gengxin xinxi')
         this.setState({
           isAuthShow: true
         })
@@ -54,10 +53,14 @@ export default class WxAuth extends Component {
       redirect_url = redirect
         ? decodeURIComponent(redirect)
         : '/pages/qrcode-buy'
-    } else {
+    } else if(!Taro.getStorageSync('help')) {
       redirect_url = redirect
         ? decodeURIComponent(redirect)
         : '/pages/member/index'
+    }else{
+      Taro.redirectTo({
+        url:'/others/pages/help/help'
+      })
     }
     api.member.memberInfo().then(res => {
       Taro.setStorageSync('userinfo',{

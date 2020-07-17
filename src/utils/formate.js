@@ -92,4 +92,16 @@ function sort(list) {
     return option
 }
 export default formate
+export function formateSelect(list) {
+  let newList = []
+    list.forEach(item => {
+      let obj = {level:'',list:[]}
+      Object.keys(item).map((item1,index1) => {
+        obj.level = item[item1].level
+        obj.list.push(item[item1])
+      })
+      newList.push(obj)
+    })
+  return newList
+}
 

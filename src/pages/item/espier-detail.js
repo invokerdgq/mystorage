@@ -185,8 +185,8 @@ export default class Detail extends Component {
       id = this.$router.params.id
     }
     let { distributor_id } = Taro.getStorageSync('curStore')
-
-    const info = await api.item.detail(id, {goods_id: goodsId, distributor_id })
+     const {assist_id,level} = this.$router.params
+    const info = await api.item.detail(id, {goods_id: goodsId, distributor_id ,level,assist_id})
     const { intro: desc, promotion_activity: promotion_activity } = info
     let marketing = 'normal'
     let timer = null
@@ -1036,13 +1036,13 @@ export default class Detail extends Component {
                   </View>
                 )
               }
-              <View style={{position:'relative'}}>
-                {
-                  info.fictitious_sales && (<Text className='goods-sold'>{info.fictitious_sales || 0}人已购</Text>)
-                }
+              <View className='back-ficticious'>
                 {
                   userinfo.is_vip &&info.rebate_commission &&
                   <View className='rank-back'>分享赚/{(Number(info.rebate_commission)/100).toFixed(2)}元</View>
+                }
+                {
+                  info.fictitious_sales && (<Text className='goods-sold'>{info.fictitious_sales || 0}人已购</Text>)
                 }
               </View>
             </View>

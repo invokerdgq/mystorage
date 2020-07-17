@@ -17,9 +17,11 @@ import * as vip from './vip'
 import * as group from './group'
 import * as wx from './wx'
 import * as wheel from './wheel'
+import * as assist from './assist'
 
 
 export default {
+  assist,
   article,
   aftersales,
   cart,

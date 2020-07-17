@@ -6,13 +6,16 @@ export default class OwnOpacity extends Component{
   static options = {
     addGlobalClass:true
   }
+  static defaultProps = {
+    containerClass:'',
+  }
   constructor(props) {
     super(props);
   }
   render() {
     const {containerClass} = this.props
     return (
-       <View className='more'>
+       <View className={`more `}>
          <View className='true-content'>
            {this.props.renderTrue}
          </View>

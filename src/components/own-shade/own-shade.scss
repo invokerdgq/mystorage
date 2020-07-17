@@ -42,8 +42,16 @@
   .save-btn{
     width: 500px;
   }
-  .canvas{
-    margin: 0 auto;
+  .canvas-shadow{
+    background: #f1f1f1;
+    padding: 20px 0;
+    width: 500px;
+    margin:0 auto;
+    .canvas{
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+    }
   }
   .save-btn-container{
     margin-top: 20px;

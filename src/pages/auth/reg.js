@@ -7,6 +7,7 @@ import { classNames, isString, isArray } from '@/utils'
 import S from '@/spx'
 import api from '@/api'
 import NavGap from "../../components/nav-gap/nav-gap";
+import {newUser} from "../../utils/insert-reg";
 
 import './reg.scss'
 
@@ -158,12 +159,17 @@ export default class Reg extends Component {
       }
 
       S.toast('注册成功')
+      newUser()
       setTimeout(()=>{
         if(Taro.getStorageSync('isqrcode') === 'true') {
           Taro.redirectTo({
             url: '/pages/qrcode-buy'
           })
-        } else {
+        } else if(Taro.getStorageSync('help')) {
+          Taro.redirectTo({
+            url:'/others/pages/help/help'
+          })
+        }else{
           Taro.redirectTo({
             url: '/pages/member/index'
           })
@@ -171,7 +177,6 @@ export default class Reg extends Component {
       }, 700)
     } catch (error) {
       return false
-      console.log(error)
     }
   }
 

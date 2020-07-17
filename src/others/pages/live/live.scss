@@ -34,15 +34,20 @@
       line-height: 40px;
     }
   }
+  .live-footer-container{
+   margin-bottom: 70px;
+  }
   .live-footer{
-    padding-bottom: 70px;
+    position: relative;
+    height:465px;
     &-user{
       display: inline-block;
       line-height: 44px;
       height: 44px;
       border-radius: 22px;
       overflow: hidden;
-      position: relative;
+      position: absolute;
+      top:0;
       .container{
         padding: 0 15px;
         background: #ec5942;
@@ -137,6 +142,33 @@
         }
       }
     }
+     &-message{
+      position: relative;
+       top:50px;
+     }
+    .message{
+      max-width: 690px;
+      border-radius: 20px;
+      display: inline-block;
+      background: rgba(0,0,0,0.3);
+      margin-bottom:6px ;
+    }
+    .msg-last{
+      margin-bottom: 17px;
+    }
+    .true{
+      line-height: 45px;
+      padding: 0 20px;
+      font-size: 27px;
+      display: inline-block;
+      .user_name{
+        color:#EC5942;
+        margin-right: 15px;
+      }
+      .user_message{
+        color:white
+      }
+    }
   }
 }
 .test{
@@ -149,4 +181,9 @@
 }
 .inner{
   color:red
+}
+//.gradient-bg{
+//  background: linear-gradient(to top,rgba(0,0,0,0.7),rgba(0,0,0,0));
+//}
+.gradient-name{
 }

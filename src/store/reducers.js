@@ -6,6 +6,7 @@ import member from './member'
 import tabBar from './tab-bar'
 import colors from './colors'
 import giftId from "./giftId";
+import step from './step'
 
 export default combineReducers({
   cart,
@@ -14,5 +15,6 @@ export default combineReducers({
   member,
   tabBar,
   colors,
-  giftId
+  giftId,
+  step
 })

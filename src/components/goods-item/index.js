@@ -37,8 +37,6 @@ export default class GoodsItem extends Component {
     if (!info) {
       return null
     }
-    console.log('lllllllllllllllllllllllll')
-    console.log(info)
     const img = info.img || info.image_default_id
 
     let promotion_activity = null, act_price = null

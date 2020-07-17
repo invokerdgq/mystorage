@@ -106,16 +106,24 @@
     text-align: center;
   }
 }
-.rank-back{
-  background: $color-theme;
-  display: inline-block;
-  color:white;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 15px;
-  font-size: 24px;
-  border-radius: 20px;
-
+.back-ficticious{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  .rank-back{
+    background: $color-theme;
+    color:white;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
+    font-size: 24px;
+    border-radius: 20px;
+    margin-right: auto;
+  }
+  .goods-sold {
+    font-size: $font-size-small;
+    color: $color-gray;
+  }
 }
 .goods-prices {
   display: flex;
@@ -310,15 +318,6 @@
     color: $color-theme;
     font-size: 26px;
   }
-}
-
-.goods-sold {
-  position: absolute;
-  right: 0;
-  top:-25px;
-  padding-left: 20px;
-  font-size: $font-size-small;
-  color: $color-gray;
 }
 
 .goods-income {

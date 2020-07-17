@@ -14,9 +14,12 @@ $item-img-size: 240px !default;
 }
 
 .goods-item {
+  height:100%;
   $self: &;
 	position: relative;
   border-radius: $item-border-radius;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 	box-shadow: 0 5px 5px rgba(0,0,0,0.1);
 &__price{
@@ -28,9 +31,11 @@ $item-img-size: 240px !default;
     border-radius: $item-border-radius;
     background: #fff;
     overflow: hidden;
+    flex:1;
+    display: flex;
+    flex-direction: column;
   }
   &__cont {
-    height: 180px !important;
     padding: 20px;
   }
   &__img {
@@ -50,7 +55,6 @@ $item-img-size: 240px !default;
     }
   }
   &__caption {
-    height: 80px !important;
   }
   &__tag-list {
     padding-bottom: 10px;

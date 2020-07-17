@@ -1,5 +1,8 @@
 @import "../../../style/imports";
 
+page{
+  background: #ffd4b2;
+}
 .gift{
   position: relative;
   .goods-list{
@@ -12,17 +15,31 @@
   }
   &-content{
     width: 650px;
+    height: 830px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin-left: 50px;
     position: absolute;
-    top:130px;
+    top:650px;
+    left:8px;
     &-title{
-      margin: 20px 0 30px;
+      margin: 10px 0 10px;
+    }
+    &-dec{
+      text-align: center;
+      font-size: 22px;
+      color: #d5d7dc;
     }
   }
   &-header{
     .img{
       width: 100%;
-      height: 800px;
+    }
+  }
+  &-footer{
+    .img{
+      width: 100%;
     }
   }
 }
