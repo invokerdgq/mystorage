@@ -1,4 +1,6 @@
 @import "../../style/imports";
+$color-white: black;
+
 
 page{
   background: white;
@@ -8,5 +10,68 @@ page{
   top:VH($nav-gap-height);
   Image{
     width: 750px;
+  }
+}
+.live{
+  display: flex;
+  flex-direction: column;
+  padding: 160px 12.5px 160px;
+  height: 100vh;
+  &-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 25px;
+    font-size: 25px;
+    color:$color-white;
+    .icon-close{
+      margin-left: auto;
+      font-size: 35px;
+      color:$color-white;
+    }
+    .icon-dizhi{
+      font-size: 35px;
+      color:$color-white;
+      margin-right: 8px;
+    }
+  }
+
+  &-body-bg{
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+  }
+  &-body{
+    margin-top: 70px;
+  }
+
+  &-footer{
+    margin-top: auto;
+    &-list{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0 125px;
+      font-size: 20px;
+      color:$color-white;
+      .item{
+        text-align: center;
+      }
+      .iconfont{
+        font-size: 48px;
+        color:$color-white;
+        margin-bottom: 14px;
+      }
+    }
+    &-begin{
+      margin: 35px auto 0;
+      width: 585px;
+      height: 95px;
+      border-radius: 47.5px;
+      line-height: 95px;
+      text-align: center;
+      font-size: 40px;
+      color:white;
+      background: $color-theme;
+    }
   }
 }

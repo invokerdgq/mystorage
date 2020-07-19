@@ -17,7 +17,8 @@
   background: white;
 }
 .data-view {
-  padding: 70px 23px 0;
+  padding-left:23px;
+  padding-right: 23px;
   position: absolute;
   top:0;
   left:0;
@@ -27,6 +28,30 @@
   flex-direction: column;
   justify-content: space-between;
   .live-header{
+    position: relative;
+    left:45px;
+    transform: translate(0,-40px);
+    &-bottom{
+      .contain-bottom{
+        height: 40px;
+        border-radius: 20px;
+        background-color: rgba(0,0,0,0.3);
+        display: inline-block;
+      }
+      .bottom-contain{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0 20px;
+        color:white;
+        .img{
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+    &-top{
+    }
     .true{
       color:white;
       font-size: 24px;
@@ -34,6 +59,46 @@
       line-height: 40px;
     }
   }
+  .contain-dec{
+    height: 80px;
+    border-radius: 40px;
+    background: rgba(0,0,0,0.3);
+    display: inline-block;
+  }
+    .header-contain{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      color:white;
+      margin: 0 40px 0 4px;
+      .room-dec-name{
+        line-height: 40px;
+        font-size: 30px;
+      }
+      .room-dec-more{
+        line-height: 40px;
+        font-size: 20px;
+      }
+    }
+  .attend{
+    margin-left: 8px;
+    height: 50px;
+    padding: 0 25px;
+    background: $color-theme;
+    line-height: 50px;
+    border-radius: 25px;
+  }
+    .avatar{
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      overflow: hidden;
+      .img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+
   .live-footer-container{
    margin-bottom: 70px;
   }
@@ -181,9 +246,4 @@
 }
 .inner{
   color:red
-}
-//.gradient-bg{
-//  background: linear-gradient(to top,rgba(0,0,0,0.7),rgba(0,0,0,0));
-//}
-.gradient-name{
 }

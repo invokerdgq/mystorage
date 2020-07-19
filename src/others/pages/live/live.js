@@ -1,8 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
-import {View,LivePlayer,Video,Input,Text} from "@tarojs/components"
+import {View,LivePlayer,Video,Input,Text,Image} from "@tarojs/components"
 import OwnOpacity from "../../../components/own-opacity/own-opacity"
 
 import './live.scss'
+import {cdn} from "../../../consts";
 export default class Live extends Component{
   constructor(props) {
     super(props);
@@ -33,8 +34,58 @@ export default class Live extends Component{
            {/*<live-player src="https://domain/pull_stream" mode="RTC" autoplay bindstatechange="statechange" binderror="error" style="width: 300px; height: 225px;" />*/}
          </View>
         <View className='data-view'>
-          <View className='live-header'>
+          <View className='live-header' style={{top:this.top +'px'}}>
+             <View className='live-header-top'>
+               <OwnOpacity
+                 containerClass='contain-dec'
+                 renderTrue={
+                   <View className='header-contain'>
+                     <View className='avatar'><Image mode='widthFix' className='img'/></View>
+                     <View className='room-dec'>
+                       <View className='room-dec-name'><Text>直播间名称...</Text></View>
+                       <View className='room-dec-more'>
+                         <Text>999关注</Text> | <Text>地域</Text>
+                       </View>
+                     </View>
+                     <View className='attend'>
+                       <Text>+</Text>关注
+                     </View>
+                   </View>
+                 }
+                 renderHide={
+                   <View className='header-contain'>
+                     <View className='avatar'><Image mode='widthFix' className='img'/></View>
+                     <View className='room-dec'>
+                       <View className='room-dec-name'><Text>直播间名称...</Text></View>
+                       <View className='room-dec-more'>
+                         <Text>999关注</Text> | <Text>地域</Text>
+                       </View>
+                     </View>
+                     <View className='attend'>
+                       <Text>+</Text>关注
+                     </View>
+                   </View>
+                 }
+               />
+             </View>
+            <View className='live-header-bottom'>
+              <OwnOpacity
+              containerClass='contain-bottom'
+              renderTrue = {
+                <View className='bottom-contain'>
+                 <Image mode='widthFix' className='img'/>
+                 <Text className='attend-dec'>亲密度2</Text>
+                </View>
+              }
+              renderHide = {
+                <View className='bottom-contain'>
+                  <Image mode='widthFix' className='img' src={`${cdn}/susisang.png`}/>
+                  <Text className='attend-dec'>亲密度2</Text>
+                </View>
+              }
+              />
 
+            </View>
           </View>
           <View className='live-footer-container'>
             <View className='live-footer'>
