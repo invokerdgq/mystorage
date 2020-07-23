@@ -159,7 +159,7 @@ export default class Reg extends Component {
       }
 
       S.toast('注册成功')
-      newUser()
+     newUser()
       setTimeout(()=>{
         if(Taro.getStorageSync('isqrcode') === 'true') {
           Taro.redirectTo({

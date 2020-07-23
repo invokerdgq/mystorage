@@ -268,9 +268,11 @@ useHooks()
         'wxde87f955d769c707'
       ]
     }
-    componentDidShow (options) {
-      console.log('++++++++++++++++++++++++++++ --------------------------------')
+   async componentDidShow (options) {
+      console.log('show--------------------------')
       console.log(this.$router.params)
+      entry.entryLaunch(this.$router.params.query)
+
       if (process.env.TARO_ENV === 'weapp') {
         FormIds.startCollectingFormIds()
         if (S.getAuthToken()) {

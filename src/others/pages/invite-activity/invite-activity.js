@@ -81,6 +81,8 @@ export default class InviteActivity extends Component{
    }
 
   onShareAppMessage(obj) {
+    console.log('hahahahah')
+    console.log(this.state.list.assist_id)
     const userinfo = Taro.getStorageSync('userinfo')
     return {
       title:'速来助我一臂之力',

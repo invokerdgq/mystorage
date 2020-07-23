@@ -39,17 +39,6 @@ async function entryLaunch(data, isNeedLocate) {
     dtidValid = store.status ? false : true
   }
 
-  // 如果需要定位,并且店铺无效，
-  if (!dtidValid) {
-    store = await getLocal(isNeedLocate)
-
-  }
-
-  if (!store.status) {
-    options.store = store
-    options.dtid = store.distributor_id
-  }
-
   if (options.uid) {
     // 如果分享带了会员ID 那么
     Taro.setStorageSync('distribution_shop_id', options.uid)
@@ -67,6 +56,15 @@ async function entryLaunch(data, isNeedLocate) {
   }
   if(options.a){
     Taro.setStorageSync('distribution_shop_id', options.i)
+  }
+  // 如果需要定位,并且店铺无效，
+  if (!dtidValid) {
+    store = await getLocal(isNeedLocate)
+  }
+
+  if (!store.status) {
+    options.store = store
+    options.dtid = store.distributor_id
   }
   return options
 }

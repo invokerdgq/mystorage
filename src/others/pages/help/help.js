@@ -25,9 +25,14 @@ export default class Help extends Component{
     }
     this.top = Taro.getStorageSync('top')
   }
+  componentDidMount(){
+  }
   componentDidShow() {
+    console.log('help page -------------------------show')
+    const id = Taro.getStorageSync('assist_id')
+    const code = Taro.getStorageSync('distribution_shop_id')
+    console.log(id,code)
     Taro.setStorageSync('help',true)
-    Taro.setStorageSync('canHelp',false)
     if(!S.getAuthToken()){
       Taro.showToast({
         title:'请先登录',
@@ -42,9 +47,13 @@ export default class Help extends Component{
     this.fetch()
   }
   async fetch(){
+    const id = Taro.getStorageSync('assist_id')
+    const code = Taro.getStorageSync('distribution_shop_id')
+    console.log('help page -------------------------322222')
+    console.log(id,code)
    const params = {
-     assist_id:Taro.getStorageSync('assist_id'),
-     user_card_code:Taro.getStorageSync('userinfo').user_card_code
+     assist_id:id,
+     user_card_code:code
    }
    const {list,share_user_info} = await api.assist.getShareInfo(params)
     this.setState({
@@ -53,18 +62,24 @@ export default class Help extends Component{
     })
   }
   back(){
-    Taro.showModal({
-      title:'是否放弃助力机会',
-      content:'如果放弃此次机会，则会视为老用户',
-      showCancel:true,
-      success(res){
-        if(res.confirm){
-          Taro.navigateTo({
-            url:'/pages/index'
-          })
+    if(Taro.getStorageSync('canHelp')){
+      Taro.showModal({
+        title:'是否放弃助力机会',
+        content:'如果放弃此次机会，则会视为老用户',
+        showCancel:true,
+        success(res){
+          if(res.confirm){
+            Taro.navigateTo({
+              url:'/pages/index'
+            })
+          }
         }
-      }
-    })
+      })
+    }else{
+      Taro.navigateTo({
+        url:'/pages/index'
+      })
+    }
   }
   handleClickItem(){
 
@@ -95,7 +110,7 @@ export default class Help extends Component{
   async handleReceiveGift(){
     const params = {
       assist_id:Taro.getStorageSync('assist_id'),
-      user_card_code:Taro.getStorageSync('userinfo').user_card_code
+      user_card_code:Taro.getStorageSync('distribution_shop_id')
     }
     let Err
     try {
