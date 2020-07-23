@@ -268,9 +268,11 @@ useHooks()
         'wxde87f955d769c707'
       ]
     }
-    componentDidShow (options) {
-      console.log('++++++++++++++++++++++++++++ --------------------------------')
-      console.log(options)
+   async componentDidShow (options) {
+      console.log('show--------------------------')
+      console.log(this.$router.params)
+      entry.entryLaunch(this.$router.params.query)
+
       if (process.env.TARO_ENV === 'weapp') {
         FormIds.startCollectingFormIds()
         if (S.getAuthToken()) {
@@ -288,7 +290,7 @@ useHooks()
         }
       }
 
-      const { referrerInfo } = options || {}
+      const { referrerInfo } = this.$router.params || {}
       if (referrerInfo) {
         console.log(referrerInfo)
         Taro.setStorageSync('extraData',referrerInfo.extraData)
