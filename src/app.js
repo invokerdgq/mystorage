@@ -270,7 +270,7 @@ useHooks()
     }
     componentDidShow (options) {
       console.log('++++++++++++++++++++++++++++ --------------------------------')
-      console.log(options)
+      console.log(this.$router.params)
       if (process.env.TARO_ENV === 'weapp') {
         FormIds.startCollectingFormIds()
         if (S.getAuthToken()) {
@@ -288,7 +288,7 @@ useHooks()
         }
       }
 
-      const { referrerInfo } = options || {}
+      const { referrerInfo } = this.$router.params || {}
       if (referrerInfo) {
         console.log(referrerInfo)
         Taro.setStorageSync('extraData',referrerInfo.extraData)
