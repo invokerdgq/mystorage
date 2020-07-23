@@ -137,7 +137,7 @@ refresh() {
     return(
       <View className='limit-container'>
         <View className='wgt__header'>
-          <View>{list[0].base.title }</View>
+          <View className='wgt__title'>{list[0].base.title }</View>
           <View className='wgt__subtitle'>{list[0].base.subtitle}</View>
         </View>
         <View className='timer-controller'>
@@ -221,7 +221,7 @@ refresh() {
                         return(
                           <View className={`limit-goods-detail-${goodsIndex === 0?'main':'other'}`}  style={{display:`${(this.state.more||goodsIndex === 0)?'block':'none'}`}}>
                             <View className='detail-img' onClick={item1.config.status === 'in_sale'?this.handleBuy.bind(this,index1,goodsIndex,item1.config.status):() =>{}}>
-                              <Image src={goodsItem.imgUrl}/>
+                              <Image src={goodsItem.imgUrl} className='img' mode='widthFix'/>
                               <View className='other-img'>
                                 <View className='goods-dec'>
                                   <View className='goods-dec-title'>{goodsItem.title}</View>

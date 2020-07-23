@@ -61,5 +61,16 @@ export default function withPager (Component) {
       }
       this.setState({ page }, cb)
     }
+
+    transFormPage(length,cb=() => {}){
+      const page = {
+        ...(this.state.page || {}),
+        page_no: Math.ceil(length/this.state.pageSize),
+        total: 0,
+        isLoading: false,
+        hasNext: true
+      }
+      this.setState({ page }, cb)
+    }
   }
 }

@@ -92,7 +92,7 @@ export default class WgtGoodsGrid extends Component {
                         <QnImg
                           img-class='goods-img'
                           src={item.imgUrl}
-                          mode='aspectFill'
+                          mode='widthFix'
                           width='400'
                           lazyLoad
                         />

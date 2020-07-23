@@ -299,6 +299,9 @@ export default class CartCheckout extends Component {
         case 'drug':
           value = 'normal_drug'
           break;
+        case 'assist':
+          value = 'assist';
+          break
         case 'group':
           value = 'normal_groups'
           activity = Object.assign(activity, { bargain_id: group_id})
@@ -389,6 +392,10 @@ export default class CartCheckout extends Component {
     console.log(params)
     if(this.state.payType === 'wxpaysurplus'){
       params.commission_balance = this.state.commission_balance
+    }
+    if(this.$router.params.level){
+      params.level = this.$router.params.level
+      params.assist_id = this.$router.params.assist_id
     }
     let data
     try {
@@ -726,6 +733,10 @@ handleExchange = async () => {
       }
       if(payType === 'wxpaysurplus'||payType === 'surplus'){
         params.commission_balance = payType === 'wxpaysurplus'?this.state.commission_balance:this.state.total.total_fee/100
+      }
+      if(this.$router.params.level){
+        params.level = this.$router.params.level
+        params.assist_id = this.$router.params.assist_id
       }
       config = await api.trade.create({...params,come_from:distributionShopId})
       order_id = isDrug ? config.order_id : config.trade_info.order_id

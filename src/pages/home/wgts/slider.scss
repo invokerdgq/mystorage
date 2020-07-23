@@ -8,7 +8,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      image {
+      .image-class {
         display: block;
         width: 100%;
         height: 100%;
@@ -23,12 +23,14 @@
 }
 .slider-dot {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-end;
   &.no-cover {
     padding: 25px;
   }
   &.center {
     justify-content: center;
+    //justify-content: flex-end;
   }
   &.right {
     justify-content: flex-end;
@@ -180,4 +182,8 @@
 .slider-caption {
   padding: 20px 30px;
   color: #999;
+}
+
+.slider-dot{
+  align-items: flex-end!important;
 }

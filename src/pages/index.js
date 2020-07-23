@@ -9,7 +9,7 @@ import entry from '@/utils/entry'
 import { withPager, withBackToTop } from '@/hocs'
 import S from "@/spx";
 import { WgtGoodsFaverite, HeaderHome } from './home/wgts'
-import { HomeWgts } from './home/comps/home-wgts'
+import  HomeWgts  from './home/comps/home-wgts'
 import Automatic from './home/comps/automatic'
 import { resolveFavsList } from './item/helper'
 import formate from "../utils/formate";
@@ -79,10 +79,10 @@ export default class HomeIndex extends Component {
 
   componentDidShow = () => {
     setTimeout(() => {
-
       Taro.navigateTo({
         // url:'/others/pages/invite-activity/invite-activity'
-        url:'/others/pages/live/live'
+        // url:'/others/pages/live/live'
+        url:'/others/pages/live-list/live-list'
         // url:'/others/pages/help/help'
         // url:'/others/pages/receive-gift/receive-gift'
         // url:'/others/pages/select/select'
@@ -243,7 +243,7 @@ export default class HomeIndex extends Component {
     const { list, total_count: total } = await api.cart.likeList(query)
 
     const nList = pickBy(list, {
-      img: 'pics[0]',
+      img: 'pics[1]',
       item_id: 'item_id',
       title: 'itemName',
       promotion_activity_tag: 'promotion_activity',

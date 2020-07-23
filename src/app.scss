@@ -17,6 +17,7 @@ $at-button-border-color-secondary: $color-border-gray;
 body, view {
   font-family: $font-family;
   font-size: $font-size;
+  box-sizing: border-box;
 }
 
 page, body {
@@ -150,5 +151,8 @@ switch, .weui-switch {
 }
 .at-tab-bar{
   height: 120px;
+}
+.img__widthfix{
+  width: 100%;
 }
 

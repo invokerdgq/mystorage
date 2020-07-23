@@ -58,7 +58,7 @@ class API {
     const { url, data, header = {}, method = 'GET', showLoading, showError = true } = config
     const methodIsGet = method.toLowerCase() === 'get'
 
-    let reqUrl = /^http/.test(url) ? url : `${this.baseURL}${url.replace(/^\//, '')}`
+    let reqUrl = /^http/.test(url) ? url : process.env.TARO_ENV === 'h5'?'https://'+`${this.baseURL}${url.replace(/^\//, '')}`:`${this.baseURL}${url.replace(/^\//, '')}`
     const query = (!data || typeof data === 'string')
       ? qs.parse(data)
       : data

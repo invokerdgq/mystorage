@@ -26,6 +26,7 @@ export default class WgtSlider extends Component {    //                       è
   handleClickItem = linkPage
 
   handleSwiperChange = (e) => {
+    if(this.props.info.data.length ===1)return
     const { current  } = e.detail
 
     this.setState({
@@ -61,8 +62,8 @@ export default class WgtSlider extends Component {    //                       è
                 />
                 <Swiper
                   className='slider-img'
-                  circular
-                  autoplay
+                  circular={data.length !==1}
+                  autoplay={data.length !== 1}
                   current={curIdx}
                   interval={config.interval}
                   duration={300}
@@ -97,7 +98,7 @@ export default class WgtSlider extends Component {    //                       è
                       <View
                         className={classNames('dot', { active: curIdx === dotIdx })}
                         key={dotIdx}
-                      ></View>
+                      />
                     )}
                   </View>
                 )}

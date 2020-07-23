@@ -18,9 +18,11 @@ import * as group from './group'
 import * as wx from './wx'
 import * as wheel from './wheel'
 import * as assist from './assist'
+import * as live from './live'
 
 
 export default {
+  live,
   assist,
   article,
   aftersales,

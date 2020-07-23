@@ -21,6 +21,8 @@ export default class GoodsBuyPanel extends Component {
   }
 
   static defaultProps = {
+    level:'',
+    assist_id:'',
     info: null,
     isOpened: false,
     type: 'fastbuy',
@@ -320,6 +322,8 @@ export default class GoodsBuyPanel extends Component {
           })
         })
         url += `&type=${marketing}&seckill_id=${seckill_id}&ticket=${ticket}`
+      }else if(marketing === 'assist'){
+        url += `&type=${marketing}&assist_id=${this.props.assist_id}&level=${this.props.level}`
       }
 
       try {

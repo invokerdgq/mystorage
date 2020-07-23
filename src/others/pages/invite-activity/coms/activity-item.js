@@ -19,12 +19,8 @@ export default class ActivityItem extends Component{
       userList:[],
       inviteNumber:0,
       step:[
-        {number:2,price:59.9,level:'level1'},
-        {number:5,price:19.9,level:'level2'},
-        {number:10,price:9.9,level:'level3'},
-        {number:28,price:1,level:'level4'}
       ],
-      last_seconds:0
+      last_seconds:''
     },
     initList: {step:''},
     onclickBtn(){},
@@ -37,10 +33,17 @@ export default class ActivityItem extends Component{
        showMore:false,
        showShare:false
      }
-     this.timer = calcTimer(this.props.activityInfo.last_seconds,'s')
+     // this.state.timer = calcTimer(this.props.activityInfo.last_seconds,'s')
    }
    componentDidMount() {
    }
+  componentWillReceiveProps(nextProps, nextContext) {
+    if(nextProps.activityInfo.last_seconds !=0){
+      this.setState({
+        timeEnd:false
+      })
+    }
+  }
 
   handleMore(){
     this.setState({
@@ -53,7 +56,7 @@ export default class ActivityItem extends Component{
     })
   }
   clickBtn(type){
-    if((this.props.last_seconds ==0 ||this.state.timeEnd)&&this.state.status){
+    if((this.props.activityInfo.last_seconds ==0 ||this.state.timeEnd)&&this.props.activityInfo.status){
       Taro.showToast({
         title:'很抱歉，超过时间期限',
         icon:'none',
@@ -103,9 +106,9 @@ export default class ActivityItem extends Component{
                  <AtCountdown
                    isCard
                    format={{ hours: ':', minutes: ':', seconds: '' }}
-                   hours={!status?0:this.timer.hh}
-                   minutes={!status?0:this.timer.mm}
-                   seconds={!status?0:this.timer.ss}
+                   hours={!status?0:calcTimer(this.props.activityInfo.last_seconds,'s').hh}
+                   minutes={!status?0:calcTimer(this.props.activityInfo.last_seconds,'s').mm}
+                   seconds={!status?0:calcTimer(this.props.activityInfo.last_seconds,'s').ss}
                    onTimeUp={this.timeEnd.bind(this)}
                  /><Text className='end'>{!status?'参与活动开始计时':this.state.timeEnd?'已结束':'后结束'}</Text>
                </View>

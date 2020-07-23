@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, ScrollView, Swiper, SwiperItem, Image, Video, Navigator, Canvas } from '@tarojs/components'
+import { View, Text, ScrollView, Swiper, SwiperItem, Image, Video, Navigator, Canvas ,Icon,Input} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtCountdown, AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
 import { Loading, Price, BackToTop, FloatMenus, FloatMenuItem, SpHtmlContent, SpToast, GoodsBuyPanel, SpCell, GoodsEvaluation } from '@/components'
@@ -304,7 +304,7 @@ export default class Detail extends Component {
     const { list, total_count: total } = await api.cart.likeList(query)
 
     const nList = pickBy(list, {
-      img: 'pics[0]',
+      img: 'pics[1]',
       item_id: 'item_id',
       title: 'itemName',
       promotion_activity_tag: 'promotion_activity',
@@ -412,10 +412,16 @@ export default class Detail extends Component {
       setTimeout(() =>{
         S.login(this)
       }, 2000)
-
       return
     }
-
+   if(this.$router.params.level && type === 'cart'){
+     Taro.showToast({
+       title:'助力产品不能加入购物车',
+       icon:'none',
+       duration:1500
+     })
+     return;
+   }
     this.setState({
       showBuyPanel: true, // 购买时底部弹窗
       buyPanelType: type,
@@ -827,7 +833,6 @@ export default class Detail extends Component {
       new_coupon_list = coupon_list.list.slice(0,3)
     }
 
-    console.log('ddd',info)
     return (
       <View>
         <View className='page-goods-detail'>
@@ -850,9 +855,11 @@ export default class Detail extends Component {
           >
             <View className='goods-imgs__wrap'>
               <Swiper
+                autoplay={false}
                 className='goods-imgs__swiper'
-                indicator-dots
+                indicatorDots={true}
                 current={curImgIdx}
+                interval={4000}
                 onChange={this.handleSwiperChange}
               >
                 {
@@ -1084,7 +1091,7 @@ export default class Detail extends Component {
               />
             }
             {
-              itemParams.length &&
+              itemParams.length >0&&
               <View
                 className='goods-sec-specs'
                 onClick={this.handleParamsClick.bind(this)}
@@ -1286,7 +1293,7 @@ export default class Detail extends Component {
             >
               <View
                 className='goods-buy-toolbar__btns'
-                style='width: 60%; text-align: center'
+                style='width: 60%; text-align: center;display:flex;justify-content:center'
               >
                 {
                   !startActivity
@@ -1299,6 +1306,8 @@ export default class Detail extends Component {
 
           {
             info && <GoodsBuyPanel
+              assist_id={this.$router.params.assist_id}
+              level={this.$router.params.level}
               info={info}
               isexchange={this.state.is_exchange}
               type={buyPanelType}

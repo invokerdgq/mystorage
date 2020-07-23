@@ -3,6 +3,9 @@
 
 .page-recommend-list {
   .recommend-list {
+    &__item{
+      box-sizing: border-box;
+    }
     &__toolbar {
       position: fixed;
       padding: 20px 0 0;

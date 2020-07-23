@@ -69,7 +69,8 @@ export default class WxAuth extends Component {
         userId:res.memberInfo.user_id,
         user_card_code:res.memberInfo.user_card_code,
         inviter_id:res.memberInfo.inviter_id,
-        is_vip:res.vipgrade.is_vip
+        is_vip:res.vipgrade.is_vip,
+        vip_grade:res.vipgrade.vip_grade_id
       })
       Taro.redirectTo({
         url: redirect_url

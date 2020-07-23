@@ -1,7 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import {View, Text, Icon} from '@tarojs/components'
 import './nav-gap.scss'
-import NavBar from 'taro-navigationbar';
 
 
 export default class NavGap extends Component{
@@ -34,21 +33,23 @@ export default class NavGap extends Component{
   }
 
   handleIconClick = () => {
-    Taro.navigateBack()
+   Taro.navigateBack()
   }
   render(){
     const {title,home } = this.props
     const { showIcon } = this.state
+    const top = Taro.getStorageSync('top')
       return (
         <View className="nav-gap-container" style={{background:this.props.bg?this.props.bg:''}}>
-          <NavBar
-          title={title}
-          back = {showIcon}
-          home={home}
-          background='#fff'
-          >
-
-          </NavBar>
+          {/*<NavBar*/}
+          {/*title={title}*/}
+          {/*back = {showIcon}*/}
+          {/*home={home}*/}
+          {/*background='#fff'*/}
+          {/*>*/}
+          {/*</NavBar>*/}
+          <View className='iconfont icon-arrow-left' onClick={this.handleIconClick} style={{top:top+'px'}}/>
+          <View style={{top:top+'px'}} className='gap-title'>{title}</View>
         </View>
       )
   }

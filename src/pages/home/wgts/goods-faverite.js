@@ -34,7 +34,7 @@ export default class WgtGoodsFaverite extends Component {
               猜你喜欢
             </Text>
           </View>
-          <View className='wgt-body with-padding'>
+          <View className='wgt-body with-padding' style={{padding:process.env.TARO_ENV === 'h5'?'0 0 60px':'0'}}>
             <View className='grid-goods out-padding grid-goods__type-grid'>
               {info.map(item => (
                 <View className='goods-list__item'>

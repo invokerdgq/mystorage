@@ -499,7 +499,7 @@ export default class RecommendList extends Component {
             onScroll={this.handleScroll}
             onScrollToLower={this.nextPage}
           >
-            <View className='recommend-list recommend-list__type-grid'>
+            <View className='recommend-list recommend-list__type-grid' style={{padding:process.env.TARO_ENV === 'h5'?'0 0 60px 0':'0'}}>
               {
                 list.map(item => {
                   return (

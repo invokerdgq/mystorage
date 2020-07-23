@@ -48,9 +48,7 @@ export default class RecommendItem extends Component {
             <QnImg
               img-class='recommend-item__img'
               src={img}
-              mode='aspectFill'
-              // mode='widthFix'
-              width='400'
+              mode='widthFix'
               lazyLoad
             />
           </View>

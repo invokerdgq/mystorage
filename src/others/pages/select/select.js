@@ -12,6 +12,9 @@ import {connect} from "@tarojs/redux";
   step:step.currentStep
 }))
 export default class SelectGood  extends Component{
+  static defaultProps = {
+    step:[{}]
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -52,12 +55,14 @@ export default class SelectGood  extends Component{
   render() {
     const {currentLevel,goodsList} = this.state
     let title,newList=[]
-    this.props.step.map(item => {
-      if(item.level == currentLevel){
-        title = item.price
-        console.log(title)
-      }
-    })
+    if(this.props.step.length !=0){
+      this.props.step.map(item => {
+        if(item.level == currentLevel){
+          title = item.price
+          console.log(title)
+        }
+      })
+    }
     goodsList.map(item => {
       if(item.level == currentLevel){
         newList = item.list

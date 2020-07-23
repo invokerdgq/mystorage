@@ -148,6 +148,7 @@
 .search-bar-container{
   height: VH(66px);
   position: relative;
+  padding: 0 26px;
 }
 .icon-sousuo{
   position:absolute;
@@ -175,12 +176,13 @@
   text-align: center;
 }
 .own-input{
-  position: relative;
+  //position: relative;
   height: 66px;
+  width: 100%;
   color:#c3c5cb;
   font-size: 26px;
-  margin: 0 26px;
   padding: 0 30px 0 90px;
   border-radius: 33px;
   background-color: #fbfafa;
+  box-sizing: border-box;
 }

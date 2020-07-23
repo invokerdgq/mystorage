@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import {View, Text, ScrollView, Image} from '@tarojs/components'
+import {View, Text, ScrollView, Image,Icon,Input} from '@tarojs/components'
 import { connect } from "@tarojs/redux";
 import { Loading, SearchBar, TabBar} from '@/components'
 import { classNames, pickBy } from '@/utils'

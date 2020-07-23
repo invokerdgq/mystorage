@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import {View, Text, Image, Button, Icon} from '@tarojs/components'
 import './feautre-select.scss'
 
-class FeautreSelect extends Component{
+export default class FeautreSelect extends Component{
   static options = {
     addGlobalClass: true
   }

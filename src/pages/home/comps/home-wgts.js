@@ -1,8 +1,7 @@
-import Taro, { PureComponent } from '@tarojs/taro'
+import Taro, { PureComponent,Component } from '@tarojs/taro'
 import { View,Image } from '@tarojs/components'
 import {WgtLimitKill ,FeautreSelect, WgtSearchHome, WgtFilm, WgtMarquees, WgtSlider, WgtImgHotZone, WgtNavigation, WgtCoupon, WgtGoodsScroll, WgtGoodsGrid, WgtShowcase, HotArea } from '../wgts'
 import S from '@/spx'
-import PostNavigation from "../../../components/post-navigation/post-navigation";
 import PostScrollNavigation from "../../../components/post-scroll-navigation/post-scroll-navigation"
 
 export default class HomeWgts extends PureComponent {

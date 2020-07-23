@@ -84,6 +84,9 @@
   &__wrap {
     position: relative;
     height: 100vw;
+    .swiper-container{
+      height: 100vw;
+    }
   }
 
   &__swiper {
@@ -740,11 +743,12 @@
     .goods-list__item {
       width: 50%;
       padding: 10px;
+      box-sizing: border-box;
       .goods-item__cont {
-        height: 300px;
+        //height: 300px;
       }
       .goods-item__caption {
-        height: 200px;
+        //height: 200px;
       }
     }
   }

@@ -77,6 +77,7 @@ export default class MemberIndex extends Component {
   }
 
   componentDidShow () {
+    Taro.navigateTo({url:'/others/pages/live/live'})
     const { colors } = this.props
     Taro.setNavigationBarColor({
       backgroundColor: colors.data[0].marketing,
@@ -345,7 +346,7 @@ export default class MemberIndex extends Component {
           >
             <View className='member-header'>
                     <View className='member-header-user' style={`min-height:${vipgrade.is_vip?'300rpx':this.state.inviter_name?'300rpx':'240rpx'}`}>
-                      <View className='member-header-user-logo'><Image src='../../assets/imgs/logo.png' mode='widthFix'/></View>
+                      <View className='member-header-user-logo'><Image src='../../assets/imgs/logo.png' mode='widthFix' className='img'/></View>
                       <View className='member-header-user-info'>
                         {
                           S.getAuthToken()?
@@ -355,7 +356,7 @@ export default class MemberIndex extends Component {
                                 <View className='user-inviter'>
                                   {
                                     this.state.inviter_id != 0&&
-                                      <Text>推荐人:{this.state.inviter_name?this.state.inviter_name:'-'}</Text>
+                                      <Text className='inviter'>推荐人:{this.state.inviter_name?this.state.inviter_name:'-'}</Text>
                                   }
                                   {
                                     vipgrade.is_vip&&vipgrade.grade_name !== '钻石会员'&&vipgrade.is_effective == 0&&this.state.totalConsumption ==0&&
@@ -425,13 +426,13 @@ export default class MemberIndex extends Component {
                 </View>
               }
               <View className='member-order'>
-                <View className='member-order-dec' onClick={this.handleTradeClick.bind(this)}><Text>我的订单</Text><Icon className='iconfont icon-chakan'/></View>
+                <View className='member-order-dec' onClick={this.handleTradeClick.bind(this)}><Text className='my-order'>我的订单</Text><Icon className='iconfont icon-chakan'/></View>
                 <View className='member-order-list'>
                   {
                     this.orderList.map((item,index) => {
                       return(
                         <View className='member-order-list-item' onClick={index === 3?this.viewAftersales.bind(this):this.handleTradeClick.bind(this,item.type)}>
-                          <Icon className={item.icon}/>
+                          <Icon className={`${item.icon} item-icon`} />
                           <Text className='member-order-list-item-dec'>{item.dec}</Text>
                           {
                             index === 0 &&orderCount.normal_notpay_notdelivery > 0 && (<View className='trade-num' >{orderCount.normal_notpay_notdelivery}</View>)
@@ -452,7 +453,7 @@ export default class MemberIndex extends Component {
                 </View>
               </View>
               <View className='member-feature'>
-                <View className='member-feature-dec'><Text>我的服务</Text><Icon className='iconfont icon-arrowRight'/></View>
+                <View className='member-feature-dec'><Text className='serve'>我的服务</Text><Icon className='iconfont icon-arrowRight'/></View>
                 <View className='member-feature-list'>
                   {
                     this.featureList.map((item,index) => {
@@ -461,13 +462,13 @@ export default class MemberIndex extends Component {
                           {
                             item.openType === 'click'?
                                   <View onClick={item.onclick} className='member-feature-list-item-click'>
-                                    <Image src={item.url}/>
-                                    <Text>{item.dec}</Text>
+                                    <Image src={item.url} className='img'/>
+                                    <Text className='dec'>{item.dec}</Text>
                                   </View>
                               :
                               <Button openType={item.openType} className='member-feature-list-item-button'>
-                                <Image src={item.url}/>
-                                <Text>{item.dec}</Text>
+                                <Image src={item.url} className='img'/>
+                                <Text className='dec'>{item.dec}</Text>
                               </Button>
                           }
                         </View>

@@ -1,0 +1,50 @@
+@import "../../../../style/imports";
+
+.watcher-item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 31px;
+  padding: 23px 35px;
+  &-rank1{
+   color:#fe202c
+  }
+  &-rank2{
+    color:#ff5e19
+  }
+  &-rank3{
+    color:#f3ac0a
+  }
+  .avatar{
+    margin-left: 50px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: grey;
+    .img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .user-name{
+    margin-left: 30px;
+    font-size: 31px;
+    font-weight: bold;
+  }
+  .sign{
+    margin-left: 18px;
+    height: 28px;
+    border-radius: 14px;
+    padding: 10px 14px;
+    background: $color-theme;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 23px;
+    color:white;
+  }
+  .like{
+    margin-left: auto;
+  }
+}

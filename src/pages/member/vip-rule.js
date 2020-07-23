@@ -11,7 +11,7 @@ export default class VipRule extends Component{
     return (
       <View className='rule-desc'>
         <NavGap title='规则说明'/>
-        <Image mode='widthFix' src='https://sxt-b-cdn.oioos.com/tupian/des.png'/>
+        <Image mode='widthFix' src='https://sxt-b-cdn.oioos.com/tupian/des.png' className='img'/>
       </View>
     )
   }

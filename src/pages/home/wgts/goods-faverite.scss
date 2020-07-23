@@ -25,4 +25,7 @@
     //border-bottom: 1PX solid $color-brand-primary;
     color: black;
   }
+  .goods-list__item{
+    box-sizing: border-box;
+  }
 }

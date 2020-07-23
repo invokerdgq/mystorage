@@ -90,6 +90,7 @@ useHooks()
       //   }
       // })
     }
+
     componentDidMount () {
       const promoterExp = Taro.getStorageSync('distribution_shop_exp')
       if (Date.parse(new Date()) - promoterExp > 86400000 * 3) {
@@ -235,13 +236,13 @@ useHooks()
         {
           root: 'others',
           pages: [
+            // 'pages/live/live',
             'pages/home/license',
             'pages/protocol/privacy',
             'pages/exchange/exchange',
             'pages/transform/transform',
             'pages/invite-activity/invite-activity',
             'pages/help/help',
-            'pages/live/live',
             'pages/live-list/live-list',
             'pages/select/select',
             'pages/receive-gift/receive-gift',
@@ -263,10 +264,13 @@ useHooks()
       navigateToMiniProgramAppIdList: [
         'wx4721629519a8f25b',
         'wx2fb97cb696f68d22',
-        'wxf91925e702efe3e3'
+        'wxf91925e702efe3e3',
+        'wxde87f955d769c707'
       ]
     }
     componentDidShow (options) {
+      console.log('++++++++++++++++++++++++++++ --------------------------------')
+      console.log(options)
       if (process.env.TARO_ENV === 'weapp') {
         FormIds.startCollectingFormIds()
         if (S.getAuthToken()) {
@@ -287,6 +291,7 @@ useHooks()
       const { referrerInfo } = options || {}
       if (referrerInfo) {
         console.log(referrerInfo)
+        Taro.setStorageSync('extraData',referrerInfo.extraData)
       }
     }
 
@@ -354,12 +359,12 @@ useHooks()
     render () {
       return (
         <Provider store={store}>
-          <Index />
+          <Index/>
         </Provider>
       )
     }
   }
-  Taro.render(<App />, document.getElementById('app'))
+  Taro.render(<App/>, document.getElementById('app'))
 
 
 

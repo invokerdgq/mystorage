@@ -78,8 +78,7 @@ export default class GoodsItem extends Component {
             <QnImg
               img-class='goods-item__img'
               src={img}
-              mode='aspectFill'
-              width='400'
+              mode='widthFix'
               lazyLoad
             />
           </View>

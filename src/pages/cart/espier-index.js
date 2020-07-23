@@ -130,7 +130,7 @@ export default class CartIndex extends Component {
     const { list, total_count: total } = await api.cart.likeList(query)
 
     const nList = pickBy(list, {
-      img: 'pics[0]',
+      img: 'pics[1]',
       item_id: 'item_id',
       promotion_activity_tag: 'promotion_activity',
       price: ({price}) => (price/100).toFixed(2),
@@ -435,11 +435,11 @@ export default class CartIndex extends Component {
         title="购物车"
         />
         <View className={classNames('page-cart-index', isDrug && 'is-drug')}>
-          <NavBar
-            title='购物车'
-            leftIconType='chevron-left'
-            fixed='true'
-          />
+          {/*<NavBar*/}
+          {/*  title='购物车'*/}
+          {/*  leftIconType='chevron-left'*/}
+          {/*  fixed='true'*/}
+          {/*/>*/}
           {
             !S.getAuthToken()
               ? <View className='login-header'>
@@ -652,8 +652,7 @@ export default class CartIndex extends Component {
                 )
               }
             </View>
-
-            {invalidList.length && (
+            {invalidList.length >0 && (
               <View className='cart-list cart-list__disabled'>
                 <View className='cart-list__hd'><Text>已失效</Text></View>
                 <View className='cart-list__bd'>
@@ -677,7 +676,6 @@ export default class CartIndex extends Component {
                 </View>
               </View>
             )}
-
             {
               !isDrug && likeList.length && showLikeList
                 ? <View className='cart-list cart-list__disabled'>

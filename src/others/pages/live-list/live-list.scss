@@ -1,6 +1,82 @@
 @import "../../../style/imports";
 
+page{
+  background: white;
+}
+.live{
+  height: 100vh;
+}
 .live-list{
-  position: relative;
-  top:VH($nav-gap-height)
+  height: 100vh;
+  box-sizing: border-box;
+  padding-top:VH($nav-gap-height);
+  display: flex;
+  flex-direction: column;
+  .search-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .live-search{
+      display: flex;
+      width: 628px;
+      flex-direction: row;
+      align-items: center;
+      margin-left: 20px;
+      height: 56px;
+      border-radius: 28px;
+      background: #F1F1F2;
+      .icon-sousuo{
+        font-size: 38px;
+        color:#5f646b;
+        margin: 0 15px 0 25px;
+      }
+      .live-input{
+        height: 100%;
+      }
+    }
+    .icon-camera-aside{
+      font-size: 45px;
+      margin-left: 38px;
+    }
+  }
+  .live-tag{
+    display:flex ;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 70px 50px 30px;
+    &-item{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .img{
+        width: 85px;
+        height: 85px;
+        margin-bottom: 15px;
+      }
+      .dec{
+        font-size: 23px;
+        color:#191919
+      }
+    }
+  }
+
+  .room-list{
+    flex:1;
+    overflow: auto;
+    background: #F1F1F2;
+    padding: 25px 13px 0;
+    .scroll-room-list{
+      height: 100%;
+      .room-list-contain{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .item-container{
+          margin-bottom: 13px;
+
+        }
+      }
+    }
+  }
 }

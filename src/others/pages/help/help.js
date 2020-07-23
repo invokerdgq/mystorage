@@ -20,7 +20,7 @@ export default class Help extends Component{
     super(props);
     this.state = {
       info:{},
-      list: {},
+      list: {items:[]},
       showGift:false
     }
     this.top = Taro.getStorageSync('top')
@@ -159,8 +159,8 @@ export default class Help extends Component{
                  <OwnProgress
                    height={28}
                    step={list.step_conf}
-                   inviteNumber={list.user_assist_info.assist_amount}
-                   lastSeconds={list.user_assist_info.last_seconds}
+                   inviteNumber={list.user_assist_info?list.user_assist_info.assist_amount:0}
+                   lastSeconds={list.user_assist_info?list.user_assist_info.last_seconds:0}
                  />
                </View>
              </View>

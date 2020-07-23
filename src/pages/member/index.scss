@@ -3,6 +3,9 @@
 page{
   background: white;
 }
+.taro_page{
+  background: white;
+}
 .member__scroll{
   @include page-scroll($nav-gap-height)
 }
@@ -17,7 +20,7 @@ page{
     height: 60px;
     line-height: 60px;
     border-bottom:solid 2px #eeeeee;
-    Text{
+    .serve{
       margin-left: 20px;
     }
   }
@@ -28,14 +31,15 @@ page{
     &-item{
       width: 25%;
       flex: none;
-      Button{
+      &-button{
         background: white;
         width: 100%;
         height: 100%;
         line-height: 1.4;
-        color:#2f2f2f
+        color:#2f2f2f;
+        border:none
       }
-      Button:after{
+      &-button:after{
         border: none;
       }
       &-button,&-click{
@@ -45,11 +49,11 @@ page{
         font-size: 25px;
         padding: 30px 0;
         line-height: 1.4;
-        Text{
+        .dec{
           margin-top: 36px;
         }
       }
-      Image{
+      .img{
         width: 48px;
         height: 48px;
       }
@@ -69,10 +73,10 @@ page{
     height: 60px;
     line-height: 60px;
     border-bottom:solid 2px #eeeeee;
-    Text{
+    .my-order{
       margin-left: 20px;
     }
-    Icon{
+    .icon-chakan{
       font-size: 28px;
       color:#5f5e5e;
       margin-right: 20px;
@@ -103,10 +107,10 @@ page{
         background: $color-theme;
         color:white
       }
-      Icon{
+      .item-icon{
         font-size: 70px;
       }
-      Text{
+      &-dec{
         font-size: 26px;
         margin-top: 10px;
       }
@@ -160,6 +164,7 @@ page{
     justify-content: flex-end;
     position: relative;
     overflow:auto;
+    min-height: 250px;
     :after{
       content: '';
       display: block;
@@ -169,7 +174,7 @@ page{
     }
     &-logo{
       margin-right: auto;
-     Image{
+     .img{
        width: 81px;
      }
     }
@@ -199,7 +204,7 @@ page{
           flex-wrap: nowrap;
           font-size: 24px;
           margin-top: 15px;
-          Text{
+          .inviter{
             height: 38px;
             line-height: 38px;
             border-radius: 19px;

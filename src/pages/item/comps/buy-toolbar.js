@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Button } from '@tarojs/components'
+import { View, Text, Button,Icon } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtBadge } from 'taro-ui'
 import { navigateTo } from '@/utils'

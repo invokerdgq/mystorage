@@ -36,8 +36,10 @@ export default class InviteActivity extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      list:{},
-      step:3,
+      list:{
+        user_assist_info:{}
+      },
+      step:0,
       items:null,
       preSave:false,
       savePath:'',
@@ -68,7 +70,9 @@ export default class InviteActivity extends Component{
     this.fetch()
   }
   async fetch(){
+    console.log('zai ci 请求zai ci 请求zai ci 请求')
        const {list,step} = await api.assist.getAssistList()
+    console.log(list)
        this.props.setStep(list.step_conf)
        this.setState({
          list:list,
@@ -104,7 +108,6 @@ export default class InviteActivity extends Component{
       }
         if(this.state.step ==0){
           try {
-            console.log('hahahahah')
             const res = await api.assist.attendassist(this.state.list.assist_id)
             this.fetch()
           }catch(e){
@@ -155,13 +158,13 @@ export default class InviteActivity extends Component{
 
   render() {
     const {userActivity,showShade,showCanvas,list,step}= this.state
-    let newList = {
+    const newList = {
       userList:step !=0?list.user_assist_info.assist_help_log:[],
-      inviteNumber: list.user_assist_info.assist_amount,
+      inviteNumber: step !=0?list.user_assist_info.assist_amount:0,
       step:list.step_conf,
-      last_seconds:list.user_assist_info.last_seconds,
+      last_seconds:step !=0?list.user_assist_info.last_seconds:0,
       poster:list.poster,
-      status: step== 0?false:true
+      status: step == 0?false:true
     }
     return(
       <View>
@@ -210,7 +213,6 @@ export default class InviteActivity extends Component{
         <View className='invite-act-content'>
         <View className='activity-list'>
             <ActivityItem
-            // activityInfo={userActivity}
               activityInfo={newList}
               initList={list}
             onclickBtn={this.handleClickBtn.bind(this)}
@@ -228,6 +230,7 @@ export default class InviteActivity extends Component{
           >
             <View className='goods-scroll-list'>
               {
+                list.items&&
                 list.items.map((item,index) => {
                   return(
                     <OwnGoodsItem
