@@ -24,7 +24,7 @@ export default class QnImg extends Component {
 
     return (
       <Image
-        style={{width:'100%'}}
+        style={{width:width?width:'100%'}}
         className="img-class"
         src={rSrc}
         mode={mode}

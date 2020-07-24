@@ -113,7 +113,7 @@ export default class OwnShade extends Component{
       })
     }
     Taro.getImageInfo({
-      src:this.props.goodsImg,
+      src:this.props.goodsImg.replace('http://','https://'),
       success:(res) => {
         this.setState({
           goodsPath:res.path,
