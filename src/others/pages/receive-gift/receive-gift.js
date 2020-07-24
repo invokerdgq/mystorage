@@ -34,7 +34,6 @@ export default class ReceiveGift extends Component{
   async fetch(){
     const [{list},{list:couponList}] = await Promise.all([api.assist.getAssistList(),api.assist.getCouponList({assist_id:Taro.getStorageSync('assist_id')})])
    console.log(list)
-    this.props.setStep(list.step_conf)
     this.setState({
       goodsList:list.items,
       couponList

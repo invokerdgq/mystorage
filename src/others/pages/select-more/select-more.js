@@ -46,9 +46,9 @@ export default class SelectMoreGood extends Component{
   back(){
     Taro.navigateBack()
   }
-  buy(item){
+  buy(item,index){
     Taro.navigateTo({
-      url:`/pages/item/espier-detail?id=${item.item_id}&level=${this.state.currentLevel}&assist_id=${item.assist_id}`
+      url:`/pages/item/espier-detail?id=${item.item_id}&level=${this.state.currentLevel -1-index}&assist_id=${item.assist_id}`
     })
   }
   showMore(index){
@@ -99,7 +99,7 @@ export default class SelectMoreGood extends Component{
                                 info={item1}
                                 disabled={item1.assist_store == 0}
                                 type='buy'
-                                onclick={this.buy.bind(this,item1)}
+                                onclick={this.buy.bind(this,item1,index)}
                                 price={newList[index].price}
                               />
                             )

@@ -84,6 +84,7 @@ handleToRoom(item){
     Taro.navigateToMiniProgram({
        appId:'wxde87f955d769c707',
        path:`/others/pages/live/live?appId=${item.im_id}&token=${Taro.getStorageSync('auth_token')}`,
+      // path:`pages/roomList/index?appId=${item.im_id}&token=${Taro.getStorageSync('auth_token')}`,
        extraData:{
         ...item,
          token:Taro.getStorageSync('auth_token')

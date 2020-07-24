@@ -56,6 +56,15 @@ export default class ActivityItem extends Component{
     })
   }
   clickBtn(type){
+    if(this.props.initList.user_assist_info.assist_status && this.props.initList.user_assist_info.assist_status !=1){
+      let status = this.props.initList.user_assist_info.assist_status
+      Taro.showToast({
+        title:status == 2?'活动已结束':'你已兑换',
+        icon:'none',
+        duration:1500
+      })
+      return
+    }
     if((this.props.activityInfo.last_seconds ==0 ||this.state.timeEnd)&&this.props.activityInfo.status){
       Taro.showToast({
         title:'很抱歉，超过时间期限',
@@ -90,6 +99,10 @@ export default class ActivityItem extends Component{
                {
                  !status ?
                    <Text>分享给好友，一元助力</Text>:
+                   initList.user_assist_info.assist_status == 2?
+                     <Text>活动已结束</Text>
+                     :initList.user_assist_info.assist_status == 3?
+                     <Text>已完成兑换</Text>:
                    <Text> 已有{inviteNumber}人助力，仅差{step[step.length-1].number-inviteNumber}人</Text>
                }
              </View>

@@ -63,10 +63,10 @@ export default class OwnShade extends Component{
     const {pixelRatio:dpr,screenWidth,screenHeight}= Taro.getSystemInfoSync()
     if(dpr<3){
       this.setState({
-        url:`${cdn}/init-post.png`
+        url:`${cdn}/init-post1.png`
       })
       Taro.getImageInfo({
-        src:`${cdn}/init-post.png`,
+        src:`${cdn}/init-post1.png`,
         success:(res)=>{
           this.setState({
             width:res.width*(screenWidth/375)/dpr,
@@ -88,10 +88,10 @@ export default class OwnShade extends Component{
       })
     }else{
       this.setState({
-        url:`${cdn}/post.png`
+        url:`${cdn}/post1.png`
       })
       Taro.getImageInfo({
-        src:`${cdn}/post.png`,
+        src:`${cdn}/post1.png`,
         success:(res)=>{
           this.setState({
             width:res.width*(screenWidth/375)/dpr,
@@ -195,13 +195,13 @@ export default class OwnShade extends Component{
   render() {
     const {width,height} = this.state
     return(
-      <View className='shade-container' style={{visibility:!this.props.show?'hidden':'visible'}}>
+      <View className='shade-container' style={{left:!this.props.show?-100+'vw':0,top:!this.props.show?-100+'vh':0}}>
         <View className='shade'/>
-        <View className='shade-content'>
+        <View className='shade-content' >
           {this.props.children}
           {this.props.canvas&&
-          <View className='post-container'>
-            <View className='canvas-shadow'>
+          <View className='post-container' >
+            <View className='canvas-shadow' >
               <Canvas canvas-id='owncanvas'  className='canvas' style={{width:width +'px',height:height+'px'}}/>
             </View>
             <View className='save-btn-container'><Image src={`${cdn}/poster-save.png`} mode='widthFix' className='save-btn' onClick={this.save.bind(this)}/></View>

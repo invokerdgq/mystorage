@@ -189,7 +189,7 @@ export default class InviteActivity extends Component{
               <Image src={`${cdn}/invite-share.png`} style={{width:'580rpx'}} mode='widthFix'/>
             </View>
             <View className='shade-slot-head'>
-                <View className='shade-slot-head-title'>仅剩<Text className='number'>{this.state.status?list.step_conf[list.step_conf.length-1].number-list.user_assist_info.assist_amount:list.step_conf[list.step_conf.length-1].number}</Text><Text className='danwei'>人</Text>即可一元购</View>
+                <View className='shade-slot-head-title'>仅剩<Text className='number'>{this.state.step != 0?list.step_conf[list.step_conf.length-1].number-list.user_assist_info.assist_amount:list.step_conf[list.step_conf.length-1].number}</Text><Text className='danwei'>人</Text>即可一元购</View>
              <View>
                 <OwnProgress
                   height={28}
