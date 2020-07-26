@@ -70,9 +70,7 @@ export default class InviteActivity extends Component{
     this.fetch()
   }
   async fetch(){
-    console.log('zai ci 请求zai ci 请求zai ci 请求')
        const {list,step} = await api.assist.getAssistList()
-    console.log(list)
        this.props.setStep(list.step_conf)
        this.setState({
          list:list,
@@ -87,7 +85,8 @@ export default class InviteActivity extends Component{
     return {
       title:'速来助我一臂之力',
       path:`/others/pages/help/help?uid=${userinfo.user_card_code}&assist_id=${this.state.list.assist_id}`,
-      imageUrl:this.state.savePath
+      // imageUrl:this.state.savePath
+      imageUrl:this.state.list.poster
     }
   }
  async handleClickBtn(type){

@@ -80,9 +80,9 @@ export default class HomeIndex extends Component {
   componentDidShow = () => {
     setTimeout(() => {
       Taro.navigateTo({
-        // url:'/others/pages/invite-activity/invite-activity'
+        url:'/others/pages/invite-activity/invite-activity'
         // url:'/others/pages/live/live'
-        url:'/others/pages/live-list/live-list'
+        // url:'/others/pages/live-list/live-list'
         // url:'/others/pages/help/help'
         // url:'/others/pages/receive-gift/receive-gift'
         // url:'/others/pages/select/select'

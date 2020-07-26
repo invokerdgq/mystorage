@@ -24,7 +24,7 @@ export default class QnImg extends Component {
 
     return (
       <Image
-        style={{width:process.env.TARO_ENV === 'h5'?'100%':'auto'}}
+        style={{width:process.env.TARO_ENV === 'h5'?'100%':''}}
         className="img-class"
         src={rSrc}
         mode={mode}

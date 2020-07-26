@@ -43,7 +43,7 @@ export default class OwnShade extends Component{
     const host = req.baseURL.replace('/api/h5app/wxapp/','')
     const extConfig = Taro.getExtConfigSync ? Taro.getExtConfigSync() : {}
     const { distributor_id } = Taro.getStorageSync('curStore')
-    // const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=others/pages/help/help&appid=${extConfig.appid}&company_id=1&dtid=${distributor_id}&uid=${userId}&help=true`
+    // const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=others/pages/help/help&appid=${extConfig.appid}&company_id=1&&assist_id=${this.props.assist_id}&uid=${userId}`
     // const  wxappCode= 'https://sxt-s.oioos.com/wechatAuth/wxapp/qrcode?page=pages/item/espier-detail&appid=wx9378bcb903abd3ab&company_id=1&id=9326&dtid=undefined&uid=OS674E'
     const  wxappCode= `https://sxt-s.oioos.com/wechatAuth/wxapp/qrcode?page=pages/index&appid=wx9378bcb903abd3ab&company_id=1&assist_id=${this.props.assist_id}&uid=OS674E`
     Taro.getImageInfo({
@@ -113,7 +113,7 @@ export default class OwnShade extends Component{
       })
     }
     Taro.getImageInfo({
-      src:this.props.goodsImg.replace('http://','https://'),
+      src:this.props.goodsImg.replace(/^http/,'https'),
       success:(res) => {
         this.setState({
           goodsPath:res.path,

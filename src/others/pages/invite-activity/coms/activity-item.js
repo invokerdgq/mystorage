@@ -22,7 +22,7 @@ export default class ActivityItem extends Component{
       ],
       last_seconds:''
     },
-    initList: {step:''},
+    initList: {step:'',user_assist_info:{assist_status:1}},
     onclickBtn(){},
     height:23
   }
@@ -91,10 +91,10 @@ export default class ActivityItem extends Component{
      }
      return(
        <View className='item'>
-         <View className='item-header'><Image src={`${cdn}/progressing.jpg`} mode='widthFix'/></View>
+         <View className='item-header'><Image src={`${cdn}/progressing.jpg`} mode='widthFix' className='img'/></View>
          <View className='item-content'>
            <View className='item-content-left'><Image src={poster} className='img'/></View>
-           <View className='item-content-right'>
+           <View className='item-content-right' style={{justifyContent:initList.user_assist_info.assist_status == 1?'space-between':'space-around'}}>
              <View className='item-content-right-dec'>
                {
                  !status ?
@@ -115,6 +115,7 @@ export default class ActivityItem extends Component{
                  lastSeconds={status?initList.user_assist_info.last_seconds:0}
                />
              </View>
+             {status && initList.user_assist_info.assist_status==1&&
                <View className='count-down-container'>
                  <AtCountdown
                    isCard
@@ -123,24 +124,41 @@ export default class ActivityItem extends Component{
                    minutes={!status?0:calcTimer(this.props.activityInfo.last_seconds,'s').mm}
                    seconds={!status?0:calcTimer(this.props.activityInfo.last_seconds,'s').ss}
                    onTimeUp={this.timeEnd.bind(this)}
-                 /><Text className='end'>{!status?'参与活动开始计时':this.state.timeEnd?'已结束':'后结束'}</Text>
+                 /><Text className='end'>{this.state.timeEnd?'已结束':'后结束'}</Text>
                </View>
-             <View className='item-content-right-btn'>
-               {
-                 status&&inviteNumber >= step[step.length -1]?
-                   <View className='fast-buy' onClick={this.clickBtn.bind(this,'buy')}>
-                      <Image src={`${cdn}/fast-buy.jpg`}/>
-                   </View>:
-                   status?
-                   <View className='feature-btn'>
-                     <View className='feature-btn-left' onClick={this.clickBtn.bind(this,'share')}><Image src={`${cdn}/presist.jpg`} mode='widthFix'/></View>
-                     <View onClick={this.clickBtn.bind(this,'buy')}><Image src={`${cdn}/select.png`} mode='widthFix'/></View>
-                   </View>:
+             }
+               <View className='item-content-right-btn'>
+                 {
+                   !status ?
                      <View className='invite-begin' onClick={this.clickBtn.bind(this,'share')}>
                        <Image src={`${cdn}/begin.png`} className='invite-begin-img' mode='widthFix'/>
-                     </View>
-               }
-             </View>
+                     </View>:
+                     initList.user_assist_info.assist_status==1?
+                       inviteNumber < step[step.length -1]?
+                         <View className='feature-btn'>
+                           <View className='feature-btn-left' onClick={this.clickBtn.bind(this,'share')}><Image src={`${cdn}/presist.jpg`} mode='widthFix' className='img'/></View>
+                           <View onClick={this.clickBtn.bind(this,'buy')}><Image src={`${cdn}/select.png`} mode='widthFix' className='img'/></View>
+                         </View>:
+                         <View className='fast-buy' onClick={this.clickBtn.bind(this,'buy')}>
+                           <Image src={`${cdn}/fast-buy.jpg`} className='img'/>
+                         </View>:
+                       <View></View>
+                 }
+                 {/*{*/}
+                 {/*  status&&inviteNumber >= step[step.length -1]?*/}
+                 {/*    <View className='fast-buy' onClick={this.clickBtn.bind(this,'buy')}>*/}
+                 {/*      <Image src={`${cdn}/fast-buy.jpg`} className='img'/>*/}
+                 {/*    </View>:*/}
+                 {/*    status?*/}
+                 {/*      <View className='feature-btn'>*/}
+                 {/*        <View className='feature-btn-left' onClick={this.clickBtn.bind(this,'share')}><Image src={`${cdn}/presist.jpg`} mode='widthFix' className='img'/></View>*/}
+                 {/*        <View onClick={this.clickBtn.bind(this,'buy')}><Image src={`${cdn}/select.png`} mode='widthFix' className='img'/></View>*/}
+                 {/*      </View>:*/}
+                 {/*      <View className='invite-begin' onClick={this.clickBtn.bind(this,'share')}>*/}
+                 {/*        <Image src={`${cdn}/begin.png`} className='invite-begin-img' mode='widthFix'/>*/}
+                 {/*      </View>*/}
+                 {/*}*/}
+               </View>
            </View>
          </View>
          {inviteNumber !=0&& status &&

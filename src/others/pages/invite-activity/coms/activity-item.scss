@@ -6,7 +6,7 @@
   border-radius: 20px;
   overflow: hidden;
   &-header{
-   image{
+   .img{
      width: 100%;
    }
   }
@@ -58,11 +58,11 @@
       width: 350px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      //justify-content: space-between;
       &-btn{
         .fast-buy{
           height: 67px;
-          Image{
+          .img{
             width: 177px;
           }
         }
@@ -81,7 +81,7 @@
           &-left{
             margin-right: 15px;
           }
-          Image{
+          .img{
             width: 177px;
           }
         }
