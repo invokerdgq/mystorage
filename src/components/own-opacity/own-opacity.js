@@ -10,20 +10,20 @@ export default class OwnOpacity extends Component{
     containerClass:'',
     containerStyle:null
   }
+  static externalClasses = ['true-class','contain-class']
   constructor(props) {
     super(props);
-    this.externalClasses = [this.props.containerClass]
   }
   render() {
     const {containerClass,containerStyle} = this.props
     return (
        <View className='more'>
-        <View className={containerStyle?'':containerClass} style={containerStyle}>
+        <View className={'contain-class'} style={containerStyle}>
           <View className='own-hidden'>
             {this.props.renderHide}
           </View>
         </View>
-         <View className='true-content'>
+         <View className='true-content true-class'>
            {this.props.renderTrue}
          </View>
       </View>

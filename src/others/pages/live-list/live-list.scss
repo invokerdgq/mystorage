@@ -16,6 +16,12 @@ page{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+    .icon-arrow-left{
+      font-size: 45px;
+      width: 40px;
+      height: 40px;
+    }
     .live-search{
       display: flex;
       width: 628px;
@@ -76,6 +82,74 @@ page{
           margin-bottom: 13px;
 
         }
+      }
+    }
+  }
+
+  .attend-none{
+    margin-top:80px;
+    width: 100%;
+    text-align: center;
+    .img{
+      width: 400px;
+    }
+    .recommend-live{
+      &-dec{
+        text-align: left;
+        margin:60px 0 28px 30px;
+        font-size: 36px;
+        font-weight: bold;
+      }
+      &-list{
+        text-align: left;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 0 13px;
+        .item-container{
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+  .attend-dec{
+    .own-recommend{
+      &-dec{
+        margin: 32px 0 25px;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .scroll-live{
+        width: 100%;
+        box-shadow: 0 0 10px 5px #ececec;
+        .own-recommend-list{
+          display: flex;
+          flex-wrap: nowrap;
+          .item-container{
+            margin-right: 12px;
+          }
+        }
+      }
+    }
+    .attend-list{
+      &-dec{
+        font-size: 28px;
+        font-weight: bold;
+        margin: 50px 0 25px 0;
+      }
+      &-list{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .item-container{
+          margin-bottom: 20px;
+        }
+      }
+      .more{
+        font-size: 24px;
+        color:#ececec;
+        text-align: center;
       }
     }
   }

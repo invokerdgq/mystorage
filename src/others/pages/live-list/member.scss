@@ -1,0 +1,143 @@
+@import "../../../style/imports";
+
+.live-member{
+  &-content{
+    position: relative;
+  }
+  &-header{
+    width: 100%;
+    height: 470px;
+    background: $color-theme;
+    padding: 30px 30px 0;
+    position: relative;
+    .user-info{
+      position: absolute;
+      bottom:150px;
+      height: 113px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .avatar{
+        width: 113px;
+        height: 113px;
+        border-radius: 50%;
+        margin-right: 25px;
+        overflow: hidden;
+        .img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .dec{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        .user-name{
+          font-size: 35px;
+          color: white;
+        }
+        .user-grade{
+          font-size: 24px;
+          color:#fedea0;
+          .img{
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+
+  &-footer{
+    background: #f5f5f5;
+    width: 100%;
+    padding: 0 30px;
+    position: relative;
+   &-content{
+      padding-top: 128px;
+     .vip-img{
+      width: 100%;
+       margin-top: 25px;
+   }
+     .user-attend{
+       margin-top: 28px;
+       width: 100%;
+       background: white;
+       padding: 40px 20px 20px;
+       &-dec{
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         .left{
+           font-size: 30px;
+           font-weight: bold;
+         }
+         .right{
+           font-size: 24px;
+           color:#cecece
+         }
+       }
+
+       &-list{
+         display: flex;
+         flex-wrap: wrap;
+         .list-item{
+           margin:15px 25px;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           .avatar{
+             width: 112px;
+             height: 112px;
+             border-radius: 50%;
+             overflow: hidden;
+             margin-bottom: 23px;
+             .img{
+               width: 100%;
+               height: 100%;
+             }
+           }
+           .user-name{
+             font-size: 26px;
+             text-overflow: ellipsis;
+             overflow: hidden;
+           }
+         }
+       }
+     }
+   }
+    .order{
+      width: 690px;
+      border-radius: 10px;
+      position: absolute;
+      top:0;
+      left:50%;
+      transform: translate(-50%,-50%);
+      padding: 40px 33px 20px;
+      background: white;
+      &-dec{
+        font-size: 30px;
+        font-weight: bold;
+      }
+      &-type{
+        margin: 30px 42px 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        &-item{
+          flex:none;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .iconfont{
+            font-size: 70px;
+          }
+          &-dec{
+            font-size: 26px;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+}

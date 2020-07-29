@@ -41,7 +41,7 @@ export default class NavGap extends Component{
     const { showIcon } = this.state
     const top = Taro.getStorageSync('top')
       return (
-        <View className="nav-gap-container" style={{background:this.props.bg?this.props.bg:''}}>
+        <View className="nav-gap-container" style={{background:this.props.bg?this.props.bg:'',color:this.props.cl?this.props.cl:'black'}}>
           {/*<NavBar*/}
           {/*title={title}*/}
           {/*back = {showIcon}*/}

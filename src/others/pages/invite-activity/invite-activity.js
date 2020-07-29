@@ -70,12 +70,23 @@ export default class InviteActivity extends Component{
     this.fetch()
   }
   async fetch(){
-       const {list,step} = await api.assist.getAssistList()
-       this.props.setStep(list.step_conf)
-       this.setState({
-         list:list,
-         step:step
-       })
+    try {
+      const {list,step} = await api.assist.getAssistList()
+      this.props.setStep(list.step_conf)
+      this.setState({
+        list:list,
+        step:step
+      })
+    }catch (e) {
+      Taro.showToast({
+        title:e.errMsg,
+        icon:'',
+        duration:1500
+      })
+      setTimeout(() => {
+        Taro.navigateTo({url:'/pages/index'})
+      },1500)
+    }
    }
 
   onShareAppMessage(obj) {
@@ -93,7 +104,7 @@ export default class InviteActivity extends Component{
     if(type === 'buy'){
       if(this.state.list.user_assist_info.assist_amount < this.state.list.step_conf[0].number){
         Taro.showToast({
-          title:'未达到最低等级，无法挑选',
+          title:'未达到最低助力人数，无法挑选',
           icon:'none'
         })
         return
@@ -133,7 +144,7 @@ export default class InviteActivity extends Component{
   handleClickItem() {
 
   }
-  handleShowCanvas(){
+  handleShowCanvas(type){
    this.setState({
      showCanvas:true,
      showShade:false
@@ -165,7 +176,8 @@ export default class InviteActivity extends Component{
       step:list.step_conf,
       last_seconds:step !=0?list.user_assist_info.last_seconds:0,
       poster:list.poster,
-      status: step == 0?false:true
+      status: step == 0?false:true,
+      level:step
     }
     return(
       <View>
@@ -204,13 +216,13 @@ export default class InviteActivity extends Component{
                 <Button className='btn-apperance' openType='share'>
                   <Image src={`${cdn}/share-friend.png`} mode='widthFix' className='shade-btn'/>
                 </Button>
-                <Image src={`${cdn}/save-img.png`} mode='widthFix' className='shade-btn' onClick={this.handleShowCanvas.bind(this)}/>
+                <Image src={`${cdn}/save-img.png`} mode='widthFix' className='shade-btn' onClick={this.handleShowCanvas.bind(this,'save')}/>
               </View>
             </View>
           </View>
         </OwnShade>
         <View className='iconfont icon-arrow-left nav' style={`top:${this.top}px`} onClick={this.back}/>
-        <Image src={`${cdn}/invite-head.png`} mode='widthFix' className='bg-img'/>
+        <Image src={`${cdn}/invite-head1.png`} mode='widthFix' className='bg-img'/>
         <View className='invite-act-content'>
         <View className='activity-list'>
             <ActivityItem
@@ -245,7 +257,7 @@ export default class InviteActivity extends Component{
           </ScrollView>
         </View>
         <View className='rule'>
-          <Image src={`${cdn}/invite-foot.png`} mode='widthFix' className='bg-img'/>
+          <Image src={`${cdn}/invite-foot1.png`} mode='widthFix' className='bg-img'/>
         </View>
       </View>
     )

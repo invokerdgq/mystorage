@@ -27,7 +27,7 @@ export default class OwnProgress extends Component{
      return(
        <View className='progress-container' style={{borderRadius:this.props.height/2+'rpx'}}>
          <View className='progress-content' style={{borderRadius:this.props.height/2+'rpx',height:this.props.height+'rpx'}}/>
-         <View className='progress-content-up' style={{borderRadius:this.props.height/2+'rpx',width:(inviteNumber/step[step.length-1].number)*100+'%',height:this.props.height+'rpx'}}/>
+         <View className='progress-content-up' style={{borderRadius:this.props.height/2+'rpx',width:((inviteNumber>Number(step[step.length-1].number)?step[step.length-1].number:inviteNumber)/step[step.length-1].number)*100+'%',height:this.props.height+'rpx'}}/>
          {
            step.map((item,index) => {
              return (

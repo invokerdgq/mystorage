@@ -24,6 +24,7 @@ export default class List extends Component {
 
     this.state = {
       ...this.state,
+      chooseList:[],
       curFilterIdx: 0,
       curTagId: '',
       filterList: [
@@ -39,15 +40,17 @@ export default class List extends Component {
       isShowSearch: false,
       showDrawer: false,
       selectParams: [],
-      info: {}
+      info: {},
+      is_live:false
     }
   }
 
   componentDidMount () {
     Taro.M(this)
-    const { cat_id = null, main_cat_id = null } = this.$router.params
+    const { cat_id = null, main_cat_id = null,is_live=false } = this.$router.params
     this.firstStatus = true
     this.setState({
+      is_live,
       query: {
         keywords: this.$router.params.keywords,
         item_type: 'normal', // 普通商品 药物
@@ -182,7 +185,15 @@ export default class List extends Component {
     })
   }
 
-  handleClickItem = (item) => {                                              //点击单个项目 回调
+  handleClickItem = (item,index) => {
+    if(this.state.is_live){
+      this.state.list[index].is_live = this.state.is_live
+      this.state.chooseList.push(this.state.list[index])
+      this.setState({
+        list:this.state.list
+      })
+      return
+    }
     const url = `/pages/item/espier-detail?id=${item.item_id}`
     Taro.navigateTo({
       url
@@ -337,7 +348,8 @@ export default class List extends Component {
       curTagId,
 			info,
       isShowSearch,
-      query
+      query,
+      is_live
     } = this.state
 
 		return (
@@ -446,8 +458,14 @@ export default class List extends Component {
                       <GoodsItem
                         key={item.item_id}
                         info={item}
-                        onClick={() => this.handleClickItem(item)}
+                        onClick={() => this.handleClickItem(item,index)}
                       />
+                      {
+                        item.is_live&&
+                          <View className='opacity-bg'>
+
+                          </View>
+                      }
                     </View>
                   )
                 })
@@ -470,6 +488,13 @@ export default class List extends Component {
             bottom={30}
           />
         </View>
+        {
+         is_live&&
+           <View className='choose-confirm'>
+             <View className='choose-dec'>已选{this.state.chooseList.length}件商品</View>
+             <View className='choose-ready' onClick={this.confirmChoose.bind(this)}>确认</View>
+           </View>
+        }
       </View>
 
     )

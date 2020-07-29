@@ -2,14 +2,14 @@ import Taro, { Component } from '@tarojs/taro'
 import {View,LivePlayer,Video,Input,Text,Image,ScrollView} from "@tarojs/components"
 import OwnOpacity from "../../../components/own-opacity/own-opacity"
 import NavGap from "../../../components/nav-gap/nav-gap";
-import './live-list.scss'
 import {cdn} from "../../../consts";
 import SearchBar from "../../../components";
 import {withPager} from "../../../hocs";
 import RoomItem from "./coms/room-item";
 import api from '@/api'
 import S from '@/spx'
-
+import './live-list.scss'
+import OwnRecommendItem from "./coms/recommend-item";
 
 @withPager
 export default class LiveList extends Component{
@@ -19,7 +19,65 @@ export default class LiveList extends Component{
       ...this.state,
       query:'',
       sort:'RANK',
-      roomList:[]
+      presort:'',
+      roomList:[],
+      list:[
+        {
+        id: "4",
+        im_id: "58662927",
+        is_subscribe: 0,
+        room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+        room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+        room_desc: "这是测试直播间",
+        room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
+        room_name: "测试直播间",
+        room_status: 1
+      },
+        {
+          id: "4",
+          im_id: "58662927",
+          is_subscribe: 0,
+          room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+          room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+          room_desc: "这是测试直播间",
+          room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
+          room_name: "测试直播间",
+          room_status: 1
+        },
+        {
+          id: "4",
+          im_id: "58662927",
+          is_subscribe: 0,
+          room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+          room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+          room_desc: "这是测试直播间",
+          room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
+          room_name: "测试直播间",
+          room_status: 1
+        },
+        {
+          id: "4",
+          im_id: "58662927",
+          is_subscribe: 0,
+          room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+          room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+          room_desc: "这是测试直播间",
+          room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
+          room_name: "测试直播间",
+          room_status: 1
+        },
+        {
+          id: "4",
+          im_id: "58662927",
+          is_subscribe: 0,
+          room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+          room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
+          room_desc: "这是测试直播间",
+          room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
+          room_name: "测试直播间",
+          room_status: 1
+        },
+      ]
     }
   }
 handleValueChange(e){
@@ -72,6 +130,9 @@ fetch = async (params) => {
   return {total}
 }
 handleSortChange(type){
+    if(type === 'ATTEND'){
+      this.state.presort = this.state.sort
+    }
     this.resetPage()
     this.setState({
       roomList:[],
@@ -83,64 +144,145 @@ handleSortChange(type){
 handleToRoom(item){
     Taro.navigateToMiniProgram({
        appId:'wxde87f955d769c707',
-       path:`/others/pages/live/live?appId=${item.im_id}&token=${Taro.getStorageSync('auth_token')}`,
-      // path:`pages/roomList/index?appId=${item.im_id}&token=${Taro.getStorageSync('auth_token')}`,
+       path:`/others/pages/live/live`,
        extraData:{
         ...item,
-         token:Taro.getStorageSync('auth_token')
+         token:Taro.getStorageSync('auth_token'),
+         owner:0
       },
       envVersion:'develop',
       success(){
          console.log('跳转 苏心购')
-        console.log({
-          ...item,
-          token:Taro.getStorageSync('auth_token')
-        })
       }
     })
 }
+backSort(){
+    this.handleSortChange(this.state.presort)
+}
+handleSearch (){
+    this.nextPage()
+}
+handleToMember(){
+    Taro.navigateTo({
+      url:'/others/pages/live-list/member'
+    })
+}
   render(){
-    const {query,roomList} = this.state
+    const {query,roomList,sort,list} = this.state
     return(
       <View className='live'>
         <NavGap title='直播间列表'/>
         <View className='live-list'>
           <View className='search-container'>
+            {
+              sort === 'ATTEND'&&
+              <View className='iconfont icon-arrow-left' onClick={this.backSort.bind(this)}/>
+            }
             <View className='live-search'>
               <View className='iconfont icon-sousuo'/>
-              <Input type='text' value={query} onInput={this.handleValueChange.bind(this)} className='live-input' placeholder='请输入昵称/ID'/>
+              <Input type='text' value={query} onInput={this.handleValueChange.bind(this)} className='live-input' placeholder='请输入昵称/ID' onConfirm={this.handleSearch.bind(this)}/>
             </View>
             <View className='iconfont icon-camera-aside'/>
           </View>
-          <View className='live-tag'>
-            <View className='live-tag-item' onClick={this.handleSortChange.bind(this,'RANK')}><Image mode='widthFix' className='img' src={`${cdn}/rank.png`}/><Text className='dec'>排行榜</Text></View>
-            <View className='live-tag-item' onClick={this.handleSortChange.bind(this,'CITY')}><Image mode='widthFix' className='img' src={`${cdn}/samecity.png`}/><Text className='dec'>同城</Text></View>
-            <View className='live-tag-item' onClick={this.handleSortChange.bind(this,'ATTEND')}><Image mode='widthFix' className='img' src={`${cdn}/attend.png`}/><Text className='dec'>关注</Text></View>
-            <View className='live-tag-item'><Image mode='widthFix' className='img' src={`${cdn}/mine.png`}/><Text className='dec'>我的</Text></View>
-          </View>
-          <View className='room-list'>
-            <ScrollView
-            className='scroll-room-list'
-            scrollY
-            enableFlex={true}
-            onScrollToLower={this.nextPage}
-            >
-              <View className='room-list-contain'>
+          {sort !== 'ATTEND'&&
+            <View className='live-tag'>
+              <View className='live-tag-item' onClick={this.handleSortChange.bind(this,'RANK')}><Image mode='widthFix' className='img' src={`${cdn}/rank.png`}/><Text className='dec'>排行榜</Text></View>
+              <View className='live-tag-item' onClick={this.handleSortChange.bind(this,'CITY')}><Image mode='widthFix' className='img' src={`${cdn}/samecity.png`}/><Text className='dec'>同城</Text></View>
+              <View className='live-tag-item' onClick={this.handleSortChange.bind(this,'ATTEND')}><Image mode='widthFix' className='img' src={`${cdn}/attend.png`}/><Text className='dec'>关注</Text></View>
+              <View className='live-tag-item' onClick={this.handleToMember.bind(this)}><Image mode='widthFix' className='img' src={`${cdn}/mine.png`}/><Text className='dec'>我的</Text></View>
+            </View>
+          }
+          {sort !== 'ATTEND'&&
+            <View className='room-list'>
+              <ScrollView
+                className='scroll-room-list'
+                scrollY
+                enableFlex={true}
+                onScrollToLower={this.nextPage}
+              >
+                <View className='room-list-contain'>
 
                   {
                     roomList.map((item,index) =>{
                       return(
                         <View className='item-container' onClick={this.handleToRoom.bind(this,item)}>
-                        <RoomItem
-                          info={item}
-                        />
+                          <RoomItem
+                            info={item}
+                          />
                         </View>
                       )
                     })
                   }
-              </View>
-            </ScrollView>
-          </View>
+                </View>
+              </ScrollView>
+            </View>
+          }
+          {
+            sort === 'ATTEND'&&roomList.length === 0?
+              <View className='attend-none'>
+                 <Image src={`${cdn}/none.png`} mode='widthFix' className='img'/>
+                 <View className='recommend-live'>
+                   <View className='recommend-live-dec'>为你推荐</View>
+                   <View className='recommend-live-list'>
+                     {
+                       list.length !== 0 &&
+                       list.map((item,index) => {
+                         return(
+                           <View className='item-container' onClick={this.handleToRoom.bind(this,item)}>
+                             <RoomItem
+                               info={item}
+                             />
+                           </View>
+                         )
+                       })
+                     }
+                   </View>
+                 </View>
+              </View>:
+              sort === 'ATTEND'?
+              <View className='attend-dec'>
+                 <View className='own-recommend'>
+                   <View className='own-recommend-dec'>为你推荐</View>
+                   <ScrollView
+                   scrollX
+                   enableFlex={true}
+                   className='scroll-live'
+                   >
+                     <View className='own-recommend-list'>
+                       {
+                         list.map((item,index) => {
+                           return(
+                             <View className='item-container' onClick={this.handleToRoom.bind(this,item)}>
+                               <OwnRecommendItem
+                                 info={item}
+                               />
+                             </View>
+                           )
+                         })
+                       }
+                     </View>
+                   </ScrollView>
+                 </View>
+                <View className='attend-list'>
+                  <View className='attend-list-dec'>我的关注</View>
+                  <View className='attend-list-list'>
+                    {
+                      roomList.map((item,index) => {
+                        return(
+                          <View className='item-container' onClick={this.handleToRoom.bind(this,item)}>
+                            <RoomItem
+                              info={item}
+                            />
+                          </View>
+                        )
+                      })
+                    }
+                  </View>
+                  <View className='more' onClick={this.handleSortChange.bind(this,'RANK')}>更多精彩内容,去主页看看吧 ></View>
+                </View>
+              </View>:
+               <View></View>
+          }
         </View>
       </View>
     )

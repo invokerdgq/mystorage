@@ -12,8 +12,9 @@ page{
 .select{
   position: relative;
   &-scroll{
-    width:688px;
-    height: 2080px;
+    background: #fef5ee;
+    margin: 0 36px 0 39px;
+    width: auto;
     &-list{
       .level-item{
         .show-more{
@@ -48,9 +49,6 @@ page{
     }
   }
   &-content{
-    position: absolute;
-    top:640px;
-    left:50%;
-    transform: translate(-50%,0);
+    background: #ffbb78;
   }
 }

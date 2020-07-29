@@ -244,6 +244,7 @@ useHooks()
             'pages/invite-activity/invite-activity',
             'pages/help/help',
             'pages/live-list/live-list',
+            'pages/live-list/member',
             'pages/select/select',
             'pages/receive-gift/receive-gift',
             'pages/select-more/select-more'

@@ -8,7 +8,7 @@ page{
 .live-container{
   position: relative;
   top:VH($nav-gap-height);
-  Image{
+  .img{
     width: 750px;
   }
 }
@@ -37,7 +37,8 @@ page{
   }
 
   &-body-bg{
-    width: 100%;
+    width: 720px;
+    border-radius: 10px;
     background: rgba(0,0,0,0.3);
   }
   &-body{
@@ -74,4 +75,67 @@ page{
       background: $color-theme;
     }
   }
+}
+.live-config{
+  position: fixed;
+  bottom: 0;
+  left:0;
+  width: 750px;
+  background: #2d2b2b;
+  border-radius: 20px 20px 0 0;
+  .reverse-config{
+    padding: 30px 20px 10px;
+    .title{
+      color: white;
+    }
+    .item-list{
+      display: flex;
+      justify-content: center;
+      .config-item{
+        margin: 20px 20px 10px;
+      }
+    }
+  }
+ .other-config{
+   padding: 30px 20px 10px;
+   .title{
+     color: white;
+   }
+   .scroll-contain{
+     width: 100%;
+     overflow: hidden;
+     .item-list{
+       width: 100%;
+       display: flex;
+       flex-wrap: nowrap;
+       .config-item{
+         margin: 20px 20px 10px;
+       }
+     }
+   }
+ }
+
+  .config-close{
+    text-align: center;
+    .icon-arrow-left{
+      display: inline-block;
+      transform: rotate(-90deg);
+      font-size: 40px;
+      color: white;
+    }
+  }
+}
+.config-item{
+  flex:none;
+  text-align: center;
+  line-height: 90px;
+  width: 90px;
+  height: 90px;
+  font-size: 28px;
+  border-radius: 45px;
+  background: #6f6b6b;
+  color:white
+}
+.selected{
+  border: solid 4px $color-theme;
 }

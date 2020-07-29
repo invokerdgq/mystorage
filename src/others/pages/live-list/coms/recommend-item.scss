@@ -1,0 +1,43 @@
+@import "../../../../style/imports";
+
+.item{
+  width: 225px;
+  height: 305px;
+  border-radius: 10px;
+  background: #550505;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 0 10px 5px #ececec;
+  &-bottom{
+    background: white;
+    border-radius: 10px 10px 0  0;
+    height: 100px;
+    position: relative;
+    &-avatar{
+      position: absolute;
+      left:50%;
+      top:0;
+      transform: translate(-50%,-50%);
+      box-sizing: border-box;
+      width: 110px;
+      height: 110px;
+      border-radius: 55px;
+      border: solid 4px #c0534e;
+      padding: 5px;
+      overflow: hidden;
+      .img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &-nick{
+      text-align: center;
+      margin-top: 25px;
+      font-size: 24px;
+      font-weight: bold;
+      position: relative;
+      top:35px
+    }
+  }
+}

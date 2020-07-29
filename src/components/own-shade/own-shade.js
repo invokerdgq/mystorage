@@ -43,9 +43,9 @@ export default class OwnShade extends Component{
     const host = req.baseURL.replace('/api/h5app/wxapp/','')
     const extConfig = Taro.getExtConfigSync ? Taro.getExtConfigSync() : {}
     const { distributor_id } = Taro.getStorageSync('curStore')
-    // const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=others/pages/help/help&appid=${extConfig.appid}&company_id=1&&assist_id=${this.props.assist_id}&uid=${userId}`
+    const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=others/pages/help/help&appid=${extConfig.appid}&company_id=1&&assist_id=${this.props.assist_id}&uid=${userId}`
     // const  wxappCode= 'https://sxt-s.oioos.com/wechatAuth/wxapp/qrcode?page=pages/item/espier-detail&appid=wx9378bcb903abd3ab&company_id=1&id=9326&dtid=undefined&uid=OS674E'
-    const  wxappCode= `https://sxt-s.oioos.com/wechatAuth/wxapp/qrcode?page=pages/index&appid=wx9378bcb903abd3ab&company_id=1&assist_id=${this.props.assist_id}&uid=OS674E`
+    // const  wxappCode= `https://sxt-s.oioos.com/wechatAuth/wxapp/qrcode?page=pages/index&appid=wx9378bcb903abd3ab&company_id=1&assist_id=${this.props.assist_id}&uid=OS674E`
     Taro.getImageInfo({
       src:wxappCode,
       success:(res) => {
@@ -204,7 +204,7 @@ export default class OwnShade extends Component{
             <View className='canvas-shadow' >
               <Canvas canvas-id='owncanvas'  className='canvas' style={{width:width +'px',height:height+'px'}}/>
             </View>
-            <View className='save-btn-container'><Image src={`${cdn}/poster-save.png`} mode='widthFix' className='save-btn' onClick={this.save.bind(this)}/></View>
+            <View className='save-btn-container'><Image src={`${cdn}/save-img1.png`} mode='widthFix' className='save-btn' onClick={this.save.bind(this)}/></View>
           </View>
           }
           <View className='iconfont icon-close' onClick={this.props.onclickClose} style={{display:this.props.close?'block':'none'}}/>

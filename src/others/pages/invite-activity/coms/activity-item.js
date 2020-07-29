@@ -14,6 +14,7 @@ export default class ActivityItem extends Component{
 
   static defaultProps = {
     activityInfo:{
+      level:0,
       status:false,
       poster:'',
       userList:[],
@@ -77,7 +78,7 @@ export default class ActivityItem extends Component{
   }
    render() {
    const {showMore} = this.state
-     const {userList,inviteNumber,step,poster,status} = this.props.activityInfo
+     const {userList,inviteNumber,step,poster,status,level} = this.props.activityInfo
      const {initList} = this.props
      let newList = []
      if(status){
@@ -103,6 +104,8 @@ export default class ActivityItem extends Component{
                      <Text>活动已结束</Text>
                      :initList.user_assist_info.assist_status == 3?
                      <Text>已完成兑换</Text>:
+                     initList.step_conf.length == level?
+                   <Text> 已完成助力，可一元购买</Text>:
                    <Text> 已有{inviteNumber}人助力，仅差{step[step.length-1].number-inviteNumber}人</Text>
                }
              </View>
@@ -120,7 +123,7 @@ export default class ActivityItem extends Component{
                  <AtCountdown
                    isCard
                    format={{ hours: ':', minutes: ':', seconds: '' }}
-                   hours={!status?0:calcTimer(this.props.activityInfo.last_seconds,'s').hh}
+                   hours={!status?0:calcTimer(this.props.activityInfo.last_seconds,'s').hh +calcTimer(this.props.activityInfo.last_seconds,'s').dd*24 }
                    minutes={!status?0:calcTimer(this.props.activityInfo.last_seconds,'s').mm}
                    seconds={!status?0:calcTimer(this.props.activityInfo.last_seconds,'s').ss}
                    onTimeUp={this.timeEnd.bind(this)}
@@ -134,7 +137,7 @@ export default class ActivityItem extends Component{
                        <Image src={`${cdn}/begin.png`} className='invite-begin-img' mode='widthFix'/>
                      </View>:
                      initList.user_assist_info.assist_status==1?
-                       inviteNumber < step[step.length -1]?
+                       inviteNumber < step[step.length -1].number?
                          <View className='feature-btn'>
                            <View className='feature-btn-left' onClick={this.clickBtn.bind(this,'share')}><Image src={`${cdn}/presist.jpg`} mode='widthFix' className='img'/></View>
                            <View onClick={this.clickBtn.bind(this,'buy')}><Image src={`${cdn}/select.png`} mode='widthFix' className='img'/></View>

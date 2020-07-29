@@ -72,8 +72,8 @@ export default class SelectMoreGood extends Component{
     return(
       <View className='select'>
         <View className='iconfont icon-arrow-left' style={{top:this.top+'px'}} onClick={this.back}/>
-        <View className='select-header'><Image mode='widthFix' src={`${cdn}/select-header.png`} className='img'/></View>
-        <View className='select-content'>
+        <View className='select-header'><Image mode='widthFix' src={`${cdn}/bg-header1.png`} className='img'/></View>
+        <View className='select-content' >
           <ScrollView
           scrollY
           enableFlex={true}
@@ -106,7 +106,7 @@ export default class SelectMoreGood extends Component{
                           })
                         }
                       </View>
-                      {newItemList.length >4&&
+                      {item.list.length >4&&
                       <View className='show-more' onClick={this.showMore.bind(this,index)}>{showList[index]?'收起':'查看更多'}<View className={`iconfont icon-more ${!showList[index]?'':'rotate'}`}/></View>
                       }
                     </View>
@@ -115,6 +115,7 @@ export default class SelectMoreGood extends Component{
                 }
             </View>
           </ScrollView>
+          <View className='select-header'><Image mode='widthFix' src={`${cdn}/bg-footer.png`} className='img'/></View>
         </View>
       </View>
     )

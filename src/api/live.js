@@ -18,3 +18,12 @@ export function giveLike(params) {
 export function getUserSig(params) {
   return req.get('/live/usersig',params)
 }
+export function checkActive() {
+   return req.get('/live/check')
+}
+export function activeLive(params) {
+   return req.post('/live/activate',params)
+}
+export function uploadImg(params) {
+  return req.post('/espier/upload',params)
+}
