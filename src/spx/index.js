@@ -48,7 +48,7 @@ class Spx {
   setAuthToken (token) {
     this.set(TOKEN_IDENTIFIER, token)
     Taro.setStorageSync(TOKEN_IDENTIFIER, token)
-    Taro.setStorageSync(TOKEN_TIMESTAMP, Date.now() + 55 * 60 * 1000)
+    Taro.setStorageSync(TOKEN_TIMESTAMP, Date.now() + 24*55 * 60 * 1000)
   }
 
   startRefreshToken () {

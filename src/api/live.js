@@ -27,3 +27,9 @@ export function activeLive(params) {
 export function uploadImg(params) {
   return req.post('/espier/upload',params)
 }
+export function postConfig(params) {
+  return req.post('/live/config',params)
+}
+export function getConfig() {
+  return req.get('/live/config',{} ,{ showError: false })
+}

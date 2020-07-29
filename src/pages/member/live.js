@@ -5,6 +5,7 @@ import api from '@/api'
 import OwnOpacity from "../../components/own-opacity/own-opacity";
 import NavGap from "../../components/nav-gap/nav-gap";
 import './live.scss'
+import {AtInput} from "taro-ui";
 
 
 export default class Live extends Component{
@@ -18,7 +19,7 @@ export default class Live extends Component{
       name:'',
       devicePosition:'front',
       beautify:0,
-      beautifyList:[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9],
+      beautifyList:[0,1,2,3,4,5,6,7,8,9],
       filterList:[
         {value:'standard',label:'标准'},
         {value:'pink',label:'粉嫩'},
@@ -37,19 +38,35 @@ export default class Live extends Component{
     }
   }
     componentDidMount() {
+    this.fetchConfig()
   }
-
+  async fetchConfig(){
+    try{
+      const {GroupInfo,product} = await api.live.getConfig()
+      this.setState({
+        name:GroupInfo[0].Name,
+        face_url:GroupInfo[0].FaceUrl,
+        preViewUrl:GroupInfo[0].FaceUrl
+      })
+      Taro.setStorageSync('chooseList',JSON.parse(product))
+    }catch (e) {
+      console.log(e)
+    }
+  }
   back(){
     Taro.navigateBack()
   }
-  navigateToProgram(){
+  navigateToProgram(id){
     Taro.navigateToMiniProgram({
       appId:'wxde87f955d769c707',
       path:`/others/pages/live/live`,
       extraData:{
         token:Taro.getStorageSync('auth_token'),
         owner:1,
-        // im_id:this.state.room_id
+        devicePosition: this.state.devicePosition,
+        beautify:this.state.beautify,
+        filter:this.state.filter,
+        im_id:id
       },
       envVersion:'develop',
       success(){
@@ -68,10 +85,11 @@ export default class Live extends Component{
      success:(res)=>{
        const path = res.tempFilePaths
        const fileList = res.tempFiles
+       console.log(path,fileList[0])
        this.setState({
          preViewUrl:path
        })
-      this.postImage(fileList[0])
+      this.postImage(path[0])
      }
    })
   }
@@ -100,8 +118,9 @@ export default class Live extends Component{
     }
   }
   chooseGoods(){
+    this.closeConfig()
     Taro.navigateTo({
-      url:'/pages/item/list?live=true'
+      url:'/pages/item/list?is_live=true'
     })
   }
   closeConfig(){
@@ -113,14 +132,36 @@ export default class Live extends Component{
     Taro.showLoading({
       title:'上传中'
     })
-   const {url} = await api.live.uploadImg({file:file})
-    Taro.hideLoading()
-    this.setState({
-      face_url:url
+    Taro.uploadFile({
+      url:'https://sxt-s.oioos.com/api/h5app/wxapp/espier/upload',
+      filePath:file,
+      name:'file',
+      success:(res)=>{
+         Taro.hideLoading()
+         this.setState({
+           face_url:(JSON.parse(res.data)).data.url
+         })
+      }
     })
-  }
-  confirmLive(){
 
+  }
+   confirmLive(){
+    const list = Taro.getStorageSync('chooseList')
+    const option = {
+      name:this.state.name,
+      face_url:this.state.face_url,
+      products:JSON.stringify(list),
+    }
+    api.live.postConfig(option).then((res) => {
+      Taro.showToast({
+        title:'设置成功'
+      })
+      this.navigateToProgram(res.group_id)
+    }).catch(e => {
+      Taro.showToast({
+        title:e.errMsg||'发生错误'
+      })
+    })
   }
   render() {
     const {name,showConfig,configType,devicePosition,beautify,filter,beautifyList,filterList,preViewUrl} = this.state
@@ -132,20 +173,21 @@ export default class Live extends Component{
         <View className='live-body'>
           <OwnOpacity
             contain-class='live-body-bg'
+            true-class='true-content'
                       renderTrue={
                         <View>
                           <View className='live-body-title'>苏心淘直播</View>
                           <View className='live-body-upload'>
                             <View className='left' onClick={this.changeCover.bind(this)}>
-                              <View className='iconfont icon-sousuo'/>
-                              <View><View className='iconfont icon-sousuo'/><Text>更换封面</Text></View>
+                              <View className='iconfont icon-jia'/>
+                              <View className='left-bottom'><View className='iconfont icon-fuzhi1'/><Text>更换封面</Text></View>
                               {
                                 preViewUrl&&
                                   <Image mode='widthFix' className='img' src={preViewUrl}/>
                               }
                             </View>
                             <View className='right'>
-                              <Input type='text' value={name} className='name-input' onInput={this.changeName.bind(this)}/>
+                              <Input type='text' value={name} className='name-input' onInput={this.changeName.bind(this)} placeholder='请输入直播间标题' placeholderStyle='placeholder'/>
                             </View>
                           </View>
                         </View>
@@ -174,7 +216,7 @@ export default class Live extends Component{
             <View className='item' onClick={this.changeConfig.bind(this,'filter')}><View className='iconfont icon-filt'/><Text>滤镜</Text></View>
             <View className='item' onClick={this.chooseGoods.bind(this)}><View className='iconfont icon-gouwucheman'/><Text>商品</Text></View>
           </View>
-          <View className='live-footer-begin'>
+          <View className='live-footer-begin' onClick={this.confirmLive.bind(this)}>
             开始直播
           </View>
         </View>

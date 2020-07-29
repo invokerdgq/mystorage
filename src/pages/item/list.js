@@ -47,10 +47,10 @@ export default class List extends Component {
 
   componentDidMount () {
     Taro.M(this)
-    const { cat_id = null, main_cat_id = null,is_live=false } = this.$router.params
+    const { cat_id = null, main_cat_id = null,is_live = false } = this.$router.params
     this.firstStatus = true
     this.setState({
-      is_live,
+      is_live:is_live,
       query: {
         keywords: this.$router.params.keywords,
         item_type: 'normal', // 普通商品 药物
@@ -63,6 +63,13 @@ export default class List extends Component {
     }, () => {
       this.nextPage()
     })
+  }
+
+  componentDidShow() {
+    const res = Taro.getStorageSync('chooseList')
+   this.setState({
+     chooseList:res?res:[]
+   })
   }
 
   async fetch (params) {
@@ -102,6 +109,15 @@ export default class List extends Component {
       is_fav: ({ item_id }) => Boolean(favs[item_id]),
       rebate_commission: ({rebate_commission}) => rebate_commission
     })
+    if(this.state.is_live && this.state.chooseList.length !== 0){
+     this.state.chooseList.map((item,index) => {
+       nList.forEach((item1) => {
+         if(item1.item_id === item.item_id){
+           item1.is_live = true
+         }
+       })
+     })
+    }
     this.setState({
       list: [...this.state.list, ...nList],
       // showDrawer: false,
@@ -187,10 +203,18 @@ export default class List extends Component {
 
   handleClickItem = (item,index) => {
     if(this.state.is_live){
-      this.state.list[index].is_live = this.state.is_live
-      this.state.chooseList.push(this.state.list[index])
+      if(this.state.list[index].is_live){
+        this.state.list[index].is_live = false
+        this.state.chooseList = this.state.chooseList.filter(item => {
+          return item.item_id !=this.state.list[index].item_id
+        })
+      }else{
+        this.state.list[index].is_live = true
+        this.state.chooseList.push(this.state.list[index])
+      }
       this.setState({
-        list:this.state.list
+        list:this.state.list,
+        chooseList:this.state.chooseList
       })
       return
     }
@@ -331,6 +355,10 @@ export default class List extends Component {
       })
     })
 	}
+  confirmChoose(){
+      Taro.setStorageSync('chooseList',this.state.chooseList)
+      Taro.navigateBack()
+  }
 
   render () {
     const {
@@ -452,18 +480,17 @@ export default class List extends Component {
           >
             <View className={`goods-list goods-list__type-${listType}`}>
               {
-                list.map(item => {
+                list.map((item,index) => {
                   return (
-                    <View className='goods-list__item'>
+                    <View className='goods-list__item' onClick={() => this.handleClickItem(item,index)}>
                       <GoodsItem
                         key={item.item_id}
                         info={item}
-                        onClick={() => this.handleClickItem(item,index)}
                       />
                       {
                         item.is_live&&
                           <View className='opacity-bg'>
-
+                                 <Text className='dec'>已选中</Text>
                           </View>
                       }
                     </View>
@@ -491,7 +518,7 @@ export default class List extends Component {
         {
          is_live&&
            <View className='choose-confirm'>
-             <View className='choose-dec'>已选{this.state.chooseList.length}件商品</View>
+             <View className='choose-dec'>已选<Text className='num'>{this.state.chooseList.length}</Text>件商品</View>
              <View className='choose-ready' onClick={this.confirmChoose.bind(this)}>确认</View>
            </View>
         }

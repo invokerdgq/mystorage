@@ -4,6 +4,23 @@
   background: $color-bg-gray;
   .goods-list {
     margin: 0 -10px;
+    &__item{
+      position: relative;
+      .opacity-bg{
+        position: absolute;
+        width: 30%;
+        height: 30%;
+        border-radius: 20px;
+        background: rgba(0,0,0,0.3);
+        color:white;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
     &__toolbar {
       position: fixed;
       top: VH($nav-gap-height);
@@ -198,7 +215,25 @@
   bottom: 0;
   width: 750px;
   display: flex;
+  align-items: center;
+  padding: 10px 30px;
+  z-index:10000;
+  background: white;
   .choose-dec{
-    
+    .num{
+      color: $color-theme;
+      margin: 0 10px;
+      font-size: 32px;
+    }
+  }
+  .choose-ready{
+    margin-left: auto;
+    height: 60px;
+    padding: 0 25px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 60px;
+    color: white;
+    background: $color-theme;
   }
 }
