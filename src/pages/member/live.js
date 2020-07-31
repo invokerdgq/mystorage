@@ -36,6 +36,7 @@ export default class Live extends Component{
       filter:'standard',
       products:[],
     }
+    this.top = Taro.getStorageSync('top')
   }
     componentDidMount() {
     this.fetchConfig()
@@ -120,7 +121,7 @@ export default class Live extends Component{
   chooseGoods(){
     this.closeConfig()
     Taro.navigateTo({
-      url:'/pages/item/list?is_live=true'
+      url:'/pages/member/live-store'
     })
   }
   closeConfig(){
@@ -156,6 +157,7 @@ export default class Live extends Component{
       Taro.showToast({
         title:'设置成功'
       })
+      console.log(res.group_id)
       this.navigateToProgram(res.group_id)
     }).catch(e => {
       Taro.showToast({
@@ -167,9 +169,10 @@ export default class Live extends Component{
     const {name,showConfig,configType,devicePosition,beautify,filter,beautifyList,filterList,preViewUrl} = this.state
     return(
       <View className='live'>
-        <View className='live-header'>
-          <View className='iconfont icon-dizhi'/><Text>杭州</Text><View className='iconfont icon-close' onClick={this.back.bind(this)}/>
-        </View>
+        <View className='iconfont icon-arrow-left nav' style={{top:this.top+'px'}} onClick={this.back}/>
+        {/*<View className='live-header'>*/}
+        {/*  <View className='iconfont icon-dizhi'/><Text>杭州</Text><View className='iconfont icon-close' onClick={this.back.bind(this)}/>*/}
+        {/*</View>*/}
         <View className='live-body'>
           <OwnOpacity
             contain-class='live-body-bg'
@@ -197,11 +200,15 @@ export default class Live extends Component{
                           <View className='live-body-title'>苏心淘直播</View>
                           <View className='live-body-upload'>
                             <View className='left' onClick={this.changeCover.bind(this)}>
-                              <View className='iconfont icon-sousuo'/>
-                              <View><View className='iconfont icon-sousuo'/><Text>更换封面</Text></View>
+                              <View className='iconfont icon-jia'/>
+                              <View className='left-bottom'><View className='iconfont icon-fuzhi1'/><Text>更换封面</Text></View>
+                              {
+                                preViewUrl&&
+                                <Image mode='widthFix' className='img' src={preViewUrl}/>
+                              }
                             </View>
                             <View className='right'>
-                              <Input type='text' value={name} className='name-input' onInput={this.changeName.bind(this)}/>
+                              <Input type='text' value={name} className='name-input' onInput={this.changeName.bind(this)} placeholder='请输入直播间标题' placeholderStyle='placeholder' style={{ visibility: 'hidden'}}/>
                             </View>
                           </View>
                         </View>

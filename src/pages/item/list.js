@@ -356,7 +356,7 @@ export default class List extends Component {
     })
 	}
   confirmChoose(){
-      Taro.setStorageSync('chooseList',this.state.chooseList)
+      Taro.setStorageSync('chooseList',this.state.chooseList || [])
       Taro.navigateBack()
   }
 

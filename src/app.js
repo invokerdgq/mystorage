@@ -168,6 +168,7 @@ useHooks()
         'pages/member/cash-out',
         'pages/member/fans',
         'pages/member/live',
+        'pages/member/live-store',
         'pages/qrcode-buy',
 
         'pages/distribution/shop-home',
