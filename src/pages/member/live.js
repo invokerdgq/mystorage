@@ -208,7 +208,7 @@ export default class Live extends Component{
                               }
                             </View>
                             <View className='right'>
-                              <Input type='text' value={name} className='name-input' onInput={this.changeName.bind(this)} placeholder='请输入直播间标题' placeholderStyle='placeholder' style={{ visibility: 'hidden'}}/>
+                              <Input type='text' value={name} className='name-input'  placeholderStyle='placeholder' style={{visibility: 'hidden'}}/>
                             </View>
                           </View>
                         </View>
