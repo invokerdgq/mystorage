@@ -21,6 +21,7 @@ export default class GoodsBuyPanel extends Component {
   }
 
   static defaultProps = {
+    is_seckill:0,
     level:'',
     assist_id:'',
     info: null,
@@ -288,6 +289,7 @@ export default class GoodsBuyPanel extends Component {
       url = `/pages/cart/espier-index`
       try {
         await api.cart.add({
+          is_seckll:this.props.is_seckill,
           item_id,
           num,
           distributor_id,
@@ -328,6 +330,7 @@ export default class GoodsBuyPanel extends Component {
 
       try {
         await api.cart.fastBuy({
+          is_seckill:this.props.is_seckill,
           item_id,
           num
         })

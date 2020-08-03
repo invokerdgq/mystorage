@@ -73,7 +73,8 @@ export default class Detail extends Component {
       showCodeInput:false,
       cardValue:'',
       top:0,
-      is_exchange:false
+      is_exchange:false,
+      is_seckill: 0
     }
   }
 
@@ -83,9 +84,16 @@ export default class Detail extends Component {
       top:top
     })
     const options = this.$router.params
-    if(options.source === 'exchange'){ // 来源于兑换
+    // 来源于兑换
+    if(options.source === 'exchange'){
       this.setState({
         is_exchange:true
+      })
+    }
+    // 是秒杀品
+    if(options.is_seckill == 1){
+      this.setState({
+        is_seckill:1
       })
     }
     const { store, uid, id, gid = '' } = await entry.entryLaunch(options, true)
@@ -1306,6 +1314,7 @@ export default class Detail extends Component {
 
           {
             info && <GoodsBuyPanel
+              is_seckill={this.state.is_seckill}
               assist_id={this.$router.params.assist_id}
               level={this.$router.params.level}
               info={info}

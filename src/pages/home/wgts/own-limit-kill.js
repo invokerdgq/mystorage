@@ -123,7 +123,7 @@ export default class WgtLimitKill extends Component{
     }else{
       let id = this.props.info.list[index].data[goodsIndex].goodsId
       Taro.navigateTo({
-        url: `/pages/item/espier-detail?id=${id}`
+        url: `/pages/item/espier-detail?id=${id}&is_seckill=1`
       })
     }
 }
