@@ -71,11 +71,13 @@ export default class SelectGood  extends Component{
     return(
       <View className='select'>
         <View className='iconfont icon-arrow-left' style={{top:this.top+'px'}} onClick={this.back}/>
-        <View className='select-header'><Image mode='widthFix' src={`${cdn}/select-header.png`} className='img'/></View>
+        <View className='select-header'><Image mode='widthFix' src={`${cdn}/bg-header1.png`} className='img'/></View>
         <View className='select-content'>
-          <OwnTitle
-          title={`${title}元购`}
-          />
+          <View className='title-contain'>
+            <OwnTitle
+              title={`${title}元购`}
+            />
+          </View>
           <ScrollView
           scrollY
           enableFlex={true}
@@ -101,6 +103,7 @@ export default class SelectGood  extends Component{
               }
             </View>
           </ScrollView>
+          <View className='select-header'><Image mode='widthFix' src={`${cdn}/bg-footer.png`} className='img'/></View>
         </View>
       </View>
     )

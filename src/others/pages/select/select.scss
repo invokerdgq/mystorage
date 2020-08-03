@@ -12,8 +12,9 @@ page{
 .select{
   position: relative;
   &-scroll{
-    width:688px;
-    height: 2080px;
+    background: #fef5ee;
+    margin: 0 36px 0 39px;
+    width: auto;
     &-list{
       width: 100%;
       display: flex;
@@ -23,10 +24,10 @@ page{
       flex-wrap: wrap;
       .see-more{
         color:#ed6005;
-        font-size: 22px;
+        font-size: 24px;
         text-align: center;
         padding: 8px 0;
-        margin-top: 20px;
+        margin-top: 60px;
       }
     }
   }
@@ -37,9 +38,11 @@ page{
     }
   }
   &-content{
-    position: absolute;
-    top:640px;
-    left:50%;
-    transform: translate(-50%,0);
+   background: #ffbb78;
+
+    .title-contain{
+      margin: 0 36px 0 39px;
+      background: #fef5ee;
+    }
   }
 }
