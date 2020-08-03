@@ -21,63 +21,7 @@ export default class LiveList extends Component{
       sort:'RANK',
       presort:'',
       roomList:[],
-      list:[
-        {
-        id: "4",
-        im_id: "58662927",
-        is_subscribe: 0,
-        room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-        room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-        room_desc: "这是测试直播间",
-        room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
-        room_name: "测试直播间",
-        room_status: 1
-      },
-        {
-          id: "4",
-          im_id: "58662927",
-          is_subscribe: 0,
-          room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-          room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-          room_desc: "这是测试直播间",
-          room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
-          room_name: "测试直播间",
-          room_status: 1
-        },
-        {
-          id: "4",
-          im_id: "58662927",
-          is_subscribe: 0,
-          room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-          room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-          room_desc: "这是测试直播间",
-          room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
-          room_name: "测试直播间",
-          room_status: 1
-        },
-        {
-          id: "4",
-          im_id: "58662927",
-          is_subscribe: 0,
-          room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-          room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-          room_desc: "这是测试直播间",
-          room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
-          room_name: "测试直播间",
-          room_status: 1
-        },
-        {
-          id: "4",
-          im_id: "58662927",
-          is_subscribe: 0,
-          room_cover: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-          room_cover_s: "https://sxt-img-sdn.oioos.com/1/2020/07/22/e9f01c2bed9f04c7e767f9a13e8ff104TsnbWoeMQeiYHVQ4fDlUMkDcFOkkd2UK",
-          room_desc: "这是测试直播间",
-          room_live_link: "rtmp://pull.oioos.com/sxt-live/58662927?auth_key=1595839535-150bbdfc8d01318c550147dfd421da73-0-db88f2de7a670b0fc20b931762dfa4e4",
-          room_name: "测试直播间",
-          room_status: 1
-        },
-      ]
+      list:[]
     }
   }
 handleValueChange(e){

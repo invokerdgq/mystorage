@@ -9,12 +9,10 @@ import {formateSelect} from "../../../utils/formate";
 import './select.scss'
 import {connect} from "@tarojs/redux";
 @connect(({step}) => ({
-  step:step.currentStep
+  step:step.currentStep||[]
 }))
 export default class SelectGood  extends Component{
-  static defaultProps = {
-    step:[{}]
-  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -63,11 +61,13 @@ export default class SelectGood  extends Component{
         }
       })
     }
-    goodsList.map(item => {
-      if(item.level == currentLevel){
-        newList = item.list
-      }
-    })
+    if(goodsList.length != 0){
+      goodsList.map(item => {
+        if(item.level == currentLevel){
+          newList = item.list
+        }
+      })
+    }
     return(
       <View className='select'>
         <View className='iconfont icon-arrow-left' style={{top:this.top+'px'}} onClick={this.back}/>

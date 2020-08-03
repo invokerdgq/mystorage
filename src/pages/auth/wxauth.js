@@ -23,7 +23,6 @@ export default class WxAuth extends Component {
   }
 
   async autoLogin () {
-    console.log('shouquan-0------')
     const { update } = this.$router.params
     const { code } = await Taro.login()
     try {

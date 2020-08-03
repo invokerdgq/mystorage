@@ -168,6 +168,7 @@ useHooks()
         'pages/member/cash-out',
         'pages/member/fans',
         'pages/member/live',
+        'pages/member/live-store',
         'pages/qrcode-buy',
 
         'pages/distribution/shop-home',
@@ -236,7 +237,6 @@ useHooks()
         {
           root: 'others',
           pages: [
-            // 'pages/live/live',
             'pages/home/license',
             'pages/protocol/privacy',
             'pages/exchange/exchange',
