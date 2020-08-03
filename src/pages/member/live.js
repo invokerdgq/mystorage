@@ -2,9 +2,9 @@ import Taro, { Component } from '@tarojs/taro'
 import {View,Image,LivePusher,Input,Text,ScrollView} from "@tarojs/components";
 import api from '@/api'
 
+import './live.scss'
 import OwnOpacity from "../../components/own-opacity/own-opacity";
 import NavGap from "../../components/nav-gap/nav-gap";
-import './live.scss'
 import {AtInput} from "taro-ui";
 
 
@@ -12,6 +12,7 @@ export default class Live extends Component{
   constructor(props) {
     super(props);
     this.state = {
+      top:40,
       preViewUrl:'',
       configType:'',
       showConfig:false,
@@ -36,9 +37,12 @@ export default class Live extends Component{
       filter:'standard',
       products:[],
     }
-    this.top = Taro.getStorageSync('top')
   }
     componentDidMount() {
+    const top = Taro.getStorageSync('top')
+    this.setState({
+      top:top
+    })
     this.fetchConfig()
   }
   async fetchConfig(){
@@ -59,7 +63,7 @@ export default class Live extends Component{
   }
   navigateToProgram(id){
     Taro.navigateToMiniProgram({
-      appId:'wxde87f955d769c707',
+      appId:'wx52f496cdcad08ffe',
       path:`/others/pages/live/live`,
       extraData:{
         token:Taro.getStorageSync('auth_token'),
@@ -166,13 +170,10 @@ export default class Live extends Component{
     })
   }
   render() {
-    const {name,showConfig,configType,devicePosition,beautify,filter,beautifyList,filterList,preViewUrl} = this.state
+    let {name,showConfig,configType,devicePosition,beautify,filter,beautifyList,filterList,preViewUrl} = this.state
     return(
       <View className='live'>
-        <View className='iconfont icon-arrow-left nav' style={{top:this.top+'px'}} onClick={this.back}/>
-        {/*<View className='live-header'>*/}
-        {/*  <View className='iconfont icon-dizhi'/><Text>杭州</Text><View className='iconfont icon-close' onClick={this.back.bind(this)}/>*/}
-        {/*</View>*/}
+        <View className='iconfont icon-arrow-left nav' onClick={this.back} style={{top:`${this.state.top}px`}}></View>
         <View className='live-body'>
           <OwnOpacity
             contain-class='live-body-bg'
@@ -206,9 +207,6 @@ export default class Live extends Component{
                                 preViewUrl&&
                                 <Image mode='widthFix' className='img' src={preViewUrl}/>
                               }
-                            </View>
-                            <View className='right'>
-                              <Input type='text' value={name} className='name-input'  placeholderStyle='placeholder' style={{visibility: 'hidden'}}/>
                             </View>
                           </View>
                         </View>

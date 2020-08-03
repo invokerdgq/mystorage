@@ -160,15 +160,19 @@ export default class Reg extends Component {
 
       S.toast('注册成功')
       if(Taro.getStorageSync('extraData').register){
-        Taro.navigateBackMiniProgram({
-          extraData:{
-            token:Taro.getStorageSync('auth_token'),
-            owner:0
-          },
-          success(){
-            console.log('跳转 苏心淘')
-          }
-        })
+        setTimeout(() => {
+          Taro.navigateBackMiniProgram({
+            extraData:{
+              path:'/others/pages/live/live',
+              token:Taro.getStorageSync('auth_token'),
+              owner:0
+            },
+            success(){
+              console.log('跳转 苏心淘')
+            }
+          })
+        },1500)
+        return
       }
      newUser()
       setTimeout(()=>{

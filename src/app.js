@@ -237,7 +237,6 @@ useHooks()
         {
           root: 'others',
           pages: [
-            // 'pages/live/live',
             'pages/home/license',
             'pages/protocol/privacy',
             'pages/exchange/exchange',

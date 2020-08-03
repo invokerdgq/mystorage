@@ -9,7 +9,7 @@ import './select-more.scss'
 import {connect} from "@tarojs/redux";
 import {formateSelect} from "../../../utils/formate";
 @connect(({step}) => ({
-  step:step.currentStep
+  step:step.currentStep||[]
 }))
 export default class SelectMoreGood extends Component{
   constructor(props) {
