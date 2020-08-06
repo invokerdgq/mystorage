@@ -289,7 +289,7 @@ export default class GoodsBuyPanel extends Component {
       url = `/pages/cart/espier-index`
       try {
         await api.cart.add({
-          is_seckll:this.props.is_seckill,
+          is_seckill:this.props.is_seckill,
           item_id,
           num,
           distributor_id,

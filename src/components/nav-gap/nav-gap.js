@@ -49,7 +49,7 @@ export default class NavGap extends Component{
           {/*background='#fff'*/}
           {/*>*/}
           {/*</NavBar>*/}
-          <View className='iconfont icon-arrow-left' onClick={this.handleIconClick.bind(this)} style={{top:top+'px'}}/>
+          <View className='iconfont icon-arrow-left' onClick={this.handleIconClick.bind(this)} style={{top:top+'px',display:`${showIcon?'block':'none'}`}}/>
           <View style={{top:top+'px'}} className='gap-title'>{title}</View>
         </View>
       )
