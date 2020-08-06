@@ -45,6 +45,7 @@ export default class InviteActivity extends Component{
       savePath:'',
       showShade:false,
       showCanvas:false,
+      showDetailIndex:'',
     }
     this.top = Taro.getStorageSync('top')
   }
@@ -141,8 +142,10 @@ export default class InviteActivity extends Component{
   back(){
     Taro.navigateBack()
   }
-  handleClickItem() {
-
+  handleClickItem(item,index) {
+       this.setState({
+         showDetailIndex:index
+       })
   }
   handleShowCanvas(type){
    this.setState({
@@ -167,9 +170,13 @@ export default class InviteActivity extends Component{
       savePath: path
     })
   }
-
+  clearDetail(){
+    this.setState({
+      showDetailIndex:''
+    })
+  }
   render() {
-    const {userActivity,showShade,showCanvas,list,step}= this.state
+    const {userActivity,showShade,showCanvas,list,step,showDetailIndex}= this.state
     const newList = {
       userList:step !=0?list.user_assist_info.assist_help_log:[],
       inviteNumber: step !=0?list.user_assist_info.assist_amount:0,
@@ -179,8 +186,10 @@ export default class InviteActivity extends Component{
       status: step == 0?false:true,
       level:step
     }
+    console.log('oooooooooooooooooooooo')
+    console.log(list.assist_id)
     return(
-      <View>
+      <View onClick={this.clearDetail.bind(this)}>
         <OwnShade
         show={showCanvas}
         onclickClose={this.handleCloseShade.bind(this,'canvas')}
@@ -200,7 +209,7 @@ export default class InviteActivity extends Component{
               <Image src={`${cdn}/invite-share.png`} style={{width:'580rpx'}} mode='widthFix'/>
             </View>
             <View className='shade-slot-head'>
-                <View className='shade-slot-head-title'>仅剩<Text className='number'>{this.state.step != 0?list.step_conf[list.step_conf.length-1].number-list.user_assist_info.assist_amount:list.step_conf[list.step_conf.length-1].number}</Text><Text className='danwei'>人</Text>即可一元购</View>
+                <View className='shade-slot-head-title'>仅剩<Text className='number'>{this.state.step != 0?list.step_conf[list.step_conf.length-1].number-list.user_assist_info.assist_amount:list.step_conf[list.step_conf.length-1].number}</Text><Text className='danwei'>人</Text>即可最低一元购</View>
              <View>
                 <OwnProgress
                   height={28}
@@ -232,7 +241,7 @@ export default class InviteActivity extends Component{
             />
         </View>
           <OwnTitle
-           title={'超值产品一元购'}
+           title={'超值一元助力产品'}
            innerClass={'inner'}
            containerClass='title-container'
           />
@@ -248,7 +257,10 @@ export default class InviteActivity extends Component{
                   return(
                     <OwnGoodsItem
                       info={item}
-                      onclick={this.handleClickItem.bind(this,item)}
+                      index={index}
+                      onclick={this.handleClickItem.bind(this,item,index)}
+                      currentIndex={showDetailIndex}
+                      type='detail'
                     />
                   )
                 })

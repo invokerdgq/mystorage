@@ -105,7 +105,7 @@ export default class ActivityItem extends Component{
                      :initList.user_assist_info.assist_status == 3?
                      <Text>已完成兑换</Text>:
                      initList.step_conf.length == level?
-                   <Text> 已完成助力，可一元购买</Text>:
+                   <Text> 已完成助力,可最低一元购买</Text>:
                    <Text> 已有{inviteNumber}人助力，仅差{step[step.length-1].number-inviteNumber}人</Text>
                }
              </View>

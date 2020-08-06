@@ -56,7 +56,7 @@ export default class SelectGood  extends Component{
     if(this.props.step.length !=0){
       this.props.step.map(item => {
         if(item.level == currentLevel){
-          title = item.price
+          title = item.number
           console.log(title)
         }
       })
@@ -75,7 +75,7 @@ export default class SelectGood  extends Component{
         <View className='select-content'>
           <View className='title-contain'>
             <OwnTitle
-              title={`${title}元购`}
+              title={`助力满${title}人可挑选`}
             />
           </View>
           <ScrollView
@@ -92,16 +92,16 @@ export default class SelectGood  extends Component{
                       disabled={item.assist_store == 0}
                       type='buy'
                       onclick={this.buy.bind(this,item)}
-                      price={title}
+                      price={Number(item.assist_price)/100}
                     />
                   )
                 })
               }
-              {
-                currentLevel >1&&
-                <View className='see-more' onClick={this.selectMore.bind(this)}>查看其他优惠 >></View>
-              }
             </View>
+            {
+              currentLevel >1&&
+              <View className='see-more' onClick={this.selectMore.bind(this)}>查看其他优惠 >></View>
+            }
           </ScrollView>
           <View className='select-header'><Image mode='widthFix' src={`${cdn}/bg-footer.png`} className='img'/></View>
         </View>

@@ -87,8 +87,6 @@ function sort(list) {
        },[])
      })
     option.splice(curIndex, 0, {list: finnalList, name: 'limit-kill'})
-    console.log(option)
-    console.log('格式化后  数据--------------------------')
     return option
 }
 export default formate
@@ -98,10 +96,13 @@ export function formateSelect(list) {
       let obj = {level:'',list:[]}
       Object.keys(item).map((item1,index1) => {
         obj.level = item[item1].level
+        obj.number = item[item1].assist_number
         obj.list.push(item[item1])
       })
       newList.push(obj)
     })
+  console.log(newList)
+  console.log('格式化后  数据--------------------------')
   return newList
 }
 
