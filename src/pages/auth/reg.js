@@ -152,8 +152,8 @@ export default class Reg extends Component {
         const { token } = await api.wx.login({ code })
         S.setAuthToken(token)
       } else {
-        let scene = Taro.getStorageSync('scene')
-        Object.assign(data,{inviter_id:scene})
+        // let scene = Taro.getStorageSync('scene')
+        // Object.assign(data,{inviter_id:scene})
         const res = await api.user.reg(data)
         S.setAuthToken(res.token)
       }
