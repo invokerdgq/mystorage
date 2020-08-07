@@ -37,16 +37,15 @@ export default class OwnShade extends Component{
     }
   }
   componentWillReceiveProps(nextProps, nextContext) {
-    if(!this.props.assist_id && nextProps.assist_id){
-      if(!this.props.canvas) return;
+    console.log(this.props,nextProps)
+    if(!this.props.canvas) return;
+    if(this.props.assist_id ==='' && nextProps.assist_id){
       const userinfo = Taro.getStorageSync('userinfo')
       if (!userinfo) return
       const { user_card_code:userId } = userinfo
       const host = req.baseURL.replace('/api/h5app/wxapp/','')
       const extConfig = Taro.getExtConfigSync ? Taro.getExtConfigSync() : {}
       const { distributor_id } = Taro.getStorageSync('curStore')
-      console.log('二维码----------------------------------参数')
-      console.log(nextProps.assist_id)
       const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=others/pages/help/help&appid=${extConfig.appid}&company_id=1&&assist_id=${nextProps.assist_id}&uid=${userId}`
       // const  wxappCode= 'https://sxt-s.oioos.com/wechatAuth/wxapp/qrcode?page=pages/item/espier-detail&appid=wx9378bcb903abd3ab&company_id=1&id=9326&dtid=undefined&uid=OS674E'
       // const  wxappCode= `https://sxt-s.oioos.com/wechatAuth/wxapp/qrcode?page=pages/index&appid=wx9378bcb903abd3ab&company_id=1&assist_id=${this.props.assist_id}&uid=OS674E`
@@ -66,7 +65,31 @@ export default class OwnShade extends Component{
   }
 
   componentDidMount() {
+    // 兼容华建 的手机  莫名其妙
+    if(!this.props.canvas) return;
+    const userinfo = Taro.getStorageSync('userinfo')
+    if (!userinfo) return
+    const { user_card_code:userId } = userinfo
+    const host = req.baseURL.replace('/api/h5app/wxapp/','')
+    const extConfig = Taro.getExtConfigSync ? Taro.getExtConfigSync() : {}
+    const { distributor_id } = Taro.getStorageSync('curStore')
+    const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=others/pages/help/help&appid=${extConfig.appid}&company_id=1&&assist_id=${this.props.assist_id}&uid=${userId}`
+    // const  wxappCode= 'https://sxt-s.oioos.com/wechatAuth/wxapp/qrcode?page=pages/item/espier-detail&appid=wx9378bcb903abd3ab&company_id=1&id=9326&dtid=undefined&uid=OS674E'
+    // const  wxappCode= `https://sxt-s.oioos.com/wechatAuth/wxapp/qrcode?page=pages/index&appid=wx9378bcb903abd3ab&company_id=1&assist_id=${this.props.assist_id}&uid=OS674E`
+    Taro.getImageInfo({
+      src:wxappCode,
+      success:(res) => {
+        this.setState({
+          codePath:res.path,
+          codeWidth:res.width,
+          codeHeight:res.height
+        },() => {
+          this.initCanvas()
+        })
+      }
+    })
   }
+
   initCanvas () {
     const {pixelRatio:dpr,screenWidth,screenHeight}= Taro.getSystemInfoSync()
     if(dpr<3){

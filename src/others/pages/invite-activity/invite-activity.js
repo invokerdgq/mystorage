@@ -50,9 +50,13 @@ export default class InviteActivity extends Component{
     this.top = Taro.getStorageSync('top')
   }
   componentDidMount() {
+    console.log('活动---------------------mount')
   }
 
   componentDidShow() {
+    console.log('活动---------------------show')
+    Promise.resolve().then(() => {console.log('活动show -> Mont  中间的过程--------------')})
+    // setTimeout(() => {console.log('活动show -> Mont  中间的过程--------------')},0)
     this.props.setStep(this.state.list.step_conf)
     if(!S.getAuthToken()){
       Taro.showToast({
@@ -73,6 +77,7 @@ export default class InviteActivity extends Component{
   async fetch(){
     try {
       const {list,step} = await api.assist.getAssistList()
+      console.log('show----------mount之间  fetch tongbu')
       this.props.setStep(list.step_conf)
       this.setState({
         list:list,
@@ -103,7 +108,7 @@ export default class InviteActivity extends Component{
   }
  async handleClickBtn(type){
     if(type === 'buy'){
-      if(this.state.list.user_assist_info.assist_amount < this.state.list.step_conf[0].number){
+      if(Number(this.state.list.user_assist_info.assist_amount) < Number(this.state.list.step_conf[0].number)){
         Taro.showToast({
           title:'未达到最低助力人数，无法挑选',
           icon:'none'
@@ -179,7 +184,7 @@ export default class InviteActivity extends Component{
     const {userActivity,showShade,showCanvas,list,step,showDetailIndex}= this.state
     const newList = {
       userList:step !=0?list.user_assist_info.assist_help_log:[],
-      inviteNumber: step !=0?list.user_assist_info.assist_amount:0,
+      inviteNumber: step !=0?Number(list.user_assist_info.assist_amount):0,
       step:list.step_conf,
       last_seconds:step !=0?list.user_assist_info.last_seconds:0,
       poster:list.poster,
