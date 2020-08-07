@@ -18,10 +18,11 @@ export function refreshToken () {
 }
 
 export function reg (params) {
-  const appid = getAppId()
+  /*const appid = getAppId()*/
+  console.log('kkkkkkkkkkkkkk')
   return req.post('/member', {
     ...params,
-    appid,
+    // appid,
   })
 }
 

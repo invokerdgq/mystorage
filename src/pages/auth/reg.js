@@ -152,8 +152,7 @@ export default class Reg extends Component {
         const { token } = await api.wx.login({ code })
         S.setAuthToken(token)
       } else {
-        let scene = Taro.getStorageSync('scene')
-        Object.assign(data,{inviter_id:scene})
+        console.log('pppppppppppppppp')
         const res = await api.user.reg(data)
         S.setAuthToken(res.token)
       }
@@ -438,7 +437,7 @@ export default class Reg extends Component {
                   </AtInput>
                 </View>
               )}
-              {/*<AtInput
+              {<AtInput
               title='密码'
               name='password'
               type={isVisible ? 'text' : 'password'}
@@ -453,7 +452,7 @@ export default class Reg extends Component {
                   ? <View className='sp-icon sp-icon-yanjing icon-pwd' onClick={this.handleClickIconpwd}> </View>
                   : <View className='sp-icon sp-icon-icon6 icon-pwd' onClick={this.handleClickIconpwd}> </View>
               }
-            </AtInput>*/}
+            </AtInput>}
               {
                 isHasData && list.map((item, index) => {
                   return (
