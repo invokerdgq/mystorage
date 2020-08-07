@@ -8,4 +8,5 @@ release.*
 dist_iwa.zip
 sitemap.json
 dist/
+h5_dist/
 project.config.json
