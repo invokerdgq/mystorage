@@ -75,7 +75,7 @@ export default class Live extends Component{
       },
       envVersion:'develop',
       success(){
-        console.log('跳转 苏心购')
+        console.log('跳转 苏心淘精选')
       }
     })
   }

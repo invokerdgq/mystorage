@@ -37,7 +37,14 @@ export default class ActivityItem extends Component{
      // this.state.timer = calcTimer(this.props.activityInfo.last_seconds,'s')
    }
    componentDidMount() {
+     console.log('item---------------------mount')
+     console.log(JSON.stringify(this.props))
    }
+   componentDidShow() {
+     console.log('item---------------------show')
+     console.log(JSON.stringify(this.props))
+   }
+
   componentWillReceiveProps(nextProps, nextContext) {
     if(nextProps.activityInfo.last_seconds !=0){
       this.setState({
@@ -105,7 +112,7 @@ export default class ActivityItem extends Component{
                      :initList.user_assist_info.assist_status == 3?
                      <Text>已完成兑换</Text>:
                      initList.step_conf.length == level?
-                   <Text> 已完成助力，可一元购买</Text>:
+                   <Text> 已完成助力,可最低一元购买</Text>:
                    <Text> 已有{inviteNumber}人助力，仅差{step[step.length-1].number-inviteNumber}人</Text>
                }
              </View>
@@ -114,7 +121,7 @@ export default class ActivityItem extends Component{
                  zeroShow={status}
                  height={this.props.height}
                  step={initList.step_conf}
-                 inviteNumber={status?initList.user_assist_info.assist_amount:0}
+                 inviteNumber={status?Number(initList.user_assist_info.assist_amount):0}
                  lastSeconds={status?initList.user_assist_info.last_seconds:0}
                />
              </View>
@@ -137,7 +144,7 @@ export default class ActivityItem extends Component{
                        <Image src={`${cdn}/begin.png`} className='invite-begin-img' mode='widthFix'/>
                      </View>:
                      initList.user_assist_info.assist_status==1?
-                       inviteNumber < step[step.length -1].number?
+                       inviteNumber < Number(step[step.length -1].number)?
                          <View className='feature-btn'>
                            <View className='feature-btn-left' onClick={this.clickBtn.bind(this,'share')}><Image src={`${cdn}/presist.jpg`} mode='widthFix' className='img'/></View>
                            <View onClick={this.clickBtn.bind(this,'buy')}><Image src={`${cdn}/select.png`} mode='widthFix' className='img'/></View>

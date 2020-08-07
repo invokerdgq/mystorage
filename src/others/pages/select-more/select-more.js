@@ -63,7 +63,7 @@ export default class SelectMoreGood extends Component{
     let title,curIndex
     this.props.step.map((item,index) => {
       if(item.level == currentLevel){
-        title = item.price
+        title = item.number
         curIndex = index
       }
     })
@@ -90,7 +90,7 @@ export default class SelectMoreGood extends Component{
                   }
                   return(
                     <View className='level-item'>
-                      <OwnTitle title={`${newList[index].price}元购`}/>
+                      <OwnTitle title={`助力满${item.number}人可挑选`}/>
                       <View className='level-item-list'>
                         {
                           newItemList.map((item1,index1) => {
@@ -100,7 +100,7 @@ export default class SelectMoreGood extends Component{
                                 disabled={item1.assist_store == 0}
                                 type='buy'
                                 onclick={this.buy.bind(this,item1,index)}
-                                price={newList[index].price}
+                                price={Number(item1.assist_price)/100}
                               />
                             )
                           })

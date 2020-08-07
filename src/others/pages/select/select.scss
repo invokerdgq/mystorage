@@ -17,18 +17,19 @@ page{
     width: auto;
     &-list{
       width: 100%;
+      padding: 0 10px;
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: flex-start;
       flex-wrap: wrap;
-      .see-more{
-        color:#ed6005;
-        font-size: 24px;
-        text-align: center;
-        padding: 8px 0;
-        margin-top: 60px;
-      }
+    }
+    .see-more{
+      color:#ed6005;
+      font-size: 24px;
+      text-align: center;
+      padding: 8px 0;
+      margin-top: 60px;
     }
   }
   &-header{
