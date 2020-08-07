@@ -152,7 +152,6 @@ export default class Reg extends Component {
         const { token } = await api.wx.login({ code })
         S.setAuthToken(token)
       } else {
-        console.log('pppppppppppppppp')
         const res = await api.user.reg(data)
         S.setAuthToken(res.token)
       }
