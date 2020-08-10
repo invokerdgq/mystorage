@@ -12,7 +12,6 @@ import './login.scss'
 export default class Login extends Component {
   constructor (props) {
     super(props)
-
     this.state = {
       info: {},
       isVisible: false
@@ -24,9 +23,6 @@ export default class Login extends Component {
       url: `/pages/auth/reg`
     })
   }
-  componentDidMount() {
-  }
-
   handleSubmit = async (e) => {
     const { value } = e.detail
     const data = {

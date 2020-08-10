@@ -53,6 +53,8 @@ export default class GoodsBuyPanel extends Component {
       isActive: props.isOpened,
       colorStyle: ''
     }
+    console.log('kkkkkkkkkkkkkkkkkkkkk')
+    console.log(JSON.stringify(this.state))
 
     this.disabledSet = new Set()
   }
@@ -94,11 +96,15 @@ export default class GoodsBuyPanel extends Component {
       t.propsText = propsText
       skuDict[key] = t
     })
+
     const selection = Array(info.item_spec_desc.length).fill(null)
     this.skuDict = skuDict
     this.setState({
       marketing,
       selection
+    },() => {
+      console.log('kkkkkkkkkkkkkkkkkkkkk')
+      console.log(JSON.stringify(this.state))
     })
 
     if (!spec_items || !spec_items.length) {
@@ -274,7 +280,9 @@ export default class GoodsBuyPanel extends Component {
     console.warn(this.props)
     if (this.state.busy) return
 
-    const { marketing, info } = this.state
+    const { marketing, info ={} } = this.state
+    console.log('ffffffffffffff')
+    console.log(this.state)
     const { special_type } = info
     const isDrug = special_type === 'drug'
     const { item_id } = this.noSpecs ? info : skuInfo
