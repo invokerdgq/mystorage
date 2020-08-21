@@ -128,6 +128,10 @@ const canvasExp = {
     ctx.drawImage(img, x, y, w, h)
     ctx.save()
   },
+  drawImageFill1: (ctx, img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) => {
+    ctx.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+    ctx.save()
+  },
   circleClip: (ctx, x, y, w, h) => {
     ctx.beginPath()
     ctx.arc(w / 2 + x, h / 2 + y, w / 2, 0, Math.PI * 2, false)

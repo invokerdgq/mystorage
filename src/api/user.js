@@ -22,7 +22,7 @@ export function reg (params) {
   console.log('kkkkkkkkkkkkkk')
   return req.post('/member', {
     ...params,
-    // appid,
+    appid:'wx9378bcb903abd3ab',
   })
 }
 

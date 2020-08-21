@@ -404,7 +404,7 @@ export default class List extends Component {
               }
             </View>
             {
-              tagsList.length &&
+              tagsList.length !== 0 &&
               <TagsBar
                 current={curTagId}
                 list={tagsList}
@@ -504,7 +504,7 @@ export default class List extends Component {
                 : null
             }
             {
-              !page.isLoading && !page.hasNext && !list.length
+              !page.isLoading && !page.hasNext && list.length === 0
               && (<SpNote img='trades_empty.png'>暂无数据~</SpNote>)
             }
           </ScrollView>

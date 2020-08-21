@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import {View, ScrollView, Text, Image, Navigator, Button, Icon,Swiper,SwiperItem,Canvas} from '@tarojs/components'
+import {View, ScrollView, Text, Image, Navigator, Button,Swiper,SwiperItem,Canvas,Icon} from '@tarojs/components'
 import NavGap from "../../components/nav-gap/nav-gap";
 import GiftListItem from "./comps/gift-list";
 import api from '@/api'
@@ -7,8 +7,6 @@ import {cdn} from '@/consts/index'
 
 
 import './vip.scss'
-const w = 200;
-const h = 400;
 export default class Vip extends Component{
   constructor(props) {
     super(props);
@@ -23,8 +21,10 @@ export default class Vip extends Component{
       showCanvas:false,
       path:null,
       showImage:false,
-      showToolBar:false
+      showToolBar:false,
+      width:Taro.getSystemInfoSync().screenWidth
     }
+   Taro.getSystemInfoSync().screenWidth
    this.couponList = [
      {title:'50元优惠券',url:`${cdn}/50元.png`},
      {title:'30元优惠券',url:`${cdn}/30元.png`},
@@ -34,7 +34,6 @@ export default class Vip extends Component{
    ]
   }
   componentDidMount() {
-
    let info = Taro.getSystemInfoSync();
     this.dpr = info.pixelRatio;
     this.width = info.screenWidth
@@ -262,17 +261,17 @@ handleCancelImg =()=> {
     })
   }
   render() {
-    const { showToolBar,titleList,curIndex ,grade_name, giftList,showFeature,giftIndex,res,showCanvas} = this.state
+    const { width,showToolBar,titleList,curIndex ,grade_name, giftList,showFeature,giftIndex,res,showCanvas} = this.state
     return(
       <View className='vip-view' onTouchStart={this.showToolBar} onTouchEnd={this.hideToolBar}>
         <View style={`display:${this.state.showImage?'block':'none'}`} className='vip-fixed'/>
         <View style={`display:${this.state.showImage?'block':'none'}`} className='img-container'>
-          <Image   style={`width:375rpx;height:480rpx`} showMenuByLongpress={true} src={this.state.path}/>
+          <Image   style={`width:${375*width/750}px;height:${480*width/750}px`} showMenuByLongpress={true} src={this.state.path}/>
           <View className='img-controll' onClick={this.handleSaveImg}>保存到相册</View>
           <View className='close' onClick={this.handleCancelImg}>X</View>
         </View>
         <View className='vip-fixed' style={{display:`${showFeature?'block':'none'}`}}/>
-          <Canvas canvasId='own-canvas' className='own-canvas' style={`width:375rpx;height:480rpx;display:${showFeature?'block':'none'}`}/>
+          <Canvas canvasId='own-canvas' className='own-canvas' style={`width:${375*width/750}px;height:${480*width/750}px;display:${showFeature?'block':'none'}`}/>
         <View style={{display:`${showFeature?'flex':'none'}`}} className='vip-fixed-bottom'>
            <View className='vip-fixed-bottom-container'>
              <View className='message-item'>
@@ -281,11 +280,11 @@ handleCancelImg =()=> {
              </View>
              <View className='message-item' onClick={this.handleCopyCode}>
                <Icon className='iconfont icon-fuzhi'/>
-               <Button>复制激活码</Button>
+               <Button className='item-button'>复制激活码</Button>
              </View>
              <View className='message-item' onClick={this.handleShowDec}>
                <Icon className='iconfont icon-copy'/>
-               <Button>保存图片</Button>
+               <Button className='item-button'>保存图片</Button>
              </View>
            </View>
           <View className='vip-fixed-bottom-controll' onClick={this.handleHide}>取消</View>
@@ -300,11 +299,12 @@ handleCancelImg =()=> {
              <View className='vip-feature'>
                <View>
                  <Swiper
+                   autoplay={3000}
                    className='vip-card-swiper'
                    current={curIndex}
                    indicatorDots = {true}
-                   nextMargin={130+'rpx'}
-                   previousMargin={130+'rpx'}
+                   nextMargin={130*width/750+'px'}
+                   previousMargin={130*width/750+'px'}
                    onChange={this.handleChange}
                  >
                    <SwiperItem className='swiper-item'>
@@ -324,15 +324,15 @@ handleCancelImg =()=> {
            <View className={`vip-similar-${curIndex}`}>
              {
                curIndex === 0&&
-                 <Image src={`${cdn}/zsqy.jpg`} mode='widthFix' />
+                 <Image src={`${cdn}/zsqy.jpg`} mode='widthFix' className='img'/>
              }
              {
                curIndex === 1&&
-               <Image src={`${cdn}/zzqy.jpg`} mode='widthFix'/>
+               <Image src={`${cdn}/zzqy.jpg`} mode='widthFix' className='img'/>
              }
              {
                curIndex === 2&&
-               <Image src={`${cdn}/wzqy.jpg`} mode='widthFix'/>
+               <Image src={`${cdn}/wzqy.jpg`} mode='widthFix' className='img'/>
              }
            </View>
 
@@ -354,7 +354,7 @@ handleCancelImg =()=> {
                          this.couponList.map((item,index) => {
                            return(
                              <View className='coupon-item'>
-                               <Image src={item.url}/>
+                               <Image src={item.url}  className='img'/>
                                <View className='coupon-dec'>{item.title}</View>
                              </View>
                            )
@@ -368,15 +368,15 @@ handleCancelImg =()=> {
              <View className='quanyi-1'>
                {
                  curIndex === 0&&
-                 <Image src={`${cdn}/zsqy1.jpg`} mode='widthFix'/>
+                 <Image src={`${cdn}/zsqy1.jpg`} mode='widthFix' className='img'/>
                }
                {
                  curIndex === 1&&
-                 <Image src={`${cdn}/zzqy1.jpg`} mode='widthFix'/>
+                 <Image src={`${cdn}/zzqy1.jpg`} mode='widthFix'  className='img'/>
                }
                {
                  curIndex === 2&&
-                 <Image src={`${cdn}/wzqy1.jpg`} mode='widthFix'/>
+                 <Image src={`${cdn}/wzqy1.jpg`} mode='widthFix' className='img'/>
                }
              </View>
              <View>

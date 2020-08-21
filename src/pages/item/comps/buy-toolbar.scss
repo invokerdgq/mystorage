@@ -3,7 +3,6 @@
 .at-badge{
   &__num{
     background: #c0534e !important;
-    width: 100px;
   }
 }
 .goods-buy-toolbar {
@@ -39,6 +38,9 @@
     line-height: 1;
     background: none;
     border: none;
+    .at-badge_num{
+      width: 20px;
+    }
     &:before, &:after {
       border: none;
     }

@@ -1,15 +1,15 @@
 {
   "extEnable": true,
-  "extAppid": "wx912913df9fef6ddd",
+  "extAppid": "wx9378bcb903abd3ab",
   "ext": {
     "company_id": "1",
-    "appid": "wx912913df9fef6ddd",
-    "wxa_name": "通用小程序"
+    "appid": "wx9378bcb903abd3ab",
+    "wxa_name": "苏心淘福利"
   },
   "window": {
       "backgroundTextStyle": "light",
       "navigationBarBackgroundColor": "#fff",
-      "navigationBarTitleText": "微商城",
+      "navigationBarTitleText": "苏心淘福利",
       "navigationBarTextStyle": "black"
   }
 }

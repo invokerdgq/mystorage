@@ -67,7 +67,7 @@
 				}
 				&.region-picker{
 					display: flex;
-					line-height: 75rpx;
+					line-height: 75px;
 				}
 				.icon-close{
 					line-height: 75px;
@@ -78,7 +78,7 @@
       }
     }
     &__scroll {
-      @include page-scroll($nav-gap-height+$tabs-height + $searchbar-height +30px, $tabbar-height + floor($edge-margin / 2));
+      @include page-scroll($nav-gap-height+$tabs-height + $searchbar-height +30px,  floor($edge-margin / 2));
     }
     &__type-grid {
       display: flex;
@@ -152,7 +152,7 @@
 	.region-picker{
 		display: flex;
 		justify-content: center;
-		line-height: 75rpx;
+		line-height: 75px;
 		.icon-close{
 			line-height: 75px;
 		}

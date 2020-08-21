@@ -50,6 +50,7 @@
 
   .cart-list {
 		padding: $edge-size 0;
+    transform: none !important;
 		&__shop {
 			margin: 0 0 20px;
 			padding: 0 0 4px;
@@ -69,6 +70,7 @@
 			// @include page-scroll($navigate-height, $toolbar-height + $tabbar-height);
       @include page-scroll($nav-gap-height,$toolbar-height);
       height:VH-last($nav-gap-height);
+      transform: none !important;
     }
     &__actions {
       display: flex;
@@ -270,7 +272,7 @@
 }
 
 .cart-toolbar {
-	 bottom:0;
+	 bottom:$tabbar-height;
 	/*position: initial;*/
   position: fixed;
   padding: 0 $edge-margin;

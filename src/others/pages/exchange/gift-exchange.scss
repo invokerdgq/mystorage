@@ -14,7 +14,7 @@ page{
     flex-direction: row;
     margin-bottom: 35px;
     &-img{
-    Image{
+    .img{
       width: 282px;
       height: 282px;
     }
@@ -30,7 +30,7 @@ page{
         justify-content: space-between;
         align-items: center;
         .price{
-           Text:first-child{
+           .p-cur:first-child{
              color:$color-theme;
              font-size: 24px;
            }

@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text ,Input,ScrollView} from '@tarojs/components'
 import NavGap from "../../components/nav-gap/nav-gap";
 import api from '@/api'
 

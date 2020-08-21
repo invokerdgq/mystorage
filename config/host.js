@@ -5,13 +5,15 @@ module.exports = {
     // test: 'ecshopx.shopex123.com/index.php'
     prod: 'sxt-s.oioos.com',
     preissue: 'sxt-s.oioos.com',
+    // preissue:'localhost:4000/cross',
     test: 'sxt-s.oioos.com'
+    // test:'localhost:4000/cross'
   },
   weapp: {
     // prod: 'ecshopx.shopex123.com/index.php',
     // preissue: 'ecshopx.shopex123.com/index.php',
     // test: 'ecshopx.shopex123.com/index.php'
-    prod: 'sxt-b.oioos.com',
+    prod: 'sxt-s.oioos.com',
     // prod:'192.168.0.121:8080',
     preissue: 'sxt-b.oioos.com',
     test: 'sxt-s.oioos.com'

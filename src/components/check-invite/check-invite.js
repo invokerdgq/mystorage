@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text,Input } from '@tarojs/components'
 
 import './check-invite.scss'
 export default class CheckInvite extends Component{

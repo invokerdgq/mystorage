@@ -10,7 +10,7 @@ page{
   @include page-scroll($nav-gap-height)
 }
 .member-body{
-  padding: 0 40px;
+  padding: 0 40px $toolbar-height;
 }
 .member-feature{
   &-dec{
@@ -164,7 +164,7 @@ page{
     justify-content: flex-end;
     position: relative;
     overflow:auto;
-    min-height: 250px;
+    min-height: 220px;
     :after{
       content: '';
       display: block;

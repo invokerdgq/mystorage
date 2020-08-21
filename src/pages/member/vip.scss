@@ -48,7 +48,7 @@ page{
   flex-wrap: wrap;
   justify-content: center;
   padding: 20px 0;
-  Image{
+  .img{
     width: 80vw;
   }
 }
@@ -59,7 +59,7 @@ page{
   flex-wrap: wrap;
   justify-content: center;
   padding: 20px 0;
-  Image{
+  .img{
     width: 80vw;
   }
 }
@@ -195,7 +195,7 @@ page{
   box-shadow: 0 0 8px 0 #ededed;
   &-body{
     text-align: center;
-    Image{
+    .img{
       width: 230px;
       height: 230px;
     }
@@ -242,12 +242,12 @@ page{
       top:10px;
       width: 250px;
       text-align: center;
-      Button{
+      .item-button{
         font-size: 28px;
         line-height: 1.5;
         background: white;
       }
-      Button:after{
+      .item-button:after{
         border: none;
       }
     }
@@ -335,7 +335,7 @@ page{
     width: 260px;
     height: 140px;
     margin-right: 20px;
-    Image{
+    .img{
       width: 100%;
       height: 100%;
     }

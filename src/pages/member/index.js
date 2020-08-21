@@ -4,11 +4,13 @@ import { connect } from '@tarojs/redux'
 import { SpToast, TabBar, SpCell} from '@/components'
 import api from '@/api'
 import S from '@/spx'
+import {cdn} from "../../consts";
 import NavGap from "../../components/nav-gap/nav-gap";
 
 import './index.scss'
 import {memberInfo} from "../../api/member";
 
+const sWidth = Taro.getSystemInfoSync().screenWidth
 @connect(({ colors }) => ({
   colors: colors.current
 }), (dispatch) => ({
@@ -60,16 +62,23 @@ export default class MemberIndex extends Component {
       {icon:'iconfont icon-jiuzhouyiwancheng',dec:'已完成',type:3},
       {icon:'iconfont icon-shouhou',dec:'售后',type:''}
     ]
-    this.featureList = [
+    this.featureList = process.env.TARO_ENV === 'h5'?[
       {url:'/assets/imgs/fans.jpg',dec:'我的粉丝',onclick:this.handleClick.bind(this, '/pages/member/fans',false),openType:'click'},
       {url:'/assets/imgs/group.png',dec:'我的拼团',onclick:this.handleClick.bind(this, '/pages/member/group-list',false) ,openType:'click'},
       {url:'/assets/imgs/buy.png',dec:'我的预约',onclick:this.handleClick.bind(this, '/marketing/pages/member/item-activity',false) ,openType:'click'},
-      {url:'/assets/imgs/kefu.png',dec:'我的客服',openType:'contact'},
-      {url:'/assets/imgs/live.png',dec:'我的直播间',onclick:this.handleClick.bind(this, '/pages/member/live',false),openType:'click'},
       {url:'/assets/imgs/address.png',dec:'地址管理',onclick: this.handleClick.bind(this, '/pages/member/address',false),openType:'click'},
-      {url:'/assets/imgs/share.png',dec:'我要分享',openType:'share'},
-      {url:'https://sxt-b-cdn.oioos.com/tupian/lb.png',dec:'礼包兑换',openType:'click',onclick: this.handleClick.bind(this, '/others/pages/exchange/exchange',false)},
-    ]
+      {url:`${cdn}/lb.png`,dec:'礼包兑换',openType:'click',onclick: this.handleClick.bind(this, '/others/pages/exchange/exchange',false)},
+    ]:
+      [
+        {url:'/assets/imgs/fans.jpg',dec:'我的粉丝',onclick:this.handleClick.bind(this, '/pages/member/fans',false),openType:'click'},
+        {url:'/assets/imgs/group.png',dec:'我的拼团',onclick:this.handleClick.bind(this, '/pages/member/group-list',false) ,openType:'click'},
+        {url:'/assets/imgs/buy.png',dec:'我的预约',onclick:this.handleClick.bind(this, '/marketing/pages/member/item-activity',false) ,openType:'click'},
+        {url:'/assets/imgs/kefu.png',dec:'我的客服',openType:'contact'},
+        {url:'/assets/imgs/live.png',dec:'我的直播间',onclick:this.handleClick.bind(this, '/pages/member/live',false),openType:'click'},
+        {url:'/assets/imgs/address.png',dec:'地址管理',onclick: this.handleClick.bind(this, '/pages/member/address',false),openType:'click'},
+        {url:'/assets/imgs/share.png',dec:'我要分享',openType:'share'},
+        {url:`${cdn}/lb.png`,dec:'礼包兑换',openType:'click',onclick: this.handleClick.bind(this, '/others/pages/exchange/exchange',false)},
+      ]
   }
 
   navigateTo (url) {
@@ -111,7 +120,6 @@ export default class MemberIndex extends Component {
   }
   async fetch () {
     if (!S.getAuthToken()) return
-
     let resUser = null
     if(Taro.getStorageSync('userinfo')){
       resUser = Taro.getStorageSync('userinfo')
@@ -289,8 +297,8 @@ export default class MemberIndex extends Component {
     })
   }
 
-  handleLoginClick = () => {
-    S.login(this, true)
+  handleLoginClick ()  {
+    S.login(this,true)
   }
 
   viewAftersales = () => {
@@ -344,7 +352,7 @@ export default class MemberIndex extends Component {
             scrollY
           >
             <View className='member-header'>
-                    <View className='member-header-user' style={`min-height:${vipgrade.is_vip?'300rpx':this.state.inviter_id !=0?'300rpx':'240rpx'}`}>
+                    <View className='member-header-user' style={`min-height:${vipgrade.is_vip?`${280*sWidth/750}px`:this.state.inviter_id !=0?`${280*sWidth/750}px`:`${210*sWidth/750}px`}`}>
                       <View className='member-header-user-logo'><Image src='../../assets/imgs/logo.png' mode='widthFix' className='img'/></View>
                       <View className='member-header-user-info'>
                         {
@@ -404,7 +412,7 @@ export default class MemberIndex extends Component {
                     className='view-flex-item'
                     onClick={this.handleClick.bind(this, '/pages/member/coupon')}
                   >
-                    <View className='member-assets__value'>{memberAssets.discount_total_count||0}</View>
+                    <View className='member-assets__value'>{memberAssets?memberAssets.discount_total_count:0||0}</View>
                     <View className='member-assets__label'>优惠券</View>
                   </View>
                   <View className='view-flex-item' onClick={this.handlePresist.bind(this,vipgrade.is_vip?vipgrade.grade_name:gradeInfo.grade_name,true)}>
@@ -419,7 +427,7 @@ export default class MemberIndex extends Component {
                     className='view-flex-item'
                     onClick={this.handleClick.bind(this, '/pages/member/item-fav')}
                   >
-                    <View className='member-assets__value'>{memberAssets.fav_total_count||0}</View>
+                    <View className='member-assets__value'>{memberAssets?memberAssets.fav_total_count:0||0}</View>
                     <View className='member-assets__label'>收藏</View>
                   </View>
                 </View>

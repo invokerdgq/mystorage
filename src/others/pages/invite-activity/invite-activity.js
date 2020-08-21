@@ -37,6 +37,7 @@ export default class InviteActivity extends Component{
     super(props);
     this.state = {
       list:{
+        step_conf:[{number:1}],
         user_assist_info:{}
       },
       step:0,
@@ -49,12 +50,8 @@ export default class InviteActivity extends Component{
     }
     this.top = Taro.getStorageSync('top')
   }
-  componentDidMount() {
-    console.log('活动---------------------mount')
-  }
 
   componentDidShow() {
-    console.log('活动---------------------show')
     Promise.resolve().then(() => {console.log('活动show -> Mont  中间的过程--------------')})
     // setTimeout(() => {console.log('活动show -> Mont  中间的过程--------------')},0)
     this.props.setStep(this.state.list.step_conf)
@@ -102,7 +99,6 @@ export default class InviteActivity extends Component{
     return {
       title:'速来助我一臂之力',
       path:`/others/pages/help/help?uid=${userinfo.user_card_code}&assist_id=${this.state.list.assist_id}`,
-      // imageUrl:this.state.savePath
       imageUrl:this.state.list.poster
     }
   }

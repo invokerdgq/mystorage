@@ -278,11 +278,6 @@ export default class TradeList extends Component {
       <View>
         <NavGap title='订单列表'/>
         <View className='page-trade-list'>
-          <NavBar
-            title='订单列表'
-            leftIconType='chevron-left'
-            fixed='true'
-          />
           <AtTabs
             className='trade-list__tabs'
             current={curTabIdx}

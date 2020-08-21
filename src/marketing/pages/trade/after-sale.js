@@ -121,11 +121,6 @@ export default class AfterSale extends Component {
       <View>
         <NavGap title='售后订单列表'/>
         <View className='page-after-sale trade-list'>
-          <NavBar
-            title='售后订单列表'
-            leftIconType='chevron-left'
-            fixed='true'
-          />
           <AtTabs
             className='trade-list__tabs'
             current={curTabIdx}

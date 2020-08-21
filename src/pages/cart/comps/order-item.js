@@ -36,7 +36,7 @@ export default class OrderItem extends Component {
           <QnImg
             img-class='order-item__img'
             src={img}
-            mode='aspectFill'
+            mode='widthFix'
             width='300'
             lazyLoad
           />

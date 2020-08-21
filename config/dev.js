@@ -7,7 +7,7 @@ module.exports = {
   weapp: {},
   h5: {
     devServer: {
-      host: '0.0.0.0',
+      host: 'localhost',
       port:4000,
       proxy:{
         '/cross':{

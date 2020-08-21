@@ -40,6 +40,9 @@
       //height: 100vh;
       box-sizing: border-box;
       padding-bottom: $toolbar-height;
+      .cart-list{
+        box-sizing: border-box;
+      }
     }
     &__total {
       margin-right: 24px;

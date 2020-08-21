@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Form, Button, Text, Picker, Image } from '@tarojs/components'
+import { View, Form, Button, Text, Picker, Image ,Input} from '@tarojs/components'
 import { connect } from "@tarojs/redux";
-import { AtInput, AtButton } from 'taro-ui'
+import { AtInput, AtButton,AtImagePicker } from 'taro-ui'
 import { SpToast, Timer, NavBar, SpCheckbox } from '@/components'
 import { classNames, isString, isArray } from '@/utils'
 import S from '@/spx'
@@ -22,6 +22,8 @@ export default class Reg extends Component {
     super(props)
 
     this.state = {
+      url:'',
+      avatar:'',
       info: {},
       isVisible: false,
       list: [],
@@ -120,10 +122,16 @@ export default class Reg extends Component {
     if (!isWeapp && !data.vcode) {
         return S.toast('请输入验证码')
       }
+    if(data.nick === ''){
+      return  S.toast('昵称不能为空')
+    }
+    if(data.url === ''){
+      return  S.toast('头像不能为空')
+    }
 
-    /*if (!data.password) {
+    if (!data.password) {
       return S.toast('请输入密码')
-    }*/
+    }
     this.state.list.map(item=>{
       return item.is_required ? (item.is_required && data[item.key] ? true : S.toast(`请输入${item.name}`)) : null
     })
@@ -154,6 +162,14 @@ export default class Reg extends Component {
       } else {
         const res = await api.user.reg(data)
         S.setAuthToken(res.token)
+      }
+      try{
+        const res = await api.member.setMemberInfo({
+          user_name:this.state.info.nick,
+          avatar:this.state.url
+        })
+      }catch (e) {
+        S.toast('更新个人信息失败')
       }
 
       S.toast('注册成功')
@@ -203,6 +219,9 @@ export default class Reg extends Component {
           imgVisible: true
         })
       }
+    }
+    if(name === 'nick'){
+        info[name] = val
     }
 
     if(!isString(val) && !isArray(val)) {
@@ -282,12 +301,6 @@ export default class Reg extends Component {
     })
   }
 
-  handleBackHome = () => {
-    Taro.redirectTo({
-      url: '/pages/index'
-    })
-  }
-
   handleGetPhoneNumber = async (e) => {
     // let { code } = this.$router.params
     // try {
@@ -333,7 +346,7 @@ export default class Reg extends Component {
       showCheckboxPanel: false
     })
     const { option_list } = this.state
-    if(btn_type === 'cancel') {
+    if(btn_type === 'cancel') {j
       // let new_type = this.type
       option_list.map(item => {
         item.ischecked = false
@@ -353,6 +366,31 @@ export default class Reg extends Component {
       option_list
     })
   }
+  upLoadImage(){
+    Taro.chooseImage({
+          success:async (res) =>{
+            let path = res.tempFilePaths[0]
+            const files = res.tempFiles[0]
+            this.setState({
+              url:path
+            })
+            console.log(res)
+            let data = new FormData()
+            data.append('file',files.originalFileObj)
+            let xhr = new XMLHttpRequest()
+            xhr.open('POST','https://sxt-s.oioos.com/api/h5app/wxapp/espier/upload')
+            xhr.send(data);
+            xhr.onreadystatechange = () => {
+              if(xhr.readyState === 4 && xhr.status === 200){
+                let url = JSON.parse(xhr.responseText).data.url
+                this.setState({
+                  url
+                })
+              }
+            }
+    }
+    })
+  }
 
   render () {
     const { colors } = this.props
@@ -362,10 +400,6 @@ export default class Reg extends Component {
       <View>
         <NavGap title='注册'/>
         <View className='auth-reg'>
-          <NavBar
-            title='注册'
-            leftIconType='chevron-left'
-          />
           <Form
             onSubmit={this.handleSubmit}
           >
@@ -383,24 +417,6 @@ export default class Reg extends Component {
                     </View>
                   </View>
                 </View>
-
-                // <AtInput
-                //   title='手机号码'
-                //   className='input-phone'
-                //   name='mobile'
-                //   type='number'
-                //   // disabled={isHasValue}
-                //   maxLength={11}
-                //   value={info.mobile}
-                //   placeholder=''
-                //   onFocus={this.handleErrorToastClose}
-                //   onChange={this.handleChange.bind(this, 'mobile')}
-                // >
-                //   <AtButton
-                //     openType='getPhoneNumber'
-                //     onGetPhoneNumber={this.handleGetPhoneNumber}
-                //   >获取手机号码</AtButton>
-                // </AtInput>
               )}
               {Taro.getEnv() !== Taro.ENV_TYPE.WEAPP && (
                 <View>
@@ -414,6 +430,21 @@ export default class Reg extends Component {
                     onFocus={this.handleErrorToastClose}
                     onChange={this.handleChange.bind(this, 'mobile')}
                   />
+                  <AtInput
+                    title='昵称'
+                    name='nick'
+                    value={info.nick}
+                    placeholder='填写昵称'
+                    onFocus={this.handleErrorToastClose}
+                    onChange={this.handleChange.bind(this, 'nick')}
+                  />
+                  <View className='avatar-up'>
+                    <View className='title'>上传头像</View>
+                    <View className='img-picker' onClick={this.upLoadImage.bind(this)}>
+                      <View className='iconfont icon-jia'/>
+                      <Image src={this.state.url} mode='widthFix' className='img'/>
+                    </View>
+                  </View>
                   {
                     imgVisible
                       ? <AtInput title='图片验证码' name='yzm' value={info.yzm} placeholder='请输入图片验证码' onFocus={this.handleErrorToastClose} onChange={this.handleChange.bind(this, 'yzm')}>
@@ -448,8 +479,8 @@ export default class Reg extends Component {
             >
               {
                 isVisible
-                  ? <View className='sp-icon sp-icon-yanjing icon-pwd' onClick={this.handleClickIconpwd}> </View>
-                  : <View className='sp-icon sp-icon-icon6 icon-pwd' onClick={this.handleClickIconpwd}> </View>
+                  ? <View className='iconfont icon-yanjing1 icon-pwd' onClick={this.handleClickIconpwd}> </View>
+                  : <View className='iconfont icon-yanjing icon-pwd' onClick={this.handleClickIconpwd}> </View>
               }
             </AtInput>}
               {

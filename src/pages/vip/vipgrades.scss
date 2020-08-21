@@ -158,6 +158,9 @@ page{
       flex-direction: row;
       color:#2f2f2f;
       justify-content: space-between;
+      .inner-dec{
+        white-space: nowrap;
+      }
     }
   }
 }
@@ -262,7 +265,7 @@ page{
       font-size: 32px;
       color:#2f2f2f;
       margin: 15px 0;
-      Image{
+      .img{
         width: 24px;
         height: 24px;
       }

@@ -57,11 +57,11 @@ export default class Exchange extends Component{
              giftGoodsList.map((item,index)=> {
                return(
                  <View className='gift-goods-item'>
-                   <View className='gift-goods-item-img'><Image src={item.pics[0]}/></View>
+                   <View className='gift-goods-item-img'><Image src={item.pics[0]} className='img'/></View>
                    <View className='gift-goods-item-info'>
                      <View className='gift-goods-item-info-name'>{item.item_name}</View>
                      <View className='feature'>
-                       <View className='price'><Text>￥</Text><Text className='price-inner'>{(Number(item.price)/100).toFixed(2)}</Text></View>
+                       <View className='price'><Text className='p-cur'>￥</Text><Text className='price-inner'>{(Number(item.price)/100).toFixed(2)}</Text></View>
                        <View onClick={this.handleClickItem.bind(this,item.item_id)} className='exchange'>立即兑换 ></View>
                      </View>
                    </View>

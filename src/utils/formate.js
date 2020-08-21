@@ -29,18 +29,20 @@ function sort(list) {
     })
 
     for (let i = 0; i < list.length; i++) {
-      if (list[i].config.lastSeconds === 0) {
+      let cur
+      activityList.map((item,index) => {
+        if (item.seckill_id === list[i].config.seckillId){
+          cur = index
+        }
+      })
+      if(cur){
+         list[i].config.lastSeconds = activityList[cur].last_seconds
+         list[i].config.status = activityList[cur].status
+         list[i].config.start_date = activityList[cur].activity_start_date
+         list[i].config.end_date = activityList[cur].activity_end_date
+         list[i].config.start_time =activityList[cur].activity_start_time
+      }else{
         list[i].config.status = 'ended'
-      } else {
-        const id = list[i].config.seckillId
-        activityList.map((item) => {
-          if (item.seckill_id === id) {
-            list[i].config.status = item.status
-            list[i].config.start_date = item.activity_start_date
-            list[i].config.end_date = item.activity_end_date
-            list[i].config.start_time =item.activity_start_time
-          }
-        })
       }
     }
     let newList = [];
@@ -87,6 +89,8 @@ function sort(list) {
        },[])
      })
     option.splice(curIndex, 0, {list: finnalList, name: 'limit-kill'})
+     console.log('格式化后  数据--------------------------')
+     console.log(option)
     return option
 }
 export default formate
@@ -102,7 +106,6 @@ export function formateSelect(list) {
       newList.push(obj)
     })
   console.log(newList)
-  console.log('格式化后  数据--------------------------')
   return newList
 }
 

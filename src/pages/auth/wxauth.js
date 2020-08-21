@@ -12,7 +12,6 @@ import './wxauth.scss'
 @connect(({ colors }) => ({
   colors: colors.current
 }))
-
 export default class WxAuth extends Component {
   state = {
     isAuthShow: false
@@ -25,7 +24,7 @@ export default class WxAuth extends Component {
   async autoLogin () {
     const { update } = this.$router.params
     const { code } = await Taro.login()
-    try {
+    try{
       const { token } = await api.wx.login({ code })
       if (!token) throw new Error(`token is not defined: ${token}`)
       S.setAuthToken(token)
@@ -36,11 +35,11 @@ export default class WxAuth extends Component {
         return
       }
       return this.redirect()
-    } catch (e) {
-      console.log(e)
+    }catch (e) {
       this.setState({
         isAuthShow: true
       })
+      console.log(e)
     }
   }
 
@@ -138,9 +137,6 @@ export default class WxAuth extends Component {
       if (uid) {
         Object.assign(params, {inviter_id: uid})
       }
-      // if(Taro.getStorageSync('scene')){
-      //   Object.assign(params,{inviter_id:Taro.getStorageSync('scene')})
-      // }
       const { token, open_id, union_id, user_id } = await api.wx.prelogin(params)
       if(this.$router.params.update == 1){
         Taro.showToast({
@@ -156,13 +152,11 @@ export default class WxAuth extends Component {
         return
       }
       S.setAuthToken(token)
-      // 绑定过，跳转会员中心
       if (user_id) {
         await this.autoLogin()
         return
       }
 
-      // 跳转注册绑定
       Taro.redirectTo({
         url: `/pages/auth/reg?code=${code}&open_id=${open_id}&union_id=${union_id}`
       })
@@ -184,7 +178,7 @@ export default class WxAuth extends Component {
   render () {
     const { colors } = this.props
     const { isAuthShow } = this.state
-    const extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {}
+    const extConfig = process.env.TARO_ENV === 'weapp'?wx.getExtConfigSync ? wx.getExtConfigSync() : {}:{}
 
     return (
       <View>

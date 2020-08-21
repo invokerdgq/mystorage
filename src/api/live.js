@@ -24,8 +24,8 @@ export function checkActive() {
 export function activeLive(params) {
    return req.post('/live/activate',params)
 }
-export function uploadImg(params) {
-  return req.post('/espier/upload',params)
+export function uploadImg(params,config) {
+  return req.post('/espier/upload',params,config)
 }
 export function postConfig(params) {
   return req.post('/live/config',params)

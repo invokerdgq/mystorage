@@ -26,7 +26,7 @@ export default class GoodsBuyToolbar extends Component {
   }
 
   handleClickCart = (id, type) => {
-    Taro.reLaunch({
+    Taro.redirectTo({
       url: `/pages/cart/espier-index?type=${type}`
     })
   }
@@ -86,7 +86,7 @@ export default class GoodsBuyToolbar extends Component {
               value={cartCount || null}
               style={{background:'#c0534e'}}
             >
-              <View className='iconfont icon-che'></View>
+              <View className='iconfont icon-che'/>
               <View className='dec'>购物车</View>
             </AtBadge>
           </View>
@@ -100,13 +100,13 @@ export default class GoodsBuyToolbar extends Component {
                     onClick={onClickFastBuy}
                   >
                     <View className='btn-fast-buy-container'>
-                      <View className={`goods-buy-toolbar__btn btn-fast-buy ${type !== 'normal' && type !== 'limited_time_sale'&& type !== 'seckill' && 'marketing-btn'}`}>{fastBuyText}</View>
+                      <View className={`goods-buy-toolbar__btn btn-fast-buy ${type !== 'normal' && type !== 'limited_time_sale' && 'marketing-btn'}`}>{fastBuyText}</View>
                     {/*<View className={`goods-buy-toolbar__btn btn-fast-buy ${type !== 'normal' && type !== 'limited_time_sale' && 'marketing-btn'}`} style={'background: ' + colors.data[0].primary}>{fastBuyText}</View>*/}
                     </View>
                   </FormIdCollector>
                 )
               }
-            {(type === 'normal' || type === 'limited_time_sale'|| type === 'seckill') && (
+            {(type === 'normal' || type === 'limited_time_sale') && (
               <FormIdCollector
                 sync
                 onClick={onClickAddCart}

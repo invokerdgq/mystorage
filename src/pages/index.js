@@ -41,6 +41,7 @@ export default class HomeIndex extends Component {
     super(props)
     this.state = {
       ...this.state,
+      showLoading:false,
       wgts: null,
       likeList: [],
       isShowAddTip: false,
@@ -65,7 +66,7 @@ export default class HomeIndex extends Component {
   }
 
   onPageScroll = (res) => {
-    console.log(res)
+  console.log('scroll----------------------')
     const { scrollTop } = res
     this.setState({
       top: scrollTop
@@ -124,55 +125,6 @@ export default class HomeIndex extends Component {
         })
       })
   }
-
-  componentDidMount () {
-    // this.setState({
-    //   url:`plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=39&custom_params=''`
-    // })
-    // this.fetchInfo(async (info) => {
-    //   const url = '/pageparams/setting?template_name=yykweishop&version=v1.0.1&page_name=index&name=search'
-    //   const [fixSetting, { is_open, ad_pic, ad_title }] = await Promise.all([req.get(url), api.promotion.automatic({register_type: 'general'})])//----------request about fix position setting
-    //   this.setState({
-    //     showPost:Object.keys(fixSetting[0].params.config).indexOf('showPost') === -1?true:fixSetting[0].params.config.showPost,
-    //     automatic: {           //   null  meaning  not  clear
-    //       title: ad_title,
-    //       isOpen: is_open === 'true',
-    //       adPic: ad_pic
-    //     },
-    //     positionStatus: (fixSetting.length && fixSetting[0].params.config.fixTop) || false
-    //   })
-    //
-    //   // const userinfo = Taro.getStorageSync('userinfo')
-    //   // if (automatic.is_open === 'true' && automatic.register_type === 'membercard' && userinfo) {
-    //   //   const { is_open, is_vip, is_had_vip, vip_type } = await api.vip.getUserVipInfo()
-    //   //   this.setState({
-    //   //     vip: {
-    //   //       isSetVip: is_open,
-    //   //       isVip: is_vip,
-    //   //       isHadVip: is_had_vip,
-    //   //       vipType: vip_type
-    //   //     }
-    //   //   })
-    //   // }
-    //
-    //   const options = this.$router.params
-    //   const res = await entry.entryLaunch(options, true)    //initial source of enter the program  and get the Curstore(shop info)
-    //       // if(S.getAuthToken()){
-    //       //     const promoterInfo = await api.distribution.info()
-    //       //     this.setState({
-    //       //       isShop:promoterInfo
-    //       //     })
-    //       //   }
-    //
-    //   const { store } = res
-    //   if (!isArray(store)) {
-    //     this.setState({
-    //       curStore: store
-    //     })
-  	// 	}
-    // })
-  }
-
   onShareAppMessage (res) {
     if (res.from === 'button') {
       console.log(res.target)
@@ -199,7 +151,7 @@ export default class HomeIndex extends Component {
     const info = await req.get(url)
 
 
-     let list = await api.seckill.seckillList({status:'',page:1,pageSize:20})
+     let list = await api.seckill.seckillList({status:'',page:1,pageSize:30})
 
     this.setState({
       wgts: formate(info.config,list.list),
@@ -224,6 +176,9 @@ export default class HomeIndex extends Component {
 
   async fetch (params) {
     console.log(params, 160)
+    this.setState({
+      showLoading:true
+    })
     const { page_no: page, page_size: pageSize } = params
     const query = {
       page,
@@ -244,6 +199,7 @@ export default class HomeIndex extends Component {
      Taro.M(nList)
     this.setState({
       likeList: [...this.state.likeList, ...nList],
+      showLoading:false
     })
 
     return {
@@ -308,7 +264,7 @@ refresh(){
     this.fetchInfo()
 }
   render () {
-    const { url,showPost,wgts, page,isShop, likeList, showBackToTop, scrollTop, isShowAddTip, curStore, positionStatus, automatic, showAuto, top } = this.state
+    const { url,showPost,wgts, page,isShop, likeList, showBackToTop, scrollTop, isShowAddTip, curStore, positionStatus, automatic, showAuto, top ,showLoading} = this.state
     const { showLikeList } = this.props
     const user = Taro.getStorageSync('userinfo')
     const isPromoter = user && user.isPromoter
@@ -327,14 +283,12 @@ refresh(){
               refresh={this.refresh.bind(this)}
             />
         }
-				{/*<ScrollView
-  className={classNames('wgts-wrap', positionStatus && 'wgts-wrap__fixed' , !curStore && 'wgts-wrap-nolocation')}
-  scrollTop={scrollTop}
-  onScroll={this.handleScroll}
-  onScrollToUpper={this.onScrollToUpper.bind(this)}
-  onScrollToLower={this.nextPage}
-  scrollY
-				>*/}
+				<ScrollView
+             className='home-scroll'
+             style={{height:process.env.TARO_ENV === 'h5'?'100vh':'100%'}}
+             onScrollToLower={process.env.TARO_ENV === 'h5'?this.nextPage:()=>{}}
+             scrollY
+				>
         <View className={classNames('wgts-wrap', positionStatus && 'wgts-wrap__fixed' , !curStore && 'wgts-wrap-nolocation')}>
           <View className='wgts-wrap__cont'>
             <HomeWgts
@@ -410,6 +364,7 @@ refresh(){
           process.env.TARO_ENV === 'weapp'?null:
           <TabBar />
         }
+        </ScrollView>
       </View>
     )
   }

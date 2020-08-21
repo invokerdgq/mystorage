@@ -41,9 +41,6 @@ if(process.env.TARO_ENV === 'weapp'){
   function isTabBarPage(url){
     return /\/pages\/(index|category\/index|recommend\/list|cart\/espier-index|member\/index)(.)*/.test(url)
   }
-  function isTradePage(url) {
-    return /\/trade(.)*/.test(url)
-  }
   let originNav = Taro.navigateTo
   Taro.navigateTo = function (option) {
     isTabBarPage(option.url)?Taro.switchTab(option): originNav(option)
@@ -52,16 +49,19 @@ if(process.env.TARO_ENV === 'weapp'){
   Taro.redirectTo = function (option) {
     isTabBarPage(option.url)?Taro.switchTab(option): originRed(option)
     }
-  let originNav1 = Taro.navigateTo
-  Taro.navigateTo = function (option) {
-    if(isTradePage(option.url)) option.url = `/marketing${option.url}`
-    originNav1(option)
-  }
-  let originRed1 = Taro.redirectTo
-  Taro.redirectTo = function (option) {
-    if(isTradePage(option.url)) option.url = `/marketing${option.url}`
-    originRed1(option)
-  }
+}
+function isTradePage(url) {
+  return /\/trade(.)*/.test(url)
+}
+let originNav1 = Taro.navigateTo
+Taro.navigateTo = function (option) {
+  if(isTradePage(option.url)) option.url = `/marketing${option.url}`
+  originNav1(option)
+}
+let originRed1 = Taro.redirectTo
+Taro.redirectTo = function (option) {
+  if(isTradePage(option.url)) option.url = `/marketing${option.url}`
+  originRed1(option)
 }
 
 
@@ -71,24 +71,7 @@ useHooks()
   class App extends Component {
     // eslint-disable-next-line react/sort-comp
     componentWillMount () {
-      console.log('app    --------------------------------')
-      console.log(this.$router)
       entry.entryLaunch(this.$router.params.query)
-      // let menuButtonObject = Taro.getMenuButtonBoundingClientRect();
-      // Taro.getSystemInfo({
-      //   success: res => {
-      //     let statusBarHeight = res.statusBarHeight;
-      //     let navTop = menuButtonObject.top;
-      //     let Height = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;
-      //     this.navHeight = Height;
-      //     this.navTop = navTop;
-      //     this.windowHeight = res.windowHeight;
-      //     Taro.setStorageSync('top',(this.navHeight - statusBarHeight)/2 + statusBarHeight)
-      //   },
-      //   fail(err) {
-      //     console.log(err);
-      //   }
-      // })
     }
 
     componentDidMount () {

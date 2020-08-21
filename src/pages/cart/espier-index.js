@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Image, ScrollView } from '@tarojs/components'
+import { View, Text, Image, ScrollView ,Button} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtButton, AtActionSheet, AtActionSheetItem } from 'taro-ui'
 import { SpCheckbox, SpNote, TabBar, Loading, Price, NavBar, GoodsItem } from '@/components'
@@ -14,6 +14,7 @@ import NavGap from "../../components/nav-gap/nav-gap"
 import './espier-index.scss'
 
 @connect(({ cart, colors }) => ({
+  cartCount:cart.cartCount,
   list: cart.list,
 	cartIds: cart.cartIds,
 	showLikeList: cart.showLikeList,
@@ -48,6 +49,8 @@ export default class CartIndex extends Component {
   }
 
   componentDidMount () {
+    console.log('lllllllllllllllllllll')
+    console.log(this.props.list)
     // console.log(this.$router.params, 48)
     // if(this.$router.params && this.$router.params.path === 'qrcode') {
     //   this.setState({
@@ -261,6 +264,7 @@ export default class CartIndex extends Component {
       is_checked: checked
     })
     this.updateCart()
+
   }
 
   handleDelect = async (cart_id) => {
@@ -421,7 +425,7 @@ export default class CartIndex extends Component {
 
   render () {
     const { groups, invalidList, cartMode, loading, curPromotions, likeList, page, isPathQrcode } = this.state
-    const { list, showLikeList, colors } = this.props
+    const { list, showLikeList, colors ,cartCount} = this.props
 
     if (loading) {
       return <Loading />
@@ -579,7 +583,7 @@ export default class CartIndex extends Component {
                         }
 
 
-                        <View className={`toolbar cart-toolbar ${isEmpty && 'hidden'}`}>
+                        <View className={`toolbar cart-toolbar ${isEmpty && 'hidden'}`} style={{bottom:process.env.TARO_ENV === 'weapp'?0:''}}>
                           {
                             <View className='cart-toolbar__hd'>
                               <SpCheckbox
@@ -618,7 +622,7 @@ export default class CartIndex extends Component {
                                   // style={`background: ${colors.data[0].primary}`}
                                   disabled={shopCart.shopInfo.cart_total_count <= 0}
                                   onClick={this.handleCheckout.bind(this, shopCart)}>
-                                  {isDrug ? '立即预约' : `结算(${list[0].list.length})`}
+                                  {isDrug ? '立即预约' : `结算(${cartCount})`}
                                 </Button>
                               </View>
                               : <View className='cart-toolbar__bd'>

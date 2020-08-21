@@ -48,7 +48,7 @@ class Spx {
   setAuthToken (token) {
     this.set(TOKEN_IDENTIFIER, token)
     Taro.setStorageSync(TOKEN_IDENTIFIER, token)
-    Taro.setStorageSync(TOKEN_TIMESTAMP, Date.now() + 24*55 * 60 * 1000)
+    Taro.setStorageSync(TOKEN_TIMESTAMP, Date.now() + 55 * 60 * 1000)
   }
 
   startRefreshToken () {
@@ -150,9 +150,7 @@ class Spx {
     if (path === APP_AUTH_PAGE) {
       return
     }
-
     const authUrl = APP_AUTH_PAGE + `?redirect=${encodedRedirect}`
-
     Taro[isRedirect ? 'redirectTo' : 'navigateTo']({
       url: authUrl
     })

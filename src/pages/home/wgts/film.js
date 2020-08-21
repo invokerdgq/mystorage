@@ -62,6 +62,8 @@ export default class WgtFilm extends Component {
   }
 
   render () {
+    console.log('kkkkkkkkkkkkkkkkkkkk')
+    console.log(this.props)
     const { info } = this.props
     const { screenWidth } = this.state
 
@@ -70,7 +72,12 @@ export default class WgtFilm extends Component {
     }
 
     const { config, base, data } = info
-    const { width, height, objectFit } = this.resolveSize(config, screenWidth)
+    let width1 ,height1
+    if(config){
+      const { width, height, objectFit } = this.resolveSize(config, screenWidth)
+      width1 = width
+      height1 = height
+    }
     return (
       <View className={`wgt ${base.padded ? 'wgt__padded' : null}`}>
         {base.title && (
@@ -79,11 +86,11 @@ export default class WgtFilm extends Component {
             <View className='wgt__subtitle'>{base.subtitle}</View>
           </View>
         )}
-        <View className={`slider-wrap ${config.padded ? 'padded' : ''}`}>
+        <View className={`slider-wrap ${base.padded ? 'padded' : ''}`}>
           <Video
             className='flim-video'
-            src={data[0].url}
-            style={styleNames({ width, height })}
+            src={data[0].media_id}
+            style={styleNames({ width1, height1 })}
             controls
           />
         </View>

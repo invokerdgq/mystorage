@@ -138,12 +138,6 @@ export default class CouponHome extends Component { // ------------------优惠�
       <View>
         <NavGap title='优惠券列表'/>
         <View className='coupon-list'>
-          <NavBar
-            title='优惠券列表'
-            leftIconType='chevron-left'
-            fixed='true'
-          />
-
           <ScrollView
             scrollY
             className='home_coupon-list__scroll'

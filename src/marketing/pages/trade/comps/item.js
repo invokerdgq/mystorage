@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text ,Button} from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 import { connect } from "@tarojs/redux";
 import { Price } from '@/components'

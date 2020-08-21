@@ -56,7 +56,13 @@ export function linkPage (type, id) {
       break;
     default:
   }
-
+  if(id === 'invite-activity'&&process.env.TARO_ENV === 'h5'){
+    Taro.showToast({
+      title:'暂未开放',
+      icon:'none',
+      duration:1500
+    })
+  }
   Taro.navigateTo({
     url
   })

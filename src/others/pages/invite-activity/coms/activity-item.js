@@ -19,8 +19,7 @@ export default class ActivityItem extends Component{
       poster:'',
       userList:[],
       inviteNumber:0,
-      step:[
-      ],
+      step:[{number:1}],
       last_seconds:''
     },
     initList: {step:'',user_assist_info:{assist_status:1}},
@@ -154,20 +153,6 @@ export default class ActivityItem extends Component{
                          </View>:
                        <View></View>
                  }
-                 {/*{*/}
-                 {/*  status&&inviteNumber >= step[step.length -1]?*/}
-                 {/*    <View className='fast-buy' onClick={this.clickBtn.bind(this,'buy')}>*/}
-                 {/*      <Image src={`${cdn}/fast-buy.jpg`} className='img'/>*/}
-                 {/*    </View>:*/}
-                 {/*    status?*/}
-                 {/*      <View className='feature-btn'>*/}
-                 {/*        <View className='feature-btn-left' onClick={this.clickBtn.bind(this,'share')}><Image src={`${cdn}/presist.jpg`} mode='widthFix' className='img'/></View>*/}
-                 {/*        <View onClick={this.clickBtn.bind(this,'buy')}><Image src={`${cdn}/select.png`} mode='widthFix' className='img'/></View>*/}
-                 {/*      </View>:*/}
-                 {/*      <View className='invite-begin' onClick={this.clickBtn.bind(this,'share')}>*/}
-                 {/*        <Image src={`${cdn}/begin.png`} className='invite-begin-img' mode='widthFix'/>*/}
-                 {/*      </View>*/}
-                 {/*}*/}
                </View>
            </View>
          </View>

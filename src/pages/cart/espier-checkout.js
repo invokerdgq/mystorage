@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, ScrollView } from '@tarojs/components'
+import { View, Text, ScrollView,Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtButton, AtInput } from 'taro-ui'
 import { Loading, Price, SpCell, AddressChoose, SpToast, NavBar } from '@/components'
@@ -80,7 +80,7 @@ export default class CartCheckout extends Component {
         coupon_discount: '',
         point: ''
       },
-      payType: 'wxpay',
+      payType:'wxpay',
       disabledPayment: null,
       isPaymentOpend: false,
       isDrugInfoOpend: false,
@@ -127,13 +127,15 @@ export default class CartCheckout extends Component {
       this.props.onClearFastbuy()
       info = null
     }
-    try{                 // 当没有店铺时 Json.parse 方法报错 中断执行
+    try{
+      // 当没有店铺时 Json.parse 方法报错 中断执行
+      let TYPE = payType || this.state.payType
       this.setState({
         curStore,
         express: JSON.parse(curStore.is_delivery) ? true : false,
         receiptType: JSON.parse(curStore.is_delivery) ? 'logistics' : 'ziti',
         info,
-        payType: payType || this.state.payType
+        payType: TYPE
       })
     }catch (e) {
       this.setState({
@@ -738,6 +740,10 @@ handleExchange = async () => {
         params.level = this.$router.params.level
         params.assist_id = this.$router.params.assist_id
       }
+      if(process.env.TARO_ENV === 'h5'){
+        params.pay_type  = params.pay_type === 'wxpay'?'wxpayh5':params.pay_type
+        params.appid = 'wx892b0a82fa08a2ac'
+      }
       config = await api.trade.create({...params,come_from:distributionShopId})
       order_id = isDrug ? config.order_id : config.trade_info.order_id
       if(payType === 'surplus'){
@@ -823,7 +829,11 @@ handleExchange = async () => {
     }
 
     payErr = null
-    Taro.M(config)
+  if(config.mweb_url){
+    if(process.env.TARO_ENV === 'h5'){
+      window.location.href = config.mweb_url + '&redirect_url='+encodeURIComponent('https://h5.oioos.com/pages/member/index')
+    }
+  }else{
     try {
       const payRes = await Taro.requestPayment(config)
       log.debug(`[order pay]: `, payRes)
@@ -835,33 +845,35 @@ handleExchange = async () => {
         icon: 'none'
       })
     }
-    if (!payErr) {
-      await Taro.showToast({
-        title: '支付成功',
-        icon: 'success',
-        success :() =>{}
+      if (!payErr) {
+        await Taro.showToast({
+          title: '支付成功',
+          icon: 'success',
+          success :() =>{}
 
-      })
-
-      this.props.onClearCart()
-      setTimeout(() => {
-        Taro.redirectTo({
-          url: type === 'group' ? `/pages/item/group-detail?team_id=${config.team_id}` : `/pages/trade/detail?id=${order_id}`
         })
-      },500)
 
-      /*this.props.onClearCart()
-      Taro.redirectTo({
-        url: `/pages/trade/detail?id=${order_id}`
-      })*/
-    } else {
-      if (payErr.errMsg.indexOf('fail cancel') >= 0) {
+        this.props.onClearCart()
+        setTimeout(() => {
+          Taro.redirectTo({
+            url: type === 'group' ? `/pages/item/group-detail?team_id=${config.team_id}` : `/pages/trade/detail?id=${order_id}`
+          })
+        },500)
+
+        /*this.props.onClearCart()
         Taro.redirectTo({
           url: `/pages/trade/detail?id=${order_id}`
-        })
+        })*/
+      } else {
+        if (payErr.errMsg.indexOf('fail cancel') >= 0) {
+          Taro.redirectTo({
+            url: `/pages/trade/detail?id=${order_id}`
+          })
+        }
       }
-    }
-    return
+
+  }
+
 
     // const url = `/pages/cashier/index?order_id=${order_id}`
     // this.props.onClearCart()
@@ -973,7 +985,8 @@ handleToast=()=>{
     // 支付方式文字
     const payTypeText = {
       point: '积分支付',
-      wxpay: process.env.TARO_ENV === 'weapp' ? '微信支付' : '现金支付',
+      // wxpay: process.env.TARO_ENV === 'weapp' ? '微信支付' : '现金支付',
+      wxpay: '微信支付',
       balance: '余额支付',
       surplus:'余额支付',
       wxpaysurplus:'混合支付'
@@ -1001,15 +1014,15 @@ handleToast=()=>{
       <View>
         <NavGap title='确认订单'/>
         <View className='page-checkout'>
-          {
-            showAddressPicker === false
-              ? <NavBar
-                title='填写订单信息'
-                leftIconType='chevron-left'
-                fixed='true'
-              />
-              : null
-          }
+          {/*{*/}
+          {/*  showAddressPicker === false*/}
+          {/*    ? <NavBar*/}
+          {/*      title='填写订单信息'*/}
+          {/*      leftIconType='chevron-left'*/}
+          {/*      fixed='true'*/}
+          {/*    />*/}
+          {/*    : null*/}
+          {/*}*/}
           <ScrollView
             scrollY
             className='checkout__wrap'
@@ -1356,6 +1369,7 @@ handleToast=()=>{
           </View>
 
           {
+            isDrug&&
             <DrugInfo
               isOpened={isDrugInfoOpend}
               info={drug}

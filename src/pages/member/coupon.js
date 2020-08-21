@@ -112,11 +112,6 @@ export default class Coupon extends Component {
       <View>
         <NavGap title='优惠券'/>
         <View className='coupon-list'>
-          <NavBar
-            title='优惠券列表'
-            leftIconType='chevron-left'
-            fixed='true'
-          />
           <AtTabs
             className='coupon-list__tabs'
             current={curTabIdx}

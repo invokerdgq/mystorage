@@ -19,7 +19,7 @@ export default class WgtLimitKill extends Component{
     this.state = {
       more:false,
       index:0,
-      poi: {pos:0},
+      poi: '',
       showTriangle:true,
       iconUp:false,
       timer:[],
@@ -27,6 +27,9 @@ export default class WgtLimitKill extends Component{
     }
   }
    componentDidMount() {
+    this.setState({
+      width:Taro.getSystemInfoSync().screenWidth
+    })
     const {list=[]} = this.props.info
      let cur = -1
       if(list.length){
@@ -38,14 +41,16 @@ export default class WgtLimitKill extends Component{
           }
         }
       }
-     this.handleTimerChange(cur === -1?0:cur)
+      setTimeout(() => {
+         this.handleTimerChange(cur === -1?0:cur)
+      },200)
   }
   handleTimerChange = (index) =>{
     let obj;
    if(index === this.state.index){
       obj = {
        index:index,
-       poi:{pos:index>=2?750/8+(index-2)*750/4:0},
+       poi:index>=2?(750/8+(index-2)*750/4)*this.state.width/750:0,
        showTriangle: false,
        more:false,
        iconUp: false
@@ -53,7 +58,7 @@ export default class WgtLimitKill extends Component{
    }else{
       obj = {
        index:index,
-        poi:{pos:index>=2?750/8+(index-2)*750/4:0},
+        poi:index>=2?(750/8+(index-2)*750/4)*this.state.width/750:0,
        showTriangle: false,
        more:false,
        iconUp: false
@@ -78,8 +83,10 @@ export default class WgtLimitKill extends Component{
     }
   }
   handleScroll = (e) => {
+    console.log(e)
      this.setState({
-       showTriangle:false
+       showTriangle:false,
+       poi:process.env.TARO_ENV === 'h5'?e.detail.scrollLeft:this.state.poi
      })
   }
   handleBuy =async (index,goodsIndex)=> {
@@ -132,24 +139,24 @@ refresh() {
 }
   render() {
     const {list} = this.props.info
-    const {Dec,index,showTriangle,iconUp,poi,allList} = this.state
-    const config = this.props.info.list[index].config
+    const {width,Dec,index,showTriangle,iconUp,poi,allList} = this.state
     return(
       <View className='limit-container'>
         <View className='wgt__header'>
           <View className='wgt__title'>{list[0].base.title }</View>
           <View className='wgt__subtitle'>{list[0].base.subtitle}</View>
         </View>
+        <View className='body-container'>
         <View className='timer-controller'>
           <ScrollView
             className='timer-scroll'
             scrollX
-            scrollLeft={poi.pos +'rpx'}
+            scrollLeft={poi}
             onScroll={this.handleScroll}
-            scrollWithAnimation= 'true'
+            scrollWithAnimation={process.env.TARO_ENV !== 'h5'}
             enableFlex='true'
           >
-            <View style={{display:'flex',flexDirection:'row',width:'100%'}}>
+            <View style={{display:'flex',flexDirection:'row'}}>
               {/*<View className='gap'>没有了~</View>*/}
               {/*  <View className='gap'/>*/}
               {
@@ -176,8 +183,9 @@ refresh() {
             </View>
           </ScrollView>
         </View>
-        <View className={`${showTriangle?'triangle-container':'triangle-container-none'}`} style={`left:${this.state.index <2?(2*this.state.index+1)*750/8 - 10:list.length-3<this.state.index?750-(list.length-1-this.state.index)*750/4-750/8-10:750/2-10}rpx`}>
-          <View className='triangle' style={`border-top:solid 10rpx${list[this.state.index].config.status === 'in_sale'?'#c0534e':'#a0a0a0'}`}/>
+        <View className={`${showTriangle?'triangle-container':'triangle-container-none'}`} style={{left:this.state.index <2?((2*this.state.index+1)*750/8 - 10)*width/750+ 'px':list.length-3<this.state.index?(750-(list.length-1-this.state.index)*750/4-750/8-10)*width/750 +'px':(750/2-10)*width/750 + 'px'}}>
+          <View className='triangle' style={{borderTop:list[this.state.index].config.status === 'in_sale'?`solid ${10*width/750}px #c0534e`:`solid ${10*width/750}px #a0a0a0`}}/>
+        </View>
         </View>
         <View className='timer-show'>
           {

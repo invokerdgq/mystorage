@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text,Image,Button ,Input} from '@tarojs/components'
+import { View, Text,Image,Button ,Input,ScrollView} from '@tarojs/components'
 import { Price} from '@/components'
 import { connect } from '@tarojs/redux'
 import { AtTabs, AtTabsPane} from 'taro-ui'
@@ -12,28 +12,20 @@ import CheckInvite from "../../components/check-invite/check-invite";
 import { withPager } from '@/hocs'
 import {cdn} from '@/consts/index'
 
-@connect(({ colors }) => ({
+
+@connect(({giftId,colors,address}) => ({
+  id:giftId.id,
+  address:address.current,
   colors: colors.current
-}))
-@connect(({address}) => ({
-  address:address.current
-}))
-@connect(({giftId}) => ({
-  id:giftId.id
 }))
 @withPager
 export default class VipIndex extends Component {
-	static config = {
-		navigationBarTitleText: '会员购买',
-		backgroundColor: '#2f3030',
-		backgroundTextStyle: 'light'
-  }
-  constructor (props) {
-    super(props)
-
+    constructor(props){
+      super(props);
     this.state = {
       ...this.state,
-			userInfo:null,
+			userInfo: {avatar:''},
+      userVipInfo:{is_vip:false},
 			curTabIdx: 0,
 			curCellIdx: 0,
 			tabList:[],
@@ -155,7 +147,7 @@ export default class VipIndex extends Component {
      url: `/pages/member/address?isPicker=choose`
    })
  }
-	async handleCharge () {
+ handleCharge =	async() =>  {
 
 		if (!S.getAuthToken()) {
       Taro.showToast({
@@ -171,6 +163,7 @@ export default class VipIndex extends Component {
 		}
 		const info = Taro.getStorageSync('userinfo')
     const id = Taro.getStorageSync('distribution_shop_id')
+    console.log('bug---------------')
     if(!Number(info.inviter_id) && !id && this.state.value === ''){
       if(Number(info.userId) !== 1){
         this.setState({
@@ -216,40 +209,45 @@ console.log(list)
 
       var config = data
       var that = this
-      Taro.requestPayment({
-        'timeStamp': '' + config.timeStamp,
-        'nonceStr': config.nonceStr,
-        'package': config.package,
-        'signType': config.signType,
-        'paySign': config.paySign,
-        'success': function (res) {
-          Taro.showModal({
-            content: '支付成功',
-            showCancel: false,
-            success: function(res) {
-              // let id =  Taro.getStorageSync('distribution_shop_id')
-              // api.member.bind({userInviteId:id}).then((res) => {
-              //   let userinfo = Taro.getStorageSync('userinfo');
-              //   if(res.status === 1){
-              //     userinfo.inviter_id = id
-              //     Taro.setStorageSync('userinfo',userinfo)
-              //   }
-              // })
-              setTimeout(() => {
-                Taro.navigateTo({
-                  url:'/pages/member/index'
-                })
-              },500)
-            }
-          })
-        },
-        'fail': function (res) {
-          Taro.showModal({
-            content: '支付失败',
-            showCancel: false
-          })
-        }
-      })
+      if(process.env.TARO_ENV === 'h5'){
+        window.location.href = config.mweb_url + '&redirect_url='+encodeURIComponent('https://h5.oioos.com/pages/member/index')
+
+      }else{
+        Taro.requestPayment({
+          'timeStamp': '' + config.timeStamp,
+          'nonceStr': config.nonceStr,
+          'package': config.package,
+          'signType': config.signType,
+          'paySign': config.paySign,
+          'success': function (res) {
+            Taro.showModal({
+              content: '支付成功',
+              showCancel: false,
+              success: function(res) {
+                // let id =  Taro.getStorageSync('distribution_shop_id')
+                // api.member.bind({userInviteId:id}).then((res) => {
+                //   let userinfo = Taro.getStorageSync('userinfo');
+                //   if(res.status === 1){
+                //     userinfo.inviter_id = id
+                //     Taro.setStorageSync('userinfo',userinfo)
+                //   }
+                // })
+                setTimeout(() => {
+                  Taro.navigateTo({
+                    url:'/pages/member/index'
+                  })
+                },500)
+              }
+            })
+          },
+          'fail': function (res) {
+            Taro.showModal({
+              content: '支付失败',
+              showCancel: false
+            })
+          }
+        })
+      }
     }
 	}
 
@@ -327,7 +325,7 @@ handleClick(index) {
           {
             this.$router.params.presist !== 'true'&&
             <View className='header'>
-              <View className='header-title'>{this.$router.params.presist?`${grade_name}续费`:`激活${grade_name}`}</View>
+              <View className='header-title'>{this.$router.params.presist?`${decodeURIComponent(grade_name)}续费`:`激活${decodeURIComponent(grade_name)}`}</View>
               <View className='header-isauth'>
                 <Image className='header-isauth__avatar' src={userInfo.avatar} mode='aspectFill'/>
                 <View className='header-isauth__info'>
@@ -373,7 +371,7 @@ handleClick(index) {
                             <View>
                               <View className='item-content'>
                                 <View className='item-left'>
-                                  <View className='item-left-name'>{item.nickname}<Image src={url}/> </View>
+                                  <View className='item-left-name'>{item.nickname}<Image src={url} className='img'/> </View>
                                   <View className='item-left-time'>创建时间 : {item.created}</View>
                                   <View className='item-left-type'>类型 : {item.type}</View>
                                   <View className='item-left-remark'>备注 : {item.remark}</View>
@@ -413,18 +411,18 @@ handleClick(index) {
                   <Image src={this.cardImgList[curTabIdx]} mode='widthFix'/>
                 </View>
                 <View className='code'>
-                  {grade_name === '至尊会员'&&
-                  <View className='code-inner'><Text>待激活(选填)</Text><Input type='text' placeholder='请输入激活码' placeholderStyle='text-align:right' value={this.state.value} onInput={this.handleValue}/></View>
+                  {decodeURIComponent(grade_name) === '至尊会员'&&
+                  <View className='code-inner'><Text className='inner-dec'>待激活(选填)</Text><Input type='text' placeholder='请输入激活码' placeholderStyle='text-align:right' value={this.state.value} onInput={this.handleValue}/></View>
                   }
                   <View className='choose-gift' onClick={this.chooseGift}>选择礼包: <Text className='right'>{this.giftNameList[present_id -8195]}></Text></View>
                   <View className='choose-address' onClick={this.chooseAddress}>选择地址:<Text className='right'>{this.state.currentAddress?this.state.currentAddress.province+this.state.currentAddress.city+this.state.currentAddress.county +this.state.currentAddress.adrdetail:''}></Text></View>
                   <View className='code-inner'><Text>会员发放时间</Text><Text>立即到账</Text></View>
                 </View>
-                {grade_name === '至尊会员'?
+                {decodeURIComponent(grade_name) === '至尊会员'?
                   <View >
                     <View className='vip-1-button'>
                       <View className='vip-1-button-dec'><Text className='vip-1-button-dec-1'>至尊会员</Text><Text className='vip-1-button-dec-2'>低至￥<Text className='vip-1-button-dec-3'>0.8</Text>元/每天</Text></View>
-                      <View className='vip-1-button-click' onClick={this.handleCharge}>{grade_name === '至尊会员'?value === ''?'立即支付￥ 299':'立即激活':''}</View>
+                      <View className='vip-1-button-click' onClick={this.handleCharge}>{decodeURIComponent(grade_name) === '至尊会员'?value === ''?'立即支付￥ 299':'立即激活':''}</View>
                     </View>
                   </View>
                   :

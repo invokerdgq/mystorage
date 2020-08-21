@@ -122,7 +122,7 @@ export default class Detail extends Component {
 
   async componentDidShow () {
     const userInfo = Taro.getStorageSync('userinfo')
-    if (S.getAuthToken() && !userInfo) {
+    if (S.getAuthToken() && (!userInfo || userInfo.user_card_code)) {
       const res = await api.member.memberInfo()
       const userObj = {
         username: res.memberInfo.username,
@@ -131,11 +131,12 @@ export default class Detail extends Component {
         isPromoter: res.is_promoter,
         userCode:res.user_card_code,
         is_vip:res.vipgrade.is_vip,
-        user_card_code:res.user_card_code,
+        user_card_code:res.memberInfo.user_card_code,
         inviter_id:res.memberInfo.inviter_id
       }
       Taro.setStorageSync('userinfo', userObj)
     }
+
     this.fetchCartCount()
     // this.getEvaluationList()                          -------------------------------请求 出错 暂时注释
   }
@@ -516,11 +517,11 @@ export default class Detail extends Component {
     const { info } = this.state
     const { pics, company_id, item_id } = info
     const host = req.baseURL.replace('/api/h5app/wxapp/','')
-    const extConfig = wx.getExtConfigSync ? wx.getExtConfigSync() : {}
+    const extConfig = process.env.TARO_ENV === 'h5'?{}:Taro.getExtConfigSync ? Taro.getExtConfigSync() : {}
     const { distributor_id } = Taro.getStorageSync('curStore')
-    const pic = pics[2].replace('http:', 'https:')
+    const pic = pics[0].replace('http:', 'https:')
 
-    const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=pages/item/espier-detail&appid=${extConfig.appid}&company_id=${company_id}&id=${item_id}&dtid=${distributor_id}&uid=${userId}`
+    const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=pages/item/espier-detail&appid=${extConfig?extConfig.appid:''}&company_id=${company_id}&id=${item_id}&dtid=${distributor_id}&uid=${userId}`
 
     const avatarImg = await Taro.getImageInfo({src: avatar})
     const goodsImg = await Taro.getImageInfo({src: pic})
@@ -531,11 +532,10 @@ export default class Detail extends Component {
         goods: goodsImg.path,
         code: codeImg.path
       }
-
       await this.setState({
         posterImgs
       }, () => {
-        this.drawImage()
+        this.drawImage(goodsImg.width,goodsImg.height)
       })
       return posterImgs
     } else {
@@ -543,14 +543,14 @@ export default class Detail extends Component {
     }
   }
 
-  drawImage = () => {
+  drawImage = (w,h) => {
     const { posterImgs } = this.state
     if (!posterImgs) return
     const { avatar, goods, code } = posterImgs
     const { info } = this.state
     const { item_name, act_price = null, member_price = null, price, market_price } = info
     //let mainPrice = act_price ? act_price : member_price ? member_price : price
-    let mainPrice = act_price ? act_price : price
+    let mainPrice = act_price ? act_price :member_price?member_price: price
     let sePrice = market_price
     mainPrice = (mainPrice/100).toFixed(2)
     if (sePrice) {
@@ -589,8 +589,7 @@ export default class Detail extends Component {
     canvasExp.roundRect(ctx, '#fff', 0, 0, 375, 640, 5)
     canvasExp.textFill(ctx, username?username:'-', 90, 45, 18, '#333')
     canvasExp.textFill(ctx, '给你推荐好货好物', 90, 65, 14, '#999')
-    // canvasExp.drawImageFill(ctx, goods, 15, 95, 345, 345)
-    canvasExp.drawImageFill(ctx, goods, 15, 95,345,345)
+    canvasExp.drawImageFill1(ctx, goods,0,0,w,h, 15, 95,345,h/w*345)
     canvasExp.imgCircleClip(ctx, avatar, 15, 15, 65, 65)
     canvasExp.textMultipleOverflowFill(ctx, item_name, 22, 2, 15, 470, 345, 18, '#333')
     canvasExp.textSpliceFill(ctx, prices, 'left', 15, 600)
@@ -676,21 +675,8 @@ export default class Detail extends Component {
     })
   }
 
-  // handleToGiftMiniProgram = () => {
-  //   Taro.navigateToMiniProgram({
-  //     appId: APP_GIFT_APPID, // 要跳转的小程序的appid
-  //     path: '/pages/index/index', // 跳转的目标页面
-  //     success(res) {
-  //       // 打开成功
-  //       console.log(res)
-  //     }
-  //   })
-  // }
-
   handleShowPoster = async () => {
     const { posterImgs } = this.state
-    console.log('执行到了这一步')
-    console.log(posterImgs)
     if (!posterImgs || !posterImgs.avatar || !posterImgs.code || !posterImgs.goods) {
       const imgs = await this.downloadPosterImg()
       if (imgs && imgs.avatar && imgs.code && imgs.goods) {
@@ -863,11 +849,10 @@ export default class Detail extends Component {
           >
             <View className='goods-imgs__wrap'>
               <Swiper
-                autoplay={false}
+                autoplay={4000}
                 className='goods-imgs__swiper'
                 indicatorDots={true}
                 current={curImgIdx}
-                interval={4000}
                 onChange={this.handleSwiperChange}
               >
                 {
@@ -876,7 +861,7 @@ export default class Detail extends Component {
                       <SwiperItem key={idx}>
                         <ItemImg
                           src={img}
-                        ></ItemImg>
+                        />
                       </SwiperItem>
                     )
                   })
@@ -1128,9 +1113,9 @@ export default class Detail extends Component {
                 coupon_list && new_coupon_list.map(kaquan_item => {
                   return (
                     <View key={kaquan_item.id} className='coupon_tag'>
-                      <View className='coupon_tag_circle circle_left'></View>
+                      <View className='coupon_tag_circle circle_left'/>
                       <Text>{kaquan_item.title}</Text>
-                      <View className='coupon_tag_circle circle_right'></View>
+                      <View className='coupon_tag_circle circle_right'/>
                     </View>
                   )
                 })
@@ -1314,7 +1299,7 @@ export default class Detail extends Component {
 
           {
             info && <GoodsBuyPanel
-              is_seckill={this.state.is_seckill}
+              // is_seckill={this.state.is_seckill}
               assist_id={this.$router.params.assist_id}
               level={this.$router.params.level}
               info={info}
@@ -1333,6 +1318,7 @@ export default class Detail extends Component {
             <View className='share'>
               <SharePanel
                 info={uid}
+                goodsId={this.$router.params.id}
                 isOpen={showSharePanel}
                 onClose={() => this.setState({ showSharePanel: false })}
                 onClick={this.handleShowPoster.bind(this)}
@@ -1354,7 +1340,7 @@ export default class Detail extends Component {
             </View>
           }
 
-          <Canvas className='canvas' canvas-id='myCanvas'></Canvas>
+          <Canvas className='canvas' canvas-id='myCanvas'/>
 
           <SpToast />
         </View>
@@ -1370,7 +1356,7 @@ export default class Detail extends Component {
           <View className='code-input-content'><Input placeholder='邀请码' type='text' onInput={this.setCodeValue} placeholderStyle='color:#666666;font-size:17rpx;margin-left:20rpx'/></View>
           <View className='code-input-controller'>
             <View className='cancel' onClick={this.handleCancel}>暂不输入</View>
-            <View className='confirm' onClick={this.handleConfirm}>提交邀请码</View>
+            <View className='confirm' onClick={this.handleConfirm.bind(this)}>提交邀请码</View>
           </View>
         </View>
       </View>

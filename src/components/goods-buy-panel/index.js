@@ -151,7 +151,7 @@ export default class GoodsBuyPanel extends Component {
       const reg = makeReg(sel, row, val)
 
       return Object.keys(skuDict).some(key => {
-        return key.match(reg) && skuDict[key].store > 0
+        return key.match(reg) && skuDict[key].store > 0 &&skuDict[key].approve_status === 'onsale'
       })
     }
 
@@ -165,7 +165,6 @@ export default class GoodsBuyPanel extends Component {
         }
       }
     }
-
     this.disabledSet = disabledSet
   }
 
@@ -274,8 +273,10 @@ export default class GoodsBuyPanel extends Component {
     console.warn(this.props)
     if (this.state.busy) return
 
-    const { marketing, info } = this.state
-    const { special_type } = info
+    const { marketing} = this.state
+    const {info} = this.props
+    console.log(this.state,'info-----------')
+    const { special_type = 'normal' } = info
     const isDrug = special_type === 'drug'
     const { item_id } = this.noSpecs ? info : skuInfo
     const { distributor_id } = info
@@ -289,7 +290,7 @@ export default class GoodsBuyPanel extends Component {
       url = `/pages/cart/espier-index`
       try {
         await api.cart.add({
-          is_seckill:this.props.is_seckill,
+          // is_seckill:this.props.is_seckill,
           item_id,
           num,
           distributor_id,
@@ -330,7 +331,7 @@ export default class GoodsBuyPanel extends Component {
 
       try {
         await api.cart.fastBuy({
-          is_seckill:this.props.is_seckill,
+          // is_seckill:this.props.is_seckill,
           item_id,
           num
         })
@@ -380,7 +381,8 @@ export default class GoodsBuyPanel extends Component {
     const isDrug = special_type === 'drug'
     const curSkus = this.noSpecs ? info : curSku
     //console.warn('356',curSkus)
-
+    console.log('skuskuksuksusku----------------')
+   console.log(JSON.stringify(curSku))
     const maxStore = +(curSkus ? curSkus.store : (info.store || 99999))
     const hasStore = curSkus ? curSkus.store > 0 : info.store > 0
 

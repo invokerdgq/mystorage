@@ -219,35 +219,39 @@ export default class TradeDetail extends Component {
     })
 
     let payErr
-    try {
-      const payRes = await Taro.requestPayment(config)
-      log.debug(`[order pay]: `, payRes)
-    } catch (e) {
-      payErr = e
-      if (e.errMsg.indexOf('cancel') < 0) {
-        Taro.showToast({
-          title: e.err_desc || e.errMsg || '支付失败',
-          icon: 'none'
-        })
+    if(process.env.TARO_ENV === 'h5'){
+      window.location.href = config.mweb_url+ '&redirect_url='+encodeURIComponent('https://h5.oioos.com/pages/member/index')
+    }else{
+      try {
+        const payRes = await Taro.requestPayment(config)
+        log.debug(`[order pay]: `, payRes)
+      } catch (e) {
+        payErr = e
+        if (e.errMsg.indexOf('cancel') < 0) {
+          Taro.showToast({
+            title: e.err_desc || e.errMsg || '支付失败',
+            icon: 'none'
+          })
+        }
       }
-    }
 
-    if (!payErr) {
-      await Taro.showToast({
-        title: '支付成功',
-        icon: 'success'
-      })
+      if (!payErr) {
+        await Taro.showToast({
+          title: '支付成功',
+          icon: 'success'
+        })
 
-      const {fullPath} = getCurrentRoute(this.$router)
-      if (/marketing/.test(fullPath)) {
-        let newPath = fullPath.split('marketing')[1]
-        Taro.redirectTo({
-          url: newPath
-        })
-      } else {
-        Taro.redirectTo({
-          url: fullPath
-        })
+        const {fullPath} = getCurrentRoute(this.$router)
+        if (/marketing/.test(fullPath)) {
+          let newPath = fullPath.split('marketing')[1]
+          Taro.redirectTo({
+            url: newPath
+          })
+        } else {
+          Taro.redirectTo({
+            url: fullPath
+          })
+        }
       }
     }
   }
@@ -418,11 +422,6 @@ export default class TradeDetail extends Component {
       <View>
         <NavGap title='订单详情'/>
         <View className='trade-detail'>
-          <NavBar
-            title='订单详情'
-            leftIconType='chevron-left'
-            fixed='true'
-          />
           <View
             className='trade-detail-header'
             style={`background: ${colors.data[0].primary}`}

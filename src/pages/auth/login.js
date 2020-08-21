@@ -12,7 +12,6 @@ import './login.scss'
 export default class Login extends Component {
   constructor (props) {
     super(props)
-
     this.state = {
       info: {},
       isVisible: false
@@ -21,17 +20,14 @@ export default class Login extends Component {
 
   handleClickReg= () => {
     Taro.navigateTo({
-      url: `/pages/auth/reg`
+      url: '/pages/auth/reg'
     })
   }
-  componentDidMount() {
-  }
-
   handleSubmit = async (e) => {
-    const { value } = e.detail
+    console.log(e)
     const data = {
       ...this.state.info,
-      ...value
+      ...e.detail.value
     }
 
     if (!data.username || !/1\d{10}/.test(data.username)) {
@@ -51,7 +47,6 @@ export default class Login extends Component {
       })
     } catch (error) {
       return false
-      console.log(error)
     }
   }
 
@@ -65,14 +60,14 @@ export default class Login extends Component {
       info: {
         username: val
       }
-    });
+    })
   }
 
   handleClickIconpwd = () => {
     const { isVisible } = this.state
     this.setState({
-      isVisible: !isVisible,
-    });
+      isVisible: !isVisible
+    })
   }
 
   handleErrorToastClose = () => {
@@ -81,7 +76,7 @@ export default class Login extends Component {
 
   handleClickForgtPwd = () => {
     Taro.navigateTo({
-      url: `/pages/auth/forgotpwd`
+      url: '/pages/auth/forgotpwd'
     })
   }
 
@@ -93,7 +88,7 @@ export default class Login extends Component {
     //   })
     // }
     //
-    // Taro.navigateBack()、
+    // Taro.navigateBack()
     Taro.redirectTo({
       url: APP_HOME_PAGE
     })
@@ -137,8 +132,8 @@ export default class Login extends Component {
             >
               {
                 isVisible
-                  ? <View className='sp-icon sp-icon-yanjing icon-pwd' onClick={this.handleClickIconpwd}> </View>
-                  : <View className='sp-icon sp-icon-icon6 icon-pwd' onClick={this.handleClickIconpwd}> </View>
+                  ? <View className='sp-icon sp-icon-yanjing icon-pwd' onClick={this.handleClickIconpwd}/>
+                  : <View className='sp-icon sp-icon-icon6 icon-pwd' onClick={this.handleClickIconpwd}/>
               }
               <Text className='forgotPwd' onClick={this.handleClickForgtPwd}>忘记密码</Text>
             </AtInput>
@@ -153,7 +148,7 @@ export default class Login extends Component {
           </View>
         </AtForm>
 
-        <SpToast />
+        <SpToast/>
       </View>
     )
   }

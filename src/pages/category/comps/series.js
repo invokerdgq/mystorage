@@ -91,7 +91,7 @@ export default class Series extends Component {
 
 
     return (
-      <View>
+      <View className='car-list-contain'>
         <View className="search-bar-container" onClick={this.handleSearchClick}>
            <Icon className='iconfont icon-sousuo'></Icon>
            <View className='glory-container'>

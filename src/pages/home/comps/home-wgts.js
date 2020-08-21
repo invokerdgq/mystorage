@@ -19,6 +19,7 @@ export default class HomeWgts extends PureComponent {
   constructor(props) {
     super(props);
   }
+
   componentDidMount () {
     Taro.getSystemInfo()
       .then(res =>{

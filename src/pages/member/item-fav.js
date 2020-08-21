@@ -146,10 +146,6 @@ export default class ItemFav extends Component {
         <NavGap title='收藏'/>
         <View className='page-goods-list page-goods-fav'>
           <View className='goods-list__toolbar'>
-            <NavBar
-              leftIconType='chevron-left'
-              fixed='true'
-            />
           </View>
           <AtTabs
             className='trade-list__tabs'

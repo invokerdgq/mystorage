@@ -81,3 +81,38 @@
     }
   }
 }
+
+.avatar-up{
+   display: flex;
+   height: 300px;
+  align-items: center;
+  border-bottom: solid 1px rgba(193, 105, 100, 0.3);
+  overflow: hidden;
+  .title{
+    margin-right: 70px;
+  }
+   .img-picker{
+     width: 200px;
+     height: 200px;
+     position: relative;
+     border: solid #d7d7d7 2px;
+     border-radius: 20px;
+     .icon-jia{
+       font-size: 50px;
+       position: absolute;
+       top:50%;
+       left:50%;
+       transform: translate(-50%,-50%);
+       color: #c0534e;
+       z-index:10
+     }
+     .img{
+       width: 100%;
+       position: absolute;
+       top:0;
+       left:0;
+       z-index:1;
+       border-radius: 20px;
+     }
+   }
+}

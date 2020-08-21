@@ -1,16 +1,14 @@
 import Taro, { Component } from '@tarojs/taro'
-import { Image } from '@tarojs/components'
+import { Image} from '@tarojs/components'
 
 export default class QnImg extends Component {
   static options = {
     addGlobalClass: true
   }
-
+  static externalClasses = ['img-class']
   static defaultProps = {
     onLoad: () => {}
   }
-
-  static externalClasses = ['img-class']
 
   render () {
     const { src, mode, qnMode, width, height, onError, onLoad, lazyLoad } = this.props
@@ -25,7 +23,7 @@ export default class QnImg extends Component {
     return (
       <Image
         style={{width:process.env.TARO_ENV === 'h5'?'100%':''}}
-        className="img-class"
+        className={'img-class'}
         src={rSrc}
         mode={mode}
         onError={onError}
