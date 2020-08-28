@@ -33,11 +33,14 @@ export default class NavGap extends Component{
   }
 
   handleIconClick = () => {
-    console.log('kakakakk')
+    if(this.props.back){
+      this.props.back()
+      return
+    }
    Taro.navigateBack()
   }
   render(){
-    const {title,home } = this.props
+    const {title,home,bg,cl } = this.props
     const { showIcon } = this.state
     const top = Taro.getStorageSync('top')
       return (

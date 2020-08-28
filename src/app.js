@@ -214,7 +214,10 @@ useHooks()
             'pages/item/rate',
             'pages/item/success',
 
-            'pages/wheel/index'
+            'pages/wheel/index',
+            'pages/user-store/user-store',
+            'pages/user-store/edit/edit-goods',
+            'pages/user-store/edit/edit-spec'
           ]
         },
         {

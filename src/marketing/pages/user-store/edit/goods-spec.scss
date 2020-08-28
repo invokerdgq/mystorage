@@ -1,0 +1,62 @@
+@import "../../../../style/imports";
+
+.spec-container{
+  padding: 32px 15px 0;
+  border-bottom: solid 2px #eeeeee;
+  .spec-title{
+    font-size: 33px;
+    margin-bottom: 28px;
+    .spec-dec{
+      font-size: 22px;
+      color: #A9A9A9;
+    }
+  }
+  .spec-content{
+    &-group{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      .checkbox-item{
+        display: flex;
+        align-items: center;
+        flex: none;
+        margin-bottom: 20px;
+        .check-box-spec{
+          transform: scale(0.75,0.75);
+        }
+      }
+    }
+  }
+}
+.custom-checked,.custom-unchecked{
+  text-align: center;
+  width: 130px;
+  height: 60px;
+  font-size: 26px;
+  margin-left: 8px;
+  margin-right: 45px;
+}
+.custom-checked{
+  background: $color-theme;
+  border: solid 2px $color-theme;
+  color: white;
+}
+.custom-unchecked{
+  background: #F8F8F8;
+  border: solid 2px #A9A9A9;
+  color: #A9A9A9;
+}
+.show-more{
+  display: flex;
+  margin: 20px 0 15px;
+  justify-content: center;
+  color:#A9A9A9;
+  .icon-more{
+    font-size: 32px;
+    margin-right: 20px;
+  }
+  .rotate{
+    transform: rotate(180deg);
+  }
+}

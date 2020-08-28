@@ -1,0 +1,174 @@
+@import "../../../../style/imports";
+
+page{
+  background: white;
+}
+.spec-page-content{
+  padding-top: VH($nav-gap-height);
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.fill{
+  &-content{
+    display: flex;
+  }
+}
+.select-simple{
+  width: 100%;
+  height: 130px;
+  background: #F8F8F8;
+  padding: 0 20px 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ .com,.multi-spec{
+   font-size: 33px;
+ }
+}
+.com-spec-content{
+  margin-top: 30px;
+  .simple-spec-item{
+    margin-bottom: 22px;
+    font-size: 33px;
+    display: flex;
+    align-items: center;
+    .status-picker{
+      font-size: 33px;
+      border: solid 2px #cccccc;
+      padding-left: 20px;
+      box-sizing: content-box;
+      margin-left: 30px;
+      width: 565px;
+      height: 72px;
+      line-height: 72px;
+      color:#E2E2E5;
+    }
+    .checked{
+      color: black;
+    }
+    .require{
+      font-size: 22px;
+      color: $color-theme;
+      margin-right: 15px;
+    }
+    .none-require{
+      visibility: hidden;
+    }
+    .input-place{
+      color:#E2E2E5
+    }
+    .price-input,.store-input{
+      padding-left: 20px;
+      margin-left: 30px;
+      position: relative;
+      width: 565px;
+      height: 72px;
+      line-height: 72px;
+      border: solid 2px #cccccc;
+    }
+    .price-input::after{
+      content:'元';
+      display: block;
+      position: absolute;
+      right: 10px;
+      top:50%;
+      transform: translate(0,-50%);
+    }
+    .store-input::after{
+      content:'件';
+      display: block;
+      position: absolute;
+      right: 10px;
+      top:50%;
+      transform: translate(0,-50%);
+    }
+  }
+}
+.save-spec{
+  width: 630px;
+  border-radius: 18px;
+  height: 88px;
+  line-height: 85px;
+  text-align: center;
+  background: $color-theme;
+  color: white;
+  font-size: 33px;
+  margin: 30px auto 40px;
+}
+.fill-spec-content{
+  &-title{
+    width: 100%;
+    height: 90px;
+    background: #F8F8F8;
+    display: flex;
+    align-items: center;
+    .dec-spec{
+      &-name{
+        text-align: center;
+        font-size: 28px;
+        width: 240px;
+      }
+      &-status,&-store,&-price{
+        text-align: center;
+        font-size: 28px;
+        color:$color-theme;
+        width: 125px;
+      }
+    }
+  }
+}
+.fill-data{
+  margin-top: 20px;
+}
+.fill-spec-item{
+  height: 50px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  .spec-item-name{
+    width: 240px;
+    text-align: center;
+  }
+  .input-item{
+    width: 120px;
+    border:solid 2px #A9A9A9 ;
+    margin-right: 10px;
+    font-size: 22px;
+  }
+  .status-picker{
+    display: inline-block;
+    width: 120px;
+    height: 50px;
+    color:#A9A9A9;
+    line-height: 50px;
+    border:solid 2px #A9A9A9;
+    margin-right: 10px;
+    font-size: 22px;
+  }
+  .checked{
+    color: black;
+  }
+  .spec-feature{
+    background: $color-theme;
+    width: 103px;
+    line-height: 50px;
+    text-align: center;
+    color: white;
+  }
+}
+.show-more{
+  display: flex;
+  margin: 20px 0 15px;
+  justify-content: center;
+  color:#A9A9A9;
+  .icon-more{
+    font-size: 32px;
+    margin-right: 20px;
+  }
+  .rotate{
+    transform: rotate(180deg);
+  }
+}

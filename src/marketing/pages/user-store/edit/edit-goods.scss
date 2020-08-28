@@ -1,0 +1,105 @@
+@import "../../../../style/imports";
+
+page{
+  background: white;
+}
+.edit-goods-content{
+  margin-top: VH($nav-gap-height);
+}
+.main-cat-item{
+  display: flex;
+  justify-content: space-between;
+  padding:32px 25px 32px 16px;
+  border-bottom: solid 2px #eeeeee;
+  .main-cat-name{
+    font-size: 28px;
+    color:#707070
+  }
+ &-dec{
+   font-size: 33px;
+   .require{
+     font-size: 22px;
+     color:$color-theme;
+     margin-right: 10px;
+   }
+ }
+}
+.spec-info{
+  border-bottom: none;
+}
+.form-content{
+  .base-info{
+    &-content{
+      .title-brief{
+        display: flex;
+        flex-direction: column;
+        .form-item-title{
+          display: flex;
+          flex-direction: column;
+          .require{
+            font-size: 22px;
+            color:$color-theme;
+            margin-right: 10px;
+          }
+          .title-input{
+            font-size: 29px;
+            margin: 30px 30px;
+          }
+        }
+        .form-item-brief{
+          display: flex;
+          .brief-input{
+            margin-left: 20px;
+          }
+          .brief-require{
+            font-size: 22px;
+            color:$color-theme;
+            margin-right: 10px;
+            visibility: hidden;
+          }
+        }
+      }
+    }
+  }
+}
+.more-info{
+  padding:32px 25px 12px 16px;
+  border-bottom: solid 2px #eeeeee;
+  &-title{
+    font-size: 33px;
+    .require{
+      font-size: 22px;
+      color: $color-theme;
+      margin-right: 10px;
+    }
+    .extra-dec{
+      font-size:20px;
+      color:#707070;
+      margin-left: 10px;
+    }
+  }
+}
+.goods-img{
+border-bottom: none;
+}
+.save-setting{
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+  .cancel,.save{
+    width: 335px;
+    height: 85px;
+    border-radius: 18px;
+    line-height: 85px;
+    font-size: 33px;
+    text-align: center;
+  }
+  .cancel{
+    background: #F8f8f8;
+    margin-right: 30px;
+  }
+  .save{
+    background: $color-theme;
+    color: white;
+  }
+}

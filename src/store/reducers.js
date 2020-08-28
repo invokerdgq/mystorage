@@ -7,6 +7,7 @@ import tabBar from './tab-bar'
 import colors from './colors'
 import giftId from "./giftId";
 import step from './step'
+import editSpec from './goods-spec'
 
 export default combineReducers({
   cart,
@@ -16,5 +17,6 @@ export default combineReducers({
   tabBar,
   colors,
   giftId,
-  step
+  step,
+  editSpec
 })

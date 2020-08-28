@@ -287,6 +287,7 @@ export default class Detail extends Component {
       }else {
         contentDesc = desc
       }
+      console.log('intro------------------------------')
       console.log(contentDesc)
       let promotion_package = null
       const { list } = await api.item.packageList({item_id: id})  // 暂时 不清楚 含义

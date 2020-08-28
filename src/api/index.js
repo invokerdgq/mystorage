@@ -19,9 +19,11 @@ import * as wx from './wx'
 import * as wheel from './wheel'
 import * as assist from './assist'
 import * as live from './live'
+import * as store from './store'
 
 
 export default {
+  store,
   live,
   assist,
   article,

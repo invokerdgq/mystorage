@@ -75,6 +75,7 @@ export default class MemberIndex extends Component {
         {url:'/assets/imgs/buy.png',dec:'我的预约',onclick:this.handleClick.bind(this, '/marketing/pages/member/item-activity',false) ,openType:'click'},
         {url:'/assets/imgs/kefu.png',dec:'我的客服',openType:'contact'},
         {url:'/assets/imgs/live.png',dec:'我的直播间',onclick:this.handleClick.bind(this, '/pages/member/live',false),openType:'click'},
+        {url:'/assets/imgs/live.png',dec:'我的小店',onclick:this.handleClick.bind(this, '/marketing/pages/user-store/user-store',false),openType:'click'},
         {url:'/assets/imgs/address.png',dec:'地址管理',onclick: this.handleClick.bind(this, '/pages/member/address',false),openType:'click'},
         {url:'/assets/imgs/share.png',dec:'我要分享',openType:'share'},
         {url:`${cdn}/lb.png`,dec:'礼包兑换',openType:'click',onclick: this.handleClick.bind(this, '/others/pages/exchange/exchange',false)},
