@@ -229,7 +229,7 @@ export default class EditSpec extends Component{
         cost_price: '',
         market_price: '',
         barcode: '',
-        fictitious_sales:''
+        fictitious_sales:0
       }
       skuList.push(obj)
     }

@@ -26,6 +26,7 @@ export default class EditGoods extends Component{
       mainCategoryId:'',
       simple:true,
       fileList:[],
+      moreImagePickerList:[],
       moreImageList:[],
       initialData:[[[]]],
       sortInitialData:[[[]]],
@@ -81,6 +82,7 @@ export default class EditGoods extends Component{
    await this.init()
     if(!itemId){
       this.state.is_edit = false
+      this.props.clearSpec()
       this.initMaincategory()
     }else{
       this.state.is_edit = true
@@ -158,8 +160,14 @@ export default class EditGoods extends Component{
         fileList:file
       })
       // 处理图文详情 可直接用数组而不是html 元素 (待定)
+      let mList = itemsDetailData.intro.split('<\/div>')
+      mList.pop()
+      let moreList = mList.map((item) => {
+        return  {url:item.split('src=')[1].split('"')[1]}
+      })
       this.setState({
-        moreImageList:Array.isArray(itemsDetailData.intro)?itemsDetailData.intro:[]
+        moreImagePickerList:moreList,
+        moreImageList:moreList.map((item) => {return item.url})
       })
         this.state.picsOldLen = this.state.form.pics.length
         if (!itemsDetailData.item_main_cat_id) {
@@ -234,15 +242,15 @@ export default class EditGoods extends Component{
             form:{
               ...this.state.form,
               approve_status:itemsDetailData.approve_status,
-              price:itemsDetailData.price,
-              market_price:itemsDetailData.market_price,
+              price:itemsDetailData.price/100,
+              market_price:itemsDetailData.market_price/100,
               store:itemsDetailData.store
             }
           })
           this.props.setSimpleForm({
             approve_status:itemsDetailData.approve_status,
-            price:itemsDetailData.price,
-            market_price:itemsDetailData.market_price,
+            price:itemsDetailData.price/100,
+            market_price:itemsDetailData.market_price/100,
             store:itemsDetailData.store
           })
           this.props.setSkus(this.state.skus)
@@ -1211,10 +1219,10 @@ export default class EditGoods extends Component{
     })
   }
   handleImageChange(type,files){
+    let list = files.map(item => {
+      return item.url
+    })
     if(type === 'goods'){
-      let list = files.map(item => {
-        return item.url
-      })
       this.state.form.pics = list
       this.setState({
         fileList:files,
@@ -1222,7 +1230,8 @@ export default class EditGoods extends Component{
       })
     }else{
       this.setState({
-        moreImageList:files
+        moreImageList:list,
+        moreImagePickerList:files
       })
     }
   }
@@ -1239,7 +1248,14 @@ export default class EditGoods extends Component{
     this.props.clearSpec()
     Taro.navigateBack()
   }
-  submitItemsActionConfirm() {
+ postImage(file){
+    return Taro.uploadFile({
+      url:'https://sxt-s.oioos.com/api/h5app/wxapp/espier/upload',
+      filePath:file,
+      name:'file'
+    })
+  }
+  async submitItemsActionConfirm() {
     Taro.showLoading({
       title:'保存中'
     })
@@ -1264,6 +1280,43 @@ export default class EditGoods extends Component{
         return
       }
     }
+   let picList =  this.state.form.pics.map((item) => {
+     if(/http/.test(item)){
+       return  Promise.resolve(item)
+     }else{
+       return  this.postImage(item)
+     }
+    })
+    let morePicList = this.state.moreImageList.map((item) => {
+      if(/http/.test(item)){
+        return  Promise.resolve(item)
+      }else{
+        return  this.postImage(item)
+      }
+    })
+   const resList = await Promise.all(picList)
+    let upPics = resList.map((item) => {
+      if(typeof item === 'string'){
+        return item
+      } else {
+        return (JSON.parse(item.data)).data.url
+      }
+    })
+    this.state.form.pics = upPics
+    // 处理更多详情
+    const moreResList = await Promise.all(morePicList)
+    let moreUpList = moreResList.map((item) => {
+      if(typeof item === 'string'){
+        return item
+      }else{
+        return (JSON.parse(item.data)).data.url
+      }
+    })
+    let intro = ''
+    moreUpList.map((item) => {
+      intro += `<div><img src=\"${item}\"/></div>`
+    })
+    this.state.form.intro = intro
     this.state.form.spec_images = ''
     this.state.form.spec_items = JSON.stringify(formSkuItem)
     if (this.state.is_edit) {
@@ -1402,7 +1455,7 @@ export default class EditGoods extends Component{
                       count={4}
                       mode='widthFix'
                       showAddBtn={this.state.moreImageList.length <4}
-                      files={this.state.moreImageList}
+                      files={this.state.moreImagePickerList}
                       onChange={this.handleImageChange.bind(this,'more')}
                     />
                   </View>
