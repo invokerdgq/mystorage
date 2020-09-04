@@ -1,0 +1,84 @@
+@import "../../../../style/imports";
+
+.store-trade-item{
+  margin: 0 0 16px;
+  padding: 30px;
+  background: white;
+  .item-top{
+   display: flex;
+    justify-content: space-between;
+    padding: 0 0 10px;
+    border-bottom: 2px solid #e4e4e4;
+    font-size: 22px;
+    color:#a6a6a6
+  }
+  .item-middle{
+    border-bottom: 2px solid #e4e4e4;
+    .goods-item{
+      display: flex;
+      padding: 30px 0;
+      align-items: center;
+      .pay{
+        margin-left: auto;
+        font-size: 20px;
+        color: #c1c1c1
+      }
+      .goods-img{
+        width: 120px;
+        height: 120px;
+        margin-right: 10px;
+        .img{
+          width: 100%;
+        }
+      }
+      .dec{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        max-width: 480px;
+        &-name{
+          font-size: 24px;
+          color: #333;
+        }
+        &-num{
+          font-size: 20px;
+          color: #c1c1c1;
+        }
+        &-spec{
+          color: #818181;
+          font-size: 25px;
+        }
+      }
+    }
+  }
+
+  .item-bottom{
+    .bottom-dec{
+      text-align: right;
+      padding: 20px 0;
+      font-size: 22px;
+      color: #000;
+    }
+    .bottom-feature{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .feature{
+        margin-left: 20px;
+        padding: 0 22px;
+        height: 42px;
+        line-height: 42px;
+        font-size: 25px;
+        color: #fff;
+        background: $color-theme;
+        border-radius: 8px;
+      }
+      .feature-status{
+        font-size: 25px;
+        color: #c1c1c1;
+        line-height: 40px;
+        margin-right: 10px
+      }
+    }
+  }
+}

@@ -296,3 +296,24 @@ page{
     }
   }
 }
+.store-shade{
+  width: 550px;
+  position: relative;
+  .img{
+    width: 100%;
+  }
+  .open-button{
+    position: absolute;
+    bottom:50px;
+    width:410px;
+    height: 90px;
+    border-radius: 45px;
+    text-align: center;
+    line-height: 90px;
+    color: white;
+    background: #ff383b;
+    font-size: 32px;
+    left: 50%;
+    transform: translate(-50%,0);
+  }
+}

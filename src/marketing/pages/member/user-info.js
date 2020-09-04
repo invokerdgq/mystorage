@@ -104,7 +104,7 @@ export default class Reg extends Component {
     this.count = 0
   }
 
-  handleSubmit = async () => {
+  handleSubmit = async (e) => {
     const { value } = e.detail?e.detail:{}
     const data = {
       ...this.state.info,
@@ -145,7 +145,7 @@ export default class Reg extends Component {
           Object.assign(params, {source_id: trackParams.source_id, monitor_id: trackParams.monitor_id})
         }
         const res = await api.user.reg(params)
-
+        Taro.setStorageSync('mobile',res.mobile)
         const { code } = await Taro.login()
         const { token } = await api.wx.login({ code })
         S.setAuthToken(token)

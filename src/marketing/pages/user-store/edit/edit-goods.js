@@ -225,15 +225,7 @@ export default class EditGoods extends Component{
             cost_price: itemsDetailData.cost_price/100,
             fictitious_sales:itemsDetailData.fictitious_sales
           })
-          this.props.setNospec({nospec: itemsDetailData.nospec,})
-          // 处理newSku分页
-          // let storeSku = []
-          // while(newSku.length > 10){
-          //   storeSku.push(newSku.slice(0,10))
-          // }
-          // storeSku.push(newSku)
-          //
-          // this.props.setSpecItems(storeSku)
+          this.props.setNospec(itemsDetailData.nospec)
           this.props.setSpecItems(newSku)
           this.props.setSkus(this.state.skus)
           this.updateSku()
@@ -327,6 +319,7 @@ export default class EditGoods extends Component{
         mainCategoryId:id,
         form:this.state.form
       })
+      this.props.clearSpec()
       return
     }
     this.state.form.item_category[0] = this.state.sortList[2][e.detail.value[2]].category_id
@@ -370,653 +363,6 @@ export default class EditGoods extends Component{
    }
    console.log(this.state.columnStatus)
   }
-
-  规格处理
-  // async handleCategoryChange(id) {
-  //   // const res = await api.store.getCategoryInfo(id)
-  //   let dec = {
-  //     "data":{
-  //       "id":"5",
-  //       "category_id":"5",
-  //       "company_id":"1",
-  //       "category_name":"家居日用",
-  //       "label":"家居日用",
-  //       "parent_id":"2",
-  //       "distributor_id":"0",
-  //       "path":"1,2,5",
-  //       "sort":"0",
-  //       "is_main_category":true,
-  //       "goods_params":[
-  //
-  //       ],
-  //       "goods_spec":[
-  //         {
-  //           "attribute_id":"3",
-  //           "company_id":"1",
-  //           "shop_id":"0",
-  //           "attribute_type":"item_spec",
-  //           "attribute_name":"颜色",
-  //           "attribute_memo":"家居日用-颜色",
-  //           "attribute_sort":"0",
-  //           "distributor_id":"0",
-  //           "is_show":"true",
-  //           "is_image":"true",
-  //           "image_url":null,
-  //           "created":1590050588,
-  //           "updated":1590923543,
-  //           "operator_id":"1",
-  //           "attribute_values":{
-  //             "total_count":31,
-  //             "list":[
-  //               {
-  //                 "attribute_value_id":"18",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"白色",
-  //                 "sort":"0",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"19",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"黑色",
-  //                 "sort":"1",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"20",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"绿色",
-  //                 "sort":"2",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"21",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"红色",
-  //                 "sort":"3",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"22",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"粉色",
-  //                 "sort":"4",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"23",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"卡其色",
-  //                 "sort":"5",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"24",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"黄色",
-  //                 "sort":"6",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"25",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"金色",
-  //                 "sort":"7",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"26",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"银色",
-  //                 "sort":"8",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"27",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"灰色",
-  //                 "sort":"9",
-  //                 "image_url":null,
-  //                 "created":1590458665,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"553",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色1",
-  //                 "sort":"10",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"554",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色2",
-  //                 "sort":"11",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"555",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色3",
-  //                 "sort":"12",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"556",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色4",
-  //                 "sort":"13",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"557",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色5",
-  //                 "sort":"14",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"558",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色6",
-  //                 "sort":"15",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"559",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色7",
-  //                 "sort":"16",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"560",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色8",
-  //                 "sort":"17",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"561",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色9",
-  //                 "sort":"18",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"562",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色10",
-  //                 "sort":"19",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"563",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色11",
-  //                 "sort":"20",
-  //                 "image_url":null,
-  //                 "created":1592379437,
-  //                 "updated":1592379437
-  //               },
-  //               {
-  //                 "attribute_value_id":"578",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色21",
-  //                 "sort":"21",
-  //                 "image_url":null,
-  //                 "created":1592379729,
-  //                 "updated":1592379729
-  //               },
-  //               {
-  //                 "attribute_value_id":"579",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色22",
-  //                 "sort":"22",
-  //                 "image_url":null,
-  //                 "created":1592379729,
-  //                 "updated":1592379729
-  //               },
-  //               {
-  //                 "attribute_value_id":"580",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"1",
-  //                 "attribute_value":"颜色23",
-  //                 "sort":"23",
-  //                 "image_url":null,
-  //                 "created":1592379729,
-  //                 "updated":1592379729
-  //               },
-  //               {
-  //                 "attribute_value_id":"640",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色24",
-  //                 "sort":"24",
-  //                 "image_url":null,
-  //                 "created":1592386215,
-  //                 "updated":1592386215
-  //               },
-  //               {
-  //                 "attribute_value_id":"641",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色25",
-  //                 "sort":"25",
-  //                 "image_url":null,
-  //                 "created":1592386215,
-  //                 "updated":1592386215
-  //               },
-  //               {
-  //                 "attribute_value_id":"642",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色26",
-  //                 "sort":"26",
-  //                 "image_url":null,
-  //                 "created":1592386215,
-  //                 "updated":1592386215
-  //               },
-  //               {
-  //                 "attribute_value_id":"643",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色27",
-  //                 "sort":"27",
-  //                 "image_url":null,
-  //                 "created":1592386215,
-  //                 "updated":1592386215
-  //               },
-  //               {
-  //                 "attribute_value_id":"644",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色28",
-  //                 "sort":"28",
-  //                 "image_url":null,
-  //                 "created":1592386215,
-  //                 "updated":1592386215
-  //               },
-  //               {
-  //                 "attribute_value_id":"645",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色29",
-  //                 "sort":"29",
-  //                 "image_url":null,
-  //                 "created":1592386215,
-  //                 "updated":1592386215
-  //               },
-  //               {
-  //                 "attribute_value_id":"646",
-  //                 "attribute_id":"3",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"颜色30",
-  //                 "sort":"30",
-  //                 "image_url":null,
-  //                 "created":1592386215,
-  //                 "updated":1592386215
-  //               }
-  //             ]
-  //           }
-  //         },
-  //         {
-  //           "attribute_id":"9",
-  //           "company_id":"1",
-  //           "shop_id":"0",
-  //           "attribute_type":"item_spec",
-  //           "attribute_name":"规格",
-  //           "attribute_memo":"家居日用-规格",
-  //           "attribute_sort":"0",
-  //           "distributor_id":"0",
-  //           "is_show":"true",
-  //           "is_image":"false",
-  //           "image_url":null,
-  //           "created":1590050588,
-  //           "updated":1590050588,
-  //           "operator_id":"1",
-  //           "attribute_values":{
-  //             "total_count":21,
-  //             "list":[
-  //               {
-  //                 "attribute_value_id":"100",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"1个",
-  //                 "sort":"0",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"101",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"2个",
-  //                 "sort":"1",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"102",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"3个",
-  //                 "sort":"2",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"103",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"4个",
-  //                 "sort":"3",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"104",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"5个",
-  //                 "sort":"4",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"105",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"6个",
-  //                 "sort":"5",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"106",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"1箱",
-  //                 "sort":"6",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"107",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"2箱",
-  //                 "sort":"7",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"108",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"3箱",
-  //                 "sort":"8",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"109",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"4箱",
-  //                 "sort":"9",
-  //                 "image_url":null,
-  //                 "created":1590463615,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"595",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格1",
-  //                 "sort":"10",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"596",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格2",
-  //                 "sort":"11",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"597",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格3",
-  //                 "sort":"12",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"598",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格4",
-  //                 "sort":"13",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"599",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格5",
-  //                 "sort":"14",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"600",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格6",
-  //                 "sort":"15",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"601",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格7",
-  //                 "sort":"16",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"602",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格8",
-  //                 "sort":"17",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"603",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格9",
-  //                 "sort":"18",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"604",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格10",
-  //                 "sort":"19",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               },
-  //               {
-  //                 "attribute_value_id":"605",
-  //                 "attribute_id":"9",
-  //                 "company_id":"1",
-  //                 "shop_id":"0",
-  //                 "attribute_value":"规格11",
-  //                 "sort":"20",
-  //                 "image_url":null,
-  //                 "created":1592383854,
-  //                 "updated":1592383854
-  //               }
-  //             ]
-  //           }
-  //         }
-  //       ],
-  //       "category_level":3,
-  //       "image_url":null,
-  //       "created":1590050549,
-  //       "updated":1598261723,
-  //       "operator_id":"0",
-  //       "state":1
-  //     }
-  //   }
-  //   let res = dec.data
-  //     // this.generateParams(detail.goods_params) // 处理主分类参数
-  //     this.generateSpec(res.goods_spec) // 处理主分类规格
-  // }
   generateSpec(data) {
     let skus = []
     data.forEach(item => {
@@ -1261,14 +607,22 @@ export default class EditGoods extends Component{
     })
     let formSkuItem = []
     this.props.specItems.forEach(item => {
-      item.forEach(child => {
-        formSkuItem.push(child)
-      })
+        formSkuItem.push(item)
     })
     this.state.form = {...this.state.form,...this.props.simpleForm}
-    // if (this.selectedMainCategory.length > 0) {
-    //   this.form.item_main_cat_id = this.selectedMainCategory[this.selectedMainCategory.length-1]
-    // }
+    if(this.state.form.item_name === ''){
+      Taro.showToast({title:'请填写商品名称',icon:'none',duration:1500})
+      return
+    }
+    if(this.state.form.item_category.length === 0){
+      Taro.showToast({title:'请选择商品分类',icon:'none',duration:1500})
+      return
+    }
+    if(this.state.form.pics.length === 0){
+      Taro.showToast({title:'请选择商品图片',icon:'none',duration:1500})
+      return
+    }
+    this.state.form.nospec = this.props.nospec
     if (!this.props.nospec) {
       if (formSkuItem.length > 0) {
         formSkuItem[0].is_default = true
@@ -1281,14 +635,14 @@ export default class EditGoods extends Component{
       }
     }
    let picList =  this.state.form.pics.map((item) => {
-     if(/http/.test(item)){
+     if(/oioos/.test(item)){
        return  Promise.resolve(item)
      }else{
        return  this.postImage(item)
      }
     })
     let morePicList = this.state.moreImageList.map((item) => {
-      if(/http/.test(item)){
+      if(/oioos/.test(item)){
         return  Promise.resolve(item)
       }else{
         return  this.postImage(item)
@@ -1317,7 +671,7 @@ export default class EditGoods extends Component{
       intro += `<div><img src=\"${item}\"/></div>`
     })
     this.state.form.intro = intro
-    this.state.form.spec_images = ''
+    this.state.form.spec_images = []
     this.state.form.spec_items = JSON.stringify(formSkuItem)
     if (this.state.is_edit) {
       api.store.updateItems(this.state.form.item_id, this.state.form).then(response => {
@@ -1329,7 +683,7 @@ export default class EditGoods extends Component{
         })
         this.props.clearSpec()
         setTimeout(() => {
-          Taro.navigateTo({url:'/marketing/pages/user-store/user-store'})
+          Taro.redirectTo({url:'/marketing/pages/user-store/store-manage'})
         },700)
       }).catch(error => {
         Taro.showToast({
@@ -1348,7 +702,7 @@ export default class EditGoods extends Component{
         })
         this.props.clearSpec()
         setTimeout(() => {
-          Taro.navigateTo({url:'/marketing/pages/user-store/user-store'})
+          Taro.redirectTo({url:'/marketing/pages/user-store/store-manage'})
         },700)
       }).catch(error => {
         Taro.showToast({
@@ -1380,7 +734,7 @@ export default class EditGoods extends Component{
             {is_edit?
               <View className='main-cat-item'>
                 <Text className='main-cat-item-dec'><Text className='require'>*</Text>当前类目</Text>
-                <Text className='main-cat-name'>{this.state.categoryNames}</Text>
+                <Text className='main-cat-name'>{this.state.categoryNames.join(' > ')}</Text>
               </View>:
               <View className='main-cat-item'>
               <Text className='main-cat-item-dec'><Text className='require'>*</Text>当前类目</Text>

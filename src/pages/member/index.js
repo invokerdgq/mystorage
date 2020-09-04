@@ -2,13 +2,13 @@ import Taro, { Component } from '@tarojs/taro'
 import {View, ScrollView, Text, Image, Navigator, Button, Icon} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { SpToast, TabBar, SpCell} from '@/components'
+import OwnShade from "../../components/own-shade/own-shade";
 import api from '@/api'
 import S from '@/spx'
 import {cdn} from "../../consts";
 import NavGap from "../../components/nav-gap/nav-gap";
 
 import './index.scss'
-import {memberInfo} from "../../api/member";
 
 const sWidth = Taro.getSystemInfoSync().screenWidth
 @connect(({ colors }) => ({
@@ -24,6 +24,7 @@ export default class MemberIndex extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      showStoreOpen:false,
       info: {
         deposit: '',
         point: '',
@@ -49,6 +50,7 @@ export default class MemberIndex extends Component {
       },
       orderCount: '',
       memberDiscount: '',
+      operatorsopen:'',
       isOpenPopularize: false,
       salespersonData:null,
       inviter_name:'',
@@ -75,7 +77,7 @@ export default class MemberIndex extends Component {
         {url:'/assets/imgs/buy.png',dec:'我的预约',onclick:this.handleClick.bind(this, '/marketing/pages/member/item-activity',false) ,openType:'click'},
         {url:'/assets/imgs/kefu.png',dec:'我的客服',openType:'contact'},
         {url:'/assets/imgs/live.png',dec:'我的直播间',onclick:this.handleClick.bind(this, '/pages/member/live',false),openType:'click'},
-        {url:'/assets/imgs/live.png',dec:'我的小店',onclick:this.handleClick.bind(this, '/marketing/pages/user-store/user-store',false),openType:'click'},
+        {url:'/assets/imgs/live.png',dec:'我的小店',onclick:this.handleClickStore.bind(this),openType:'click'},
         {url:'/assets/imgs/address.png',dec:'地址管理',onclick: this.handleClick.bind(this, '/pages/member/address',false),openType:'click'},
         {url:'/assets/imgs/share.png',dec:'我要分享',openType:'share'},
         {url:`${cdn}/lb.png`,dec:'礼包兑换',openType:'click',onclick: this.handleClick.bind(this, '/others/pages/exchange/exchange',false)},
@@ -129,15 +131,15 @@ export default class MemberIndex extends Component {
           username: resUser.username,
           avatar: resUser.avatar,
           isPromoter: resUser.isPromoter,
+          user_id:resUser.userId
         }
       })
     }
     const [res, { list: favs }, orderCount, { list: memberDiscount }, assets,fansCount] = await Promise.all([api.member.memberInfo(), api.member.favsList(), api.trade.getCount(), api.vip.getList(), api.member.memberAssets(),api.member.getFansCount()])
     if((res.vipgrade.grade_name === '至尊会员')|| (res.vipgrade.grade_name === '王者身份')){
     }else{
-      console.log('shangchu')
       this.featureList = this.featureList.filter((item) => {
-        return  item.dec !== '我的直播间'
+        return  item.dec !== '我的直播间' && item.dec !== '我的小店'
       })
     }
     this.props.onFetchFavs(favs)
@@ -145,6 +147,8 @@ export default class MemberIndex extends Component {
       isOpenPopularize: res.is_open_popularize,
       inviter_name:res.memberInfo.inviter_name,
       inviter_id:res.memberInfo.inviter_id,
+      operatorsopen:res.memberInfo.operatorsopen,
+      mobile:res.memberInfo.mobile,
       is_effective:res.vipgrade.is_effective,
       fansCount,
       totalConsumption:res.memberInfo.totalConsumption
@@ -157,8 +161,9 @@ export default class MemberIndex extends Component {
       user_card_code:res.memberInfo.user_card_code,
       inviter_id:res.memberInfo.inviter_id,
       is_vip:res.vipgrade.is_vip,
+      grade_name: res.vipgrade.grade_name
     }
-    if(!resUser || resUser.username !== userObj.username || resUser.avatar !== userObj.avatar||resUser.inviter_id !== userObj.inviter_id) {
+    if(!resUser || resUser.username !== userObj.username || resUser.grade_name !== userObj.grade_name || resUser.avatar !== userObj.avatar||resUser.inviter_id !== userObj.inviter_id) {
       Taro.setStorageSync('userinfo', userObj)
       this.setState({
         info: {
@@ -341,9 +346,47 @@ export default class MemberIndex extends Component {
       }
     })
   }
+ async handleOpen(){
+    const mobile = Taro.getStorageSync('mobile')
+    const option = {
+      operator_type:'supplier',
+      mobile: mobile || this.state.mobile,
+      login_name:this.state.info.username,
+      username:this.state.info.username,
+      user_id:this.state.info.user_id,
+      head_portrait:this.state.info.avatar
+    }
+    if(!/^[1-9][0-9]{10}$/.test(option.mobile)){
+      Taro.navigateTo({url:'/marketing/pages/member/user-info'})
+    }else{
+      const data = await api.store.openStore(option)
+      if(!data.errMsg){
+        Taro.navigateTo({url:'/marketing/pages/user-store/own-store'})
+      }else{
+        Taro.showToast({title:data.errMsg || '出现错误，请稍后重试',icon:'none'})
+      }
+    }
+  }
+  handleCloseShade(){
+    this.setState({
+      showStoreOpen:false
+    })
+  }
+  handleClickStore(){
+    if (!S.getAuthToken()) {
+      return S.toast('请先登录')
+    }
+    if(this.state.operatorsopen == 1){
+      Taro.navigateTo({url:'/marketing/pages/user-store/own-store'})
+    }else{
+      this.setState({
+        showStoreOpen:true
+      })
+    }
+  }
   render () {
     const { colors } = this.props
-    const {expect_commission, commission,vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
+    const {showStoreOpen,expect_commission, commission,vipgrade, gradeInfo, orderCount, memberDiscount, memberAssets, info, isOpenPopularize, salespersonData } = this.state
     return (
       <View>
         <NavGap title="个人中心"/>
@@ -487,16 +530,22 @@ export default class MemberIndex extends Component {
               </View>
             </View>
           </ScrollView>
-
           <SpToast />
-
           {
             process.env.TARO_ENV === 'weapp'?null:
               <TabBar />
           }
         </View>
+        <OwnShade
+          show={showStoreOpen}
+          onclickClose={this.handleCloseShade.bind(this,'store')}
+        >
+          <View className='store-shade'>
+            <Image mode='widthFix' src={`${cdn}/store-open.png`} className='img'/>
+            <View onClick={this.handleOpen.bind(this)} className='open-button'>确认开通</View>
+          </View>
+        </OwnShade>
       </View>
-
     )
   }
 }

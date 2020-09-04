@@ -53,8 +53,6 @@ export default class GoodsBuyPanel extends Component {
       isActive: props.isOpened,
       colorStyle: ''
     }
-    console.log('kkkkkkkkkkkkkkkkkkkkk')
-    console.log(JSON.stringify(this.state))
 
     this.disabledSet = new Set()
   }
@@ -102,9 +100,6 @@ export default class GoodsBuyPanel extends Component {
     this.setState({
       marketing,
       selection
-    },() => {
-      console.log('kkkkkkkkkkkkkkkkkkkkk')
-      console.log(JSON.stringify(this.state))
     })
 
     if (!spec_items || !spec_items.length) {
@@ -282,7 +277,7 @@ export default class GoodsBuyPanel extends Component {
 
     const { marketing} = this.state
     const {info} = this.props
-    console.log(this.state,'info-----------')
+    const user_id = Taro.getStorageSync('user_id')
     const { special_type = 'normal' } = info
     const isDrug = special_type === 'drug'
     const { item_id } = this.noSpecs ? info : skuInfo
@@ -301,7 +296,8 @@ export default class GoodsBuyPanel extends Component {
           item_id,
           num,
           distributor_id,
-          shop_type: isDrug ? 'drug' : 'distributor'
+          shop_type: isDrug ? 'drug' : 'distributor',
+          reference:user_id
 				})
 				Taro.showToast({
 					title: '成功加入购物车',
@@ -340,7 +336,8 @@ export default class GoodsBuyPanel extends Component {
         await api.cart.fastBuy({
           // is_seckill:this.props.is_seckill,
           item_id,
-          num
+          num,
+          reference:user_id
         })
       } catch (e) {
        Taro.showToast({

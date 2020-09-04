@@ -187,8 +187,6 @@ export default class InviteActivity extends Component{
       status: step == 0?false:true,
       level:step
     }
-    console.log('oooooooooooooooooooooo')
-    console.log(list.assist_id)
     return(
       <View onClick={this.clearDetail.bind(this)}>
         <OwnShade

@@ -1,0 +1,142 @@
+@import "../../../style/imports";
+
+page{
+  background: white;
+}
+.popularize-content{
+  min-height: 100vh;
+  padding-top: VH($nav-gap-height);
+  display: flex;
+  flex-direction: column;
+  .openPopularize{
+    background: #f9f9f8;
+    padding: 55px 35px 22px;
+    &-top{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      font-size: 33px;
+      margin-bottom: 30px;
+      .goods-name{
+        margin-right: auto;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 460px;
+      }
+    }
+
+    &-bottom{
+      display: flex;
+      align-items: center;
+      .iconfont{
+        font-size: 26px;
+        color: #A9A9A9;
+        margin-right: 18px;
+      }
+      .popularize-dec{
+        font-size: 23px;
+        color: #A9A9A9;
+      }
+    }
+  }
+
+  .popularize-setting{
+    &-top{
+      margin: 50px 10px 40px;
+      height: 90px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 33px;
+      .unchecked{
+        color:#A9A9A9
+      }
+      .fill{
+        height: 100%;
+        border-radius: 8px;
+        color: white;
+        background: $color-theme;
+        line-height: 90px;
+        padding: 0 25px;
+      }
+      .radio{
+        margin-right: -20px;
+      }
+      .setting-input{
+        position: relative;
+        height: 100%;
+        .inner{
+          width: 180px;
+          height: 100%;
+          border: solid 2px #eeeeee;
+        }
+        .sign{
+          position: absolute;
+          right:20px;
+          top:50%;
+          transform: translate(0,-50%);
+        }
+      }
+    }
+
+    &-bottom{
+      padding: 0 10px;
+      .first{
+        background: #f9f9f8;
+        font-size: 33px;
+      }
+      .bottom-item{
+        display: flex;
+        align-items: center;
+        min-height: 90px;
+        .item-spec,.item-type{
+          flex:1.8;
+          text-align: center;
+        }
+        .item-price,.item-dec{
+          flex: 1;
+          text-align: center;
+        }
+        .item-type{
+         .radio{
+           margin-right: -16px;
+         }
+        }
+        .item-dec{
+          position: relative;
+          .inner{
+            border: solid 2px #eeeeee;
+          }
+          .sign{
+            position: absolute;
+            right: 10px;
+            top:50%;
+            transform: translate(0,-50%);
+          }
+        }
+        .fill{
+          color: $color-theme;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .tip-dec{
+    font-size: 32px;
+    color: #A9A9A9;
+    margin-top: 200px;
+    text-align: center;
+  }
+  .save-popularize{
+    color:white;
+    width: 650px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    background: $color-theme;
+    border-radius: 16px;
+    margin: auto auto 30px;
+  }
+}

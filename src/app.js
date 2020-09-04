@@ -51,7 +51,7 @@ if(process.env.TARO_ENV === 'weapp'){
     }
 }
 function isTradePage(url) {
-  return /\/trade(.)*/.test(url)
+  return /\/pages\/trade(.)*/.test(url)
 }
 let originNav1 = Taro.navigateTo
 Taro.navigateTo = function (option) {
@@ -215,9 +215,15 @@ useHooks()
             'pages/item/success',
 
             'pages/wheel/index',
-            'pages/user-store/user-store',
+            'pages/user-store/own-store',
             'pages/user-store/edit/edit-goods',
-            'pages/user-store/edit/edit-spec'
+            'pages/user-store/edit/edit-spec',
+            'pages/user-store/store-manage',
+            'pages/user-store/popularize',
+            'pages/user-store/visit-store',
+            'pages/user-store/trade/list',
+            'pages/user-store/trade/delivery',
+            'pages/user-store/trade/trade-detail',
           ]
         },
         {
@@ -256,8 +262,6 @@ useHooks()
       ]
     }
    async componentDidShow (options) {
-      console.log('show---------------------------------')
-     console.log(this.$router.params)
       entry.entryLaunch(this.$router.params.query)
       if (process.env.TARO_ENV === 'weapp') {
         FormIds.startCollectingFormIds()

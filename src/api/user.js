@@ -19,7 +19,6 @@ export function refreshToken () {
 
 export function reg (params) {
   /*const appid = getAppId()*/
-  console.log('kkkkkkkkkkkkkk')
   return req.post('/member', {
     ...params,
     appid:'wx9378bcb903abd3ab',

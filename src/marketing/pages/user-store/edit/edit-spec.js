@@ -23,7 +23,7 @@ export default class EditSpec extends Component{
     super(props);
     this.state = {
       showMore:false,
-      statusList:[{label:'前台可销售',value:'onsale'},{label:'可线下销售',value:'offline_sale'},{label:'前台仅展示',value:'only_show'},{label:'不可销售',value:'instock'},],
+      statusList:[{label:'前台可销售',value:'onsale'},{label:'不可销售',value:'instock'},],
       skus:[],
       specTotal:'',
       specPagesize:10,
@@ -65,7 +65,6 @@ export default class EditSpec extends Component{
             }
           })
         }
-        this.handleCategoryChange(id)
       })
     }else{
       this.handleCategoryChange(id)
@@ -111,6 +110,8 @@ export default class EditSpec extends Component{
     this.state.skus[curIndex].sku_value[index].custom_attribute_value = e.detail.value
     this.setState({
       skus:this.state.skus
+    },() => {
+      this.updateSku()
     })
     this.handleSkuName(e.detail.value,id)
   }
@@ -334,7 +335,7 @@ export default class EditSpec extends Component{
     })
   }
   settingConfirm(){
-    if(!this.state.simple){
+    if(this.state.simple){
       if(this.state.simpleForm.approve_status === ''){
         Taro.showToast({title:'请选择商品状态',icon:'none'})
         return
@@ -347,17 +348,42 @@ export default class EditSpec extends Component{
         Taro.showToast({title:'请输入商品价格',icon:'none'})
         return
       }
+    }else{
+      let hasEmpty
+      this.state.specItems.map((item,index) => {
+        if(item.approve_status ===''|| item.price === '' || item.store === ''){
+          hasEmpty = true
+          Taro.showToast({title:`第${index+1}项有空数据，请填写`,icon:'none',duration:1500})
+        }
+      })
+      if(hasEmpty) return;
     }
      this.props.setSpecItems(this.state.specItems)
      this.props.setNospec(this.state.simple)
      this.props.setSimpleForm(this.state.simpleForm)
-    this.props.setSkus(this.state.skus)
+     this.props.setSkus(this.state.skus)
      Taro.navigateBack()
   }
   changeShowMore(){
     this.setState({
       showMore:!this.state.showMore
     })
+  }
+  checkFillValid(type,index,e){
+    if(!/^[0-9]*(\.)?[0-9]*$/.test(e.detail.value)){
+      Taro.showToast({title:'请输入正确的数据',icon:'none',duration:1500})
+      if(index !== ''){
+        this.state.specItems[index][type] = ''
+        this.setState({
+          specItems:this.state.specItems
+        })
+      }else{
+        this.state.fill[type] = ''
+        this.setState({
+          fill:this.state.fill
+        })
+      }
+    }
   }
   render() {
     const {formValue,simpleForm,skus,simple,specItems,fill,statusList,fillPickerValue,specItemsValue,showMore} = this.state
@@ -441,8 +467,8 @@ export default class EditSpec extends Component{
                                 <Text className='status-picker checked'>{statusList[fillPickerValue].label}</Text>
                               }
                             </Picker>
-                            <Input value={fill.store} onBlur={this.handleFillChange.bind(this,'store')} className='input-item'/>
-                            <Input value={fill.price} onBlur={this.handleFillChange.bind(this,'price')} className='input-item'/>
+                            <Input value={fill.store} onInput={this.handleFillChange.bind(this,'store')} className='input-item' onBlur={this.checkFillValid.bind(this,'store')}/>
+                            <Input value={fill.price} onInput={this.handleFillChange.bind(this,'price')} className='input-item' onBlur={this.checkFillValid.bind(this,'price')}/>
                             <Text onClick={this.handleFill.bind(this)} className='spec-feature'>填充</Text>
                         </View>
                         {
@@ -475,8 +501,8 @@ export default class EditSpec extends Component{
                                     <Text className='status-picker checked'>{status}</Text>
                                   }
                                 </Picker>
-                                <Input value={item.store} onClick={this.handleSpecItems.bind(this,'store',index)} className='input-item'/>
-                                <Input value={item.price} onClick={this.handleSpecItems.bind(this,'price',index)} className='input-item'/>
+                                <Input value={item.store} onInput={this.handleSpecItems.bind(this,'store',index)} className='input-item' onBlur={this.checkFillValid.bind(this,'store',index)}/>
+                                <Input value={item.price} onInput={this.handleSpecItems.bind(this,'price',index)} className='input-item' onBlur={this.checkFillValid.bind(this,'price',index)}/>
                                 <Text onClick={this.clearSpecItems.bind(this,index)} className='spec-feature'>清除</Text>
                               </View>
                             )

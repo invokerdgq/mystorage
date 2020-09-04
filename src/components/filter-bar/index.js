@@ -51,7 +51,8 @@ export default class FilterBar extends Component {
 
   render () {
     const { list, className, custom, colors } = this.props
-		const { sortOrder, curIdx } = this.state
+		const { sortOrder} = this.state
+    const {current:curIdx} = this.props
 
     return (
       <View className={classNames('filter-bar', className)}>

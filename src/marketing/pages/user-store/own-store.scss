@@ -1,0 +1,127 @@
+@import "../../../style/imports";
+
+.personal-store-content{
+  margin-top: VH($nav-gap-height);
+  .content-top{
+    background: $color-theme;
+    height: 300px;
+    padding: 0 30px;
+    margin-top: 35px;
+    display: flex;
+    .user-avatar{
+      width: 113px;
+      height: 113px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 25px;
+      .img{
+        width: 100%;
+        height: 100%;
+        background: white;
+      }
+    }
+    .user-info{
+      height: 113px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .user-name{
+        font-size: 35px;
+        font-weight: bold;
+        color:white
+      }
+      .user-vip{
+        display: flex;
+        .icon-huiyuan{
+          font-size: 32px;
+          color: #fedea0;
+        }
+        font-size: 24px;
+        color: #fedea0;
+      }
+    }
+  }
+
+  .content-middle{
+    padding: 0 30px;
+    &-inner{
+      position: relative;
+      top:-122.5px;
+      .store-feature,.own-data,.own-order{
+        border-radius: 14px;
+        margin-bottom: 32px;
+      }
+      .store-feature{
+        background: white;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 145px;
+        .feature-item{
+          display: flex;
+          align-items: center;
+          .img{
+            width: 65px;
+            height: 65px;
+            margin-right: 20px;
+          }
+          .dec{
+            font-size: 26px;
+          }
+        }
+      }
+
+      .own-data,.own-order{
+        background: white;
+        padding: 40px 45px;
+        &-title{
+          font-size: 30px;
+          font-weight: bold;
+        }
+        &-content{
+          display: flex;
+          justify-content: space-between;
+          margin-top: 40px;
+          .data-item,.order-item{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .data-num{
+              font-size: 40px;
+              font-weight: bold;
+            }
+            .data-dec{
+              font-size: 26px;
+              margin-top: 20px;
+            }
+          }
+        }
+      }
+
+      .own-order{
+       &-content{
+         .iconfont{
+           font-size: 72px;
+         }
+         .order-item{
+           position: relative;
+           .num{
+             display: block;
+             position: absolute;
+             width: 26px;
+             height: 26px;
+             line-height: 26px;
+             text-align: center;
+             font-size: 16px;
+             border-radius: 50%;
+             background: $color-theme;
+             color: white;
+             top:-10px;
+             right:-26px
+           }
+         }
+       }
+      }
+    }
+  }
+}

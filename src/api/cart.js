@@ -17,9 +17,10 @@ export function add (params) {
 }
 
 export function fastBuy (params) {
-  const { item_id, num = 1 ,is_seckill=0} = params
+  const { item_id, num = 1 ,is_seckill=0,reference} = params
   return req.post('/cart', {
     is_seckill,
+    reference,
     cart_type: 'fastbuy',
     item_id,
     num,

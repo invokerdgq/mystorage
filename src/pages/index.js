@@ -41,6 +41,8 @@ export default class HomeIndex extends Component {
     super(props)
     this.state = {
       ...this.state,
+      showStoreMore:false,
+      currentShop:null,
       showLoading:false,
       wgts: null,
       likeList: [],
@@ -79,6 +81,10 @@ export default class HomeIndex extends Component {
   }
 
   componentDidShow = () => {
+    // 获取店铺浏览历史
+    if(S.getAuthToken()){
+      this.fetchStoreHistory()
+    }
     this.setState({
       url:`plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=39&custom_params=''`
     })
@@ -125,6 +131,12 @@ export default class HomeIndex extends Component {
         })
       })
   }
+  async fetchStoreHistory(){
+   const res = await api.store.getShopHistoryList({page:1,pageSize:10})
+    this.setState({
+      currentShop:res.list.length === 0?null:res.list[0]
+    })
+  }
   onShareAppMessage (res) {
     if (res.from === 'button') {
       console.log(res.target)
@@ -151,7 +163,7 @@ export default class HomeIndex extends Component {
     const info = await req.get(url)
 
 
-     let list = await api.seckill.seckillList({status:'',page:1,pageSize:30})
+     let list = await api.seckill.seckillList({status:'',page:1,pageSize:70})
 
     this.setState({
       wgts: formate(info.config,list.list),
@@ -263,8 +275,16 @@ export default class HomeIndex extends Component {
 refresh(){
     this.fetchInfo()
 }
+switchMore(){
+    this.setState({
+      showStoreMore:!this.state.showStoreMore
+    })
+}
+handleToVisit(){
+  Taro.navigateTo({url:`/marketing/pages/user-store/visit-store?id=${this.state.currentShop.operator_id}`})
+}
   render () {
-    const { url,showPost,wgts, page,isShop, likeList, showBackToTop, scrollTop, isShowAddTip, curStore, positionStatus, automatic, showAuto, top ,showLoading} = this.state
+    const {showStoreMore,currentShop, url,showPost,wgts, page,isShop, likeList, showBackToTop, scrollTop, isShowAddTip, curStore, positionStatus, automatic, showAuto, top ,showLoading} = this.state
     const { showLikeList } = this.props
     const user = Taro.getStorageSync('userinfo')
     const isPromoter = user && user.isPromoter
@@ -311,8 +331,28 @@ refresh(){
 
           </View>
         </View>
-        {/*</ScrollView>*/}
-
+          {
+            currentShop&&
+              <FloatMenus
+              bottom={500}
+              >
+                {!showStoreMore ?
+                  <View className='float-store' onClick={this.switchMore.bind(this)}>
+                    <View  className='inner'>
+                      <Image mode='widthFix' className='img' src={currentShop.head_portrait}/>
+                    </View>
+                  </View>:
+                    <View className='float-store-more'>
+                        <Image mode='widthFix' className='img' src={currentShop.head_portrait}/>
+                      <View className='dec-more'>
+                        <View className='store-name'>{currentShop.username}的小店</View>
+                        <View className='to-visit' onClick={this.handleToVisit.bind(this)}>进去逛逛 > ></View>
+                      </View>
+                      <View className='iconfont icon-close' onClick={this.switchMore.bind(this)}/>
+                    </View>
+                }
+              </FloatMenus>
+          }
         {
           <FloatMenus>
             {

@@ -30,6 +30,9 @@ async function entryLaunch(data, isNeedLocate) {
   if(options.assist_id){
     Taro.setStorageSync('assist_id',options.assist_id)
   }
+  if(options.user_id){ // 用户店铺商品 分享者uid
+    Taro.setStorageSync('user_id',options.user_id)
+  }
   let dtidValid = false
   let store = {}
 
@@ -40,7 +43,7 @@ async function entryLaunch(data, isNeedLocate) {
   }
 
   if (options.uid) {
-    // 如果分享带了会员ID 那么
+    // 如果分享带了会员ID (卡号) 那么
     Taro.setStorageSync('distribution_shop_id', options.uid)
     Taro.setStorageSync('distribution_shop_exp', Date.parse(new Date()))
     Taro.setStorageSync('trackParams', {})

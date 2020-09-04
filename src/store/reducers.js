@@ -8,6 +8,7 @@ import colors from './colors'
 import giftId from "./giftId";
 import step from './step'
 import editSpec from './goods-spec'
+import popularize from "./popularize";
 
 export default combineReducers({
   cart,
@@ -18,5 +19,6 @@ export default combineReducers({
   colors,
   giftId,
   step,
-  editSpec
+  editSpec,
+  popularize
 })

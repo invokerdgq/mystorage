@@ -42,6 +42,10 @@ export default class Detail extends Component {
 
     this.state = {
       ...this.state,
+      shopInfo:{
+        username:'',
+        head_portrait:''
+      },
       showCopy:false,
       marketing: 'normal',
       info: null,
@@ -121,6 +125,9 @@ export default class Detail extends Component {
   }
 
   async componentDidShow () {
+    const {operator_id} = this.$router.params
+    console.log('llllllllllllllllllllllllllllllllllllllll')
+    console.log(operator_id)
     const userInfo = Taro.getStorageSync('userinfo')
     if (S.getAuthToken() && (!userInfo || userInfo.user_card_code)) {
       const res = await api.member.memberInfo()
@@ -136,7 +143,22 @@ export default class Detail extends Component {
       }
       Taro.setStorageSync('userinfo', userObj)
     }
-
+    if(operator_id && operator_id !== ''){
+      const userInfo = Taro.getStorageSync('userinfo')
+      api.store.getShopInfo(operator_id).then((res) => {
+        this.setState({
+          shopInfo:res
+        })
+      })
+      try{
+        api.item.bindShop({
+          operator_id,
+          user_card_code: userInfo.user_card_code
+        })
+      }catch(e){
+        console.log(e)
+      }
+    }
     this.fetchCartCount()
     // this.getEvaluationList()                          -------------------------------请求 出错 暂时注释
   }
@@ -160,12 +182,12 @@ export default class Detail extends Component {
   onShareAppMessage () {
     const { info } = this.state
     const { distributor_id } = Taro.getStorageSync('curStore')
-    const { user_card_code :userId} = Taro.getStorageSync('userinfo')
+    const { user_card_code :userId,userId:user_id} = Taro.getStorageSync('userinfo')
 
-
+    console.log(`/pages/item/espier-detail?id=${info.item_id}&dtid=${distributor_id}`+(userId && '&uid=' + userId)+(this.$router.params.operator_id && '&operator_id=' + this.$router.params.operator_id)+(user_id && '&user_id=' + user_id))
     return {
       title: info.item_name,
-      path: '/pages/item/espier-detail?id='+ info.item_id + '&dtid=' + distributor_id + (userId && '&uid=' + userId)
+      path: `/pages/item/espier-detail?id=${info.item_id}&dtid=${distributor_id}`+(userId && '&uid=' + userId)+(this.$router.params.operator_id && '&operator_id=' + this.$router.params.operator_id)+(user_id && '&user_id=' + user_id)
     }
 
   }
@@ -772,6 +794,9 @@ export default class Detail extends Component {
       })
     },800)
   }
+  handleToStore(){
+    Taro.navigateTo({url:`/marketing/pages/user-store/visit-store?id=${this.$router.params.operator_id}`})
+  }
   render () {
     const userinfo = Taro.getStorageSync('userinfo')
     const store = Taro.getStorageSync('curStore')
@@ -805,7 +830,8 @@ export default class Detail extends Component {
       page,
       evaluationTotal,
       evaluationList,
-      type
+      type,
+      shopInfo
     } = this.state
     const { showLikeList, colors } = this.props
 
@@ -1122,6 +1148,13 @@ export default class Detail extends Component {
                 })
               }
             </SpCell>
+            {this.$router.params.operator_id&&
+               <View className='shop-info'>
+                 <Image mode='widthFix' className='img' src={shopInfo.head_portrait}/>
+                 <View className='owner-name'>{shopInfo.username}的小店</View>
+                 <View className='to-visit' onClick={this.handleToStore.bind(this)}>进店逛逛</View>
+               </View>
+            }
 
             {
               promotion_activity && promotion_activity.length > 0

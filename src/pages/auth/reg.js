@@ -129,7 +129,7 @@ export default class Reg extends Component {
       return  S.toast('头像不能为空')
     }
 
-    if (!data.password) {
+    if (!isWeapp &&!data.password) {
       return S.toast('请输入密码')
     }
     this.state.list.map(item=>{
@@ -467,22 +467,22 @@ export default class Reg extends Component {
                   </AtInput>
                 </View>
               )}
-              {<AtInput
-              title='密码'
-              name='password'
-              type={isVisible ? 'text' : 'password'}
-              value={info.password}
-              placeholder='请输入密码'
-              autocomplete='new-password'
-              onFocus={this.handleErrorToastClose}
-              onChange={this.handleChange.bind(this, 'password')}
-            >
-              {
-                isVisible
-                  ? <View className='iconfont icon-yanjing1 icon-pwd' onClick={this.handleClickIconpwd}> </View>
-                  : <View className='iconfont icon-yanjing icon-pwd' onClick={this.handleClickIconpwd}> </View>
-              }
-            </AtInput>}
+            {/*  {<AtInput*/}
+            {/*  title='密码'*/}
+            {/*  name='password'*/}
+            {/*  type={isVisible ? 'text' : 'password'}*/}
+            {/*  value={info.password}*/}
+            {/*  placeholder='请输入密码'*/}
+            {/*  autocomplete='new-password'*/}
+            {/*  onFocus={this.handleErrorToastClose}*/}
+            {/*  onChange={this.handleChange.bind(this, 'password')}*/}
+            {/*>*/}
+            {/*  {*/}
+            {/*    isVisible*/}
+            {/*      ? <View className='iconfont icon-yanjing1 icon-pwd' onClick={this.handleClickIconpwd}> </View>*/}
+            {/*      : <View className='iconfont icon-yanjing icon-pwd' onClick={this.handleClickIconpwd}> </View>*/}
+            {/*  }*/}
+            {/*</AtInput>}*/}
               {
                 isHasData && list.map((item, index) => {
                   return (

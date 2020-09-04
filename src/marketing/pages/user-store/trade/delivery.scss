@@ -1,0 +1,126 @@
+@import "../../../../style/imports";
+
+.delivery-content{
+  padding: VH($nav-gap-height) 20px 0;
+  &-title{
+    font-size: 32px;
+    font-weight: bold;
+    padding: 20px 10px;
+    border-bottom: solid 2px #eeeeee;
+  }
+  .delivery-body{
+    .delivery-type{
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      .batch{
+        margin-right: -20px;
+        margin-left: 20px;
+      }
+      .sep{
+        margin-left: 10px;
+      }
+      .dec{
+        font-size: 26px;
+        font-weight: bold;
+      }
+    }
+    .delivery-setting-batch,.delivery-setting-sep{
+      .dec{
+        font-size: 26px;
+        font-weight: bold;
+      }
+      .order-goods{
+        border-bottom: solid 2px #eeeeee;
+      }
+      .set-delivery-company{
+        padding: 20px 0;
+        display: flex;
+        align-items: center;
+        .dec{
+          font-size: 26px;
+          font-weight: bold;
+        }
+        .picker-input{
+          margin-left: 30px;
+          font-size: 26px;
+          color:#A9A9A9
+        }
+      }
+      .set-delivery-code{
+        padding: 20px 0;
+        display: flex;
+        align-items: center;
+        .dec{
+          font-size: 26px;
+          font-weight: bold;
+        }
+        .code-input{
+          margin-left: 30px;
+          border-bottom: solid 2px rgba(192,83,78,0.5);
+        }
+        .holder-input{
+          color:#A9A9A9;
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+  .delivery-save{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 200px;
+    .cancel,.confirm{
+      width: 300px;
+      height: 80px;
+      line-height: 80px;
+      border-radius: 10px;
+      text-align: center;
+    }
+  .cancel{
+    background: white;
+    border: solid 2px #eeeeee;
+  }
+  .confirm{
+    background: $color-theme;
+    color: white;
+  }
+  }
+  .goods-item{
+    display: flex;
+    padding: 30px 40px;
+    align-items: center;
+    .pay{
+      margin-left: auto;
+      font-size: 20px;
+      color: #c1c1c1
+    }
+    .goods-img{
+      width: 120px;
+      height: 120px;
+      margin-right: 10px;
+      .img{
+        width: 100%;
+      }
+    }
+    .dec{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      max-width: 480px;
+      &-name{
+        font-size: 24px;
+        color: #333;
+      }
+      &-num{
+        font-size: 20px;
+        color: #c1c1c1;
+      }
+      &-spec{
+        color: #818181;
+        font-size: 25px;
+      }
+    }
+  }
+}

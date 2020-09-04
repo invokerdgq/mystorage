@@ -51,3 +51,6 @@ export function packageDetail (item_id) {
 export function evaluationList (params) {
   return req.get('/order/rate/list', params)
 }
+export function bindShop(params) {
+ return req.post('/usershops/bindshop',params)
+}
