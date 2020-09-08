@@ -48,7 +48,7 @@ export default class StoreDelivery extends Component{
        Taro.showToast({title:'请选择快递公司',icon:'none',duration:1000})
        return
      }
-     if(this.state.form.delivery_code === '' || !/^[0-9]*$/.test(this.state.form.delivery_code)){
+     if(this.state.form.delivery_code === ''){
        Taro.showToast({title:'请输入正确的快递单号',icon:'none',duration:1000})
        return
      }

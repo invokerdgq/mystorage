@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro'
 import api from '@/api'
 import req from '@/api/req'
+import S from '@/spx'
 
 // 请在onload 中调用此函数，保证千人千码跟踪记录正常
 // 用户分享和接受参数处理
@@ -31,6 +32,8 @@ async function entryLaunch(data, isNeedLocate) {
     Taro.setStorageSync('assist_id',options.assist_id)
   }
   if(options.user_id){ // 用户店铺商品 分享者uid
+    const userinfo = Taro.getStorageSync('userinfo')
+    if(S.getAuthToken() && options.user_id && userinfo.userId != options.user_id)
     Taro.setStorageSync('user_id',options.user_id)
   }
   let dtidValid = false

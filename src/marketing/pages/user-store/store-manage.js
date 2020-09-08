@@ -240,7 +240,7 @@ export default class StoreManage extends Component{
                                     </View>
                                     <View className='item-middle-bottom'>
                                       <View className='dec-item'><Text>商品id:{item.item_id}</Text><Text>库存:{item.store}</Text></View>
-                                      <View className='dec-item'><Text>总销量:{item.fictitious_sales}</Text><Text>状态:{status}</Text></View>
+                                      <View className='dec-item'><Text>总销量:{item.sales}</Text><Text>状态:{status}</Text></View>
                                     </View>
                                   </View>
                                   <View className='item-right iconfont icon-chakan' onClick={this.handleFeature.bind(this,'preview',item)}/>

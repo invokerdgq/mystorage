@@ -125,9 +125,7 @@ export default class Detail extends Component {
   }
 
   async componentDidShow () {
-    const {operator_id} = this.$router.params
-    console.log('llllllllllllllllllllllllllllllllllllllll')
-    console.log(operator_id)
+    const {operator_id,} = this.$router.params
     const userInfo = Taro.getStorageSync('userinfo')
     if (S.getAuthToken() && (!userInfo || userInfo.user_card_code)) {
       const res = await api.member.memberInfo()
@@ -144,21 +142,23 @@ export default class Detail extends Component {
       Taro.setStorageSync('userinfo', userObj)
     }
     if(operator_id && operator_id !== ''){
-      const userInfo = Taro.getStorageSync('userinfo')
       api.store.getShopInfo(operator_id).then((res) => {
         this.setState({
           shopInfo:res
         })
       })
+    }
+    if(operator_id && this.$router.params.uid && S.getAuthToken()){
       try{
         api.item.bindShop({
           operator_id,
-          user_card_code: userInfo.user_card_code
+          user_card_code: this.$router.params.uid
         })
       }catch(e){
         console.log(e)
       }
     }
+    entry.entryLaunch(this.$router.params)
     this.fetchCartCount()
     // this.getEvaluationList()                          -------------------------------请求 出错 暂时注释
   }
@@ -186,7 +186,7 @@ export default class Detail extends Component {
 
     console.log(`/pages/item/espier-detail?id=${info.item_id}&dtid=${distributor_id}`+(userId && '&uid=' + userId)+(this.$router.params.operator_id && '&operator_id=' + this.$router.params.operator_id)+(user_id && '&user_id=' + user_id))
     return {
-      title: info.item_name,
+      title: this.state.shopInfo.username?`${this.state.shopInfo.username}的小店` : info.item_name,
       path: `/pages/item/espier-detail?id=${info.item_id}&dtid=${distributor_id}`+(userId && '&uid=' + userId)+(this.$router.params.operator_id && '&operator_id=' + this.$router.params.operator_id)+(user_id && '&user_id=' + user_id)
     }
 
@@ -309,8 +309,6 @@ export default class Detail extends Component {
       }else {
         contentDesc = desc
       }
-      console.log('intro------------------------------')
-      console.log(contentDesc)
       let promotion_package = null
       const { list } = await api.item.packageList({item_id: id})  // 暂时 不清楚 含义
       if (list.length) {
@@ -992,7 +990,7 @@ export default class Detail extends Component {
             <View className='goods-hd'>
               <View className='goods-info__wrap'>
                 <View className='goods-title__wrap'>
-                  <Text className='goods-title' onLongPress={this.showCopy.bind(this)} onTouchEnd={this.hideCopy.bind(this)}>{info.item_name}</Text>
+                  <Text className='goods-title' onLongPress={this.showCopy.bind(this)} onTouchEnd={this.hideCopy.bind(this)}>{info.goods_brand?info.goods_brand !=='无品牌'?'':`【${info.goods_brand}】`:''}{info.item_name}</Text>
                   <Text className='goods-title__desc'>{info.brief}</Text>
                   <View onClick={this.copyName.bind(this,info.item_name)} className='copy' style={`display:${this.state.showCopy?'block':'none'}`}>复制</View>
                 </View>

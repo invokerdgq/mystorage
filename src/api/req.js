@@ -111,11 +111,9 @@ class API {
       options.data = qs.stringify(options.data)
     }
 
-    console.log(options)
     return Taro.request(options)
         .then(res => {
         // eslint-disable-next-line
-
         const { data, statusCode, header } = res
         if (showLoading) {
           Taro.hideLoading()
@@ -156,14 +154,21 @@ class API {
 
         return Promise.reject(this.reqError(res, `API error: ${statusCode}`))
       })
+      .catch(e =>{
+        if(process.env.TARO_ENV === 'h5'){
+          e.json().then(res => {
+            Taro.showToast({title:res.error.message||res.error.errMsg||'出现错误,稍后重试',icon:'none',duration:1500})
+          })
+        }
+      })
   }
 
-  reqError (res, msg = '') {
-    const data = (res.data.error || res.data)
-    const errMsg = data.message || data.err_msg || msg
-    const err = new Error(errMsg)
-    err.res = res
-    return err
+  reqError (resp, msg = '') {
+      const data = (res.data.error || res.data)
+      const errMsg = data.message || data.err_msg || msg
+      const err = new Error(errMsg)
+      err.res = res
+      return err
   }
 }
 

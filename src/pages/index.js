@@ -68,7 +68,6 @@ export default class HomeIndex extends Component {
   }
 
   onPageScroll = (res) => {
-  console.log('scroll----------------------')
     const { scrollTop } = res
     this.setState({
       top: scrollTop
@@ -82,7 +81,7 @@ export default class HomeIndex extends Component {
 
   componentDidShow = () => {
     // 获取店铺浏览历史
-    if(S.getAuthToken()){
+    if(S.getAuthToken() && process.env.TARO_ENV === 'weapp'){
       this.fetchStoreHistory()
     }
     this.setState({

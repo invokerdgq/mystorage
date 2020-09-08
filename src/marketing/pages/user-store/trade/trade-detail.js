@@ -94,6 +94,7 @@ export default class StoreTradeDetail extends Component{
             <View className='title'>物流信息</View>
             <View className='item-content'>
               <View className='item-item'>收货人:{orderInfo.receiver_name}</View>
+              <View className='item-item'>收货人手机:{orderInfo.receiver_mobile}</View>
               <View className='item-item'>地址: {orderInfo.receiver_state}{orderInfo.receiver_city}{orderInfo.receiver_district}{orderInfo.receiver_address}</View>
             </View>
           </View>

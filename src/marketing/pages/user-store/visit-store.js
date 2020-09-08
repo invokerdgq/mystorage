@@ -84,6 +84,7 @@ fetch =async (params) =>{
     })
   }
   handleFilterChange(e){
+    if(this.state.page.isLoading) return
     this.state.filterList[e.current].sort = e.sort
     this.setState({
       goodsList:[],
@@ -101,7 +102,6 @@ fetch =async (params) =>{
     })
   }
   handleDetail(id){
-    console.log('kkkkkkkkkkkkk',this.$router.params.id)
     Taro.navigateTo({url:`/pages/item/espier-detail?id=${id}&operator_id=${this.$router.params.id}`})
   }
   render() {

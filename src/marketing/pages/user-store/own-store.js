@@ -26,14 +26,19 @@ export default class OwnStore extends Component{
     this.getshopInfo()
   }
 
-  getshopInfo = async () => {
-    const [res,data] = await Promise.all([api.store.getOwnShopInfo(),api.store.getOwnShopData()])
-    this.setState({
-      operator_id:res.operator_id,
-      deal_count:res.deal_count,
-      deal_price:res.deal_price,
-      item_view_num:res.item_view_num,
-      shopData:data
+  getshopInfo = () => {
+    api.store.getOwnShopInfo().then((res) => {
+     this.setState({
+       operator_id:res.operator_id,
+       deal_count:res.deal_count,
+       deal_price:res.deal_price,
+       item_view_num:res.item_view_num,
+     })
+    })
+    api.store.getOwnShopData().then((res) => {
+      this.setState({
+        shopData:res
+      })
     })
   }
   handleFeature(type){
@@ -72,19 +77,19 @@ export default class OwnStore extends Component{
               <View className='own-order'>
                 <View className='own-order-title'>我的订单</View>
                 <View className='own-order-content'>
-                  <View className='order-item' onClick={this.handleOrder.bind(this,'notpay')}>
-                    <View className='iconfont icon-daifukuan'/>
-                    <View className='item-dec'>待付款</View>
-                    <View className='num'>{shopData.normal_notpay_notdelivery}</View>
-                  </View>
                   <View className='order-item' onClick={this.handleOrder.bind(this,'notship')}>
                     <View className='iconfont icon-daifahuo1'/>
                     <View className='item-dec'>待发货</View>
-                    <View className='num'>{shopData.normal_payed_notdelivery}</View>
+                    <View className='num'>{shopData.normal_payed_daifahuo}</View>
                   </View>
                   <View className='order-item' onClick={this.handleOrder.bind(this,'done')}>
                       <View className='iconfont icon-jiuzhouyiwancheng'/>
                       <View className='item-dec'>已完成</View>
+                  </View>
+                  <View className='order-item' onClick={this.handleOrder.bind(this,'done')}>
+                    <View className='iconfont icon-daifukuan'/>
+                    <View className='item-dec'>去提现</View>
+                    <View className='num'>{shopData.normal_notpay_notdelivery}</View>
                   </View>
                   <View className='order-item' >
                     <View className='iconfont icon-shouhou'/>

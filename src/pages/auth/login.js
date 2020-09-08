@@ -24,10 +24,9 @@ export default class Login extends Component {
     })
   }
   handleSubmit = async (e) => {
-    console.log(e)
     const data = {
       ...this.state.info,
-      ...e.detail.value
+      ...e[0].detail.value
     }
 
     if (!data.username || !/1\d{10}/.test(data.username)) {
@@ -38,16 +37,15 @@ export default class Login extends Component {
       return S.toast('请输入密码')
     }
 
-    try {
-      const { token } = await api.user.login(data)
-      S.setAuthToken(token)
-      const redirect = decodeURIComponent(this.$router.params.redirect || APP_HOME_PAGE)
-      Taro.redirectTo({
-        url: redirect
-      })
-    } catch (error) {
-      return false
-    }
+       api.user.login(data).then((res) => {
+           S.setAuthToken(res.token)
+           const redirect = decodeURIComponent(this.$router.params.redirect || APP_HOME_PAGE)
+           Taro.redirectTo({
+             url: redirect
+           })
+       }).catch(e => {
+           Taro.showToast({title:e.message||'出现错误，稍后重试',icon:'none',duration:1500})
+         })
   }
 
   handleChange (name, val) {
@@ -143,7 +141,7 @@ export default class Login extends Component {
             {
               process.env.TARO_ENV === 'weapp'
                 ? <AtButton type='primary' formType='submit'>登录</AtButton>
-                : <AtButton type='primary' onClick={this.handleSubmit} formType='submit'>登录</AtButton>
+                : <AtButton type='primary' formType='submit'>登录</AtButton>
             }
           </View>
         </AtForm>
