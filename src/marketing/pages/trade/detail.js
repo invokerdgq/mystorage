@@ -550,7 +550,7 @@ export default class TradeDetail extends Component {
             info.order_class !== 'drug'
             && <View>
               {
-                isDhPoint !=='point' && info.status === 'WAIT_BUYER_PAY' && <View className='trade-detail__footer'>
+                isDhPoint !=='point' && info.status === 'WAIT_BUYER_PAY' && info.order_class !== "usershop" && <View className='trade-detail__footer'>
                   <Text className='trade-detail__footer__btn' onClick={this.handleClickBtn.bind(this, 'cancel')}>取消订单</Text>
                   <Button
                     className='trade-detail__footer__btn trade-detail__footer_active'
@@ -563,7 +563,7 @@ export default class TradeDetail extends Component {
               {
                 isDhPoint !=='point' && info.status === 'WAIT_SELLER_SEND_GOODS' && <View className='trade-detail__footer'>
                   {
-                    info.order_status_des !== 'PAYED_WAIT_PROCESS' && <Text className='trade-detail__footer__btn' onClick={this.handleClickBtn.bind(this, 'cancel')}>取消订单</Text>
+                    info.order_status_des !== 'PAYED_WAIT_PROCESS' && info.order_class !== "usershop" && <Text className='trade-detail__footer__btn' onClick={this.handleClickBtn.bind(this, 'cancel')}>取消订单</Text>
                   }
                   <Text
                     className={`trade-detail__footer__btn trade-detail__footer_active ${info.order_status_des === 'PAYED_WAIT_PROCESS' ? 'trade-detail__footer_allWidthBtn' : ''} `}

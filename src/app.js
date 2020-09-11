@@ -163,6 +163,7 @@ useHooks()
         'pages/vip/present',
 
         'pages/custom/custom-page',
+        'auth'
 
       ],
       subpackages: [

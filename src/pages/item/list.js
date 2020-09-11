@@ -46,7 +46,6 @@ export default class List extends Component {
   }
 
   componentDidMount () {
-    Taro.M(this)
     const { cat_id = null, main_cat_id = null,is_live = false } = this.$router.params
     this.firstStatus = true
     this.setState({

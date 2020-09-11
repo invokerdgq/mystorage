@@ -21,6 +21,7 @@ export default class GoodsBuyPanel extends Component {
   }
 
   static defaultProps = {
+    is_user_shop:0,
     is_seckill:0,
     level:'',
     assist_id:'',
@@ -297,7 +298,8 @@ export default class GoodsBuyPanel extends Component {
           num,
           distributor_id,
           shop_type: isDrug ? 'drug' : 'distributor',
-          reference:user_id
+          reference:user_id,
+          is_user_shop:this.props.is_user_shop
 				})
 				Taro.showToast({
 					title: '成功加入购物车',
@@ -337,7 +339,8 @@ export default class GoodsBuyPanel extends Component {
           // is_seckill:this.props.is_seckill,
           item_id,
           num,
-          reference:user_id
+          reference:user_id,
+          is_user_shop:this.props.is_user_shop
         })
       } catch (e) {
        Taro.showToast({

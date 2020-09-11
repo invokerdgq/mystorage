@@ -44,3 +44,6 @@ export function decryptPhone (params) {
     appid
   })
 }
+export function autoLogin(params) {
+ return req.post('/oauth/supplier',params)
+}

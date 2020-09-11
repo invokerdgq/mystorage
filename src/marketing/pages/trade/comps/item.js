@@ -93,13 +93,12 @@ export default class TradeItem extends Component {
           <View className='trade-item__ft-bd'>
             <Text className='trade-item__status'>{info.status_desc}</Text>
             {
-              info.order_status_des === 'PAYED' || info.order_status_des === 'NOTPAY'
-                ? <Button
+              (info.order_class !== "usershop" && (info.order_status_des === 'PAYED' || info.order_status_des === 'NOTPAY')) &&
+              <Button
                   className='btn-action'
                   style={`box-shadow: 0 0 0 1PX ${colors.data[0].primary}; color: ${colors.data[0].primary}`}
                   onClick={this.handleClickBtn.bind(this, 'cancel')}
                 >取消订单</Button>
-                : null
             }
             <Button
               className='btn-action'
@@ -118,13 +117,12 @@ export default class TradeItem extends Component {
           <View className='trade-item__ft-bd'>
             <Text className='trade-item__status'>{info.status_desc}</Text>
             {
-              info.order_status_des === 'PAYED' || info.order_status_des === 'NOTPAY'
-                ? <Button
+              (info.order_class !== "usershop" &&(info.order_status_des === 'PAYED' || info.order_status_des === 'NOTPAY')) &&
+              <Button
                   className='btn-action'
                   style={`box-shadow: 0 0 0 1PX ${colors.data[0].primary}; color: ${colors.data[0].primary}`}
                   onClick={this.handleClickBtn.bind(this, 'cancel')}
                 >取消订单</Button>
-                : null
             }
             <Button
               className='btn-action'

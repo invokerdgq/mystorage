@@ -1334,6 +1334,7 @@ export default class Detail extends Component {
               // is_seckill={this.state.is_seckill}
               assist_id={this.$router.params.assist_id}
               level={this.$router.params.level}
+              is_user_shop={this.$router.params.operator_id?1:0}
               info={info}
               isexchange={this.state.is_exchange}
               type={buyPanelType}

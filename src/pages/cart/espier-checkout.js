@@ -391,7 +391,6 @@ export default class CartCheckout extends Component {
       mask: true
     })
     const params = this.getParams()
-    console.log(params)
     if(this.state.payType === 'wxpaysurplus'){
       params.commission_balance = this.state.commission_balance
     }

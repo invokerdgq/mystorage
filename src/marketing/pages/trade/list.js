@@ -147,6 +147,7 @@ export default class TradeList extends Component {
     const { list, pager: { count: total }, rate_status } = await api.trade.list(params)
     let nList = pickBy(list, {
       tid: 'order_id',
+      order_class:'order_class',
       status_desc: 'order_status_msg',
       order_status_des: 'order_status_des',
       status: ({ order_status }) => resolveOrderStatus(order_status),

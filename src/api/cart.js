@@ -17,7 +17,7 @@ export function add (params) {
 }
 
 export function fastBuy (params) {
-  const { item_id, num = 1 ,is_seckill=0,reference} = params
+  const { item_id, num = 1 ,is_seckill=0,reference,is_user_shop} = params
   return req.post('/cart', {
     is_seckill,
     reference,
@@ -25,7 +25,8 @@ export function fastBuy (params) {
     item_id,
     num,
     isAccumulate: false,
-    shop_type: 'distributor'
+    shop_type: 'distributor',
+    is_user_shop
   })
 }
 

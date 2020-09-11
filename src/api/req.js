@@ -111,6 +111,7 @@ class API {
       options.data = qs.stringify(options.data)
     }
 
+
     return Taro.request(options)
         .then(res => {
         // eslint-disable-next-line
@@ -155,6 +156,7 @@ class API {
         return Promise.reject(this.reqError(res, `API error: ${statusCode}`))
       })
       .catch(e =>{
+        console.log('err----------',e)
         if(process.env.TARO_ENV === 'h5'){
           e.json().then(res => {
             Taro.showToast({title:res.error.message||res.error.errMsg||'出现错误,稍后重试',icon:'none',duration:1500})
