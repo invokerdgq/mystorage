@@ -544,9 +544,9 @@ export default class Detail extends Component {
 
     const wxappCode = `${host}/wechatAuth/wxapp/qrcode?page=pages/item/espier-detail&appid=${extConfig?extConfig.appid:''}&company_id=${company_id}&id=${item_id}&dtid=${distributor_id}&uid=${userId}`
 
-    const avatarImg = await Taro.getImageInfo({src: avatar})
+    const avatarImg = await Taro.getImageInfo({src: avatar.replace('http:', 'https:')})
     const goodsImg = await Taro.getImageInfo({src: pic})
-    const codeImg = await Taro.getImageInfo({src: wxappCode})
+    const codeImg = await Taro.getImageInfo({src: wxappCode.replace('http:', 'https:')})
     if (avatarImg && goodsImg && codeImg) {
       const posterImgs = {
         avatar: avatarImg.path,

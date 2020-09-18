@@ -6,6 +6,7 @@ export default class StoreTradeItem extends Component{
   static defaultProps = {
     info:{},
     handleClick:() => {},
+    handleCashDetail:()=>{},
     top:true,
     bottom:true
   }
@@ -57,7 +58,7 @@ export default class StoreTradeItem extends Component{
         {
           this.props.bottom&&
           <View className='item-bottom'>
-            <View className='bottom-dec'>共{info.items.length}件商品 合计：￥{Number(info.total_fee)/100}</View>
+            <View className='bottom-dec'>共{info.items.length}件商品 合计：￥{Number(info.item_fee)/100}</View>
             <View className='bottom-feature'>
               <View className='feature-status'>{info.order_status_msg}</View>
               <View className='feature-detail feature' onClick={() => {this.props.handleClick('detail',info)}}>订单详情</View>
@@ -82,7 +83,7 @@ export default class StoreTradeItem extends Component{
                     }
                     {
                       info.commission_status == '-1'&&
-                      <View className='feature-cash-out'>提现审核失败</View>
+                      <View className='feature-cash-out feature' onClick={() =>{this.props.handleCashDetail(info)}}>提现失败 查看详情</View>
                     }
                     {
                       info.commission_status == '-2'&&

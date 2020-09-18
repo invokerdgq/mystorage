@@ -89,12 +89,12 @@ export default class OwnStore extends Component{
                   <View className='order-item' onClick={this.handleOrder.bind(this,'done')}>
                     <View className='iconfont icon-daifukuan'/>
                     <View className='item-dec'>去提现</View>
-                    <View className='num'>{shopData.normal_notpay_notdelivery}</View>
+                    {/*<View className='num'>{shopData.normal_notpay_notdelivery}</View>*/}
                   </View>
                   <View className='order-item' >
                     <View className='iconfont icon-shouhou'/>
                     <View className='item-dec'>售后</View>
-                    <View className='num'>{shopData.aftersales}</View>
+                    {/*<View className='num'>{shopData.aftersales}</View>*/}
                   </View>
                 </View>
               </View>

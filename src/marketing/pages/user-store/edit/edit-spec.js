@@ -50,9 +50,9 @@ export default class EditSpec extends Component{
     const {id,is_edit} = this.$router.params
     if(this.props.skus.length !==0 || this.props.simpleForm.approve_status){
       this.setState({
-        simpleForm: {...this.props.simpleForm},
-        specItems:[...this.props.specItems],
-        skus:[...this.props.skus],
+        simpleForm: JSON.parse(JSON.stringify(this.props.simpleForm)),
+        specItems:JSON.parse(JSON.stringify(this.props.specItems)),
+        skus:JSON.parse(JSON.stringify(this.props.skus)),
         simple:this.props.nospec
       },() =>{
         if(this.state.simpleForm.approve_status !== ''){

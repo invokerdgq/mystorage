@@ -150,7 +150,6 @@ useHooks()
         'pages/member/vip-rule',
         'pages/member/cash-out',
         'pages/member/fans',
-        'pages/member/live',
         'pages/member/live-store',
         'pages/qrcode-buy',
 
@@ -225,6 +224,7 @@ useHooks()
             'pages/user-store/trade/list',
             'pages/user-store/trade/delivery',
             'pages/user-store/trade/trade-detail',
+            'pages/user-store/trade/cash-out-detail'
           ]
         },
         {

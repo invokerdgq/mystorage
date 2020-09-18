@@ -163,7 +163,6 @@ export default class VipIndex extends Component {
 		}
 		const info = Taro.getStorageSync('userinfo')
     const id = Taro.getStorageSync('distribution_shop_id')
-    console.log('bug---------------')
     if(!Number(info.inviter_id) && !id && this.state.value === ''){
       if(Number(info.userId) !== 1){
         this.setState({
@@ -188,7 +187,6 @@ export default class VipIndex extends Component {
       card_type: vip_grade.price_list[curCellIdx].name,
 			distributor_id: Taro.getStorageSync('trackIdentity').distributor_id || ''
 		}
-console.log(list)
     if(this.state.value !== ''){
         api.member.codeActive(this.state.value).then((res) => {
           Taro.setStorageSync('inviteCode','')
@@ -211,7 +209,6 @@ console.log(list)
       var that = this
       if(process.env.TARO_ENV === 'h5'){
         window.location.href = config.mweb_url + '&redirect_url='+encodeURIComponent('https://h5.oioos.com/pages/member/index')
-
       }else{
         Taro.requestPayment({
           'timeStamp': '' + config.timeStamp,

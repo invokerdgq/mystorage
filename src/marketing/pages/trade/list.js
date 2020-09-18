@@ -152,7 +152,7 @@ export default class TradeList extends Component {
       order_status_des: 'order_status_des',
       status: ({ order_status }) => resolveOrderStatus(order_status),
       totalItems: ({ items }) => items.reduce((acc, item) => (+item.num) + acc, 0),
-      payment: ({ total_fee }) => (total_fee / 100).toFixed(2),
+      payment: ({ total_fee,order_class,item_fee }) => ((order_class === 'usershop'?item_fee:total_fee) / 100).toFixed(2),
       total_fee: 'total_fee',
       pay_type: 'pay_type',
       point: 'point',

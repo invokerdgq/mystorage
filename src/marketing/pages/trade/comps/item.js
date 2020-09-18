@@ -83,7 +83,7 @@ export default class TradeItem extends Component {
               : payType === 'point'
                 ? (<View className='trade-item__total'>共{info.totalItems}件商品 合计: <Price appendText='积分' noSymbol noDecimal value={info.point} /></View>)
                 : payType === 'dhpoint'
-                  ? (<View className='trade-item__total'>共{info.totalItems}件商品 合计: <Price appendText='积分' noSymbol noDecimal value={info.total_fee} /></View>)
+                  ? (<View className='trade-item__total'>共{info.totalItems}件商品 合计: <Price appendText='积分' noSymbol noDecimal value={info.order_class === 'usershop'?info.item_fee:info.total_fee} /></View>)
                   : (<View className='trade-item__total'>共{info.totalItems}件商品 合计: <Price value={info.payment} /></View>)
           }
         </View>

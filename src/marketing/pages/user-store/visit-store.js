@@ -145,7 +145,7 @@ fetch =async (params) =>{
                            </View>
                            <View className='goods-dec'>
                              <View className='goods-name'>{item.item_name}</View>
-                             <View className='goods-price'><Text className='inner'>￥{Number(item.price)/100}</Text><Text className='sale-count'>已售{item.fictitious_sales}件</Text></View>
+                             <View className='goods-price'><Text className='inner'>￥{Number(item.price)/100}</Text><Text className='sale-count'>已售{item.sales}件</Text></View>
                            </View>
                          </View>
                        )

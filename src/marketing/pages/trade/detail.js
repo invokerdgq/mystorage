@@ -106,7 +106,7 @@ export default class TradeDetail extends Component {
       item_fee: ({ item_fee }) => (+item_fee / 100).toFixed(2),
       coupon_discount: ({ coupon_discount }) => (+coupon_discount / 100).toFixed(2),
       freight_fee: ({ freight_fee }) => (+freight_fee / 100).toFixed(2),
-      payment: ({ pay_type, total_fee }) => pay_type === 'point' ? Math.floor(total_fee) : (+total_fee / 100).toFixed(2), // 积分向下取整
+      payment: ({ pay_type, total_fee,item_fee ,order_class}) => pay_type === 'point' ? Math.floor(total_fee) : (+(order_class === 'usershop'?item_fee:total_fee) / 100).toFixed(2), // 积分向下取整
       pay_type: 'pay_type',
       invoice_content: 'invoice.content',
       point: 'point',

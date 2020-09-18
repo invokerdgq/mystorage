@@ -64,6 +64,11 @@ export default class StoreList extends Component{
       })
     })
   }
+  handleCashDetail(item){
+    Taro.navigateTo({
+      url:`/marketing/pages/user-store/trade/cash-out-detail?id=${item.order_id}&amount=${Number(item.total_fee)/100}`
+    })
+  }
   async handleFeatureClick(type,item){
    switch (type) {
      case "detail":
@@ -123,6 +128,7 @@ export default class StoreList extends Component{
                        <StoreTradeItem
                           info={item}
                           handleClick={this.handleFeatureClick.bind(this)}
+                          handleCashDetail={this.handleCashDetail.bind(this)}
                        />
                      )
                    })

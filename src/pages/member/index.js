@@ -76,7 +76,7 @@ export default class MemberIndex extends Component {
         {url:'/assets/imgs/group.png',dec:'我的拼团',onclick:this.handleClick.bind(this, '/pages/member/group-list',false) ,openType:'click'},
         {url:'/assets/imgs/buy.png',dec:'我的预约',onclick:this.handleClick.bind(this, '/marketing/pages/member/item-activity',false) ,openType:'click'},
         {url:'/assets/imgs/kefu.png',dec:'我的客服',openType:'contact'},
-        {url:'/assets/imgs/live.png',dec:'我的直播间',onclick:this.handleClick.bind(this, '/pages/member/live',false),openType:'click'},
+        {url:'/assets/imgs/live.png',dec:'我的直播间',onclick:this.handleToLive.bind(this),openType:'click'},
         {url:'/assets/imgs/live.png',dec:'我的小店',onclick:this.handleClickStore.bind(this),openType:'click'},
         {url:'/assets/imgs/address.png',dec:'地址管理',onclick: this.handleClick.bind(this, '/pages/member/address',false),openType:'click'},
         {url:'/assets/imgs/share.png',dec:'我要分享',openType:'share'},
@@ -383,6 +383,16 @@ export default class MemberIndex extends Component {
         showStoreOpen:true
       })
     }
+  }
+  handleToLive(){
+    Taro.navigateToMiniProgram({
+      appId:'wx52f496cdcad08ffe',
+      path:`others/pages/live/live`,
+      envVersion:'develop',
+      success(){
+        console.log('跳转 苏心淘精选')
+      }
+    })
   }
   render () {
     const { colors } = this.props
