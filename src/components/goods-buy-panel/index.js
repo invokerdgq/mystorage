@@ -21,6 +21,7 @@ export default class GoodsBuyPanel extends Component {
   }
 
   static defaultProps = {
+    currentShop:'',
     is_user_shop:0,
     is_seckill:0,
     level:'',
@@ -278,7 +279,6 @@ export default class GoodsBuyPanel extends Component {
 
     const { marketing} = this.state
     const {info} = this.props
-    const user_id = Taro.getStorageSync('user_id')
     const { special_type = 'normal' } = info
     const isDrug = special_type === 'drug'
     const { item_id } = this.noSpecs ? info : skuInfo
@@ -298,7 +298,7 @@ export default class GoodsBuyPanel extends Component {
           num,
           distributor_id,
           shop_type: isDrug ? 'drug' : 'distributor',
-          reference:user_id,
+          reference:this.props.currentShop.user_id,
           is_user_shop:this.props.is_user_shop
 				})
 				Taro.showToast({
@@ -339,7 +339,7 @@ export default class GoodsBuyPanel extends Component {
           // is_seckill:this.props.is_seckill,
           item_id,
           num,
-          reference:user_id,
+          reference:this.props.currentShop.user_id,
           is_user_shop:this.props.is_user_shop
         })
       } catch (e) {

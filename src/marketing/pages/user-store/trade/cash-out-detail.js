@@ -8,11 +8,19 @@ export default class CashOutDetail extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      info:{}
+      info:{},
+      rejectReason:''
     }
   }
   componentWillMount() {
     const {id} = this.$router.params
+    this.fetchDetail(id)
+  }
+  async fetchDetail(id){
+    const {payload} = await api.store.getCashOutDetail({order_id:id})
+    this.setState({
+      rejectReason:payload
+    })
   }
   async handleCashOut(){
     let option = {
@@ -32,15 +40,15 @@ export default class CashOutDetail extends Component{
       <View className='cash-out-detail'>
         <NavGap title='提现详情'/>
         <View className='cash-out-detail-content'>
-          <View>已拒绝</View>
+          <View className='order-status'>已拒绝</View>
           <View className='reject-reason'>
             <View className='reject-title'>拒绝原因:</View>
-            <View>
-              dddddddd
+            <View className='reject-body'>
+              {this.state.rejectReason}
             </View>
           </View>
           <View className='cash-out-feature' onClick={this.handleCashOut.bind(this)}>
-               在此申请提现
+               再次申请提现
           </View>
         </View>
       </View>

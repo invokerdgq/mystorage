@@ -1,2 +1,42 @@
 @import "../../../../style/imports";
 
+.cash-out-detail-content{
+  padding-top: VH($nav-gap-height);
+  margin: 0 25px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .order-status{
+    width: 120px;
+    height: 50px;
+    border-radius: 16px;
+    color:white;
+    background: $color-theme;
+    line-height: 50px;
+    text-align: center;
+    margin: 30px 0 20px;
+  }
+  .reject-reason{
+    .reject-title{
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .reject-body{
+      border: solid 2px #bbbaba;
+      padding: 20px;
+      min-height: 300px;
+      border-radius: 16px;
+    }
+  }
+  .cash-out-feature{
+    margin: auto auto 50px;
+    width: 600px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    border-radius: 18px;
+    background: $color-theme;
+    color: white;
+    font-size: 32px;
+  }
+}

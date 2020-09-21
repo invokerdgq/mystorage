@@ -136,7 +136,7 @@ export default class MemberIndex extends Component {
       })
     }
     const [res, { list: favs }, orderCount, { list: memberDiscount }, assets,fansCount] = await Promise.all([api.member.memberInfo(), api.member.favsList(), api.trade.getCount(), api.vip.getList(), api.member.memberAssets(),api.member.getFansCount()])
-    if((res.vipgrade.grade_name === '至尊会员')|| (res.vipgrade.grade_name === '王者身份')){
+    if((res.vipgrade.grade_name === '至尊会员'|| res.vipgrade.grade_name === '王者身份') && res.vipgrade.is_vip){
     }else{
       this.featureList = this.featureList.filter((item) => {
         return  item.dec !== '我的直播间' && item.dec !== '我的小店'

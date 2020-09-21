@@ -65,3 +65,6 @@ export function orderCashOut(params) {
 export function getOwnShopData() {
  return req.get('/usershops/orderscount')
 }
+export function getCashOutDetail(params) {
+ return req.get('/usershops/commissionorderInfo',params)
+}
