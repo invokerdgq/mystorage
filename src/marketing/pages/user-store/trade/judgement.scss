@@ -1,0 +1,47 @@
+@import "../../../../style/imports";
+
+.order-judgement-content{
+  padding: VH($nav-gap-height) 20px 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .title{
+    padding: 20px 0;
+    font-size: 32px;
+    font-weight: bold;
+   }
+  .cancel-reason{
+    border: solid 2px #bbbaba;
+    padding: 20px;
+    min-height: 200px;
+    border-radius: 16px;
+  }
+  .choose-judge{
+    margin-top: 20px;
+    .reject-reason{
+      &-input{
+        border: solid 2px #bbbaba;
+        padding: 20px;
+        min-height: 200px;
+        border-radius: 16px;
+      }
+    }
+    .reject-cancel,.resolve-cnacel{
+      margin: 0 28px 0 12px;
+      .reject,.resolve{
+        margin-right: 16px;
+      }
+    }
+  }
+  .judge-feature{
+    margin: auto auto 50px;
+    width: 600px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    border-radius: 18px;
+    background: $color-theme;
+    color: white;
+    font-size: 32px;
+  }
+}

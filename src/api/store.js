@@ -68,3 +68,9 @@ export function getOwnShopData() {
 export function getCashOutDetail(params) {
  return req.get('/usershops/commissionorderInfo',params)
 }
+export function getCancelOrderDetail(id) {
+ return req.get(`/usershops/order/${id}/cancelinfo?order_type=normal`)
+}
+export function judge(params) {
+ return req.post(`/usershops/order/${params.order_id}/confirmcancel`,params)
+}

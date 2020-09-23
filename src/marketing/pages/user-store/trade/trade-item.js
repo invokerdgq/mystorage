@@ -67,6 +67,10 @@ export default class StoreTradeItem extends Component{
                 <View className='feature-delivery feature' onClick={() => {this.props.handleClick('delivery',info)}}>发货</View>
               }
               {
+                info.order_status_des === 'PAYED_WAIT_PROCESS' &&
+                  <View className='feature-delivery feature' onClick={() => {this.props.handleClick('judgement',info)}}>待审核</View>
+              }
+              {
                 info.order_status === 'DONE'&&
                   <View>
                     {

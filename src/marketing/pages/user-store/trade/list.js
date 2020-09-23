@@ -16,7 +16,7 @@ export default class StoreList extends Component{
       statusList:[
         {title:'全部',status:''},
         {title:'待发货',status:'notship'},
-        {title:'未支付',status:'notpay'},
+        {title:'待审核',status:'cancelapply'},
         {title:'已完成',status:'done'},
         {title:'已取消',status:'cancel'}
       ],
@@ -94,6 +94,9 @@ export default class StoreList extends Component{
        }
        Taro.navigateTo({url:`/marketing/pages/user-store/trade/delivery?id=${item.order_id}`})
        break
+     case "judgement" :
+       Taro.navigateTo({url:`/marketing/pages/user-store/trade/judgement?id=${item.order_id}`})
+       break
      default :
 
    }
@@ -119,8 +122,6 @@ export default class StoreList extends Component{
          >
            <View className='list-container'>
              {
-               this.state.page.isLoading?
-                 <View className='none-order'><Loading>加载中...</Loading></View>:
                  orderList.length === 0?
                    <View className='none-order'>暂时没有订单</View>:
                    orderList.map((item,index) => {
@@ -132,6 +133,10 @@ export default class StoreList extends Component{
                        />
                      )
                    })
+             }
+             {
+               this.state.page.isLoading&&
+                 <View className='none-order'><Loading>加载中...</Loading></View>
              }
            </View>
          </ScrollView>

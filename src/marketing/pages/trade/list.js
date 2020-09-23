@@ -126,9 +126,6 @@ export default class TradeList extends Component {
       const {list,total_count:total} = await api.member.getRecord(params)
       this.setState({
         list:[...this.state.list,...list]
-      },() => {
-        console.log('kkkkkkkkkkkk')
-        console.log(this.state.list)
       })
       return {total}
     }

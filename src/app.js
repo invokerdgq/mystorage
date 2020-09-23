@@ -224,7 +224,8 @@ useHooks()
             'pages/user-store/trade/list',
             'pages/user-store/trade/delivery',
             'pages/user-store/trade/trade-detail',
-            'pages/user-store/trade/cash-out-detail'
+            'pages/user-store/trade/cash-out-detail',
+            'pages/user-store/trade/judgement'
           ]
         },
         {

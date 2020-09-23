@@ -82,6 +82,11 @@ export default class OwnStore extends Component{
                     <View className='item-dec'>待发货</View>
                     <View className='num'>{shopData.normal_payed_daifahuo}</View>
                   </View>
+                  <View className='order-item' onClick={this.handleOrder.bind(this,'cancelapply')}>
+                    <View className='iconfont icon-icongroup04'/>
+                    <View className='item-dec'>待审核</View>
+                    {/*<View className='num'>{shopData.aftersales}</View>*/}
+                  </View>
                   <View className='order-item' onClick={this.handleOrder.bind(this,'done')}>
                       <View className='iconfont icon-jiuzhouyiwancheng'/>
                       <View className='item-dec'>已完成</View>
@@ -90,11 +95,6 @@ export default class OwnStore extends Component{
                     <View className='iconfont icon-daifukuan'/>
                     <View className='item-dec'>去提现</View>
                     {/*<View className='num'>{shopData.normal_notpay_notdelivery}</View>*/}
-                  </View>
-                  <View className='order-item' >
-                    <View className='iconfont icon-shouhou'/>
-                    <View className='item-dec'>售后</View>
-                    {/*<View className='num'>{shopData.aftersales}</View>*/}
                   </View>
                 </View>
               </View>

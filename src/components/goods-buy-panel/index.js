@@ -298,7 +298,7 @@ export default class GoodsBuyPanel extends Component {
           num,
           distributor_id,
           shop_type: isDrug ? 'drug' : 'distributor',
-          reference:this.props.currentShop.user_id,
+          reference:this.props.currentShop.share_user_id,
           is_user_shop:this.props.is_user_shop
 				})
 				Taro.showToast({
@@ -339,7 +339,7 @@ export default class GoodsBuyPanel extends Component {
           // is_seckill:this.props.is_seckill,
           item_id,
           num,
-          reference:this.props.currentShop.user_id,
+          reference:this.props.currentShop.share_user_id,
           is_user_shop:this.props.is_user_shop
         })
       } catch (e) {
